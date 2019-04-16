@@ -1,0 +1,253 @@
+{
+    "data": [
+        {
+            "type": "change_map_state",
+            "parameters": {
+                "map": "V/s",
+                "state": "fought_monster"
+            }
+        },
+        {
+            "type": "change_map_state",
+            "parameters": {
+                "map": "V/s",
+                "state": "fought_monster"
+            }
+        },
+        [
+            {
+                "type": "animation",
+                "parameters": {
+                    "object": "CONTROL_ENEMY",
+                    "animation": "snatch"
+                }
+            },
+            {
+                "type": "animation",
+                "parameters": {
+                    "object": "CONTROL_PLAYER",
+                    "animation": "hurt_up",
+                    "finish_animation": null
+                }
+            },
+            {
+                "type" : "wait",
+                "parameters": {
+                    "duration": 3
+                }
+            }
+        ],
+        [
+            {
+                "type" : "color_flash",
+                "parameters": {
+                    "out_duration" : 1
+                }
+            },
+            {
+                "type": "shake",
+                "parameters": {
+                    "duration" : 5,
+                    "loop": true
+                }
+            },
+            {
+                "type": "move",
+                "parameters": {
+                    "at_speed": 50,
+                    "destination": "MonsterGripFloor",
+                    "control": "CONTROL_PLAYER",
+                    "animates": false
+                }
+            },
+            {
+                "type": "animation",
+                "parameters": {
+                    "object": "CONTROL_ENEMY",
+                    "animation": "shake_hand",
+                    "loops": true
+                }
+            },
+            {
+                "type": "wait",
+                "parameters": {
+                    "duration": 5
+                }
+            }
+        ],
+        [
+            {
+                "type": "animation",
+                "parameters": {
+                    "object": "CONTROL_ENEMY",
+                    "animation": "grab_down",
+                    "finish_animation": null
+                }
+            },
+            {
+                "type": "shake",
+                "parameters": {
+                    "duration": 0.5,
+                    "shake_amount": 10
+                }
+            },
+            {
+                "type": "sound",
+                "parameters": {
+                    "sound": "player_hit.wav"
+                }
+            },
+            {
+                "type": "damage_player",
+                "parameters": {
+                    "amount": 100000
+                }
+            },
+            {
+                "type": "wait",
+                "parameters": {
+                    "duration": 1
+                }
+            }
+        ],
+        {
+            "type": "animation",
+            "parameters": {
+                "object": "CONTROL_ENEMY",
+                "animation": "choke",
+                "is_important": false,
+                "finish_animation": null
+            }
+        },
+        {
+            "type": "wait",
+            "parameters": {
+                "duration": 1.5
+            }
+        },
+        {
+            "type": "move",
+            "parameters": {
+                "destination": "MonsterGripElevating",
+                "control": "CONTROL_PLAYER",
+                "animates": false,
+                "dest_elevation": 80,
+                "instant_move": true
+            }
+        },
+        {
+            "type": "wait",
+            "parameters": {
+                "duration": 1.5
+            }
+        },
+        {
+            "type": "move",
+            "parameters": {
+                "destination": "MonsterGripElevated",
+                "control": "CONTROL_PLAYER",
+                "animates": false,
+                "dest_elevation": 136,
+                "instant_move": true
+            }
+        },
+        {
+            "type": "wait",
+            "parameters": {
+                "duration": 1.5
+            }
+        },
+        [
+            {
+                "type": "shake",
+                "parameters": {
+                    "duration": 1
+                }
+            },
+            {
+                "type": "animation",
+                "parameters": {
+                    "object": "CONTROL_ENEMY",
+                    "animation": "absorb",
+                    "finish_animation": null
+                }
+            }
+        ],
+        {
+            "type": "shake",
+            "parameters": {
+                "duration": 1
+            }
+        },
+        {
+            "type": "shake",
+            "parameters": {
+                "duration": 7,
+                "shake_amount": 0.7,
+                "is_important": false
+            }
+        },
+        {
+            "type": "move",
+            "parameters": {
+                "destination": "MonsterFallenDown",
+                "control": "CONTROL_PLAYER",
+                "animates": false,
+                "dest_elevation": 0,
+                "at_speed": 20
+            }
+        },
+        {
+            "type": "exit_battle",
+            "parameters": {}
+        },
+        {
+			"type": "wait",
+			"parameters": {
+				"duration": 0.5
+			}
+		},
+		{
+			"type": "animation",
+			"parameters": {
+				"object": "CONTROL_PLAYER",
+				"animation": "fainting",
+				"loop": false
+			}
+		},
+		{
+			"type": "wait",
+			"parameters": {
+				"duration": 3
+			}
+		},
+		{
+			"type": "change_map_state",
+			"parameters": {
+				"map": "UF/e",
+				"state": "back_from_flashback"
+			}
+		},
+		{
+			"type": "change_map_state",
+			"parameters": {
+				"map": "UF/eh",
+				"state": "chapter2"
+			}
+		},
+		{
+			"type": "change_map",
+			"parameters": {
+				"map": "UF/e",
+				"position": "player_back_from_flashback",
+				"finish_early": true
+			}
+		},
+		{
+			"type": "overworld_player_state",
+			"parameters": {
+				"new_state": "Fainted"
+			}
+		}
+    ]
+}
