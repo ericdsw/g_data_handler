@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import CutsceneRow from './CutsceneRow';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import axios from 'axios';
+import React, { Component } from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import axios from 'axios'
+
+import CutsceneRow from './CutsceneRow'
 
 const styles = theme => ({
     root: {
@@ -11,19 +11,18 @@ const styles = theme => ({
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 2,
     }
-});
+})
 
 class Cutscene extends Component {
 
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             cutsceneRows: []
         }
     }
 
     componentWillMount() {
-
         axios.get(this.props.file)
             .then(response => response.data)
             .then(content => this.setState({ cutsceneRows: content.data }))
@@ -36,22 +35,22 @@ class Cutscene extends Component {
 
         let counter = 0;
         const rows = this.state.cutsceneRows.map(cutsceneRow => {
+            counter++
             return (
-                <CutsceneRow key={counter++} rowData={cutsceneRow} />
+                <CutsceneRow 
+                    key={counter} 
+                    rowNumber={counter} 
+                    rowData={cutsceneRow} />
             )
         });
 
         return (
             <div>
-                <Typography variant="h5" component="h3">
-                    Cutscene: {this.props.file}
-                </Typography>
                 <Grid 
                     className={classes.root}
                     container 
                     spacing={16}
-                    alignItems="center"
-                >
+                    alignItems="center">
                     {rows}
                 </Grid>
             </div>

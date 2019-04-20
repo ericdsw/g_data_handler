@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
-import './App.css';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
-import green from '@material-ui/core/colors/green';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Cutscene from './components/Cutscene'
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import React from 'react'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import { purple, green } from '@material-ui/core/colors'
+import { CssBaseline, withStyles } from '@material-ui/core'
+import { NavigationDrawer, ApplicationBar } from './components/elements'
+import { drawerWidth } from './globals'
+import { Route, BrowserRouter as Router } from 'react-router-dom'
+import routes from './router'
 
-const theme = createMuiTheme({
+const applicationTheme = createMuiTheme({
     palette: {
         primary: {
             light: purple[300],
@@ -25,30 +23,48 @@ const theme = createMuiTheme({
     typography: {
         useNextVariants: true
     },
-});
+})
 
-class App extends Component {
+const styles = theme => ({
+    root: {
+        display: 'flex',
+    },
+    toolbar: theme.mixins.toolbar,
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing.unit * 3,
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: drawerWidth,
+        }
+    },
+})
+
+class App extends React.Component {
 
     render() {
+        const { classes } = this.props
         return (
-            <React.Fragment>
-                <MuiThemeProvider theme={theme}>
+            <div className={classes.root}>
+                <MuiThemeProvider theme={applicationTheme}>
                     <CssBaseline />
-
-                    <AppBar position="static" color="primary">
-                    <Toolbar>
-                        <Typography variant="h6" color="inherit">
-                            Cutscene Editor v0.1
-                        </Typography>
-                    </Toolbar>
-                    </AppBar>
-
-                    <Cutscene file='./data/first_monster_battle.json' />
+                    <Router>
+                        <ApplicationBar />
+                        <NavigationDrawer />
+                        <main className={classes.content}>
+                            <div className={classes.toolbar} />
+                            {routes.map(route => (
+                                <Route
+                                    key={route.path}
+                                    path={route.path}
+                                    exact={route.exact}
+                                    component={route.component} />
+                            ))}
+                        </main>
+                    </Router>
                 </MuiThemeProvider>
-            </React.Fragment>
-        );
+            </div>
+        )
     }
-
 }
 
-export default App;
+export default withStyles(styles)(App)

@@ -1,19 +1,25 @@
 import React, { Component } from 'react'
+import { 
+    ExpansionPanel, 
+    ExpansionPanelSummary, 
+    ExpansionPanelDetails,
+    Typography,
+    Grid
+} from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Chip from '@material-ui/core/Chip';
-import Grid from '@material-ui/core/Grid';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const styles = theme => ({
     eventCard: {
         width: 300,
-        height: 250,
         margin: `${theme.spacing.unit}px auto`,
     },
-    chip: {
-        margin: 4
+    listParamItem: {
+        fontSize: 12,
+        margin: '8px 0',
+    },
+    title: {
+        fontSize: 14,
     }
 });
 
@@ -23,28 +29,45 @@ class CutsceneEvent extends Component {
 
         const { classes, cutsceneEventData } = this.props;
 
-        let chipParams = [];
-        for (let param_name in cutsceneEventData.parameters) {
-            chipParams.push((
-                <Chip
-                    className={classes.chip}
-                    label={`${param_name} => ${cutsceneEventData.parameters[param_name]}`}
-                    color="secondary"
-                    variant="outlined" 
-                />
+
+        let listParams = [];
+        let counter = 0;
+        for (let paramName in cutsceneEventData.parameters) {
+
+            let param = cutsceneEventData.parameters[paramName]
+
+            if (typeof param === "boolean") {
+                param = param ? "true":"false"
+            }
+
+            listParams.push((
+                <li key={counter++} className={classes.listParamItem}>
+                    <b>{paramName}</b> : {param}
+                </li>
             ));
+
         }
 
         return (
             <Grid item>
-                <Card className={classes.eventCard}>
-                    <CardContent>
-                        <Typography variant="h5" component="h2">
-                            {cutsceneEventData.type}
+                <ExpansionPanel 
+                    className={classes.eventCard}>
+                    <ExpansionPanelSummary 
+                        expandIcon={<ExpandMoreIcon />}>
+                        <Typography 
+                            className={classes.title} 
+                            color="textSecondary" gutterBottom>
+                            <b>Type</b>: {cutsceneEventData.type}
+
                         </Typography>
-                        {chipParams}
-                    </CardContent>
-                </Card>
+
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <ul>
+                            {listParams}
+                        </ul>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
             </Grid>
         )
     }
