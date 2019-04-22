@@ -4,8 +4,8 @@ import { purple, green } from '@material-ui/core/colors'
 import { CssBaseline, withStyles } from '@material-ui/core'
 import { NavigationDrawer, ApplicationBar } from './components/elements'
 import { drawerWidth } from './globals'
-import { Route, BrowserRouter as Router } from 'react-router-dom'
-import routes from './router'
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import routes, { fallbackRoute } from './router'
 
 const applicationTheme = createMuiTheme({
     palette: {
@@ -52,13 +52,16 @@ class App extends React.Component {
                         <NavigationDrawer />
                         <main className={classes.content}>
                             <div className={classes.toolbar} />
-                            {routes.map(route => (
-                                <Route
-                                    key={route.path}
-                                    path={route.path}
-                                    exact={route.exact}
-                                    component={route.component} />
-                            ))}
+                            <Switch>
+                                { routes.map( route => (
+                                    <Route
+                                        key={route.path}
+                                        path={route.path}
+                                        exact={route.exact}
+                                        component={route.component} />
+                                )) }
+                                <Route component={fallbackRoute.component} />
+                            </Switch>
                         </main>
                     </Router>
                 </MuiThemeProvider>

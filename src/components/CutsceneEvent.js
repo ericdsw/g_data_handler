@@ -1,34 +1,58 @@
 import React, { Component } from 'react'
 import { 
-    ExpansionPanel, 
-    ExpansionPanelSummary, 
-    ExpansionPanelDetails,
     Typography,
-    Grid
+    Grid,
+    Card,
+    CardHeader,
+    CardContent,
+    CardActions,
+    Collapse,
+    IconButton,
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
+import classnames from 'classnames'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const styles = theme => ({
     eventCard: {
-        width: 300,
-        margin: `${theme.spacing.unit}px auto`,
+        width: 330
     },
-    listParamItem: {
-        fontSize: 12,
-        margin: '8px 0',
+    actions: {
+        display: 'flex',
     },
-    title: {
-        fontSize: 14,
+    expand: {
+        transform: 'rotate(0deg)',
+        marginLeft: 'auto',
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.shortest,
+        }),
+    },
+    expandOpen: {
+        transform: 'rotate(180deg)',
     }
-});
+})
 
 class CutsceneEvent extends Component {
+
+    state = { expanded : false }
+
+    handleExpandClick = () => {
+        this.setState(state => ({expanded: !state.expanded}))
+    }
+
+    handleEdit = () => {
+
+    }
+
+    handleDelete = () => {
+
+    }
 
     render() {
 
         const { classes, cutsceneEventData } = this.props;
-
 
         let listParams = [];
         let counter = 0;
@@ -41,35 +65,50 @@ class CutsceneEvent extends Component {
             }
 
             listParams.push((
-                <li key={counter++} className={classes.listParamItem}>
-                    <b>{paramName}</b> : {param}
-                </li>
+                <Typography variant='body1' gutterBottom>
+                    <li key={counter++} className={classes.listParamItem}>
+                        <b>{paramName}</b> : {param}
+                    </li>
+                </Typography>
             ));
 
         }
 
         return (
             <Grid item>
-                <ExpansionPanel 
-                    className={classes.eventCard}>
-                    <ExpansionPanelSummary 
-                        expandIcon={<ExpandMoreIcon />}>
-                        <Typography 
-                            className={classes.title} 
-                            color="textSecondary" gutterBottom>
-                            <b>Type</b>: {cutsceneEventData.type}
-
-                        </Typography>
-
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        <ul>
-                            {listParams}
-                        </ul>
-                    </ExpansionPanelDetails>
-                </ExpansionPanel>
+                <Card className={classes.eventCard}>
+                    <CardHeader
+                        title={cutsceneEventData.type} />
+                    <CardActions className={classes.actions} disableActionSpacing>
+                        <IconButton aria-label='Edit'
+                            onClick={this.handleEdit}>
+                            <EditIcon />
+                        </IconButton>
+                        <IconButton aria-label='Delete'
+                            onClick={this.handleDelete}>
+                            <DeleteIcon />
+                        </IconButton>
+                        <IconButton
+                            className={classnames(classes.expand, {
+                                [classes.expandOpen]: this.state.expanded,
+                            })}
+                            onClick={this.handleExpandClick}
+                            aria-expanded={this.state.expanded}
+                            aria-label='More Info'>
+                            <ExpandMoreIcon />
+                        </IconButton>
+                    </CardActions>
+                    <Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
+                        <CardContent>
+                            <ul>
+                                {listParams}
+                            </ul>
+                        </CardContent>
+                    </Collapse>
+                </Card>
             </Grid>
         )
+
     }
 }
 

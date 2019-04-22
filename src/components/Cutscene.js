@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
-import axios from 'axios'
+import { Grid } from '@material-ui/core'
 
 import CutsceneRow from './CutsceneRow'
 
@@ -17,16 +16,10 @@ class Cutscene extends Component {
 
     constructor(props) {
         super(props)
+        console.log(props)
         this.state = {
-            cutsceneRows: []
+            cutsceneRows: props.cutscene.data
         }
-    }
-
-    componentWillMount() {
-        axios.get(this.props.file)
-            .then(response => response.data)
-            .then(content => this.setState({ cutsceneRows: content.data }))
-            .catch(error => console.log("Error: " + error))
     }
 
     render() {
@@ -42,7 +35,7 @@ class Cutscene extends Component {
                     rowNumber={counter} 
                     rowData={cutsceneRow} />
             )
-        });
+        })
 
         return (
             <div>

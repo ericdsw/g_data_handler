@@ -5,7 +5,6 @@ import { Paper, Grid } from '@material-ui/core';
 
 const styles = theme => ({
     cutsceneRow: {
-        maxWidth: 1000,
         margin: `${theme.spacing.unit}px auto`,
         padding: 16
     }
@@ -23,7 +22,7 @@ class CutsceneRow extends Component {
         if (Array.isArray(rowData)) {
             var cutsceneArray = rowData.map(cutsceneData => {
                 counter++;
-                return <CutsceneEvent 
+                return <CutsceneEvent
                     key={`cutscene-row:${rowNumber}:${counter}`} 
                     cutsceneEventData={cutsceneData} />
             });

@@ -1,17 +1,44 @@
 import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-
-const styles = theme =>({
-
-})
+import NoCutscene from './NoCutscene'
+import Cutscene from '../Cutscene'
 
 class CutscenePage extends React.Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            currentCutscene: null
+        }
+    }
+
+    newCutsceneDetected = (cutscene) => {
+        this.setState({
+            currentCutscene: cutscene
+        })
+    }
+
     render() {
+        let content
+        if (this.state.currentCutscene !== null) {
+            content = (
+                <Cutscene 
+                    cutscene={this.state.currentCutscene}
+                />
+            )
+        } else {
+            content = (
+                <NoCutscene 
+                    onCutsceneDetected={this.newCutsceneDetected} 
+                />
+            )
+        }
+
         return (
-            <p>This is the cutscene page</p>
+            <div>
+                {content}
+            </div>
         )
     }
 }
 
-export default withStyles(styles)(CutscenePage)
+export default CutscenePage
