@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import { Grid } from '@material-ui/core'
+import { Grid, Button, Typography } from '@material-ui/core'
 
+import { updateCutscene, addCutsceneRow } from '../actions/cutsceneActions'
 import CutsceneRow from './CutsceneRow'
 
 const styles = theme => ({
@@ -14,25 +16,30 @@ const styles = theme => ({
 
 class Cutscene extends Component {
 
-    constructor(props) {
-        super(props)
-        console.log(props)
-        this.state = {
-            cutsceneRows: props.cutscene.data
-        }
+    handleClearCutscene = () => {
+        this.props.updateCutscene({
+            cutscene: null,
+            fileName: ''
+        })
+    }
+
+    handleAddRow = () => {
+        this.props.addCutsceneRow()
+    }
+
+    handleAddJump = () => {
+
     }
 
     render() {
 
-        const { classes } = this.props;
+        const { classes, cutsceneRows } = this.props;
 
-        let counter = 0;
-        const rows = this.state.cutsceneRows.map(cutsceneRow => {
-            counter++
+        const rows = cutsceneRows.map((cutsceneRow, index) => {
             return (
                 <CutsceneRow 
-                    key={counter} 
-                    rowNumber={counter} 
+                    key={index} 
+                    rowNumber={index} 
                     rowData={cutsceneRow} />
             )
         })
@@ -44,6 +51,27 @@ class Cutscene extends Component {
                     container 
                     spacing={16}
                     alignItems="center">
+                    <Grid item xs={6}>
+                        <Typography align='left'>
+                            <Button 
+                                onClick={this.handleAddRow}
+                                color='primary'>
+                                Add Row
+                            </Button>
+                            <Button color='primary'>
+                                Add Jump
+                            </Button>
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography align='right'>
+                            <Button 
+                                onClick={this.handleClearCutscene} 
+                                color='secondary'>
+                                Clear Cutscene
+                            </Button>
+                        </Typography>
+                    </Grid>
                     {rows}
                 </Grid>
             </div>
@@ -51,4 +79,7 @@ class Cutscene extends Component {
     }
 }
 
-export default withStyles(styles)(Cutscene);
+export default connect(null, { 
+    updateCutscene,
+    addCutsceneRow
+})(withStyles(styles)(Cutscene))

@@ -1,36 +1,23 @@
 import React from 'react'
 import NoCutscene from './NoCutscene'
 import Cutscene from '../Cutscene'
+import { connect } from 'react-redux'
 
 class CutscenePage extends React.Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            currentCutscene: null
-        }
-    }
-
-    newCutsceneDetected = (cutscene) => {
-        this.setState({
-            currentCutscene: cutscene
-        })
-    }
-
     render() {
+
+        const { currentCutscene, currentCutsceneJumps} = this.props
+
         let content
-        if (this.state.currentCutscene !== null) {
+        if (this.props.currentCutscene !== null) {
             content = (
                 <Cutscene 
-                    cutscene={this.state.currentCutscene}
-                />
+                    cutsceneRows={currentCutscene}
+                    jumps={currentCutsceneJumps}/>
             )
         } else {
-            content = (
-                <NoCutscene 
-                    onCutsceneDetected={this.newCutsceneDetected} 
-                />
-            )
+            content = <NoCutscene />
         }
 
         return (
@@ -41,4 +28,10 @@ class CutscenePage extends React.Component {
     }
 }
 
-export default CutscenePage
+const mapStateToProps = state => ({
+    currentCutscene: state.cutscene.currentCutscene,
+    currentCutsceneJumps: state.cutscene.currentCutsceneJumps,
+    fileName: state.cutscene.fileName
+})
+
+export default connect(mapStateToProps, {})(CutscenePage)

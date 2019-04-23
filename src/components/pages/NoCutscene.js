@@ -7,6 +7,8 @@ import {
     Paper,
     Grid
 } from '@material-ui/core'
+import { connect } from 'react-redux'
+import { updateCutscene } from '../../actions/cutsceneActions'
 import DragAndDrop from '../DragAndDrop'
 
 const styles = theme => ({
@@ -38,10 +40,27 @@ class NoCutscene extends React.Component {
         // Parsing Logic
         const fileReader = new FileReader()
         fileReader.onload = (event) => {
+            const name = firstFile.name
             const result = JSON.parse(event.target.result)
-            this.props.onCutsceneDetected(result)
+
+            const cutscene = result.data
+            const jumps = (result.jumps) ? result.jumps : []
+
+            this.props.updateCutscene({ 
+                cutscene: cutscene,
+                jumps: jumps,
+                fileName: name,
+            })
         }
         fileReader.readAsText(firstFile)
+    }
+
+    handleNewEmptyCutscene = () => {
+        this.props.updateCutscene({
+            cutscene: [],
+            jumps: [],
+            fileName: 'foo_name.json'
+        })
     }
 
     render() {
@@ -51,6 +70,7 @@ class NoCutscene extends React.Component {
                 <Button 
                     variant='contained' 
                     color='primary' 
+                    onClick={this.handleNewEmptyCutscene}
                     className={classes.button}>
                     New Cutscene
                 </Button>
@@ -81,4 +101,4 @@ class NoCutscene extends React.Component {
     }
 }
 
-export default withStyles(styles)(NoCutscene)
+export default connect(null, { updateCutscene })(withStyles(styles)(NoCutscene))
