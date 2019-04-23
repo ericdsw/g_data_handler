@@ -3,10 +3,13 @@ import { connect } from 'react-redux'
 import CutsceneEvent from './CutsceneEvent'
 import { withStyles } from '@material-ui/core/styles'
 import { 
-    Paper, Grid, Typography, IconButton
+    Paper, Grid, Typography, IconButton,
+    Dialog, DialogTitle, DialogContent, DialogActions,
+    DialogContentText
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
+import CreateEventForm from './elements/CreateEventForm'
 
 import { deleteCutsceneRow } from '../actions/cutsceneActions'
 
@@ -20,12 +23,28 @@ const styles = theme => ({
 
 class CutsceneRow extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            newEventDialogueOpen: false
+        }
+    }
+
     handleDeleteRow = () => {
         this.props.deleteCutsceneRow(this.props.rowNumber)
     }
 
     handleAddEvent = () => {
+        this.setState({newEventDialogueOpen: true})
+    }
 
+    handleAddEventClose = () => {
+        this.setState({newEventDialogueOpen: false})
+    }
+
+    saveNewEvent = (eventData) => {
+        this.setState({newEventDialogueOpen: false})
+        console.log(eventData)
     }
 
     render() {
@@ -79,6 +98,19 @@ class CutsceneRow extends Component {
                     </Grid>
                     {renderData}
                 </Paper>
+
+                <Dialog
+                    open={this.state.newEventDialogueOpen}
+                    onClose={this.handleAddEventClose}
+                    fullWidth={true}
+                    maxWidth='sm'
+                    aria-labelledby='form-dialog-title'>
+                    <DialogTitle id='form-dialog-title'>Create Cutscene Event</DialogTitle>
+                    <DialogContent>
+                        <CreateEventForm creationHandler={this.saveNewEvent} />
+                    </DialogContent>
+                </Dialog>
+
             </Grid>
         );
 
