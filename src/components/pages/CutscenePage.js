@@ -7,12 +7,13 @@ class CutscenePage extends React.Component {
 
     render() {
 
-        const { currentCutscene, currentCutsceneJumps} = this.props
+        const { currentCutscene, currentCutsceneJumps } = this.props
 
         let content
         if (this.props.currentCutscene !== null) {
             content = (
                 <Cutscene 
+                    fileName={this.props.fileName}
                     cutsceneRows={currentCutscene}
                     jumps={currentCutsceneJumps}/>
             )

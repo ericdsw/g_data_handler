@@ -3,7 +3,6 @@ import { Paper, Grid, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
 import SubscriptionsIcon from '@material-ui/icons/Subscriptions'
-import CreateEventForm from '../elements/CreateEventForm'
 
 const styles = theme => ({
     appSectionButton: {
@@ -57,7 +56,6 @@ class MainPage extends React.Component {
 
                 </Grid>
 
-                <CreateEventForm />
             </div>
         )
     }

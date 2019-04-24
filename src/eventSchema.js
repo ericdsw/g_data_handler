@@ -68,7 +68,6 @@ const eventSchema = {
                 default: '',
                 tooltip: 'If specified, will play this cutscene when the battle finishes'
             },
-            // TODO: win_state_changes
             win_state_changes: {
                 label: 'Win State Changes',
                 type: 'json',
@@ -188,6 +187,7 @@ const eventSchema = {
             }
         }
     },
+
     "color_flash": {
         name: 'Color Flash',
         icon: 'wb_sunny',
@@ -225,6 +225,7 @@ const eventSchema = {
             }
         }
     },
+
     "conditional_state_change": {
         name: 'Conditional State Change',
         icon: 'developer_board',
@@ -252,6 +253,7 @@ const eventSchema = {
             }
         }
     },
+
     "jump": {
         name: 'Cutscene Jump',
         icon: 'flight_takeoff',
@@ -265,6 +267,7 @@ const eventSchema = {
             }
         }
     },
+
     "damage_enemy": {
         name: 'Damage Enemy',
         icon: 'mood_bad',
@@ -278,6 +281,7 @@ const eventSchema = {
             }
         }
     },
+
     "damage_player": {
         name: 'Damage Player',
         icon: 'mood_bad',
@@ -291,6 +295,7 @@ const eventSchema = {
             }
         }
     },
+
     "destroy_object": {
         name: 'Destroy Object',
         icon: 'cancel',
@@ -304,6 +309,7 @@ const eventSchema = {
             }
         }
     },
+
     "dialogue": {
         name: 'Dialogue',
         icon: 'chat_bubble',
@@ -431,6 +437,7 @@ const eventSchema = {
             }
         }
     },
+
     "move": {
         name: 'Move',
         icon: 'directions_walk',

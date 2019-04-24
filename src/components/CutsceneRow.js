@@ -62,6 +62,8 @@ class CutsceneRow extends Component {
         const cutsceneArray = data.map((cutsceneData, index) => {
             return <CutsceneEvent
                 key={`cutscene-row:${rowNumber}:${index}`} 
+                rowNumber={rowNumber}
+                eventNumber={index}
                 cutsceneEventData={cutsceneData} />
         })
         const renderData = (
@@ -79,7 +81,7 @@ class CutsceneRow extends Component {
                     <Grid container alignItems='center'>
                         <Grid item xs={6}>
                             <Typography variant='h6' gutterBottom align='left'>
-                                Number: {this.props.rowNumber}
+                                {this.props.rowNumber}
                             </Typography>
                         </Grid>
                         <Grid item xs={6}>
@@ -106,7 +108,9 @@ class CutsceneRow extends Component {
                     fullWidth={true}
                     maxWidth='sm'
                     aria-labelledby='form-dialog-title'>
-                    <DialogTitle id='form-dialog-title'>Create Cutscene Event</DialogTitle>
+                    <DialogTitle id='form-dialog-title'>
+                        Create Cutscene Event
+                    </DialogTitle>
                     <DialogContent>
                         <CreateEventForm creationHandler={this.saveNewEvent} />
                     </DialogContent>

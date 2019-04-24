@@ -2,7 +2,9 @@ import {
     UPDATE_CUTSCENE,
     ADD_CUTSCENE_ROW,
     DELETE_CUTSCENE_ROW,
-    ADD_CUTSCENE_EVENT
+    ADD_CUTSCENE_EVENT,
+    DELETE_CUTSCENE_EVENT,
+    UPDATE_CUTSCENE_FILE_NAME,
 } from '../actions/types'
 
 const initialState = {
@@ -12,37 +14,76 @@ const initialState = {
 }
 
 export default function(state = initialState, action) {
+
     switch(action.type) {
+
         case UPDATE_CUTSCENE:
-            return {
-                currentCutscene: action.payload.cutscene,
-                currentCutsceneJumps: action.payload.jumps,
-                fileName: action.payload.fileName
-            }
+            return updateCutscene(state, action)
+            
         case ADD_CUTSCENE_ROW:
-            return {
-                currentCutscene: [...state.currentCutscene, []],
-                currentCutsceneJumps: state.currentCutsceneJumps,
-                fileName: state.fileName
-            }
+            return addCutsceneRow(state, action)
+
         case DELETE_CUTSCENE_ROW:
-            let rows = state.currentCutscene.slice(0)
-            rows.splice(action.payload, 1)
-            return {
-                currentCutscene: rows,
-                currentCutsceneJumps: state.currentCutsceneJumps,
-                fileName: state.fileName
-            }
+            return deleteCutsceneRow(state, action)
+            
         case ADD_CUTSCENE_EVENT:
-            const { rowOffset, cutsceneEventData } = action.payload
-            let previousRows = state.currentCutscene.slice(0)
-            previousRows[rowOffset].push(cutsceneEventData)
-            return {
-                currentCutscene: previousRows,
-                currentCutsceneJumps: state.currentCutsceneJumps,
-                fileName: state.fileName
-            }
+            return addCutsceneEvent(state, action)
+
+        case DELETE_CUTSCENE_EVENT:
+            return deleteCutsceneEvent(state, action)
+
+        case UPDATE_CUTSCENE_FILE_NAME:
+            return updateCutsceneFileName(state, action)
+
         default:
             return state
     }
+}
+
+function updateCutscene(state, action) {
+    return Object.assign({}, state, {
+        currentCutscene: action.payload.cutscene,
+        currentCutsceneJumps: action.payload.jumps,
+        fileName: action.payload.fileName
+    })
+}
+
+function addCutsceneRow(state, action) {
+    return Object.assign({}, state, {
+        currentCutscene: [...state.currentCutscene, []]
+    })
+}
+
+function deleteCutsceneRow(state, action) {
+    let rows = state.currentCutscene.slice(0)
+    rows.splice(action.payload, 1)
+    return Object.assign({}, state, {
+        currentCutscene: rows
+    })
+}
+
+function addCutsceneEvent(state, action) {
+    const { rowOffset, cutsceneEventData } = action.payload
+    let rows = [...state.currentCutscene]
+    rows[rowOffset].push(cutsceneEventData)
+    return Object.assign({}, state, {
+        currentCutscene: rows,
+    })
+}
+
+function deleteCutsceneEvent(state, action) {
+    const { rowOffset, eventOffset } = action.payload
+    let rows = [...state.currentCutscene]
+    rows[rowOffset] = [...rows[rowOffset]]
+    rows[rowOffset].splice(eventOffset, 1)
+    return Object.assign({}, state, {
+        currentCutscene: rows,
+    })
+}
+
+function updateCutsceneFileName(state, action) {
+    const { newFileName } = action.payload
+    return Object.assign({}, state, {
+        fileName: newFileName
+    })
 }

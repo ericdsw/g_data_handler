@@ -15,6 +15,8 @@ import {
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import eventSchema from '../../eventSchema'
+import createInput from '../../inputCreator'
+import { checkForRequired, processRegularInputs } from '../../inputChecks'
 
 const styles = theme => ({
     errorMessage: {
@@ -46,6 +48,7 @@ class CreateEventForm extends React.Component {
     }
 
     handleTypeChange = event => {
+
         const newType = event.target.value
         this.formFields = eventSchema[newType].parameters
 
@@ -67,45 +70,61 @@ class CreateEventForm extends React.Component {
     }
 
     handleInputChange = inputIdentifier => event => {
+
+        if (! event.target) {
+            return
+        }
+
         let newResultData = {...this.state.resultData}
-        newResultData[inputIdentifier] = event.target.value
+        if (
+            inputIdentifier === 'is_important' || 
+            this.formFields[inputIdentifier].type === 'boolean') {
+            newResultData[inputIdentifier] = event.target.checked
+        } else {
+            newResultData[inputIdentifier] = event.target.value
+        }
         this.setState({
             currentEventType: this.state.currentEventType,
             resultData: newResultData
         })
     }
 
-    handleToggleChange = inputIdentifier => event => {
-        let newResultData = {...this.state.resultData}
-        newResultData[inputIdentifier] = event.target.checked
-        this.setState({
-            currentEventType: this.state.currentEventType,
-            resultData: newResultData
-        })
-    }
+    submitData = event => {
 
-    showData = () => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        const eventData = {...this.state.resultData}
 
         let errorInputs = []
-        for (let paramName in this.state.resultData) {
+        const eventType = this.state.currentEventType
+        for (let paramName in eventData) {
+
             if (paramName === 'is_important') {
                 continue
             }
-            let paramValue = this.state.resultData[paramName]
-            let paramRequired = this.formFields[paramName].required
-            if (paramRequired && (!paramValue || paramValue === "")) {
+
+            eventData[paramName] = processRegularInputs(
+                eventType, paramName, eventData[paramName]
+            )
+
+            const paramValue = eventData[paramName]
+
+            if (! checkForRequired(eventType, paramName, paramValue)) {
                 errorInputs.push(this.formFields[paramName].label)
             }
+            
         }
 
         if (errorInputs.length > 0) {
+            const errors = errorInputs.join(', ')
             this.setState({
-                "errorMessage": `The following fields are required: ${errorInputs.join(", ")}`}
-            )
+                "errorMessage": `The following fields are required: ${errors}`
+            })
         } else {
             let cutsceneData = {
                 type: this.state.currentEventType,
-                parameters: this.state.resultData
+                parameters: eventData
             }
             this.props.creationHandler(cutsceneData)
         }
@@ -141,7 +160,7 @@ class CreateEventForm extends React.Component {
                 control={
                     <Switch
                         checked={this.state.resultData['is_important']}
-                        onChange={this.handleToggleChange('is_important')}
+                        onChange={this.handleInputChange('is_important')}
                         value={this.state.resultData['is_important']} />
                 }
             />
@@ -150,66 +169,14 @@ class CreateEventForm extends React.Component {
         for (const paramName in this.formFields) {
 
             const currentParamData = this.formFields[paramName]
-            let constructedFormField
 
-            switch(currentParamData.type) {
-                case 'boolean':
-                    constructedFormField = (
-                        <FormControlLabel
-                            label={currentParamData.label}
-                            control={
-                                <Switch
-                                    checked={this.state.resultData[paramName]}
-                                    onChange={this.handleToggleChange(paramName)}
-                                    value={this.state.resultData[paramName]} />
-                            }
-                        />
-                    )
-                    break
-                case 'number':
-                    constructedFormField = (
-                        <TextField
-                            id={paramName}
-                            label={currentParamData.label}
-                            placeholder={currentParamData.placeholder}
-                            required={currentParamData.isRequired}
-                            fullWidth
-                            type='number'
-                            variant='outlined'
-                            onChange={this.handleInputChange(paramName)}
-                            value={this.state.resultData[paramName]}
-                            margin='normal' />
-                    )
-                    break
-                case 'json':
-                    constructedFormField = (
-                        <TextField
-                            id={paramName}
-                            label={currentParamData.label}
-                            placeholder={currentParamData.placeholder}
-                            required={currentParamData.isRequired}
-                            multiline
-                            fullWidth
-                            variant='outlined'
-                            rows={5}
-                            margin='normal' />
-                    )
-                    break
-                case 'position':
-                default:
-                    constructedFormField = (
-                        <TextField
-                            id={paramName}
-                            label={currentParamData.label}
-                            placeholder={currentParamData.placeholder}
-                            required={currentParamData.isRequired}
-                            value={this.state.resultData[paramName]}
-                            fullWidth
-                            variant='outlined'
-                            onChange={this.handleInputChange(paramName)}
-                            margin='normal' />
-                    )
-            }
+            const constructedFormField = createInput(
+                paramName,
+                currentParamData,
+                this.state.resultData[paramName],
+                this.handleInputChange
+            )
+            
             fields.push(
                 <Tooltip 
                     enterDelay={500}
@@ -221,7 +188,7 @@ class CreateEventForm extends React.Component {
         }
         
         return (
-            <React.Fragment>
+            <form onSubmit={this.submitData}>
                 <TextField
                     id='event_type_select'
                     select fullWidth
@@ -236,11 +203,13 @@ class CreateEventForm extends React.Component {
                     {fields}
                 </Grid>
                 <Grid justify='flex-end' container>
-                    <Button variant='contained' 
+                    <Button 
+                        type='submit'
+                        variant='contained' 
                         style={{marginTop: 8}} 
                         color='primary' 
                         onClick={this.showData}>
-                        Show Data
+                        Add Cutscene Event
                     </Button>
                 </Grid>
 
@@ -255,21 +224,23 @@ class CreateEventForm extends React.Component {
                     ContentProps={{
                         'aria-describedby': 'message-id'
                     }}
-                    message={<span id='message-id'>{this.state.errorMessage}</span>}
+                    message={
+                        <span id='message-id'>
+                            {this.state.errorMessage}
+                        </span>
+                    }
                     action={[
                         <IconButton
                             key='close'
                             aria-label='Close'
                             color='inherit'
-                            className={classes.close}
-                            onClick={this.handleSnackbarClose}
-                        >
+                            className={classes.close}>
                             <CloseIcon />
                         </IconButton>
                     ]}
                 />
 
-            </React.Fragment>
+            </form>
         )
     }
 }

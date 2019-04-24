@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { 
     Typography,
     Grid,
@@ -18,6 +19,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import eventSchema from '../eventSchema'
+import { deleteCutsceneEvent } from '../actions/cutsceneActions'
 
 const styles = theme => ({
     eventCard: {
@@ -54,7 +56,10 @@ class CutsceneEvent extends Component {
     }
 
     handleDelete = () => {
-
+        this.props.deleteCutsceneEvent(
+            this.props.rowNumber,
+            this.props.eventNumber
+        )
     }
 
     render() {
@@ -74,7 +79,10 @@ class CutsceneEvent extends Component {
             listParams.push((
                 <li key={counter++} className={classes.listParamItem}>
                     <Typography variant='body1' gutterBottom>
-                        <b>{paramName}</b> : {param}
+                        <b>{paramName}</b> : {
+                            (typeof param === 'string') ?
+                                param : JSON.stringify(param)
+                        }
                     </Typography>
                 </li>
             ));
@@ -123,9 +131,7 @@ class CutsceneEvent extends Component {
                     </CardActions>
                     <Collapse in={this.state.expanded} timeout='auto' unmountOnExit>
                         <CardContent>
-                            <ul>
-                                {listParams}
-                            </ul>
+                            <ul>{listParams}</ul>
                         </CardContent>
                     </Collapse>
                 </Card>
@@ -135,4 +141,6 @@ class CutsceneEvent extends Component {
     }
 }
 
-export default withStyles(styles)(CutsceneEvent);
+export default connect(null, {
+    deleteCutsceneEvent
+})(withStyles(styles)(CutsceneEvent))

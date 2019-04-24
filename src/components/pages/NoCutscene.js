@@ -59,7 +59,7 @@ class NoCutscene extends React.Component {
         this.props.updateCutscene({
             cutscene: [],
             jumps: [],
-            fileName: 'foo_name.json'
+            fileName: 'cutscene_file_name.json'
         })
     }
 

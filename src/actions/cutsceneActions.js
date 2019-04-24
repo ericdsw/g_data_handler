@@ -2,7 +2,9 @@ import {
     UPDATE_CUTSCENE,
     ADD_CUTSCENE_ROW,
     DELETE_CUTSCENE_ROW,
-    ADD_CUTSCENE_EVENT
+    ADD_CUTSCENE_EVENT,
+    DELETE_CUTSCENE_EVENT,
+    UPDATE_CUTSCENE_FILE_NAME,
 } from './types'
 
 export const updateCutscene = cutsceneData => dispatch => {
@@ -33,4 +35,25 @@ export const addCutsceneEvent = (rowOffset, cutsceneEventData) => dispatch => {
             cutsceneEventData
         }
     })
+}
+
+export const deleteCutsceneEvent = (rowOffset, eventOffset) => dispatch => {
+    dispatch({
+        type: DELETE_CUTSCENE_EVENT,
+        payload: {
+            rowOffset,
+            eventOffset
+        }
+    })
+}
+
+export const updateCutsceneFileName = newFileName => dispatch => {
+    dispatch(
+        {
+            type: UPDATE_CUTSCENE_FILE_NAME,
+            payload: {
+                newFileName
+            }
+        }
+    )
 }
