@@ -1,7 +1,8 @@
 import {
     UPDATE_CUTSCENE,
     ADD_CUTSCENE_ROW,
-    DELETE_CUTSCENE_ROW
+    DELETE_CUTSCENE_ROW,
+    ADD_CUTSCENE_EVENT
 } from './types'
 
 export const updateCutscene = cutsceneData => dispatch => {
@@ -21,5 +22,15 @@ export const deleteCutsceneRow = rowOffset => dispatch => {
     dispatch({
         type: DELETE_CUTSCENE_ROW,
         payload: rowOffset
+    })
+}
+
+export const addCutsceneEvent = (rowOffset, cutsceneEventData) => dispatch => {
+    dispatch({
+        type: ADD_CUTSCENE_EVENT,
+        payload: {
+            rowOffset,
+            cutsceneEventData
+        }
     })
 }

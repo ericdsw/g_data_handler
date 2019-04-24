@@ -1,7 +1,8 @@
 import {
     UPDATE_CUTSCENE,
     ADD_CUTSCENE_ROW,
-    DELETE_CUTSCENE_ROW
+    DELETE_CUTSCENE_ROW,
+    ADD_CUTSCENE_EVENT
 } from '../actions/types'
 
 const initialState = {
@@ -29,6 +30,15 @@ export default function(state = initialState, action) {
             rows.splice(action.payload, 1)
             return {
                 currentCutscene: rows,
+                currentCutsceneJumps: state.currentCutsceneJumps,
+                fileName: state.fileName
+            }
+        case ADD_CUTSCENE_EVENT:
+            const { rowOffset, cutsceneEventData } = action.payload
+            let previousRows = state.currentCutscene.slice(0)
+            previousRows[rowOffset].push(cutsceneEventData)
+            return {
+                currentCutscene: previousRows,
                 currentCutsceneJumps: state.currentCutsceneJumps,
                 fileName: state.fileName
             }

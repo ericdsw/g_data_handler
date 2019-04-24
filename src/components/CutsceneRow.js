@@ -4,14 +4,12 @@ import CutsceneEvent from './CutsceneEvent'
 import { withStyles } from '@material-ui/core/styles'
 import { 
     Paper, Grid, Typography, IconButton,
-    Dialog, DialogTitle, DialogContent, DialogActions,
-    DialogContentText
+    Dialog, DialogTitle, DialogContent
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
 import CreateEventForm from './elements/CreateEventForm'
-
-import { deleteCutsceneRow } from '../actions/cutsceneActions'
+import { deleteCutsceneRow, addCutsceneEvent } from '../actions/cutsceneActions'
 
 const styles = theme => ({
     cutsceneRow: {
@@ -44,7 +42,10 @@ class CutsceneRow extends Component {
 
     saveNewEvent = (eventData) => {
         this.setState({newEventDialogueOpen: false})
-        console.log(eventData)
+        this.props.addCutsceneEvent(
+            this.props.rowNumber,
+            eventData
+        )
     }
 
     render() {
@@ -119,5 +120,6 @@ class CutsceneRow extends Component {
 }
 
 export default connect(null, {
-    deleteCutsceneRow
+    deleteCutsceneRow,
+    addCutsceneEvent
 })(withStyles(styles)(CutsceneRow))

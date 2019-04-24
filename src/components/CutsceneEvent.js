@@ -8,16 +8,20 @@ import {
     CardActions,
     Collapse,
     IconButton,
+    Avatar,
+    Icon
 } from '@material-ui/core'
+import { purple } from '@material-ui/core/colors'
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import eventSchema from '../eventSchema'
 
 const styles = theme => ({
     eventCard: {
-        width: 330
+        width: 330,
     },
     actions: {
         display: 'flex',
@@ -31,6 +35,9 @@ const styles = theme => ({
     },
     expandOpen: {
         transform: 'rotate(180deg)',
+    },
+    avatar: {
+        backgroundColor: purple[500]
     }
 })
 
@@ -65,20 +72,36 @@ class CutsceneEvent extends Component {
             }
 
             listParams.push((
-                <Typography variant='body1' gutterBottom>
-                    <li key={counter++} className={classes.listParamItem}>
+                <li key={counter++} className={classes.listParamItem}>
+                    <Typography variant='body1' gutterBottom>
                         <b>{paramName}</b> : {param}
-                    </li>
-                </Typography>
+                    </Typography>
+                </li>
             ));
 
         }
 
+        const { name, icon } = eventSchema[cutsceneEventData.type]
+
+        let subHeader = 'Important'
+        let important = cutsceneEventData.parameters.is_important
+        if (typeof important !== 'undefined' && !important) {
+            subHeader = 'Not Important'
+        }
+
         return (
             <Grid item>
-                <Card className={classes.eventCard}>
+                <Card className={classes.eventCard} elevation={2}>
                     <CardHeader
-                        title={cutsceneEventData.type} />
+                        avatar={
+                            <Avatar aria-label='Type' className={classes.avatar}>
+                                <Icon>
+                                    {icon}
+                                </Icon>
+                            </Avatar>
+                        }
+                        title={name}
+                        subheader={subHeader}/>
                     <CardActions className={classes.actions} disableActionSpacing>
                         <IconButton aria-label='Edit'
                             onClick={this.handleEdit}>
