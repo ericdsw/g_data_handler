@@ -20,9 +20,6 @@ export const processRegularInputs = (eventType, inputName, value) => {
     if (inputData.type === 'json') {
         try {
             returnValue = JSON.parse(value)
-            console.log('was json')
-            console.log(typeof returnValue)
-            console.log(returnValue)
         } catch (error) {
             returnValue = ''
         }
