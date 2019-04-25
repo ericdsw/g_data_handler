@@ -10,7 +10,7 @@ import {
     Collapse,
     IconButton,
     Avatar,
-    Icon
+    Icon,
 } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import { withStyles } from '@material-ui/core/styles';
@@ -19,6 +19,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import eventSchema from '../eventSchema'
+import createEventDescription from './createEventDescription'
 import { deleteCutsceneEvent } from '../actions/cutsceneActions'
 
 const styles = theme => ({
@@ -40,12 +41,22 @@ const styles = theme => ({
     },
     avatar: {
         backgroundColor: purple[500]
+    },
+    avatarNonImportant: {
+        backgroundColor: purple[100]
     }
 })
 
 class CutsceneEvent extends Component {
 
     state = { expanded : false }
+
+    getDescription = () => {
+        return createEventDescription(
+            this.props.cutsceneEventData.type, 
+            this.props.cutsceneEventData.parameters
+        )
+    }
 
     handleExpandClick = () => {
         this.setState(state => ({expanded: !state.expanded}))
@@ -90,26 +101,24 @@ class CutsceneEvent extends Component {
         }
 
         const { name, icon } = eventSchema[cutsceneEventData.type]
-
-        let subHeader = 'Important'
-        let important = cutsceneEventData.parameters.is_important
-        if (typeof important !== 'undefined' && !important) {
-            subHeader = 'Not Important'
-        }
+        const important = cutsceneEventData.parameters.important
 
         return (
             <Grid item>
                 <Card className={classes.eventCard} elevation={2}>
                     <CardHeader
                         avatar={
-                            <Avatar aria-label='Type' className={classes.avatar}>
+                            <Avatar aria-label='Type' className={
+                                (typeof important !== 'undefined' && !important) ?
+                                    classes.avatarNonImportant : classes.avatar
+                            }>
                                 <Icon>
                                     {icon}
                                 </Icon>
                             </Avatar>
                         }
                         title={name}
-                        subheader={subHeader}/>
+                        subheader={this.getDescription()}/>
                     <CardActions className={classes.actions} disableActionSpacing>
                         <IconButton aria-label='Edit'
                             onClick={this.handleEdit}>

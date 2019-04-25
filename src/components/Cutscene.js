@@ -116,7 +116,8 @@ class Cutscene extends Component {
                 })
             } else {
                 let exportData = {
-                    data: this.props.cutsceneRows
+                    data: this.props.cutsceneRows,
+                    cutscene_jumps: this.props.jumps
                 }
 
                 // Download
@@ -127,8 +128,6 @@ class Cutscene extends Component {
                 linkElement.setAttribute('href', uri)
                 linkElement.setAttribute('download', this.props.fileName)
                 linkElement.click()
-
-                console.log(exportData)
             }
         }
     }
@@ -261,7 +260,7 @@ class Cutscene extends Component {
                     open={this.state.viewJumpDialogueOpen}
                     onClose={this.handleDialogueClose('viewJumpDialogueOpen')}
                     fullWidth={true}
-                    maxWidth='sm'
+                    maxWidth='md'
                     aria-labelledby='form-dialog-title'>
                     <DialogTitle id='form-dialog-title'>
                         Current Jumps

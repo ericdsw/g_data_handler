@@ -5,16 +5,21 @@ import {
     TableBody,
     TableCell,
     TableHead,
-    TableRow
+    TableRow,
+    Typography,
+    IconButton,
 } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 const styles = theme => ({
-
+    button: {
+        margin: theme.spacing.unit
+    }
 })
 
 class JumpList extends React.Component {
     render() {
-        const { jumpList } = this.props
+        const { jumpList, classes } = this.props
 
         let jumpTableRows = []
         for (const jumpName in jumpList) {
@@ -23,22 +28,37 @@ class JumpList extends React.Component {
                 <TableRow key={jumpName}>
                     <TableCell>{jumpName}</TableCell>
                     <TableCell>{jumpPath}</TableCell>
+                    <TableCell style={{width: 50}} padding='dense'>
+                        <IconButton className={classes.button} aria-label='Delete'>
+                            <DeleteIcon />
+                        </IconButton>
+                    </TableCell>
                 </TableRow>
             )
         }
 
         return (
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Path</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {jumpTableRows}
-                </TableBody>
-            </Table>
+            <div>
+                {Object.keys(jumpList).length <= 0 &&
+                    <Typography align='center'>
+                        No Jumps Specified
+                    </Typography>
+                }
+                {Object.keys(jumpList).length > 0 &&
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Path</TableCell>
+                                <TableCell padding='dense'></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {jumpTableRows}
+                        </TableBody>
+                    </Table>
+                }
+            </div>
         )
     }
 }

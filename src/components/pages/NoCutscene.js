@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { updateCutscene } from '../../actions/cutsceneActions'
+import eventSchema from '../../eventSchema'
 import DragAndDrop from '../DragAndDrop'
 
 const styles = theme => ({
@@ -27,6 +28,30 @@ const styles = theme => ({
 
 class NoCutscene extends React.Component {
 
+    fillWithDefaultValues = cutsceneData => {
+        return cutsceneData.map(event => {
+            if (!Array.isArray(event)) {
+                for (const paramName in eventSchema[event.type]['parameters']) {
+                    if (typeof event['parameters'][paramName] === 'undefined') {
+                        const defaultValue = eventSchema[event.type]['parameters'][paramName]['default']
+                        event['parameters'][paramName] = defaultValue
+                    }
+                }
+                return event
+            } else {
+                return event.map(currentEvent => {
+                    for (const paramName in eventSchema[currentEvent.type]['parameters']) {
+                        if (typeof currentEvent['parameters'][paramName] === 'undefined') {
+                            const defaultValue = eventSchema[currentEvent.type]['parameters'][paramName]['default']
+                            currentEvent['parameters'][paramName] = defaultValue
+                        }
+                    }
+                    return currentEvent
+                })
+            }
+        })
+    }
+
     handleDrop = (files) => {
 
         const firstFile = files[0]
@@ -43,7 +68,7 @@ class NoCutscene extends React.Component {
             const name = firstFile.name
             const result = JSON.parse(event.target.result)
 
-            const cutscene = result.data
+            const cutscene = this.fillWithDefaultValues(result.data)
             const jumps = (result.cutscene_jumps) ? result.cutscene_jumps : []
 
             this.props.updateCutscene({ 

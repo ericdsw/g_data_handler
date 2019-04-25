@@ -438,6 +438,7 @@ const eventSchema = {
         }
     },
 
+    //TODO: finish
     "move": {
         name: 'Move',
         icon: 'directions_walk',
