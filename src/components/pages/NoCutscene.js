@@ -1,5 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import { withSnackbar } from 'notistack'
 import { Typography } from '@material-ui/core'
 import {
     Button,
@@ -58,24 +59,33 @@ class NoCutscene extends React.Component {
         
         // Check logic
         if (firstFile.type !== 'application/json') {
-            console.log("Wrong file type")
+            this.props.enqueueSnackbar(
+                'Unsupported file type provided',
+                {variant:'error'}
+            )
             return
         }
 
         // Parsing Logic
         const fileReader = new FileReader()
-        fileReader.onload = (event) => {
-            const name = firstFile.name
-            const result = JSON.parse(event.target.result)
+        fileReader.onload = event => {
 
-            const cutscene = this.fillWithDefaultValues(result.data)
-            const jumps = (result.cutscene_jumps) ? result.cutscene_jumps : []
-
-            this.props.updateCutscene({ 
-                cutscene: cutscene,
-                jumps: jumps,
-                fileName: name,
-            })
+            try {
+                const name = firstFile.name
+                const result = JSON.parse(event.target.result)
+                const cutscene = this.fillWithDefaultValues(result.data)
+                const jumps = (result.cutscene_jumps) ? result.cutscene_jumps : []
+                this.props.updateCutscene({ 
+                    cutscene: cutscene,
+                    jumps: jumps,
+                    fileName: name,
+                })
+            } catch (exception) {
+                this.props.enqueueSnackbar(
+                    'Malformed json file, please verify.',
+                    {variant:'error'}
+                )
+            }
         }
         fileReader.readAsText(firstFile)
     }
@@ -126,4 +136,8 @@ class NoCutscene extends React.Component {
     }
 }
 
-export default connect(null, { updateCutscene })(withStyles(styles)(NoCutscene))
+export default connect(null, { updateCutscene })(
+    withSnackbar(
+        withStyles(styles)(NoCutscene)
+    )
+)

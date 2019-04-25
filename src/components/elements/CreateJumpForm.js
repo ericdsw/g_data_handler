@@ -1,18 +1,14 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import { withSnackbar } from 'notistack'
 import {
     TextField,
     Grid,
     Button,
-    Snackbar,
-    IconButton
 } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
 
 const styles = theme => ({
-    close: {
-        padding: theme.spacing.unit / 2,
-    }
+
 })
 
 class CreateJumpForm extends React.Component {
@@ -22,7 +18,6 @@ class CreateJumpForm extends React.Component {
         this.state = {
             jump_name: '',
             jump_file: '',
-            errorMessage: ''
         }
     }
 
@@ -40,9 +35,10 @@ class CreateJumpForm extends React.Component {
 
         if (errorInputs.length > 0) {
             const errorNames = errorInputs.join(', ')
-            this.setState({
-                errorMessage: `The following inputs are required: ${errorNames}`
-            })
+            this.props.enqueueSnackbar(
+                `The following inputs are required: ${errorNames}`,
+                {variant:'error'}
+            )
         } else {
             this.props.creationHandler(
                 this.state.jump_name,
@@ -58,7 +54,6 @@ class CreateJumpForm extends React.Component {
     }
 
     render() {
-        const { classes } = this.props
         return (
             <form onSubmit={this.submitData}>
                 <Grid container>
@@ -90,39 +85,10 @@ class CreateJumpForm extends React.Component {
                         Add Jump
                     </Button>
                 </Grid>
-
-                <Snackbar
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'right'
-                    }}
-                    open={this.state.errorMessage !== ''}
-                    autoHideDuration={5000}
-                    onClose={this.handleSnackbarClose}
-                    ContentProps={{
-                        'aria-describedby': 'message-id'
-                    }}
-                    message={
-                        <span id='message-id'>
-                            {this.state.errorMessage}
-                        </span>
-                    }
-                    action={[
-                        <IconButton
-                            key='close'
-                            aria-label='Close'
-                            color='inherit'
-                            className={classes.close}>
-                            <CloseIcon />
-                        </IconButton>
-                    ]}
-                />
-
-
             </form>
         )
     }
 }
 
-export default withStyles(styles)(CreateJumpForm)
+export default withSnackbar(withStyles(styles)(CreateJumpForm))
 

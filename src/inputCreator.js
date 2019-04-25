@@ -33,6 +33,7 @@ export default function createInput(paramName, inputData, value, handleChange) {
                 value={value}
                 variant='outlined' margin='normal' />
 
+        case 'positionArray':
         case 'position':
         case 'number':
         case 'text':

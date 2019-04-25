@@ -1,5 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import { withSnackbar } from 'notistack'
 import {
     TextField,
     MenuItem,
@@ -10,10 +11,7 @@ import {
     Button,
     FormControlLabel,
     Switch,
-    Snackbar,
-    IconButton
 } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
 import eventSchema from '../../eventSchema'
 import createInput from '../../inputCreator'
 import { checkForRequired, processRegularInputs } from '../../inputChecks'
@@ -35,16 +33,9 @@ class CreateEventForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            errorMessage: '',
             currentEventType: 'gain_abilities',
-            resultData: {
-                'is_important': true
-            }
+            resultData: {'is_important': true}
         }
-    }
-
-    handleSnackbarClose = () => {
-        this.setState({errorMessage: ''})
     }
 
     handleTypeChange = event => {
@@ -55,6 +46,7 @@ class CreateEventForm extends React.Component {
         let resultData = {
             'is_important': eventSchema[newType].defaultImportant
         }
+
         for (const paramName in this.formFields) {
             if (this.formFields[paramName].required) {
                 resultData[paramName] = ''
@@ -67,14 +59,10 @@ class CreateEventForm extends React.Component {
             currentEventType: newType,
             resultData: resultData
         })
+
     }
 
     handleInputChange = inputIdentifier => event => {
-
-        if (! event.target) {
-            return
-        }
-
         let newResultData = {...this.state.resultData}
         if (
             inputIdentifier === 'is_important' || 
@@ -118,9 +106,10 @@ class CreateEventForm extends React.Component {
 
         if (errorInputs.length > 0) {
             const errors = errorInputs.join(', ')
-            this.setState({
-                "errorMessage": `The following fields are required: ${errors}`
-            })
+            this.props.enqueueSnackbar(
+                `The following fields are required: ${errors}`,
+                {variant:'error'}
+            )
         } else {
             let cutsceneData = {
                 type: this.state.currentEventType,
@@ -131,8 +120,6 @@ class CreateEventForm extends React.Component {
     }
 
     render() {
-
-        const { classes } = this.props
 
         let optionTypes = []
         let fields = []
@@ -212,37 +199,9 @@ class CreateEventForm extends React.Component {
                         Add Cutscene Event
                     </Button>
                 </Grid>
-
-                <Snackbar
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'right'
-                    }}
-                    open={this.state.errorMessage !== ''}
-                    autoHideDuration={5000}
-                    onClose={this.handleSnackbarClose}
-                    ContentProps={{
-                        'aria-describedby': 'message-id'
-                    }}
-                    message={
-                        <span id='message-id'>
-                            {this.state.errorMessage}
-                        </span>
-                    }
-                    action={[
-                        <IconButton
-                            key='close'
-                            aria-label='Close'
-                            color='inherit'
-                            className={classes.close}>
-                            <CloseIcon />
-                        </IconButton>
-                    ]}
-                />
-
             </form>
         )
     }
 }
 
-export default withStyles(styles)(CreateEventForm)
+export default withSnackbar(withStyles(styles)(CreateEventForm))

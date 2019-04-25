@@ -24,7 +24,7 @@ import { deleteCutsceneEvent } from '../actions/cutsceneActions'
 
 const styles = theme => ({
     eventCard: {
-        width: 330,
+        width: 300,
     },
     actions: {
         display: 'flex',

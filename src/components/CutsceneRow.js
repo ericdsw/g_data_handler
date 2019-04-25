@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import CutsceneEvent from './CutsceneEvent'
 import { withStyles } from '@material-ui/core/styles'
+import { withSnackbar } from 'notistack'
 import { 
     Paper, 
     Grid, 
@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
+import CutsceneEvent from './CutsceneEvent'
 import CreateEventForm from './elements/CreateEventForm'
 import { deleteCutsceneRow, addCutsceneEvent } from '../actions/cutsceneActions'
 
@@ -131,4 +132,8 @@ class CutsceneRow extends Component {
 export default connect(null, {
     deleteCutsceneRow,
     addCutsceneEvent
-})(withStyles(styles)(CutsceneRow))
+})(
+    withSnackbar(
+        withStyles(styles)(CutsceneRow)
+    )
+)

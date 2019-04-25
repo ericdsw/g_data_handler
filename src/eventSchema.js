@@ -452,7 +452,7 @@ const eventSchema = {
             },
             destination: {
                 label: 'Destination',
-                type: 'text',
+                type: 'positionArray',
                 required: true,
                 tooltip: 'Where the target will land'
             },
@@ -620,7 +620,7 @@ const eventSchema = {
             visible: {
                 label: 'Should Be Visible',
                 type: 'boolean',
-                required: true,
+                default: false,
                 tooltip: 'Whether to show or hide the object'
             }
         }

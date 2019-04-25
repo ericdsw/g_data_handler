@@ -1,18 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
+import { withSnackbar } from 'notistack'
 import { 
     Grid, 
     Button, 
     Typography,
-    Snackbar,
-    IconButton,
     TextField,
     Dialog, 
     DialogTitle, 
     DialogContent
 } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
 import { red } from '@material-ui/core/colors'
 
 import { 
@@ -38,9 +36,6 @@ const styles = theme => ({
         padding: 32,
         width: '100%'
     },
-    close: {
-        padding: theme.spacing.unit / 2,
-    }
 })
 
 class Cutscene extends Component {
@@ -48,7 +43,6 @@ class Cutscene extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            errorMessage: '',
             newJumpDialogueOpen: false,
             viewJumpDialogueOpen: false
         }
@@ -56,12 +50,6 @@ class Cutscene extends Component {
 
     handleFileNameChange = (event) => {
         this.props.updateCutsceneFileName(event.target.value)
-    }
-
-    handleSnackbarClose = () => {
-        this.setState({
-            errorMessage: ''
-        })
     }
 
     handleClearCutscene = () => {
@@ -96,9 +84,10 @@ class Cutscene extends Component {
 
     handleExport = () => {
         if (this.props.cutsceneRows.length <= 0) {
-            this.setState({
-                errorMessage: 'Cannot export empty Cutscene'
-            })
+            this.props.enqueueSnackbar(
+                'Cannot export an empty Cutscene.',
+                {variant:'error'}
+            )
         } else {
 
             let emptyRows = 0 
@@ -109,11 +98,12 @@ class Cutscene extends Component {
             })
 
             if (emptyRows > 0) {
-                this.setState({
-                    errorMessage: `${emptyRows} row${
+                this.props.enqueueSnackbar(
+                    `${emptyRows} row${
                         emptyRows > 1 ? 's are' : ' is'
-                    } empty`
-                })
+                    } empty`,
+                    {variant:'error'}
+                )
             } else {
                 let exportData = {
                     data: this.props.cutsceneRows,
@@ -213,33 +203,6 @@ class Cutscene extends Component {
                     }
                     {rows}
 
-                    <Snackbar
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right'
-                        }}
-                        open={this.state.errorMessage !== ''}
-                        autoHideDuration={5000}
-                        onClose={this.handleSnackbarClose}
-                        ContentProps={{
-                            'aria-describedby': 'message-id'
-                        }}
-                        message={
-                            <span id='message-id'>
-                                {this.state.errorMessage}
-                            </span>
-                        }
-                        action={[
-                            <IconButton
-                                key='close'
-                                aria-label='Close'
-                                color='inherit'
-                                className={classes.close}>
-                                <CloseIcon />
-                            </IconButton>
-                        ]}
-                    />
-
                 </Grid>
 
                 <Dialog
@@ -280,4 +243,8 @@ export default connect(null, {
     addCutsceneRow,
     updateCutsceneFileName,
     addCutsceneJump
-})(withStyles(styles)(Cutscene))
+})(
+    withSnackbar(
+        withStyles(styles)(Cutscene)
+    )
+)

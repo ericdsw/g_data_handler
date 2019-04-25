@@ -23,6 +23,42 @@ export const processRegularInputs = (eventType, inputName, value) => {
         } catch (error) {
             returnValue = ''
         }
+    } else if(inputData.type === 'boolean') {
+        if (typeof value === 'undefined') {
+            returnValue = false
+        }
+    } else if (inputData.type === 'position') {
+        try {
+            returnValue = JSON.parse(value)
+            if (!('x' in returnValue) || !('y' in returnValue)) {
+                returnValue = ''
+            }
+        } catch (error) {
+            returnValue = value
+        }
+    } else if (inputData.type === 'positionArray') {
+        try {
+            returnValue = JSON.parse(value)
+            if (Array.isArray(returnValue)) {
+                returnValue = returnValue.map(position => {
+                    if (typeof position === 'string') {
+                        return position
+                    } else {
+                        if (!('x' in position) || !('y' in position)) {
+                            return ''
+                        } else {
+                            return position
+                        }
+                    }
+                })
+            } else {
+                if (!('x' in returnValue) || !('y' in returnValue)) {
+                    returnValue = ''
+                }
+            }
+        } catch (error) {
+            returnValue = value
+        }
     }
 
     return returnValue
