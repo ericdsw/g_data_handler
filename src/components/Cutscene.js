@@ -2,10 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import { 
-    Grid, Button, Typography,
+    Grid, 
+    Button, 
+    Typography,
     Snackbar,
     IconButton,
-    TextField
+    TextField,
+    Dialog, 
+    DialogTitle, 
+    DialogContent
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import { red } from '@material-ui/core/colors'
@@ -13,9 +18,12 @@ import { red } from '@material-ui/core/colors'
 import { 
     updateCutsceneFileName, 
     updateCutscene, 
-    addCutsceneRow 
+    addCutsceneRow,
+    addCutsceneJump
 } from '../actions/cutsceneActions'
 import CutsceneRow from './CutsceneRow'
+import CreateJumpForm from './elements/CreateJumpForm'
+import JumpList from './elements/JumpList'
 
 const styles = theme => ({
     root: {
@@ -41,6 +49,8 @@ class Cutscene extends Component {
         super(props)
         this.state = {
             errorMessage: '',
+            newJumpDialogueOpen: false,
+            viewJumpDialogueOpen: false
         }
     }
 
@@ -65,8 +75,23 @@ class Cutscene extends Component {
         this.props.addCutsceneRow()
     }
 
-    handleAddJump = () => {
+    handleDialogueClose = identifier => () => {
+        this.setState({
+            [identifier]: false
+        })
+    }
 
+    handleDialogueOpen = identifier => () => {
+        this.setState({
+            [identifier]: true
+        })
+    }
+    
+    createNewJump = (jumpName, fileName) => {
+        this.setState({
+            newJumpDialogueOpen: false
+        })
+        this.props.addCutsceneJump(jumpName, fileName)
     }
 
     handleExport = () => {
@@ -135,13 +160,27 @@ class Cutscene extends Component {
                                 color='primary'>
                                 Add Row
                             </Button>
-                            <Button color='primary'>
+                            <Button 
+                                color='primary'
+                                onClick={
+                                    this.handleDialogueOpen('newJumpDialogueOpen')
+                                }>
                                 Add Jump
                             </Button>
+                            
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
                         <Typography align='right'>
+                            <Button 
+                                color='secondary'
+                                onClick={
+                                    this.handleDialogueOpen('viewJumpDialogueOpen')
+                                }>
+                                View Jumps ({
+                                    Object.keys(this.props.jumps).length
+                                })
+                            </Button>
                             <Button 
                                 onClick={this.handleExport} 
                                 color='secondary'>
@@ -203,6 +242,35 @@ class Cutscene extends Component {
                     />
 
                 </Grid>
+
+                <Dialog
+                    open={this.state.newJumpDialogueOpen}
+                    onClose={this.handleDialogueClose('newJumpDialogueOpen')}
+                    fullWidth={true}
+                    maxWidth='sm'
+                    aria-labelledby='form-dialog-title'>
+                    <DialogTitle id='form-dialog-title'>
+                        Add Jump
+                    </DialogTitle>
+                    <DialogContent>
+                        <CreateJumpForm creationHandler={this.createNewJump} />
+                    </DialogContent>
+                </Dialog>
+
+                <Dialog
+                    open={this.state.viewJumpDialogueOpen}
+                    onClose={this.handleDialogueClose('viewJumpDialogueOpen')}
+                    fullWidth={true}
+                    maxWidth='sm'
+                    aria-labelledby='form-dialog-title'>
+                    <DialogTitle id='form-dialog-title'>
+                        Current Jumps
+                    </DialogTitle>
+                    <DialogContent>
+                        <JumpList jumpList={this.props.jumps} />
+                    </DialogContent>
+                </Dialog>
+
             </div>
         )
     }
@@ -211,5 +279,6 @@ class Cutscene extends Component {
 export default connect(null, { 
     updateCutscene,
     addCutsceneRow,
-    updateCutsceneFileName
+    updateCutsceneFileName,
+    addCutsceneJump
 })(withStyles(styles)(Cutscene))

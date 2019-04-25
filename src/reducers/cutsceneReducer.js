@@ -5,11 +5,12 @@ import {
     ADD_CUTSCENE_EVENT,
     DELETE_CUTSCENE_EVENT,
     UPDATE_CUTSCENE_FILE_NAME,
+    ADD_CUTSCENE_JUMP
 } from '../actions/types'
 
 const initialState = {
     currentCutscene: null,
-    currentCutsceneJumps: [],
+    currentCutsceneJumps: {},
     fileName: ''
 }
 
@@ -34,6 +35,9 @@ export default function(state = initialState, action) {
 
         case UPDATE_CUTSCENE_FILE_NAME:
             return updateCutsceneFileName(state, action)
+
+        case ADD_CUTSCENE_JUMP:
+            return addCutsceneJump(state, action)
 
         default:
             return state
@@ -85,5 +89,14 @@ function updateCutsceneFileName(state, action) {
     const { newFileName } = action.payload
     return Object.assign({}, state, {
         fileName: newFileName
+    })
+}
+
+function addCutsceneJump(state, action) {
+    const { jumpName, cutsceneFile } = action.payload
+    let newJumps = {...state.currentCutsceneJumps}
+    newJumps[jumpName] = cutsceneFile
+    return Object.assign({}, state, {
+        currentCutsceneJumps: newJumps
     })
 }

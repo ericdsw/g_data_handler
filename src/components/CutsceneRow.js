@@ -3,8 +3,13 @@ import { connect } from 'react-redux'
 import CutsceneEvent from './CutsceneEvent'
 import { withStyles } from '@material-ui/core/styles'
 import { 
-    Paper, Grid, Typography, IconButton,
-    Dialog, DialogTitle, DialogContent
+    Paper, 
+    Grid, 
+    Typography, 
+    IconButton,
+    Dialog, 
+    DialogTitle, 
+    DialogContent
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'

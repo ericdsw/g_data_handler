@@ -5,6 +5,7 @@ import {
     ADD_CUTSCENE_EVENT,
     DELETE_CUTSCENE_EVENT,
     UPDATE_CUTSCENE_FILE_NAME,
+    ADD_CUTSCENE_JUMP,
 } from './types'
 
 export const updateCutscene = cutsceneData => dispatch => {
@@ -53,6 +54,17 @@ export const updateCutsceneFileName = newFileName => dispatch => {
             type: UPDATE_CUTSCENE_FILE_NAME,
             payload: {
                 newFileName
+            }
+        }
+    )
+}
+
+export const addCutsceneJump = (jumpName, cutsceneFile) => dispatch => {
+    dispatch(
+        {
+            type: ADD_CUTSCENE_JUMP,
+            payload: {
+                jumpName, cutsceneFile
             }
         }
     )

@@ -44,7 +44,7 @@ class NoCutscene extends React.Component {
             const result = JSON.parse(event.target.result)
 
             const cutscene = result.data
-            const jumps = (result.jumps) ? result.jumps : []
+            const jumps = (result.cutscene_jumps) ? result.cutscene_jumps : []
 
             this.props.updateCutscene({ 
                 cutscene: cutscene,
@@ -58,7 +58,7 @@ class NoCutscene extends React.Component {
     handleNewEmptyCutscene = () => {
         this.props.updateCutscene({
             cutscene: [],
-            jumps: [],
+            jumps: {},
             fileName: 'cutscene_file_name.json'
         })
     }
