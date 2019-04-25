@@ -54,10 +54,16 @@ export const processRegularInputs = (eventType, inputName, value) => {
             } else {
                 if (!('x' in returnValue) || !('y' in returnValue)) {
                     returnValue = ''
+                } else {
+                    returnValue = [returnValue]
                 }
             }
         } catch (error) {
-            returnValue = value
+            if (value === '') {
+                return ''
+            } else {
+                returnValue = [value]
+            }
         }
     }
 

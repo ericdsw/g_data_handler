@@ -450,17 +450,18 @@ const eventSchema = {
                 default: 90,
                 tooltip: 'How fast the target will move'
             },
-            destination: {
-                label: 'Destination',
-                type: 'positionArray',
-                required: true,
-                tooltip: 'Where the target will land'
-            },
             control: {
                 label: 'Controlled Node',
                 type: 'text',
                 required: true,
                 tooltip: 'The node to move'
+            },
+            destination: {
+                label: 'Destinations',
+                type: 'positionArray',
+                required: true,
+                placeholder:'An array of positions',
+                tooltip: 'Where the target will land'
             },
             animates: {
                 label: 'Should Animate',
