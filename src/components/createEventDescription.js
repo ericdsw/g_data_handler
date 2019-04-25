@@ -13,7 +13,10 @@ export default function createEventDescription(type, parameters) {
         case 'change_enemy':
             return `New Enemy: ${parameters.new_enemy}`
         case 'change_map':
-            return `${parameters.map} at position ${parameters.position}`
+            return `${parameters.map} at position ${
+                (typeof parameters.position === 'object') ?
+                    JSON.stringify(parameters.position) :parameters.position
+            }`
         case 'change_map_state':
             return `Map alias: ${parameters.map}, new state: ${parameters.state}`
         case 'overworld_player_state':
