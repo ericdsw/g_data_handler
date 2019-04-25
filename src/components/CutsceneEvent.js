@@ -11,6 +11,9 @@ import {
     IconButton,
     Avatar,
     Icon,
+    Dialog,
+    DialogTitle,
+    DialogContent
 } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import { withStyles } from '@material-ui/core/styles';
@@ -20,7 +23,11 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import eventSchema from '../eventSchema'
 import createEventDescription from './createEventDescription'
-import { deleteCutsceneEvent } from '../actions/cutsceneActions'
+import CreateEventForm from './elements/CreateEventForm'
+import { 
+    editCutsceneEvent,
+    deleteCutsceneEvent 
+} from '../actions/cutsceneActions'
 
 const styles = theme => ({
     eventCard: {
@@ -49,7 +56,10 @@ const styles = theme => ({
 
 class CutsceneEvent extends Component {
 
-    state = { expanded : false }
+    state = { 
+        expanded : false,
+        editDialogueOpen: false,
+    }
 
     getDescription = () => {
         return createEventDescription(
@@ -58,12 +68,21 @@ class CutsceneEvent extends Component {
         )
     }
 
+    editCutsceneEvent = eventData => {
+        this.setState(state => ({editDialogueOpen: false}))
+        this.props.editCutsceneEvent(
+            this.props.rowNumber,
+            this.props.eventNumber,
+            eventData
+        )
+    }
+
     handleExpandClick = () => {
         this.setState(state => ({expanded: !state.expanded}))
     }
 
     handleEdit = () => {
-
+        this.setState(state => ({editDialogueOpen: true}))
     }
 
     handleDelete = () => {
@@ -71,6 +90,10 @@ class CutsceneEvent extends Component {
             this.props.rowNumber,
             this.props.eventNumber
         )
+    }
+
+    handleEditClose = () => {
+        this.setState(state => ({editDialogueOpen: false}))
     }
 
     render() {
@@ -101,7 +124,7 @@ class CutsceneEvent extends Component {
         }
 
         const { name, icon } = eventSchema[cutsceneEventData.type]
-        const important = cutsceneEventData.parameters.important
+        const important = cutsceneEventData.parameters.is_important
 
         return (
             <Grid item>
@@ -144,6 +167,25 @@ class CutsceneEvent extends Component {
                         </CardContent>
                     </Collapse>
                 </Card>
+
+                <Dialog
+                    open={this.state.editDialogueOpen}
+                    onClose={this.handleEditClose}
+                    fullWidth={true}
+                    maxWidth='sm'
+                    aria-labelledby='form-dialog-title'>
+                    <DialogTitle id='form-dialog-title'>
+                        Create Cutscene Event
+                    </DialogTitle>
+                    <DialogContent>
+                        <CreateEventForm
+                            existingData={cutsceneEventData}
+                            creationHandler={this.editCutsceneEvent} />
+                    </DialogContent>
+                </Dialog>
+
+
+
             </Grid>
         )
 
@@ -151,5 +193,6 @@ class CutsceneEvent extends Component {
 }
 
 export default connect(null, {
+    editCutsceneEvent,
     deleteCutsceneEvent
 })(withStyles(styles)(CutsceneEvent))

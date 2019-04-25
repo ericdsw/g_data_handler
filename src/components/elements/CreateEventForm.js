@@ -32,9 +32,28 @@ class CreateEventForm extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            currentEventType: 'gain_abilities',
-            resultData: {'is_important': true}
+        if (props.existingData) {
+            let usedParameters = {}
+            for (const paramName in props.existingData.parameters) {
+                const data = props.existingData.parameters[paramName]
+                if (typeof data === 'object') {
+                    usedParameters[paramName] = JSON.stringify(data)
+                } else {
+                    usedParameters[paramName] = data
+                }
+            }
+            this.state = {
+                lockType: true,
+                currentEventType: props.existingData.type,
+                resultData: usedParameters
+            }
+            this.formFields = eventSchema[props.existingData.type].parameters
+        } else {
+            this.state = {
+                lockType: false,
+                currentEventType: 'gain_abilities',
+                resultData: {'is_important': true}
+            }
         }
     }
 
@@ -183,6 +202,7 @@ class CreateEventForm extends React.Component {
                     onChange={this.handleTypeChange}
                     value={this.state.currentEventType}
                     variant='outlined'
+                    disabled={this.state.lockType}
                     margin='normal'>
                     {optionTypes}
                 </TextField>
@@ -196,7 +216,9 @@ class CreateEventForm extends React.Component {
                         style={{marginTop: 8}} 
                         color='primary' 
                         onClick={this.showData}>
-                        Add Cutscene Event
+                        {(this.state.lockType) ? 
+                            'Edit Cutscene Event':'Add Cutscene Event'
+                        }
                     </Button>
                 </Grid>
             </form>

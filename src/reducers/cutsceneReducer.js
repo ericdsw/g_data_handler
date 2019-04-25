@@ -4,8 +4,10 @@ import {
     DELETE_CUTSCENE_ROW,
     ADD_CUTSCENE_EVENT,
     DELETE_CUTSCENE_EVENT,
+    EDIT_CUTSCENE_EVENT,
     UPDATE_CUTSCENE_FILE_NAME,
-    ADD_CUTSCENE_JUMP
+    ADD_CUTSCENE_JUMP,
+    DELETE_CUTSCENE_JUMP
 } from '../actions/types'
 
 const initialState = {
@@ -33,11 +35,17 @@ export default function(state = initialState, action) {
         case DELETE_CUTSCENE_EVENT:
             return deleteCutsceneEvent(state, action)
 
+        case EDIT_CUTSCENE_EVENT:
+            return editCutsceneEvent(state, action)
+
         case UPDATE_CUTSCENE_FILE_NAME:
             return updateCutsceneFileName(state, action)
 
         case ADD_CUTSCENE_JUMP:
             return addCutsceneJump(state, action)
+
+        case DELETE_CUTSCENE_JUMP:
+            return deleteCutsceneJump(state, action)
 
         default:
             return state
@@ -85,6 +93,17 @@ function deleteCutsceneEvent(state, action) {
     })
 }
 
+function editCutsceneEvent(state, action) {
+    const { rowOffset, eventOffset, data } = action.payload
+    let rows = [...state.currentCutscene]
+    rows[rowOffset] = [...rows[rowOffset]]
+    rows[rowOffset].splice(eventOffset, 1)
+    rows[rowOffset].splice(eventOffset, 0, data)
+    return Object.assign({}, state, {
+        currentCutscene: rows
+    })
+}
+
 function updateCutsceneFileName(state, action) {
     const { newFileName } = action.payload
     return Object.assign({}, state, {
@@ -96,6 +115,15 @@ function addCutsceneJump(state, action) {
     const { jumpName, cutsceneFile } = action.payload
     let newJumps = {...state.currentCutsceneJumps}
     newJumps[jumpName] = cutsceneFile
+    return Object.assign({}, state, {
+        currentCutsceneJumps: newJumps
+    })
+}
+
+function deleteCutsceneJump(state, action) {
+    const { jumpName } = action.payload
+    let newJumps = {...state.currentCutsceneJumps}
+    delete newJumps[jumpName]
     return Object.assign({}, state, {
         currentCutsceneJumps: newJumps
     })

@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import {
     Table,
@@ -9,6 +10,7 @@ import {
     Typography,
     IconButton,
 } from '@material-ui/core'
+import { deleteCutsceneJump } from '../../actions/cutsceneActions'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 const styles = theme => ({
@@ -18,6 +20,11 @@ const styles = theme => ({
 })
 
 class JumpList extends React.Component {
+
+    handleDeleteJump = jumpName => event => {
+        this.props.deleteCutsceneJump(jumpName)
+    }
+
     render() {
         const { jumpList, classes } = this.props
 
@@ -29,7 +36,10 @@ class JumpList extends React.Component {
                     <TableCell>{jumpName}</TableCell>
                     <TableCell>{jumpPath}</TableCell>
                     <TableCell style={{width: 50}} padding='dense'>
-                        <IconButton className={classes.button} aria-label='Delete'>
+                        <IconButton
+                            onClick={this.handleDeleteJump(jumpName)}
+                            className={classes.button} 
+                            aria-label='Delete'>
                             <DeleteIcon />
                         </IconButton>
                     </TableCell>
@@ -63,4 +73,6 @@ class JumpList extends React.Component {
     }
 }
 
-export default withStyles(styles)(JumpList)
+export default connect(null, {
+    deleteCutsceneJump
+})(withStyles(styles)(JumpList))
