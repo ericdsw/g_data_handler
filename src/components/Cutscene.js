@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
-import { withSnackbar } from 'notistack'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
+import { withSnackbar } from 'notistack';
 import { 
     Grid, 
     Button, 
@@ -10,18 +10,18 @@ import {
     Dialog, 
     DialogTitle, 
     DialogContent
-} from '@material-ui/core'
-import { red } from '@material-ui/core/colors'
+} from '@material-ui/core';
+import { red } from '@material-ui/core/colors';
 
 import { 
     updateCutsceneFileName, 
     updateCutscene, 
     addCutsceneRow,
     addCutsceneJump
-} from '../actions/cutsceneActions'
-import CutsceneRow from './CutsceneRow'
-import CreateJumpForm from './elements/CreateJumpForm'
-import JumpList from './elements/JumpList'
+} from '../actions/cutsceneActions';
+import CutsceneRow from './CutsceneRow';
+import CreateJumpForm from './elements/CreateJumpForm';
+import JumpList from './elements/JumpList';
 
 const styles = theme => ({
     root: {
@@ -36,50 +36,47 @@ const styles = theme => ({
         padding: 32,
         width: '100%'
     },
-})
+});
 
 class Cutscene extends Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            newJumpDialogueOpen: false,
-            viewJumpDialogueOpen: false
-        }
+    state = {
+        newJumpDialogueOpen: false,
+        viewJumpDialogueOpen: false
     }
 
     handleFileNameChange = (event) => {
-        this.props.updateCutsceneFileName(event.target.value)
+        this.props.updateCutsceneFileName(event.target.value);
     }
 
     handleClearCutscene = () => {
         this.props.updateCutscene({
             cutscene: null,
             fileName: ''
-        })
+        });
     }
 
     handleAddRow = () => {
-        this.props.addCutsceneRow()
+        this.props.addCutsceneRow();
     }
 
     handleDialogueClose = identifier => () => {
         this.setState({
             [identifier]: false
-        })
+        });
     }
 
     handleDialogueOpen = identifier => () => {
         this.setState({
             [identifier]: true
-        })
+        });
     }
     
     createNewJump = (jumpName, fileName) => {
         this.setState({
             newJumpDialogueOpen: false
-        })
-        this.props.addCutsceneJump(jumpName, fileName)
+        });
+        this.props.addCutsceneJump(jumpName, fileName);
     }
 
     handleExport = () => {
@@ -87,15 +84,15 @@ class Cutscene extends Component {
             this.props.enqueueSnackbar(
                 'Cannot export an empty Cutscene.',
                 {variant:'error'}
-            )
+            );
         } else {
 
-            let emptyRows = 0 
+            let emptyRows = 0;
             this.props.cutsceneRows.forEach(row => {
                 if (row.length <= 0) {
-                    emptyRows += 1
+                    emptyRows += 1;
                 }
-            })
+            });
 
             if (emptyRows > 0) {
                 this.props.enqueueSnackbar(
@@ -103,28 +100,28 @@ class Cutscene extends Component {
                         emptyRows > 1 ? 's are' : ' is'
                     } empty`,
                     {variant:'error'}
-                )
+                );
             } else {
                 let exportData = {
                     data: this.props.cutsceneRows,
                     cutscene_jumps: this.props.jumps
-                }
+                };
 
                 // Download
-                let data = encodeURIComponent(JSON.stringify(exportData))
-                let uri = 'data:application/json;charset=utf-8,' + data
+                let data = encodeURIComponent(JSON.stringify(exportData));
+                let uri = 'data:application/json;charset=utf-8,' + data;
 
-                let linkElement = document.createElement('a')
-                linkElement.setAttribute('href', uri)
-                linkElement.setAttribute('download', this.props.fileName)
-                linkElement.click()
+                let linkElement = document.createElement('a');
+                linkElement.setAttribute('href', uri);
+                linkElement.setAttribute('download', this.props.fileName);
+                linkElement.click();
             }
         }
     }
 
     render() {
 
-        const { classes, cutsceneRows } = this.props
+        const { classes, cutsceneRows } = this.props;
 
         const rows = cutsceneRows.map((cutsceneRow, index) => {
             return (
@@ -132,7 +129,7 @@ class Cutscene extends Component {
                     key={index} 
                     rowNumber={index} 
                     rowData={cutsceneRow} />
-            )
+            );
         })
 
         return (
@@ -234,7 +231,7 @@ class Cutscene extends Component {
                 </Dialog>
 
             </div>
-        )
+        );
     }
 }
 
@@ -247,4 +244,4 @@ export default connect(null, {
     withSnackbar(
         withStyles(styles)(Cutscene)
     )
-)
+);

@@ -1,6 +1,6 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
+import React from 'react';
+import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
 import {
     Table,
     TableBody,
@@ -9,28 +9,28 @@ import {
     TableRow,
     Typography,
     IconButton,
-} from '@material-ui/core'
-import { deleteCutsceneJump } from '../../actions/cutsceneActions'
-import DeleteIcon from '@material-ui/icons/Delete'
+} from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { deleteCutsceneJump } from '../../actions/cutsceneActions';
 
 const styles = theme => ({
     button: {
         margin: theme.spacing.unit
     }
-})
+});
 
 class JumpList extends React.Component {
 
     handleDeleteJump = jumpName => event => {
-        this.props.deleteCutsceneJump(jumpName)
+        this.props.deleteCutsceneJump(jumpName);
     }
 
     render() {
-        const { jumpList, classes } = this.props
+        const { jumpList, classes } = this.props;
 
-        let jumpTableRows = []
+        let jumpTableRows = [];
         for (const jumpName in jumpList) {
-            const jumpPath = jumpList[jumpName]
+            const jumpPath = jumpList[jumpName];
             jumpTableRows.push(
                 <TableRow key={jumpName}>
                     <TableCell>{jumpName}</TableCell>
@@ -44,7 +44,7 @@ class JumpList extends React.Component {
                         </IconButton>
                     </TableCell>
                 </TableRow>
-            )
+            );
         }
 
         return (
@@ -69,10 +69,10 @@ class JumpList extends React.Component {
                     </Table>
                 }
             </div>
-        )
+        );
     }
 }
 
 export default connect(null, {
     deleteCutsceneJump
-})(withStyles(styles)(JumpList))
+})(withStyles(styles)(JumpList));

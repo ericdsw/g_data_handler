@@ -1,15 +1,15 @@
-import React from 'react'
+import React from 'react';
 import {
     TextField,
     FormControlLabel,
     Switch,
-} from '@material-ui/core'
+} from '@material-ui/core';
 
 export default function createInput(paramName, inputData, value, handleChange) {
 
-    let label = inputData.label
+    let label = inputData.label;
     if (inputData.required) {
-        label += '*'
+        label += '*';
     }
 
     switch (inputData.type) {
@@ -21,7 +21,7 @@ export default function createInput(paramName, inputData, value, handleChange) {
                     <Switch
                         onChange={handleChange(paramName)}
                         checked={value} value={value} />
-                } />
+                } />;
 
         case 'json':
             return <TextField
@@ -31,7 +31,7 @@ export default function createInput(paramName, inputData, value, handleChange) {
                 multiline fullWidth rows={5}
                 onChange={handleChange(paramName)}
                 value={value}
-                variant='outlined' margin='normal' />
+                variant='outlined' margin='normal' />;
 
         case 'positionArray':
         case 'position':
@@ -45,7 +45,7 @@ export default function createInput(paramName, inputData, value, handleChange) {
                 onChange={handleChange(paramName)}
                 value={value}
                 type={inputData.type === 'number' ? 'number' : 'text'}
-                fullWidth variant='outlined' margin='normal' />
+                fullWidth variant='outlined' margin='normal' />;
             
     }
 }

@@ -1,17 +1,17 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { withSnackbar } from 'notistack'
-import { Typography } from '@material-ui/core'
+import React from 'react';
+import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
+import { withSnackbar } from 'notistack';
+import { Typography } from '@material-ui/core';
 import {
     Button,
     Divider,
     Paper,
     Grid
-} from '@material-ui/core'
-import { connect } from 'react-redux'
-import { updateCutscene } from '../../actions/cutsceneActions'
-import eventSchema from '../../eventSchema'
-import DragAndDrop from '../DragAndDrop'
+} from '@material-ui/core';
+import { updateCutscene } from '../../actions/cutsceneActions';
+import { schema as eventSchema } from '../../globals';
+import DragAndDrop from '../DragAndDrop';
 
 const styles = theme => ({
     button: {
@@ -25,7 +25,7 @@ const styles = theme => ({
     gridContainer: {
         minHeight: 300,
     }
-})
+});
 
 class NoCutscene extends React.Component {
 
@@ -34,20 +34,20 @@ class NoCutscene extends React.Component {
             if (!Array.isArray(event)) {
                 for (const paramName in eventSchema[event.type]['parameters']) {
                     if (typeof event['parameters'][paramName] === 'undefined') {
-                        const defaultValue = eventSchema[event.type]['parameters'][paramName]['default']
-                        event['parameters'][paramName] = defaultValue
+                        const defaultValue = eventSchema[event.type]['parameters'][paramName]['default'];
+                        event['parameters'][paramName] = defaultValue;
                     }
                 }
-                return event
+                return event;
             } else {
                 return event.map(currentEvent => {
                     for (const paramName in eventSchema[currentEvent.type]['parameters']) {
                         if (typeof currentEvent['parameters'][paramName] === 'undefined') {
-                            const defaultValue = eventSchema[currentEvent.type]['parameters'][paramName]['default']
-                            currentEvent['parameters'][paramName] = defaultValue
+                            const defaultValue = eventSchema[currentEvent.type]['parameters'][paramName]['default'];
+                            currentEvent['parameters'][paramName] = defaultValue;
                         }
                     }
-                    return currentEvent
+                    return currentEvent;
                 })
             }
         })
@@ -55,39 +55,39 @@ class NoCutscene extends React.Component {
 
     handleDrop = (files) => {
 
-        const firstFile = files[0]
+        const firstFile = files[0];
         
         // Check logic
         if (firstFile.type !== 'application/json') {
             this.props.enqueueSnackbar(
                 'Unsupported file type provided',
                 {variant:'error'}
-            )
-            return
+            );
+            return;
         }
 
         // Parsing Logic
-        const fileReader = new FileReader()
+        const fileReader = new FileReader();
         fileReader.onload = event => {
 
             try {
-                const name = firstFile.name
-                const result = JSON.parse(event.target.result)
-                const cutscene = this.fillWithDefaultValues(result.data)
-                const jumps = (result.cutscene_jumps) ? result.cutscene_jumps : []
+                const name = firstFile.name;
+                const result = JSON.parse(event.target.result);
+                const cutscene = this.fillWithDefaultValues(result.data);
+                const jumps = (result.cutscene_jumps) ? result.cutscene_jumps : [];
                 this.props.updateCutscene({ 
                     cutscene: cutscene,
                     jumps: jumps,
                     fileName: name,
-                })
+                });
             } catch (exception) {
                 this.props.enqueueSnackbar(
                     'Malformed json file, please verify.',
                     {variant:'error'}
-                )
+                );
             }
         }
-        fileReader.readAsText(firstFile)
+        fileReader.readAsText(firstFile);
     }
 
     handleNewEmptyCutscene = () => {
@@ -95,11 +95,11 @@ class NoCutscene extends React.Component {
             cutscene: [],
             jumps: {},
             fileName: 'cutscene_file_name.json'
-        })
+        });
     }
 
     render() {
-        const { classes } = this.props
+        const { classes } = this.props;
         return (
             <div>
                 <Button 
@@ -132,7 +132,7 @@ class NoCutscene extends React.Component {
 
                 </DragAndDrop>
             </div>
-        )
+        );
     }
 }
 
@@ -140,4 +140,4 @@ export default connect(null, { updateCutscene })(
     withSnackbar(
         withStyles(styles)(NoCutscene)
     )
-)
+);

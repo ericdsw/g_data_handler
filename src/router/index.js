@@ -1,14 +1,14 @@
-import React from 'react'
-import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
-import SubscriptionsIcon from '@material-ui/icons/Subscriptions'
-import HomeIcon from '@material-ui/icons/Home'
-import HelpIcon from '@material-ui/icons/Help'
+import React from 'react';
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
+import SubscriptionsIcon from '@material-ui/icons/Subscriptions';
+import HomeIcon from '@material-ui/icons/Home';
+import HelpIcon from '@material-ui/icons/Help';
 import { 
     MainPage, 
     CutscenePage, 
     DialoguePage,
     NotFound
-} from '../components/pages'
+} from '../components/pages';
 
 export const fallbackRoute = {
     component: NotFound
@@ -43,5 +43,5 @@ export default [
         icon: <HelpIcon />,
         text: 'Help',
     }
-]
+];
 

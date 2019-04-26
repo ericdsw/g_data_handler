@@ -1,7 +1,6 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { connect } from 'react-redux'
-import { drawerWidth } from '../../globals'
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 import {
     Divider,
     Drawer,
@@ -10,13 +9,15 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
-} from '@material-ui/core'
-import { Link } from 'react-router-dom'
-import routes from '../../router'
+} from '@material-ui/core';
+import { Link } from 'react-router-dom';
+
+import routes from '../../router';
+import { drawerWidth } from '../../globals';
 import { 
     toggleDrawer, 
     collapseDrawer 
-} from '../../actions/appActions'
+} from '../../actions/appActions';
 
 const styles = theme => ({
     toolbar: theme.mixins.toolbar,
@@ -35,16 +36,16 @@ const styles = theme => ({
 class NavigationDrawer extends React.Component {
 
     handleDrawerToggle = () => {
-        this.props.toggleDrawer()
+        this.props.toggleDrawer();
     }
 
     handleDrawerCollapse = () => {
-        this.props.collapseDrawer()
+        this.props.collapseDrawer();
     }
 
     render() {
 
-        const { classes, theme } = this.props
+        const { classes, theme } = this.props;
 
         const drawerContent = (
             <div>
@@ -68,7 +69,7 @@ class NavigationDrawer extends React.Component {
                     }
                 </List>
             </div>
-        )
+        );
 
         return (
             <nav className={classes.drawer}>
@@ -94,16 +95,17 @@ class NavigationDrawer extends React.Component {
                 </Hidden>
 
             </nav>
-        )
+        );
     }
 }
 
 const mapStateToProps = state => ({
     drawerOpen: state.app.drawerOpen
-})
+});
 
 export default connect(mapStateToProps, {
-    toggleDrawer, collapseDrawer
+    toggleDrawer, 
+    collapseDrawer
 })(
     withStyles(styles, { withTheme: true })(NavigationDrawer)
-)
+);

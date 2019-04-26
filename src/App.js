@@ -1,14 +1,14 @@
-import React from 'react'
-import { Provider } from 'react-redux'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import { purple, green } from '@material-ui/core/colors'
-import { CssBaseline, withStyles } from '@material-ui/core'
-import { NavigationDrawer, ApplicationBar } from './components/elements'
-import { drawerWidth } from './globals'
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import React from 'react';
+import { Provider } from 'react-redux';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { purple, green } from '@material-ui/core/colors';
+import { CssBaseline, withStyles } from '@material-ui/core';
+import { NavigationDrawer, ApplicationBar } from './components/elements';
+import { drawerWidth } from './globals';
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 
-import routes, { fallbackRoute } from './router'
-import store from './store'
+import routes, { fallbackRoute } from './router';
+import store from './store';
 
 const applicationTheme = createMuiTheme({
     palette: {
@@ -26,7 +26,7 @@ const applicationTheme = createMuiTheme({
     typography: {
         useNextVariants: true
     },
-})
+});
 
 const styles = theme => ({
     root: {
@@ -40,12 +40,12 @@ const styles = theme => ({
             marginLeft: drawerWidth,
         }
     },
-})
+});
 
 class App extends React.Component {
 
     render() {
-        const { classes } = this.props
+        const { classes } = this.props;
         return (
             <Provider store={store}>
                 <div className={classes.root}>
@@ -71,8 +71,8 @@ class App extends React.Component {
                     </MuiThemeProvider>
                 </div>
             </Provider>
-        )
+        );
     }
 }
 
-export default withStyles(styles)(App)
+export default withStyles(styles)(App);

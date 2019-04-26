@@ -1,71 +1,63 @@
-import eventSchema from './eventSchema'
+import { schema } from '../globals';
 
-export const checkForRequired = (eventType, inputName, value) => {
-    const inputData = eventSchema[eventType]['parameters'][inputName]
-    if (inputName !== 'is_important' && inputData.required && value === '') {
-        return false
-    }
-    return true
-}
+export default function processRegularInputs(eventType, inputName, value) {
 
-export const processRegularInputs = (eventType, inputName, value) => {
+    let returnValue = value;
 
-    let returnValue = value
-
-    const inputData = eventSchema[eventType]['parameters'][inputName]
+    const inputData = schema[eventType]['parameters'][inputName];
     if (! (value || inputData.required)) {
-        returnValue = inputData.default
+        returnValue = inputData.default;
     }
 
     if (inputData.type === 'json') {
         try {
-            returnValue = JSON.parse(value)
+            returnValue = JSON.parse(value);
         } catch (error) {
-            returnValue = ''
+            returnValue = '';
         }
     } else if(inputData.type === 'boolean') {
         if (typeof value === 'undefined') {
-            returnValue = false
+            returnValue = false;
         }
     } else if (inputData.type === 'position') {
         try {
-            returnValue = JSON.parse(value)
+            returnValue = JSON.parse(value);
             if (!('x' in returnValue) || !('y' in returnValue)) {
-                returnValue = ''
+                returnValue = '';
             }
         } catch (error) {
-            returnValue = value
+            returnValue = value;
         }
     } else if (inputData.type === 'positionArray') {
         try {
-            returnValue = JSON.parse(value)
+            returnValue = JSON.parse(value);
             if (Array.isArray(returnValue)) {
                 returnValue = returnValue.map(position => {
                     if (typeof position === 'string') {
-                        return position
+                        return position;
                     } else {
                         if (!('x' in position) || !('y' in position)) {
-                            return ''
+                            return '';
                         } else {
-                            return position
+                            return position;
                         }
                     }
-                })
+                });
             } else {
                 if (!('x' in returnValue) || !('y' in returnValue)) {
-                    returnValue = ''
+                    returnValue = '';
                 } else {
-                    returnValue = [returnValue]
+                    returnValue = [returnValue];
                 }
             }
         } catch (error) {
             if (value === '') {
-                return ''
+                return '';
             } else {
-                returnValue = [value]
+                returnValue = [value];
             }
         }
     }
 
-    return returnValue
+    return returnValue;
 }

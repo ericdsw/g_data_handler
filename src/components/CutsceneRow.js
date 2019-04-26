@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
-import { withSnackbar } from 'notistack'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
+import { withSnackbar } from 'notistack';
 import { 
     Paper, 
     Grid, 
@@ -11,11 +11,14 @@ import {
     DialogTitle, 
     DialogContent
 } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete'
-import AddIcon from '@material-ui/icons/Add'
-import CutsceneEvent from './CutsceneEvent'
-import CreateEventForm from './elements/CreateEventForm'
-import { deleteCutsceneRow, addCutsceneEvent } from '../actions/cutsceneActions'
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
+
+import CutsceneEvent from './CutsceneEvent';
+import CreateEventForm from './elements/CreateEventForm';
+import { 
+    deleteCutsceneRow, addCutsceneEvent 
+} from '../actions/cutsceneActions';
 
 const styles = theme => ({
     cutsceneRow: {
@@ -27,42 +30,39 @@ const styles = theme => ({
 
 class CutsceneRow extends Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            newEventDialogueOpen: false
-        }
+    state = {
+        newEventDialogueOpen: false
     }
 
     handleDeleteRow = () => {
-        this.props.deleteCutsceneRow(this.props.rowNumber)
+        this.props.deleteCutsceneRow(this.props.rowNumber);
     }
 
     handleAddEvent = () => {
-        this.setState({newEventDialogueOpen: true})
+        this.setState({newEventDialogueOpen: true});
     }
 
     handleAddEventClose = () => {
-        this.setState({newEventDialogueOpen: false})
+        this.setState({newEventDialogueOpen: false});
     }
 
     saveNewEvent = (eventData) => {
-        this.setState({newEventDialogueOpen: false})
+        this.setState({newEventDialogueOpen: false});
         this.props.addCutsceneEvent(
             this.props.rowNumber,
             eventData
-        )
+        );
     }
 
     render() {
 
         const { classes, rowData, rowNumber } = this.props;
 
-        let data = rowData
+        let data = rowData;
 
         // Convert to array if it's not already an array
         if (!Array.isArray(rowData)) {
-            data = [rowData]
+            data = [rowData];
         }
 
         const cutsceneArray = data.map((cutsceneData, index) => {
@@ -70,7 +70,7 @@ class CutsceneRow extends Component {
                 key={`cutscene-row:${rowNumber}:${index}`} 
                 rowNumber={rowNumber}
                 eventNumber={index}
-                cutsceneEventData={cutsceneData} />
+                cutsceneEventData={cutsceneData} />;
         })
         const renderData = (
             <Grid container
@@ -79,7 +79,7 @@ class CutsceneRow extends Component {
                 spacing={16}>
                 {cutsceneArray}
             </Grid>
-        )
+        );
 
         return (
             <Grid item xs={12}>
@@ -136,4 +136,4 @@ export default connect(null, {
     withSnackbar(
         withStyles(styles)(CutsceneRow)
     )
-)
+);

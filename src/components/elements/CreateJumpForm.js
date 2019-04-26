@@ -1,56 +1,53 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { withSnackbar } from 'notistack'
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import { withSnackbar } from 'notistack';
 import {
     TextField,
     Grid,
     Button,
-} from '@material-ui/core'
+} from '@material-ui/core';
 
 const styles = theme => ({
 
-})
+});
 
 class CreateJumpForm extends React.Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            jump_name: '',
-            jump_file: '',
-        }
+    state = {
+        jump_name: '',
+        jump_file: ''
     }
 
     submitData = event => {
-        event.preventDefault()
-        event.stopPropagation()
+        event.preventDefault();
+        event.stopPropagation();
 
-        let errorInputs = []
+        let errorInputs = [];
         if (this.state.jump_name === '') {
-            errorInputs.push('Jump Name')
+            errorInputs.push('Jump Name');
         }
         if (this.state.jump_file === '') {
-            errorInputs.push('Target Cutscene File')
+            errorInputs.push('Target Cutscene File');
         }
 
         if (errorInputs.length > 0) {
-            const errorNames = errorInputs.join(', ')
+            const errorNames = errorInputs.join(', ');
             this.props.enqueueSnackbar(
                 `The following inputs are required: ${errorNames}`,
                 {variant:'error'}
-            )
+            );
         } else {
             this.props.creationHandler(
                 this.state.jump_name,
                 this.state.jump_file
-            )
+            );
         }
     }
 
     handleChange = identifier => event => {
         this.setState({
             [identifier]: event.target.value
-        })
+        });
     }
 
     render() {
@@ -86,9 +83,9 @@ class CreateJumpForm extends React.Component {
                     </Button>
                 </Grid>
             </form>
-        )
+        );
     }
 }
 
-export default withSnackbar(withStyles(styles)(CreateJumpForm))
+export default withSnackbar(withStyles(styles)(CreateJumpForm));
 

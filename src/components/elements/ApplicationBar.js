@@ -1,15 +1,16 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { connect } from 'react-redux'
-import { drawerWidth, applicationName } from '../../globals'
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 import { 
     AppBar, 
     Toolbar, 
     Typography,
     IconButton
-} from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu'
-import { toggleDrawer } from '../../actions/appActions'
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+
+import { drawerWidth, applicationName } from '../../globals';
+import { toggleDrawer } from '../../actions/appActions';
 
 const styles = theme => ({
     appBar: {
@@ -24,17 +25,17 @@ const styles = theme => ({
             display: 'none',
         },
     },
-})
+});
 
 class ApplicationBar extends React.Component {
 
     handleDrawerToggle = () => {
-        this.props.toggleDrawer()
+        this.props.toggleDrawer();
     }
 
     render() {
 
-        const { classes } = this.props
+        const { classes } = this.props;
 
         return (
             <AppBar position="fixed" color="primary"
@@ -52,10 +53,10 @@ class ApplicationBar extends React.Component {
                     </Typography>
                 </Toolbar>
             </AppBar>
-        )
+        );
     }
 }
 
 export default connect(null, {
     toggleDrawer
-})(withStyles(styles)(ApplicationBar))
+})(withStyles(styles)(ApplicationBar));

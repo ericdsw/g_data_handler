@@ -663,4 +663,4 @@ const eventSchema = {
     }
 }
 
-export default eventSchema
+export default eventSchema;

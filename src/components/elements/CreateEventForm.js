@@ -1,6 +1,6 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { withSnackbar } from 'notistack'
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import { withSnackbar } from 'notistack';
 import {
     TextField,
     MenuItem,
@@ -11,10 +11,14 @@ import {
     Button,
     FormControlLabel,
     Switch,
-} from '@material-ui/core'
-import eventSchema from '../../eventSchema'
-import createInput from '../../inputCreator'
-import { checkForRequired, processRegularInputs } from '../../inputChecks'
+} from '@material-ui/core';
+
+import { schema as eventSchema } from '../../globals';
+import { 
+    createInput,
+    checkForRequired,
+    processRegularInputs,
+} from '../../functions';
 
 const styles = theme => ({
     errorMessage: {
@@ -23,128 +27,126 @@ const styles = theme => ({
     close: {
         padding: theme.spacing.unit / 2,
     }
-})
-
+});
 
 class CreateEventForm extends React.Component {
 
-    formFields = eventSchema['gain_abilities'].parameters
+    formFields = eventSchema['gain_abilities'].parameters;
 
     constructor(props) {
-        super(props)
+        super(props);
         if (props.existingData) {
-            let usedParameters = {}
+            let usedParameters = {};
             for (const paramName in props.existingData.parameters) {
-                const data = props.existingData.parameters[paramName]
+                const data = props.existingData.parameters[paramName];
                 if (typeof data === 'object') {
-                    usedParameters[paramName] = JSON.stringify(data)
+                    usedParameters[paramName] = JSON.stringify(data);
                 } else {
-                    usedParameters[paramName] = data
+                    usedParameters[paramName] = data;
                 }
             }
             this.state = {
                 lockType: true,
                 currentEventType: props.existingData.type,
                 resultData: usedParameters
-            }
-            this.formFields = eventSchema[props.existingData.type].parameters
+            };
+            this.formFields = eventSchema[props.existingData.type].parameters;
         } else {
             this.state = {
                 lockType: false,
                 currentEventType: 'gain_abilities',
                 resultData: {'is_important': true}
-            }
+            };
         }
     }
 
     handleTypeChange = event => {
 
-        const newType = event.target.value
-        this.formFields = eventSchema[newType].parameters
+        const newType = event.target.value;
+        this.formFields = eventSchema[newType].parameters;
 
         let resultData = {
             'is_important': eventSchema[newType].defaultImportant
-        }
+        };
 
         for (const paramName in this.formFields) {
             if (this.formFields[paramName].required) {
-                resultData[paramName] = ''
+                resultData[paramName] = '';
             } else {
-                resultData[paramName] = this.formFields[paramName].default
+                resultData[paramName] = this.formFields[paramName].default;
             }
         }
 
         this.setState({
             currentEventType: newType,
             resultData: resultData
-        })
-
+        });
     }
 
     handleInputChange = inputIdentifier => event => {
-        let newResultData = {...this.state.resultData}
+        let newResultData = {...this.state.resultData};
         if (
             inputIdentifier === 'is_important' || 
             this.formFields[inputIdentifier].type === 'boolean') {
-            newResultData[inputIdentifier] = event.target.checked
+            newResultData[inputIdentifier] = event.target.checked;
         } else {
-            newResultData[inputIdentifier] = event.target.value
+            newResultData[inputIdentifier] = event.target.value;
         }
         this.setState({
             currentEventType: this.state.currentEventType,
             resultData: newResultData
-        })
+        });
     }
 
     submitData = event => {
 
-        event.preventDefault()
-        event.stopPropagation()
+        event.preventDefault();
+        event.stopPropagation();
 
-        const eventData = {...this.state.resultData}
+        const eventData = {...this.state.resultData};
 
-        let errorInputs = []
-        const eventType = this.state.currentEventType
+        let errorInputs = [];
+        const eventType = this.state.currentEventType;
         for (let paramName in eventData) {
 
             if (paramName === 'is_important') {
-                continue
+                continue;
             }
 
             eventData[paramName] = processRegularInputs(
                 eventType, paramName, eventData[paramName]
-            )
+            );
 
-            const paramValue = eventData[paramName]
+            const paramValue = eventData[paramName];
 
             if (! checkForRequired(eventType, paramName, paramValue)) {
-                errorInputs.push(this.formFields[paramName].label)
+                errorInputs.push(this.formFields[paramName].label);
             }
             
         }
 
         if (errorInputs.length > 0) {
-            const errors = errorInputs.join(', ')
+            const errors = errorInputs.join(', ');
             this.props.enqueueSnackbar(
                 `The following fields are required: ${errors}`,
                 {variant:'error'}
-            )
+            );
         } else {
             let cutsceneData = {
                 type: this.state.currentEventType,
                 parameters: eventData
-            }
-            this.props.creationHandler(cutsceneData)
+            };
+            this.props.creationHandler(cutsceneData);
         }
     }
 
     render() {
 
-        let optionTypes = []
-        let fields = []
+        let optionTypes = [];
+        let fields = [];
 
         for (const key in eventSchema) {
-            const data = eventSchema[key]
+            const data = eventSchema[key];
             optionTypes.push(
                 <MenuItem key={key} value={key}>
                     <Grid container
@@ -156,7 +158,7 @@ class CreateEventForm extends React.Component {
                         </Typography>
                     </Grid>
                 </MenuItem>
-            )
+            );
         }
 
         fields.push(
@@ -170,18 +172,18 @@ class CreateEventForm extends React.Component {
                         value={this.state.resultData['is_important']} />
                 }
             />
-        )
+        );
 
         for (const paramName in this.formFields) {
 
-            const currentParamData = this.formFields[paramName]
+            const currentParamData = this.formFields[paramName];
 
             const constructedFormField = createInput(
                 paramName,
                 currentParamData,
                 this.state.resultData[paramName],
                 this.handleInputChange
-            )
+            );
             
             fields.push(
                 <Tooltip 
@@ -190,7 +192,7 @@ class CreateEventForm extends React.Component {
                     title={currentParamData.tooltip}>
                     {constructedFormField}
                 </Tooltip>
-            )
+            );
         }
         
         return (
@@ -222,8 +224,8 @@ class CreateEventForm extends React.Component {
                     </Button>
                 </Grid>
             </form>
-        )
+        );
     }
 }
 
-export default withSnackbar(withStyles(styles)(CreateEventForm))
+export default withSnackbar(withStyles(styles)(CreateEventForm));

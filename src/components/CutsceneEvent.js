@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { 
     Typography,
     Grid,
@@ -14,20 +14,21 @@ import {
     Dialog,
     DialogTitle,
     DialogContent
-} from '@material-ui/core'
-import { purple } from '@material-ui/core/colors'
+} from '@material-ui/core';
+import { purple } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
-import classnames from 'classnames'
-import EditIcon from '@material-ui/icons/Edit'
-import DeleteIcon from '@material-ui/icons/Delete'
+import classnames from 'classnames';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import eventSchema from '../eventSchema'
-import createEventDescription from './createEventDescription'
-import CreateEventForm from './elements/CreateEventForm'
+
+import CreateEventForm from './elements/CreateEventForm';
+import { schema as eventSchema } from '../globals';
+import { createEventDescription } from '../functions';
 import { 
     editCutsceneEvent,
     deleteCutsceneEvent 
-} from '../actions/cutsceneActions'
+} from '../actions/cutsceneActions';
 
 const styles = theme => ({
     eventCard: {
@@ -52,7 +53,7 @@ const styles = theme => ({
     avatarNonImportant: {
         backgroundColor: purple[100]
     }
-})
+});
 
 class CutsceneEvent extends Component {
 
@@ -65,35 +66,35 @@ class CutsceneEvent extends Component {
         return createEventDescription(
             this.props.cutsceneEventData.type, 
             this.props.cutsceneEventData.parameters
-        )
+        );
     }
 
     editCutsceneEvent = eventData => {
-        this.setState(state => ({editDialogueOpen: false}))
+        this.setState(state => ({editDialogueOpen: false}));
         this.props.editCutsceneEvent(
             this.props.rowNumber,
             this.props.eventNumber,
             eventData
-        )
+        );
     }
 
     handleExpandClick = () => {
-        this.setState(state => ({expanded: !state.expanded}))
+        this.setState(state => ({expanded: !state.expanded}));
     }
 
     handleEdit = () => {
-        this.setState(state => ({editDialogueOpen: true}))
+        this.setState(state => ({editDialogueOpen: true}));
     }
 
     handleDelete = () => {
         this.props.deleteCutsceneEvent(
             this.props.rowNumber,
             this.props.eventNumber
-        )
+        );
     }
 
     handleEditClose = () => {
-        this.setState(state => ({editDialogueOpen: false}))
+        this.setState(state => ({editDialogueOpen: false}));
     }
 
     render() {
@@ -104,10 +105,10 @@ class CutsceneEvent extends Component {
         let counter = 0;
         for (let paramName in cutsceneEventData.parameters) {
 
-            let param = cutsceneEventData.parameters[paramName]
+            let param = cutsceneEventData.parameters[paramName];
 
             if (typeof param === "boolean") {
-                param = param ? "true":"false"
+                param = param ? "true" : "false";
             }
 
             listParams.push((
@@ -123,8 +124,8 @@ class CutsceneEvent extends Component {
 
         }
 
-        const { name, icon } = eventSchema[cutsceneEventData.type]
-        const important = cutsceneEventData.parameters.is_important
+        const { name, icon } = eventSchema[cutsceneEventData.type];
+        const important = cutsceneEventData.parameters.is_important;
 
         return (
             <Grid item>
@@ -184,15 +185,12 @@ class CutsceneEvent extends Component {
                     </DialogContent>
                 </Dialog>
 
-
-
             </Grid>
-        )
-
+        );
     }
 }
 
 export default connect(null, {
     editCutsceneEvent,
     deleteCutsceneEvent
-})(withStyles(styles)(CutsceneEvent))
+})(withStyles(styles)(CutsceneEvent));
