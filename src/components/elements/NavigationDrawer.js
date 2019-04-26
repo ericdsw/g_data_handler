@@ -1,5 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import { connect } from 'react-redux'
 import { drawerWidth } from '../../globals'
 import {
     Divider,
@@ -12,6 +13,7 @@ import {
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import routes from '../../router'
+import { toggleDrawer } from '../../actions/appActions'
 
 const styles = theme => ({
     toolbar: theme.mixins.toolbar,
@@ -29,12 +31,8 @@ const styles = theme => ({
 
 class NavigationDrawer extends React.Component {
 
-    state = {
-        mobileOpen: false
-    }
-
     handleDrawerToggle = () => {
-        this.setState(state => ({mobileOpen: !state.mobileOpen}))
+        this.props.toggleDrawer()
     }
 
     render() {
@@ -48,8 +46,10 @@ class NavigationDrawer extends React.Component {
                 <List>
                     {
                         routes.map( route => (
-                            <ListItem button
+                            <ListItem 
+                                button
                                 component={Link}
+                                onClick={this.handleDrawerToggle}
                                 to={route.path}
                                 key={route.path}>
                                 <ListItemIcon>
@@ -70,7 +70,7 @@ class NavigationDrawer extends React.Component {
                     <Drawer
                         variant='temporary'
                         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-                        open={this.state.mobileOpen}
+                        open={this.props.drawerOpen}
                         onClose={this.handleDrawerToggle}
                         classes={{ paper: classes.drawerPaper }}>
                         {drawerContent}
@@ -91,4 +91,10 @@ class NavigationDrawer extends React.Component {
     }
 }
 
-export default withStyles(styles, { withTheme: true })(NavigationDrawer)
+const mapStateToProps = state => ({
+    drawerOpen: state.app.drawerOpen
+})
+
+export default connect(mapStateToProps, {toggleDrawer})(
+    withStyles(styles, { withTheme: true })(NavigationDrawer)
+)

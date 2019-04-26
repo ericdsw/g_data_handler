@@ -9,7 +9,11 @@ export default function createEventDescription(type, parameters) {
         case 'battle':
             return `${parameters.enemy_scene} (${parameters.max_hp})`
         case 'change_bgm':
-            return `New BGM: ${parameters.BGM}`
+            if (parameters.BGM === '') {
+                return 'Will mute BGM'
+            } else {
+                return `New BGM: ${parameters.BGM}`
+            }
         case 'change_enemy':
             return `New Enemy: ${parameters.new_enemy}`
         case 'change_map':

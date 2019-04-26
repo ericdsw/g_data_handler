@@ -86,6 +86,7 @@ const eventSchema = {
                 label: 'BGM file name',
                 type: 'text', 
                 default: '',
+                placeholder: 'Leave blank to mute the current BGM',
                 tooltip: 'The BGM to play (format: name.ogg). If left blank, the current bgm will stop playing'
             },
             offset: {

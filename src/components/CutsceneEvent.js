@@ -175,7 +175,7 @@ class CutsceneEvent extends Component {
                     maxWidth='sm'
                     aria-labelledby='form-dialog-title'>
                     <DialogTitle id='form-dialog-title'>
-                        Create Cutscene Event
+                        Edit Cutscene Event
                     </DialogTitle>
                     <DialogContent>
                         <CreateEventForm
