@@ -13,7 +13,10 @@ import {
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import routes from '../../router'
-import { toggleDrawer } from '../../actions/appActions'
+import { 
+    toggleDrawer, 
+    collapseDrawer 
+} from '../../actions/appActions'
 
 const styles = theme => ({
     toolbar: theme.mixins.toolbar,
@@ -35,6 +38,10 @@ class NavigationDrawer extends React.Component {
         this.props.toggleDrawer()
     }
 
+    handleDrawerCollapse = () => {
+        this.props.collapseDrawer()
+    }
+
     render() {
 
         const { classes, theme } = this.props
@@ -49,7 +56,7 @@ class NavigationDrawer extends React.Component {
                             <ListItem 
                                 button
                                 component={Link}
-                                onClick={this.handleDrawerToggle}
+                                onClick={this.handleDrawerCollapse}
                                 to={route.path}
                                 key={route.path}>
                                 <ListItemIcon>
@@ -95,6 +102,8 @@ const mapStateToProps = state => ({
     drawerOpen: state.app.drawerOpen
 })
 
-export default connect(mapStateToProps, {toggleDrawer})(
+export default connect(mapStateToProps, {
+    toggleDrawer, collapseDrawer
+})(
     withStyles(styles, { withTheme: true })(NavigationDrawer)
 )

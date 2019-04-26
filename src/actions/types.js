@@ -1,5 +1,6 @@
 // Application
 export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR"
+export const COLLAPSE_SIDEBAR = "COLLAPSE_SIDEBAR"
 
 // Cutscene actions
 export const UPDATE_CUTSCENE = "UPDATE_CUTSCENE"

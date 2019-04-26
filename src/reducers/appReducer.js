@@ -1,5 +1,6 @@
 import {
-    TOGGLE_SIDEBAR
+    TOGGLE_SIDEBAR,
+    COLLAPSE_SIDEBAR
 } from '../actions/types'
 
 const initialState = {
@@ -11,6 +12,10 @@ export default function(state = initialState, action) {
         case TOGGLE_SIDEBAR:
             return Object.assign({}, state, {
                 drawerOpen: !state.drawerOpen
+            })
+        case COLLAPSE_SIDEBAR:
+            return Object.assign({}, state, {
+                drawerOpen: false
             })
         default:
             return state
