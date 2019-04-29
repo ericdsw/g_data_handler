@@ -22,8 +22,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import CreateEventForm from './elements/CreateEventForm';
-import { schema as eventSchema } from '../globals';
+import { CreateEventForm } from './elements';
+import { eventSchema } from '../globals';
 import { createEventDescription } from '../functions';
 import { 
     editCutsceneEvent,

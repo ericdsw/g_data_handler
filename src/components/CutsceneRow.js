@@ -15,7 +15,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 
 import CutsceneEvent from './CutsceneEvent';
-import CreateEventForm from './elements/CreateEventForm';
+import { CreateEventForm } from './elements';
 import { 
     deleteCutsceneRow, addCutsceneEvent 
 } from '../actions/cutsceneActions';

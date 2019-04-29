@@ -32,6 +32,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "react-test-renderer": "^16.8.6",
     "redux-devtools-extension": "^2.13.8"
   }
 }

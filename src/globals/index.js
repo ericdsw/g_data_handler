@@ -1,5 +1,12 @@
 import eventSchema from './eventSchema';
+import speakerSchema from './speakerSchema';
 
-export const drawerWidth = 240;
-export const applicationName = 'Game Data Manager v1.0';
-export const schema = eventSchema;
+const applicationName = 'Game Data Manager v1.0';
+const drawerWidth = 240;
+
+export {
+    drawerWidth,
+    applicationName,
+    eventSchema,
+    speakerSchema
+}

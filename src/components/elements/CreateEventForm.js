@@ -13,7 +13,7 @@ import {
     Switch,
 } from '@material-ui/core';
 
-import { schema as eventSchema } from '../../globals';
+import { eventSchema } from '../../globals';
 import { 
     createInput,
     checkForRequired,

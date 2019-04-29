@@ -10,8 +10,8 @@ import {
     Grid
 } from '@material-ui/core';
 import { updateCutscene } from '../../actions/cutsceneActions';
-import { schema as eventSchema } from '../../globals';
-import DragAndDrop from '../DragAndDrop';
+import { eventSchema } from '../../globals';
+import DragAndDrop from './DragAndDrop';
 
 const styles = theme => ({
     button: {

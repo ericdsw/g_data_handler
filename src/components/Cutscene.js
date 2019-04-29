@@ -20,8 +20,7 @@ import {
     addCutsceneJump
 } from '../actions/cutsceneActions';
 import CutsceneRow from './CutsceneRow';
-import CreateJumpForm from './elements/CreateJumpForm';
-import JumpList from './elements/JumpList';
+import { CreateJumpForm, JumpList } from './elements';
 
 const styles = theme => ({
     root: {
@@ -153,7 +152,6 @@ class Cutscene extends Component {
                                 }>
                                 Add Jump
                             </Button>
-                            
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>

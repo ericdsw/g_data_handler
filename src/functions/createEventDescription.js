@@ -1,4 +1,3 @@
-
 export default function createEventDescription(type, parameters) {
 
     switch (type) {
@@ -75,7 +74,10 @@ export default function createEventDescription(type, parameters) {
         case 'sound':
             return `Play sound ${parameters.sound}`;
         case 'spawn_object':
-            return `${parameters.object} at position ${parameters.position}`;
+            return `${parameters.object} at position ${
+                (typeof parameters.position === 'object') ?
+                JSON.stringify(parameters.position) : parameters.position
+            }`;
         case 'toggle_hud':
             return `Visible: ${(parameters.should_show) ? 'true' : 'false'}`;
         case 'visible':

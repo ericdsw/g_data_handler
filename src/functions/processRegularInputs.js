@@ -1,10 +1,10 @@
-import { schema } from '../globals';
+import { eventSchema } from '../globals';
 
 export default function processRegularInputs(eventType, inputName, value) {
 
     let returnValue = value;
 
-    const inputData = schema[eventType]['parameters'][inputName];
+    const inputData = eventSchema[eventType]['parameters'][inputName];
     if (! (value || inputData.required)) {
         returnValue = inputData.default;
     }

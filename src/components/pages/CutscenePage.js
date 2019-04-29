@@ -1,7 +1,8 @@
 import React from 'react';
-import NoCutscene from './NoCutscene';
-import Cutscene from '../Cutscene';
 import { connect } from 'react-redux';
+
+import { NoCutscene } from '../elements';
+import Cutscene from '../Cutscene';
 
 class CutscenePage extends React.Component {
 
