@@ -10,9 +10,8 @@ export default function processRegularInputs(eventType, inputName, value) {
     }
 
     if (inputData.type === 'number') {
-        returnValue = JSON.parse(value);
-    }
-    if (inputData.type === 'json') {
+        returnValue = parseFloat(JSON.parse(value));
+    } else if (inputData.type === 'json') {
         try {
             returnValue = JSON.parse(value);
         } catch (error) {
