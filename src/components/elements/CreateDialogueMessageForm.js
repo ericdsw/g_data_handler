@@ -45,8 +45,6 @@ const styles = theme => ({
 
 class CreateDialogueMessageForm extends React.Component {
 
-    
-
     constructor(props) {
         super(props);
         if (props.messageData) {
@@ -137,7 +135,7 @@ class CreateDialogueMessageForm extends React.Component {
             messageData.control_level = this.state.controlLevel; 
         }
         if (this.state.autopilotOffset) {
-            messageData.autopilot_offset = parseInt(this.state.autopilotOffset);
+            messageData.autopilot_offset = parseFloat(this.state.autopilotOffset);
         }
         if (this.state.choices.length > 0) {
             messageData.choices = this.state.choices;
