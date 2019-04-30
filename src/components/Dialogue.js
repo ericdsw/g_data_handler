@@ -90,6 +90,7 @@ class Dialogue extends React.Component {
                 } empty`,
                 {variant: 'error'}
             );
+            return;
         }
 
         const data = encodeURIComponent(JSON.stringify(conversations));
