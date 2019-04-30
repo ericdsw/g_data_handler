@@ -118,8 +118,7 @@ class CreateDialogueMessageForm extends React.Component {
         if (this.state.controlLevel === 'autopilot') {
             if (this.state.autopilotOffset === '') {
                 this.props.enqueueSnackbar(
-                    'If the control level is Auto Pilot, the Auto Pilot \
-                    Offset must be specified',
+                    'If the control level is Auto Pilot, the Auto Pilot Offset must be specified',
                     {variant: 'error'}
                 );
                 return;
@@ -138,7 +137,7 @@ class CreateDialogueMessageForm extends React.Component {
             messageData.control_level = this.state.controlLevel; 
         }
         if (this.state.autopilotOffset) {
-            messageData.autopilot_offset = this.state.autopilotOffset
+            messageData.autopilot_offset = parseInt(this.state.autopilotOffset);
         }
         if (this.state.choices.length > 0) {
             messageData.choices = this.state.choices;

@@ -60,6 +60,7 @@ class CreateJumpForm extends React.Component {
                             label='Jump Name'
                             value={this.state.jump_name}
                             onChange={this.handleChange('jump_name')}
+                            autoFocus
                             fullWidth variant='outlined' margin='normal' />
                     </Grid>
                 </Grid>
