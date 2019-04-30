@@ -9,13 +9,21 @@ import {
     Typography,
     IconButton,
     Chip,
-    Tooltip
+    Tooltip,
+    Dialog,
+    DialogTitle,
+    DialogContent
 } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
+import CreateDialogueMessageForm from './elements/CreateDialogueMessageForm';
 import { speakerSchema } from '../globals';
+import {
+    editConversationMessage,
+    deleteConversationMessage
+} from '../actions/dialogueActions';
 
 const styles = theme => ({
     messageContainer: {
@@ -58,6 +66,29 @@ const styles = theme => ({
 
 class DialogueMessage extends React.Component {
 
+    state = {
+        editMessageFormOpen: false
+    }
+
+    handleEditMessageFormClose = () => {
+        this.setState({editMessageFormOpen: false});
+    }
+
+    handleEditMessageFormOpen = () => {
+        this.setState({editMessageFormOpen: true});
+    }
+
+    handleDeleteMessage = () => {
+        const { conversation, offset } = this.props;
+        this.props.deleteConversationMessage(conversation, offset);
+    }
+
+    editMessage = (messageData, shouldContinue) => {
+        const { conversation, offset } = this.props;
+        this.setState({editMessageFormOpen: false});
+        this.props.editConversationMessage(conversation, offset, messageData);
+    }
+
     render() {
         const { message, classes } = this.props;
 
@@ -77,7 +108,8 @@ class DialogueMessage extends React.Component {
         }
 
         let extraChips = [];
-        ['location', 'voice', 'control_level', 'autopilot_offset'].forEach(extraProperty => {
+        const extras = ['location', 'voice', 'control_level', 'autopilot_offset'];
+        extras.forEach(extraProperty => {
             if (message.hasOwnProperty(extraProperty)) {
                 extraChips.push(
                     <Chip 
@@ -92,6 +124,7 @@ class DialogueMessage extends React.Component {
         if (message.choices) {
             choicesChips = message.choices.map(currentChoice => {
                 if (currentChoice.next_message) {
+                    const label = `${currentChoice.key}: ${currentChoice.value}`;
                     return (
                         <Tooltip 
                             key={currentChoice.key}
@@ -99,7 +132,7 @@ class DialogueMessage extends React.Component {
                             <Chip
                                 className={classes.chip}
                                 color='primary'
-                                label={`${currentChoice.key}: ${currentChoice.value}`} />
+                                label={label} />
                             </Tooltip>
                         );
                 } else {
@@ -134,10 +167,16 @@ class DialogueMessage extends React.Component {
                             </Typography>
                         </div>
                         <div>
-                            <IconButton className={classes.button} aria-label='Edit'>
+                            <IconButton 
+                                className={classes.button}
+                                aria-label='Edit'
+                                onClick={this.handleEditMessageFormOpen}>
                                 <EditIcon />
                             </IconButton>
-                            <IconButton className={classes.button} aria-label='Delete'>
+                            <IconButton 
+                                className={classes.button} 
+                                aria-label='Delete'
+                                onClick={this.handleDeleteMessage}>
                                 <DeleteIcon />
                             </IconButton>
                         </div>
@@ -170,13 +209,32 @@ class DialogueMessage extends React.Component {
                     }
 
                 </CardContent>
+
+                <Dialog
+                    open={this.state.editMessageFormOpen}
+                    onClose={this.handleEditMessageFormClose}
+                    fullWidth={true}
+                    maxWidth='sm'
+                    aria-labelledby='form-dialog-title'>
+                    <DialogTitle id='form-dialog-title'>
+                        Add Message
+                    </DialogTitle>
+                    <DialogContent>
+                        <CreateDialogueMessageForm 
+                            messageData={message}
+                            creationHandler={this.editMessage}/>
+                    </DialogContent>
+                </Dialog>
+
+
             </Card>
         );
     }
 }
 
 export default connect(null, {
-
+    editConversationMessage,
+    deleteConversationMessage
 })(
     withSnackbar(
         withStyles(styles)(DialogueMessage)

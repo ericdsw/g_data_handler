@@ -9,9 +9,19 @@ import {
     Typography,
     Grid,
     Button,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    IconButton,
+    Icon
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DialogueMessage from './DialogueMessage';
+import CreateDialogueMessageForm from './elements/CreateDialogueMessageForm';
+import { 
+    addMessageToConversation,
+    deleteDialogueConversation
+} from '../actions/dialogueActions';
 
 const styles = theme => ({
     heading: {
@@ -34,20 +44,63 @@ const styles = theme => ({
 });
 
 class DialogueConversation extends React.Component {
+
+    state = {
+        messageFormOpen: false,
+        editMessageFormOpen: false,
+    }
+
+    handleDelete = event => {
+        event.stopPropagation();
+        this.props.deleteDialogueConversation(
+            this.props.conversationName
+        );
+    }
+
+    handleMessageFormOpen = () => {
+        this.setState({messageFormOpen: true});
+    }
+
+    handleMessageFormClose = () => {
+        this.setState({messageFormOpen: false});
+    }
+
+    createMessage = (messageData, shouldContinue) => {
+        if (!shouldContinue) {
+            this.setState({messageFormOpen: false});
+        }
+        this.props.addMessageToConversation(
+            this.props.conversationName,
+            messageData
+        );
+    }
+
     render() {
         const { conversationName, messages, classes } = this.props;
         return (
             <ExpansionPanel style={{width: '100%'}}>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography className={classes.heading}>
-                        <b>Name: {conversationName}</b>
-                    </Typography>
-                    <Typography className={classes.subHeading}>
-                        ({messages.length} {
-                            (messages.length === 1) ?
-                                'message' : 'messages'
-                        })
-                    </Typography>
+                    <Grid container alignItems='center'>
+                        <Grid item xs>
+                            <Typography className={classes.heading}>
+                                <b>Name: {conversationName}</b>
+                            </Typography>
+                            <Typography className={classes.subHeading}>
+                                ({messages.length} {
+                                    (messages.length === 1) ?
+                                        'message' : 'messages'
+                                })
+                            </Typography>
+                        </Grid>
+                        <Grid item xs>
+                            <Grid container justify='flex-end'>
+                                <IconButton 
+                                    onClick={this.handleDelete}>
+                                    <Icon>delete</Icon>
+                                </IconButton>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                     <div className={classes.messageContainer}>
@@ -59,11 +112,18 @@ class DialogueConversation extends React.Component {
                                     <Grid item xs 
                                         key={index}
                                         className={classes.messageElement}>
-                                        <DialogueMessage message={message}/>
+                                        <DialogueMessage 
+                                            offset={index}
+                                            conversation={conversationName}
+                                            message={message}/>
                                     </Grid>
                                 ))}
                                 <Grid item xs>
-                                    <Button color='primary' variant='contained'>
+                                    <Button 
+                                        style={{marginTop: 8}}
+                                        color='primary'
+                                        variant='contained'
+                                        onClick={this.handleMessageFormOpen}>
                                         Add message to conversation
                                     </Button>
                                 </Grid>
@@ -71,13 +131,30 @@ class DialogueConversation extends React.Component {
                     </div>
                     
                 </ExpansionPanelDetails>
-            </ExpansionPanel>
+
+                <Dialog
+                    open={this.state.messageFormOpen}
+                    onClose={this.handleMessageFormClose}
+                    fullWidth={true}
+                    maxWidth='sm'
+                    aria-labelledby='form-dialog-title'>
+                    <DialogTitle id='form-dialog-title'>
+                        Add Message
+                    </DialogTitle>
+                    <DialogContent>
+                        <CreateDialogueMessageForm 
+                            creationHandler={this.createMessage}/>
+                    </DialogContent>
+                </Dialog>
+
+           </ExpansionPanel>
         );
     }
 }
 
 export default connect(null, {
-
+    addMessageToConversation,
+    deleteDialogueConversation
 })(
     withSnackbar(
         withStyles(styles)(DialogueConversation)

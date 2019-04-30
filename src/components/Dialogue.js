@@ -16,7 +16,8 @@ import { red } from '@material-ui/core/colors';
 
 import {
     updateDialogue,
-    addDialogueConversation
+    addDialogueConversation,
+    updateDialogueFilename
 } from '../actions/dialogueActions';
 import { CreateConversationForm } from './elements';
 
@@ -42,6 +43,10 @@ class Dialogue extends React.Component {
         addConversationDialogueOpen: false
     }
 
+    handleFilenameChange = event => {
+        this.props.updateDialogueFilename(event.target.value);
+    }
+
     handleDialogueClose = identifier => () => {
         this.setState({
             [identifier]: false
@@ -59,6 +64,41 @@ class Dialogue extends React.Component {
             dialogueData: null,
             fileName: ''
         });
+    }
+
+    handleExport = () => {
+        const { conversations } = this.props;
+
+        if (Object.keys(conversations).length <= 0) {
+            this.props.enqueueSnackbar(
+                'Cannot export an empty dialogue file',
+                {variant: 'error'}
+            );
+            return;
+        }
+
+        let emptyConversations = 0;
+        for (const conversationName in conversations) {
+            if (conversations[conversationName].length <= 0) {
+                emptyConversations++;
+            }
+        }
+        if (emptyConversations > 0) {
+            this.props.enqueueSnackbar(
+                `${emptyConversations} conversation${
+                    (emptyConversations === 1) ? ' is' : 's are'
+                } empty`,
+                {variant: 'error'}
+            );
+        }
+
+        const data = encodeURIComponent(JSON.stringify(conversations));
+        const uri = `data:application/json;charset=utf-8,${data}`;
+
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', uri);
+        linkElement.setAttribute('download', this.props.fileName);
+        linkElement.click();
     }
 
     addConversation = conversationName => {
@@ -100,7 +140,8 @@ class Dialogue extends React.Component {
                     </Grid>
                     <Grid item xs={6}>
                         <Typography align='right'>
-                            <Button 
+                            <Button
+                                onClick={this.handleExport}
                                 color='secondary'>
                                 Export
                             </Button>
@@ -118,6 +159,7 @@ class Dialogue extends React.Component {
                             label='File Name'
                             fullWidth
                             value={fileName}
+                            onChange={this.handleFilenameChange}
                             variant='outlined' margin='normal' />
                     </Grid>
                     <Grid item xs={12}>
@@ -159,7 +201,8 @@ class Dialogue extends React.Component {
 
 export default connect(null, {
     updateDialogue,
-    addDialogueConversation
+    addDialogueConversation,
+    updateDialogueFilename
 })(
     withSnackbar(
         withStyles(styles)(Dialogue)

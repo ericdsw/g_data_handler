@@ -1,3 +1,12 @@
+
+export const speakerImages = [
+    "Phoenix_Cool.png",
+    "Phoenix_Defiant.png",
+    "Phoenix_Despair.png",
+    "Phoenix_Serious.png",
+    "Phoenix_Shocked.png"
+];
+
 export default {
 	"narrator": {
 		"image"      : null,
