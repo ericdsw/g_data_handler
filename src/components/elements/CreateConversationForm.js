@@ -48,6 +48,7 @@ class CreateConversationForm extends React.Component {
                             label='Conversation Name'
                             value={this.state.conversationName}
                             onChange={this.handleChange('conversationName')}
+                            autoFocus
                             fullWidth variant='outlined' margin='normal' />
                         </Grid>
                     </Grid>

@@ -175,8 +175,23 @@ class Dialogue extends React.Component {
                         }
                         {conversationElements}
                     </Grid>
+                    <Grid item xs={12}>
+                        <Grid 
+                            container 
+                            justify='center'>
+                            <Button 
+                                variant='contained'
+                                color='primary'
+                                onClick={
+                                    this.handleDialogueOpen(
+                                        'addConversationDialogueOpen'
+                                    )
+                                }>
+                                Add Conversation
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </Grid>
-
 
                 <Dialog
                     open={this.state.addConversationDialogueOpen}

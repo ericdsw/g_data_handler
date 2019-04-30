@@ -9,13 +9,16 @@ export default function processRegularInputs(eventType, inputName, value) {
         returnValue = inputData.default;
     }
 
+    if (inputData.type === 'number') {
+        returnValue = JSON.parse(value);
+    }
     if (inputData.type === 'json') {
         try {
             returnValue = JSON.parse(value);
         } catch (error) {
             returnValue = '';
         }
-    } else if(inputData.type === 'boolean') {
+    } else if (inputData.type === 'boolean') {
         if (typeof value === 'undefined') {
             returnValue = false;
         }
