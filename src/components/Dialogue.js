@@ -19,6 +19,7 @@ import {
     addDialogueConversation,
     updateDialogueFilename
 } from '../actions/dialogueActions';
+import { downloadJSON } from '../functions';
 import { CreateConversationForm } from './elements';
 
 const styles = theme => ({
@@ -69,12 +70,13 @@ class Dialogue extends React.Component {
     }
 
     handleExport = () => {
+
         const { conversations } = this.props;
 
         if (Object.keys(conversations).length <= 0) {
             this.props.enqueueSnackbar(
                 'Cannot export an empty dialogue file',
-                {variant: 'error'}
+                { variant: 'error' }
             );
             return;
         }
@@ -90,18 +92,12 @@ class Dialogue extends React.Component {
                 `${emptyConversations} conversation${
                     (emptyConversations === 1) ? ' is' : 's are'
                 } empty`,
-                {variant: 'error'}
+                { variant: 'error' }
             );
             return;
         }
 
-        const data = encodeURIComponent(JSON.stringify(conversations));
-        const uri = `data:application/json;charset=utf-8,${data}`;
-
-        const linkElement = document.createElement('a');
-        linkElement.setAttribute('href', uri);
-        linkElement.setAttribute('download', this.props.fileName);
-        linkElement.click();
+        downloadJSON(this.props.fileName, conversations);
     }
 
     // Methods
@@ -122,7 +118,8 @@ class Dialogue extends React.Component {
                 <DialogueConversation
                     key={name}
                     conversationName={name}
-                    messages={conversations[name]} />
+                    messages={conversations[name]} 
+                />
             );
         });
 

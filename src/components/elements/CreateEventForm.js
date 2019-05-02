@@ -150,7 +150,8 @@ class CreateEventForm extends React.Component {
             optionTypes.push(
                 <MenuItem key={key} value={key}>
                     <Grid container
-                        alignItems='center'>
+                        alignItems='center'
+                    >
                         <Icon>{data.icon}</Icon>
                         &nbsp;
                         <Typography>
@@ -169,7 +170,8 @@ class CreateEventForm extends React.Component {
                     <Switch
                         checked={this.state.resultData['is_important']}
                         onChange={this.handleInputChange('is_important')}
-                        value={this.state.resultData['is_important']} />
+                        value={this.state.resultData['is_important']} 
+                        />
                 }
             />
         );
@@ -189,7 +191,8 @@ class CreateEventForm extends React.Component {
                 <Tooltip 
                     enterDelay={500}
                     key={paramName} 
-                    title={currentParamData.tooltip}>
+                    title={currentParamData.tooltip}
+                >
                     {constructedFormField}
                 </Tooltip>
             );
@@ -217,7 +220,8 @@ class CreateEventForm extends React.Component {
                         variant='contained' 
                         style={{marginTop: 8}} 
                         color='primary' 
-                        onClick={this.showData}>
+                        onClick={this.showData}
+                    >
                         {(this.state.lockType) ? 
                             'Edit Cutscene Event':'Add Cutscene Event'
                         }

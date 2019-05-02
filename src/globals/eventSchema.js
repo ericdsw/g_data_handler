@@ -473,7 +473,7 @@ const eventSchema = {
             dest_elevation: {
                 label: 'Final Elevation',
                 type: 'number',
-                default: null,
+                default: '',
                 tooltip: 'The final elevation',
             },
             instant_move: {
