@@ -108,14 +108,20 @@ class DialogueMessage extends React.Component {
         }
 
         let extraChips = [];
-        const extras = ['location', 'voice', 'control_level', 'autopilot_offset'];
+        const extras = [
+            'location', 
+            'voice_file', 
+            'control_level', 
+            'autopilot_offset'
+        ];
         extras.forEach(extraProperty => {
             if (message.hasOwnProperty(extraProperty)) {
                 extraChips.push(
                     <Chip 
                         key={extraProperty} 
                         className={classes.chip}
-                        label={`${extraProperty}: ${message[extraProperty]}`} />
+                        label={`${extraProperty}: ${message[extraProperty]}`} 
+                    />
                 );
             } 
         });
@@ -128,18 +134,23 @@ class DialogueMessage extends React.Component {
                     return (
                         <Tooltip 
                             key={currentChoice.key}
-                            title={`Next Message: ${currentChoice.next_message}`}>
+                            title={`Next Message: ${currentChoice.next_message}`}
+                        >
                             <Chip
                                 className={classes.chip}
                                 color='primary'
-                                label={label} />
+                                label={label} 
+                            />
                             </Tooltip>
                         );
                 } else {
-                    return <Chip
-                        key={currentChoice.key}
-                        className={classes.chip}
-                        label={`${currentChoice.key}: ${currentChoice.value}`} />;
+                    return (
+                        <Chip
+                            key={currentChoice.key}
+                            className={classes.chip}
+                            label={`${currentChoice.key}: ${currentChoice.value}`} 
+                        />
+                    );
 
                 }
             });
@@ -154,7 +165,8 @@ class DialogueMessage extends React.Component {
                                 <Typography
                                     variant='caption'
                                     className={classes.subTitle}
-                                    align='left'>
+                                    align='left'
+                                >
                                     Speaker: {message.speaker}
                                 </Typography>
                             }
@@ -162,7 +174,8 @@ class DialogueMessage extends React.Component {
                                 variant='h6'
                                 className={classes.title}
                                 align='left'
-                                gutterBottom>
+                                gutterBottom
+                            >
                                 {speakerName}
                             </Typography>
                         </div>
@@ -170,13 +183,15 @@ class DialogueMessage extends React.Component {
                             <IconButton 
                                 className={classes.button}
                                 aria-label='Edit'
-                                onClick={this.handleEditMessageFormOpen}>
+                                onClick={this.handleEditMessageFormOpen}
+                            >
                                 <EditIcon />
                             </IconButton>
                             <IconButton 
                                 className={classes.button} 
                                 aria-label='Delete'
-                                onClick={this.handleDeleteMessage}>
+                                onClick={this.handleDeleteMessage}
+                            >
                                 <DeleteIcon />
                             </IconButton>
                         </div>
@@ -187,7 +202,8 @@ class DialogueMessage extends React.Component {
                             <div className={classes.contentImage}>
                                 <Avatar
                                     className={classes.avatar}
-                                    src={`/images/${usedImagePath}`} />
+                                    src={`/images/${usedImagePath}`} 
+                                />
                             </div>
                         }
                         <div className={classes.content}>
@@ -203,8 +219,11 @@ class DialogueMessage extends React.Component {
 
                     {choicesChips.length > 0 &&
                         <div className={classes.chipContainer}>
-                            <label style={{color:'white'}}>Choices: </label> &nbsp;
-                                {choicesChips}
+                            <label style={{color:'white'}}>
+                                Choices: 
+                            </label> 
+                            &nbsp;
+                            {choicesChips}
                         </div>
                     }
 
@@ -215,17 +234,19 @@ class DialogueMessage extends React.Component {
                     onClose={this.handleEditMessageFormClose}
                     fullWidth={true}
                     maxWidth='sm'
-                    aria-labelledby='form-dialog-title'>
+                    aria-labelledby='form-dialog-title'
+                >
                     <DialogTitle id='form-dialog-title'>
-                        Add Message
+                        Edit Message
                     </DialogTitle>
                     <DialogContent>
                         <CreateDialogueMessageForm 
+                            isEdit
                             messageData={message}
-                            creationHandler={this.editMessage}/>
+                            creationHandler={this.editMessage}
+                        />
                     </DialogContent>
                 </Dialog>
-
 
             </Card>
         );
