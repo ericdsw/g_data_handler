@@ -6,8 +6,8 @@ import {
     Grid,
     IconButton,
     Menu,
-    Avatar,
     Typography,
+    Avatar,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -29,8 +29,12 @@ const styles = theme => ({
     },
     largeAvatar: {
         width: 150,
-        height: 150
-    }
+        height: 150,
+    },
+    smallAvatar: {
+        width: 40,
+        height: 40.
+    },
 });
 
 class DialogueImageSearcher extends React.Component {
@@ -74,12 +78,13 @@ class DialogueImageSearcher extends React.Component {
             );
         } else {
             searchContent = (
-                <Avatar 
+                <Avatar
                     className={classes.largeAvatar}
                     src={`images/${image}`}
                     aria-owns={open ? 'image-menu' : undefined}
                     aria-haspopup='true'
                     onClick={this.handleSearchImageShow}
+                    alt='Speaker'
                 />
             );
         }
@@ -107,7 +112,11 @@ class DialogueImageSearcher extends React.Component {
                             key={image}
                             onClick={this.handleUpdateImage(image)}
                         >
-                            <Avatar src={`images/${image}`} />
+                            <Avatar
+                                className={classes.smallAvatar}
+                                src={`images/${image}`} 
+                                alt='Speaker'
+                            />
                             <Typography variant='body2'>
                                 {image}
                             </Typography>

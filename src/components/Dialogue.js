@@ -43,6 +43,8 @@ class Dialogue extends React.Component {
         addConversationDialogueOpen: false
     }
 
+    // Handlers
+
     handleFilenameChange = event => {
         this.props.updateDialogueFilename(event.target.value);
     }
@@ -102,10 +104,14 @@ class Dialogue extends React.Component {
         linkElement.click();
     }
 
+    // Methods
+
     addConversation = conversationName => {
         this.setState({addConversationDialogueOpen: false});
         this.props.addDialogueConversation(conversationName);
     }
+
+    // Renderer
 
     render() {
 
@@ -125,7 +131,8 @@ class Dialogue extends React.Component {
                 <Grid
                     className={classes.root}
                     container
-                    spacing={16}>
+                    spacing={16}
+                >
                     <Grid item xs={6}>
                         <Typography align='left'>
                             <Button 
@@ -134,7 +141,8 @@ class Dialogue extends React.Component {
                                         'addConversationDialogueOpen'
                                     )
                                 }
-                                color='primary'>
+                                color='primary'
+                            >
                                 Add Conversation
                             </Button>
                         </Typography>
@@ -143,13 +151,15 @@ class Dialogue extends React.Component {
                         <Typography align='right'>
                             <Button
                                 onClick={this.handleExport}
-                                color='secondary'>
+                                color='secondary'
+                            >
                                 Export
                             </Button>
                             <Button 
                                 className={classes.deleteButton}
                                 color='secondary'
-                                onClick={this.handleClearDialogue}>
+                                onClick={this.handleClearDialogue}
+                            >
                                 Clear Dialogue File
                             </Button>
                         </Typography>
@@ -161,7 +171,8 @@ class Dialogue extends React.Component {
                             fullWidth
                             value={fileName}
                             onChange={this.handleFilenameChange}
-                            variant='outlined' margin='normal' />
+                            variant='outlined' margin='normal' 
+                        />
                     </Grid>
                     <Grid item xs={12}>
                         {Object.keys(conversations).length === 0 && 
@@ -169,7 +180,8 @@ class Dialogue extends React.Component {
                                     variant='h5' 
                                     color='textSecondary' 
                                     align='center' 
-                                    className={classes.emptyText}>
+                                    className={classes.emptyText}
+                                >
                                     No conversations for this dialogue
                                 </Typography>
                         }
@@ -178,15 +190,16 @@ class Dialogue extends React.Component {
                     <Grid item xs={12}>
                         <Grid 
                             container 
-                            justify='center'>
+                            justify='center'
+                        >
                             <Button 
-                                variant='contained'
                                 color='primary'
                                 onClick={
                                     this.handleDialogueOpen(
                                         'addConversationDialogueOpen'
                                     )
-                                }>
+                                }
+                            >
                                 Add Conversation
                             </Button>
                         </Grid>
@@ -200,13 +213,15 @@ class Dialogue extends React.Component {
                     )}
                     fullWidth={true}
                     maxWidth='sm'
-                    aria-labelledby='form-dialog-title'>
+                    aria-labelledby='form-dialog-title'
+                >
                     <DialogTitle id='form-dialog-title'>
                         Add Conversation
                     </DialogTitle>
                     <DialogContent>
                         <CreateConversationForm 
-                            creationHandler={this.addConversation}/>
+                            creationHandler={this.addConversation}
+                        />
                     </DialogContent>
                 </Dialog>
 

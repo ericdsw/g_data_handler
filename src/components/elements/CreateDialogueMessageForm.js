@@ -22,17 +22,6 @@ const styles = theme => ({
         width: '100%',
         height: 105,
         marginTop: 12,
-    },
-    largeAvatar: {
-        width: 70,
-        height: 70,
-    },
-    choiceChipContainer: {
-        marginTop: 12
-    },
-    choiceChip: {
-        marginRight: 8,
-        marginTop: 8,
     }
 });
 
