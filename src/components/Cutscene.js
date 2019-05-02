@@ -19,8 +19,9 @@ import {
     addCutsceneRow,
     addCutsceneJump
 } from '../actions/cutsceneActions';
-import CutsceneRow from './CutsceneRow';
+import { downloadJSON } from '../functions';
 import { CreateJumpForm, JumpList } from './elements';
+import CutsceneRow from './CutsceneRow';
 
 const styles = theme => ({
     root: {
@@ -79,6 +80,7 @@ class Cutscene extends Component {
     }
 
     handleExport = () => {
+
         if (this.props.cutsceneRows.length <= 0) {
             this.props.enqueueSnackbar(
                 'Cannot export an empty Cutscene.',
@@ -95,10 +97,8 @@ class Cutscene extends Component {
 
             if (emptyRows > 0) {
                 this.props.enqueueSnackbar(
-                    `${emptyRows} row${
-                        emptyRows > 1 ? 's are' : ' is'
-                    } empty`,
-                    {variant:'error'}
+                    `${emptyRows} row${emptyRows > 1 ? 's are' : ' is'} empty`,
+                    { variant: 'error' }
                 );
             } else {
                 let exportData = {
@@ -107,13 +107,7 @@ class Cutscene extends Component {
                 };
 
                 // Download
-                let data = encodeURIComponent(JSON.stringify(exportData));
-                let uri = 'data:application/json;charset=utf-8,' + data;
-
-                let linkElement = document.createElement('a');
-                linkElement.setAttribute('href', uri);
-                linkElement.setAttribute('download', this.props.fileName);
-                linkElement.click();
+                downloadJSON(this.props.fileName, exportData);
             }
         }
     }
@@ -127,7 +121,8 @@ class Cutscene extends Component {
                 <CutsceneRow 
                     key={index} 
                     rowNumber={index} 
-                    rowData={cutsceneRow} />
+                    rowData={cutsceneRow} 
+                />
             );
         })
 
@@ -137,12 +132,14 @@ class Cutscene extends Component {
                     className={classes.root}
                     container 
                     spacing={16}
-                    alignItems="center">
+                    alignItems="center"
+                >
                     <Grid item xs={6}>
                         <Typography align='left'>
                             <Button 
                                 onClick={this.handleAddRow}
-                                color='primary'>
+                                color='primary'
+                            >
                                 Add Row
                             </Button>
                             <Button 
@@ -188,16 +185,28 @@ class Cutscene extends Component {
                             variant='outlined' margin='normal' />
                     </Grid>
                     {cutsceneRows.length === 0 && 
-                            <Typography 
-                                variant='h5' 
-                                color='textSecondary' 
-                                align='center' 
-                                className={classes.emptyText}>
-                                The cutscene is empty
-                            </Typography>
+                        <Typography 
+                            variant='h5' 
+                            color='textSecondary' 
+                            align='center' 
+                            className={classes.emptyText}
+                        >
+                            The cutscene is empty
+                        </Typography>
                     }
                     {rows}
 
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Grid container justify='center'>
+                        <Button
+                            color='primary'
+                            onClick={this.handleAddRow}
+                        >
+                            Add Row
+                        </Button>
+                    </Grid>
                 </Grid>
 
                 <Dialog
@@ -205,7 +214,8 @@ class Cutscene extends Component {
                     onClose={this.handleDialogueClose('newJumpDialogueOpen')}
                     fullWidth={true}
                     maxWidth='sm'
-                    aria-labelledby='form-dialog-title'>
+                    aria-labelledby='form-dialog-title'
+                >
                     <DialogTitle id='form-dialog-title'>
                         Add Jump
                     </DialogTitle>
@@ -219,7 +229,8 @@ class Cutscene extends Component {
                     onClose={this.handleDialogueClose('viewJumpDialogueOpen')}
                     fullWidth={true}
                     maxWidth='md'
-                    aria-labelledby='form-dialog-title'>
+                    aria-labelledby='form-dialog-title'
+                >
                     <DialogTitle id='form-dialog-title'>
                         Current Jumps
                     </DialogTitle>

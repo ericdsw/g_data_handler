@@ -9,15 +9,19 @@ import {
     IconButton,
     Dialog, 
     DialogTitle, 
-    DialogContent
+    DialogContent,
+    Tooltip
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
+import InputIcon from '@material-ui/icons/Input';
 
 import CutsceneEvent from './CutsceneEvent';
 import { CreateEventForm } from './elements';
 import { 
-    deleteCutsceneRow, addCutsceneEvent 
+    deleteCutsceneRow, 
+    addCutsceneEvent,
+    addCutsceneRowAtPosition
 } from '../actions/cutsceneActions';
 
 const styles = theme => ({
@@ -40,6 +44,12 @@ class CutsceneRow extends Component {
 
     handleAddEvent = () => {
         this.setState({newEventDialogueOpen: true});
+    }
+
+    handleAddRowBelow = () => {
+        this.props.addCutsceneRowAtPosition(
+            this.props.rowNumber + 1
+        );
     }
 
     handleAddEventClose = () => {
@@ -66,17 +76,22 @@ class CutsceneRow extends Component {
         }
 
         const cutsceneArray = data.map((cutsceneData, index) => {
-            return <CutsceneEvent
-                key={`cutscene-row:${rowNumber}:${index}`} 
-                rowNumber={rowNumber}
-                eventNumber={index}
-                cutsceneEventData={cutsceneData} />;
+            return (
+                <CutsceneEvent
+                    key={`cutscene-row:${rowNumber}:${index}`} 
+                    rowNumber={rowNumber}
+                    eventNumber={index}
+                    cutsceneEventData={cutsceneData} 
+                />
+            );
         })
         const renderData = (
-            <Grid container
+            <Grid 
+                container
                 direction="row"
                 justify="center"
-                spacing={16}>
+                spacing={16}
+            >
                 {cutsceneArray}
             </Grid>
         );
@@ -92,16 +107,39 @@ class CutsceneRow extends Component {
                         </Grid>
                         <Grid item xs={6}>
                             <Typography variant='h6' gutterBottom align='right'>
-                                <IconButton 
-                                    onClick={this.handleAddEvent}
-                                    aria-label='add'>
-                                    <AddIcon />
-                                </IconButton>
-                                <IconButton 
-                                    onClick={this.handleDeleteRow}
-                                    aria-label='delete'>
-                                    <DeleteIcon />
-                                </IconButton>
+                                <Tooltip
+                                    title='Add row below'
+                                    enterDelay={200}
+                                >
+                                    <IconButton
+                                        onClick={this.handleAddRowBelow}
+                                        aria-label='add-row-below'
+                                    >
+                                        <InputIcon />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip 
+                                    title='Add Cutscene Event' 
+                                    enterDelay={200}
+                                >
+                                    <IconButton 
+                                        onClick={this.handleAddEvent}
+                                        aria-label='add'
+                                    >
+                                        <AddIcon />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip 
+                                    title='Delete Row'
+                                    enterDelay={200}
+                                >
+                                    <IconButton 
+                                        onClick={this.handleDeleteRow}
+                                        aria-label='delete'
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Tooltip>
                             </Typography>
                         </Grid>
                     </Grid>
@@ -113,7 +151,8 @@ class CutsceneRow extends Component {
                     onClose={this.handleAddEventClose}
                     fullWidth={true}
                     maxWidth='sm'
-                    aria-labelledby='form-dialog-title'>
+                    aria-labelledby='form-dialog-title'
+                >
                     <DialogTitle id='form-dialog-title'>
                         Create Cutscene Event
                     </DialogTitle>
@@ -131,7 +170,8 @@ class CutsceneRow extends Component {
 
 export default connect(null, {
     deleteCutsceneRow,
-    addCutsceneEvent
+    addCutsceneEvent,
+    addCutsceneRowAtPosition
 })(
     withSnackbar(
         withStyles(styles)(CutsceneRow)

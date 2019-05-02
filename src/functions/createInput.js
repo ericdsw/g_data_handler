@@ -12,6 +12,10 @@ export default function createInput(paramName, inputData, value, handleChange) {
         label += '*';
     }
 
+    if (value === null) {
+        value = '';
+    }
+
     switch (inputData.type) {
 
         case 'boolean':

@@ -373,6 +373,12 @@ const eventSchema = {
                 type: 'text',
                 required: true,
                 tooltip: 'The required item id'
+            },
+            aux_message: {
+                label: 'Optional Message',
+                type: 'text',
+                default: null,
+                tooltip: 'Will be displayed after the item is given'
             }
         }
     },
@@ -473,7 +479,7 @@ const eventSchema = {
             dest_elevation: {
                 label: 'Final Elevation',
                 type: 'number',
-                default: null,
+                default: '',
                 tooltip: 'The final elevation',
             },
             instant_move: {

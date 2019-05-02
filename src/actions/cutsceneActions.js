@@ -1,6 +1,7 @@
 import {
     UPDATE_CUTSCENE,
     ADD_CUTSCENE_ROW,
+    ADD_CUTSCENE_ROW_AT_POS,
     DELETE_CUTSCENE_ROW,
     ADD_CUTSCENE_EVENT,
     DELETE_CUTSCENE_EVENT,
@@ -20,6 +21,13 @@ export const updateCutscene = cutsceneData => dispatch => {
 export const addCutsceneRow = () => dispatch => {
     dispatch({
         type: ADD_CUTSCENE_ROW
+    });
+}
+
+export const addCutsceneRowAtPosition = position => dispatch => {
+    dispatch({
+        type: ADD_CUTSCENE_ROW_AT_POS,
+        payload: { position }
     });
 }
 

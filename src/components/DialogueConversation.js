@@ -13,7 +13,8 @@ import {
     DialogTitle,
     DialogContent,
     IconButton,
-    Icon
+    Icon,
+    Tooltip
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DialogueMessage from './DialogueMessage';
@@ -94,10 +95,16 @@ class DialogueConversation extends React.Component {
                         </Grid>
                         <Grid item xs>
                             <Grid container justify='flex-end'>
-                                <IconButton 
-                                    onClick={this.handleDelete}>
-                                    <Icon>delete</Icon>
-                                </IconButton>
+                                <Tooltip
+                                    title='Delete Conversation'
+                                    enterDelay={200}
+                                >
+                                    <IconButton 
+                                        onClick={this.handleDelete}
+                                    >
+                                        <Icon>delete</Icon>
+                                    </IconButton>
+                                </Tooltip>
                             </Grid>
                         </Grid>
                     </Grid>

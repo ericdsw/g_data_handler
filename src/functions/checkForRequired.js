@@ -2,8 +2,20 @@ import { eventSchema } from '../globals';
 
 export default function checkForRequired(eventType, inputName, value) {
     const inputData = eventSchema[eventType]['parameters'][inputName];
-    if (inputName !== 'is_important' && inputData.required && value === '') {
+
+    if (inputName !== 'is_important' && 
+        inputData.required && 
+        !valueIsValid(value)) {
         return false;
     }
     return true;
+}
+
+function valueIsValid(value) {
+    return (
+        value !== '' &&
+        value !== null &&
+        typeof value !== 'undefined' &&
+        ! Number.isNaN(value)
+    );
 }

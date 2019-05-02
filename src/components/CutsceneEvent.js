@@ -136,9 +136,7 @@ class CutsceneEvent extends Component {
                                 (typeof important !== 'undefined' && !important) ?
                                     classes.avatarNonImportant : classes.avatar
                             }>
-                                <Icon>
-                                    {icon}
-                                </Icon>
+                                <Icon>{icon}</Icon>
                             </Avatar>
                         }
                         title={name}
@@ -174,14 +172,16 @@ class CutsceneEvent extends Component {
                     onClose={this.handleEditClose}
                     fullWidth={true}
                     maxWidth='sm'
-                    aria-labelledby='form-dialog-title'>
+                    aria-labelledby='form-dialog-title'
+                >
                     <DialogTitle id='form-dialog-title'>
                         Edit Cutscene Event
                     </DialogTitle>
                     <DialogContent>
                         <CreateEventForm
                             existingData={cutsceneEventData}
-                            creationHandler={this.editCutsceneEvent} />
+                            creationHandler={this.editCutsceneEvent} 
+                        />
                     </DialogContent>
                 </Dialog>
 
