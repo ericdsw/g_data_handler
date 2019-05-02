@@ -373,6 +373,12 @@ const eventSchema = {
                 type: 'text',
                 required: true,
                 tooltip: 'The required item id'
+            },
+            aux_message: {
+                label: 'Optional Message',
+                type: 'text',
+                default: null,
+                tooltip: 'Will be displayed after the item is given'
             }
         }
     },

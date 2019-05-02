@@ -1,6 +1,7 @@
 import {
     UPDATE_CUTSCENE,
     ADD_CUTSCENE_ROW,
+    ADD_CUTSCENE_ROW_AT_POS,
     DELETE_CUTSCENE_ROW,
     ADD_CUTSCENE_EVENT,
     DELETE_CUTSCENE_EVENT,
@@ -25,6 +26,9 @@ export default function(state = initialState, action) {
             
         case ADD_CUTSCENE_ROW:
             return addCutsceneRow(state, action);
+
+        case ADD_CUTSCENE_ROW_AT_POS:
+            return addCutsceneRowAtPosition(state, action);
 
         case DELETE_CUTSCENE_ROW:
             return deleteCutsceneRow(state, action);
@@ -63,6 +67,15 @@ function updateCutscene(state, action) {
 function addCutsceneRow(state, action) {
     return Object.assign({}, state, {
         currentCutscene: [...state.currentCutscene, []]
+    });
+}
+
+function addCutsceneRowAtPosition(state, action) {
+    const { position } = action.payload;
+    let rows = [...state.currentCutscene];
+    rows.splice(position, 0, []);
+    return Object.assign({}, state, {
+        currentCutscene: rows
     });
 }
 

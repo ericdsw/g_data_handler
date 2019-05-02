@@ -39,7 +39,7 @@ class CreateEventForm extends React.Component {
             let usedParameters = {};
             for (const paramName in props.existingData.parameters) {
                 const data = props.existingData.parameters[paramName];
-                if (typeof data === 'object') {
+                if (typeof data === 'object' && data !== null) {
                     usedParameters[paramName] = JSON.stringify(data);
                 } else {
                     usedParameters[paramName] = data;

@@ -12,7 +12,7 @@ import {
     Tooltip,
     Dialog,
     DialogTitle,
-    DialogContent
+    DialogContent,
 } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -180,20 +180,30 @@ class DialogueMessage extends React.Component {
                             </Typography>
                         </div>
                         <div>
-                            <IconButton 
-                                className={classes.button}
-                                aria-label='Edit'
-                                onClick={this.handleEditMessageFormOpen}
+                            <Tooltip
+                                title='Edit message'
+                                enterDelay={200}
                             >
-                                <EditIcon />
-                            </IconButton>
-                            <IconButton 
-                                className={classes.button} 
-                                aria-label='Delete'
-                                onClick={this.handleDeleteMessage}
+                                <IconButton 
+                                    className={classes.button}
+                                    aria-label='Edit'
+                                    onClick={this.handleEditMessageFormOpen}
+                                >
+                                    <EditIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip
+                                title='Delete Message'
+                                enterDelay={200}
                             >
-                                <DeleteIcon />
-                            </IconButton>
+                                <IconButton 
+                                    className={classes.button} 
+                                    aria-label='Delete'
+                                    onClick={this.handleDeleteMessage}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Tooltip>
                         </div>
                     </div>
                     
