@@ -269,6 +269,7 @@ class CreateDialogueMessageForm extends React.Component {
                     label='Message'
                     multiline
                     rows='3'
+                    autoFocus
                     value={this.state.message}
                     onChange={this.handleInputChange('message')}
                 />
