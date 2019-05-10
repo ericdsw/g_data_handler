@@ -57,7 +57,7 @@ class App extends React.Component {
                             <main className={classes.content}>
                                 <div className={classes.toolbar} />
                                 <Switch>
-                                    { routes.map( route => (
+                                    { routes.map(route => (
                                         <Route
                                             key={route.path}
                                             path={route.path}

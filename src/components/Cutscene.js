@@ -20,7 +20,11 @@ import {
     addCutsceneJump
 } from '../actions/cutsceneActions';
 import { downloadJSON } from '../functions';
-import { CreateJumpForm, JumpList } from './elements';
+import { 
+    CreateJumpForm, 
+    JumpList,
+    ConfirmationDialogue
+} from './elements';
 import CutsceneRow from './CutsceneRow';
 
 const styles = theme => ({
