@@ -5,6 +5,7 @@ import CreateJumpForm from './CreateJumpForm';
 import JumpList from './JumpList';
 import NoCutscene from './NoCutscene';
 import NoDialogue from './NoDialogue';
+import ConfirmationDialogue from './ConfirmationDialogue';
 
 import CreateConversationForm from './CreateConversationForm';
 
@@ -17,4 +18,5 @@ export {
     NoCutscene,
     NoDialogue,
     CreateConversationForm,
+    ConfirmationDialogue,
 }
