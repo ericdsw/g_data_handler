@@ -42,37 +42,34 @@ const styles = theme => ({
     },
 });
 
-class App extends React.Component {
+const App = ({classes}) => (
 
-    render() {
-        const { classes } = this.props;
-        return (
-            <Provider store={store}>
-                <div className={classes.root}>
-                    <MuiThemeProvider theme={applicationTheme}>
-                        <CssBaseline />
-                        <Router>
-                            <ApplicationBar />
-                            <NavigationDrawer />
-                            <main className={classes.content}>
-                                <div className={classes.toolbar} />
-                                <Switch>
-                                    { routes.map(route => (
-                                        <Route
-                                            key={route.path}
-                                            path={route.path}
-                                            exact={route.exact}
-                                            component={route.component} />
-                                    )) }
-                                    <Route component={fallbackRoute.component} />
-                                </Switch>
-                            </main>
-                        </Router>
-                    </MuiThemeProvider>
-                </div>
-            </Provider>
-        );
-    }
-}
+    <Provider store={store}>
+        <div className={classes.root}>
+            <MuiThemeProvider theme={applicationTheme}>
+                <CssBaseline />
+                <Router>
+                    <ApplicationBar />
+                    <NavigationDrawer />
+                    <main className={classes.content}>
+                        <div className={classes.toolbar} />
+                        <Switch>
+                            { routes.map(route => (
+                                <Route
+                                    key={route.path}
+                                    path={route.path}
+                                    exact={route.exact}
+                                    component={route.component} 
+                                />
+                            )) }
+                            <Route component={fallbackRoute.component} />
+                        </Switch>
+                    </main>
+                </Router>
+            </MuiThemeProvider>
+        </div>
+    </Provider>
+
+);
 
 export default withStyles(styles)(App);

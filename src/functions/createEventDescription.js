@@ -86,6 +86,8 @@ export default function createEventDescription(type, parameters) {
             return `Wait for ${parameters.duration} seconds`;
         case 'zoom':
             return `To ${parameters.target_zoom} for ${parameters.zoom_duration} seconds`;
+        case 'ability_toggle':
+            return `${parameters.enabled ? 'Enable' : 'Disable'} the ability ${parameters.ability_name}`
         default:
             return '';
     }

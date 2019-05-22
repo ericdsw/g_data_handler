@@ -666,7 +666,28 @@ const eventSchema = {
                 tooltip: 'How much time will it take to zoom to the target'
             }
         }
+    },
+
+    "ability_toggle": {
+        name: 'Ability Toggle',
+        icon: 'toggle_on',
+        defaultImportant: false,
+        parameters: {
+            ability_name: {
+                label: 'Ability Name',
+                type: 'text',
+                required: true,
+                tooltip: 'The node name of the ability to enable/disable (on either PlayerOverworld or PlayerBattle'
+            },
+            enabled: {
+                label: 'Enabled',
+                type: 'boolean',
+                default: false,
+                tooltip: 'Whether the ability will be enabled or disabled'
+            }
+        }
     }
+
 }
 
 export default eventSchema;
