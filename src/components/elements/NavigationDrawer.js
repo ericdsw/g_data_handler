@@ -59,7 +59,8 @@ class NavigationDrawer extends React.Component {
                                 component={Link}
                                 onClick={this.handleDrawerCollapse}
                                 to={route.path}
-                                key={route.path}>
+                                key={route.path}
+                            >
                                 <ListItemIcon>
                                     {route.icon}
                                 </ListItemIcon>
@@ -80,7 +81,8 @@ class NavigationDrawer extends React.Component {
                         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
                         open={this.props.drawerOpen}
                         onClose={this.handleDrawerToggle}
-                        classes={{ paper: classes.drawerPaper }}>
+                        classes={{ paper: classes.drawerPaper }}
+                    >
                         {drawerContent}
                     </Drawer>
                 </Hidden>
@@ -89,7 +91,8 @@ class NavigationDrawer extends React.Component {
                     <Drawer
                         variant='permanent'
                         open
-                        classes={{ paper: classes.drawerPaper }}>
+                        classes={{ paper: classes.drawerPaper }}
+                    >
                         {drawerContent}
                     </Drawer>
                 </Hidden>
