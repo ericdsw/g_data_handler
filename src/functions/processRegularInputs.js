@@ -5,7 +5,7 @@ export default function processRegularInputs(eventType, inputName, value) {
     let returnValue = value;
 
     const inputData = eventSchema[eventType]['parameters'][inputName];
-    if (! (value || inputData.required)) {
+    if (inputData.type !== 'boolean' && ! (value || inputData.required)) {
         returnValue = inputData.default;
     }
 
