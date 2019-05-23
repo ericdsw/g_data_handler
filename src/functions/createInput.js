@@ -19,23 +19,31 @@ export default function createInput(paramName, inputData, value, handleChange) {
     switch (inputData.type) {
 
         case 'boolean':
-            return <FormControlLabel
-                label={label}
-                control={
-                    <Switch
-                        onChange={handleChange(paramName)}
-                        checked={value} value={value} />
-                } />;
+            return (
+                <FormControlLabel
+                    label={label}
+                    control={
+                        <Switch
+                            onChange={handleChange(paramName)}
+                            checked={value} 
+                            value={value} 
+                        />
+                    } 
+                />
+            );
 
         case 'json':
-            return <TextField
-                id={paramName}
-                label={label}
-                placeholder={inputData.placeholder}
-                multiline fullWidth rows={5}
-                onChange={handleChange(paramName)}
-                value={value}
-                variant='outlined' margin='normal' />;
+            return (
+                <TextField
+                    id={paramName}
+                    label={label}
+                    placeholder={inputData.placeholder}
+                    multiline fullWidth rows={5}
+                    onChange={handleChange(paramName)}
+                    value={value}
+                    variant='outlined' margin='normal' 
+                />
+            );
 
         case 'positionArray':
         case 'position':
