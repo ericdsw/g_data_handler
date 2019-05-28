@@ -38,7 +38,7 @@ class NoCutscene extends React.Component {
                         event['parameters'][paramName] = defaultValue;
                     }
                 }
-                return event;
+                return [event];
             } else {
                 return event.map(currentEvent => {
                     for (const paramName in eventSchema[currentEvent.type]['parameters']) {
