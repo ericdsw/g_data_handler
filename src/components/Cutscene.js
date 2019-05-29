@@ -46,7 +46,8 @@ class Cutscene extends Component {
 
     state = {
         newJumpDialogueOpen: false,
-        viewJumpDialogueOpen: false
+        viewJumpDialogueOpen: false,
+        deleteConfirmationOpen: false
     }
 
     handleFileNameChange = (event) => {
@@ -75,7 +76,7 @@ class Cutscene extends Component {
             [identifier]: true
         });
     }
-    
+
     createNewJump = (jumpName, fileName) => {
         this.setState({
             newJumpDialogueOpen: false
@@ -173,7 +174,7 @@ class Cutscene extends Component {
                             </Button>
                             <Button 
                                 className={classes.deleteButton}
-                                onClick={this.handleClearCutscene} 
+                                onClick={this.handleDialogueOpen("deleteConfirmationOpen")} 
                                 color='secondary'>
                                 Clear Cutscene
                             </Button>
@@ -242,6 +243,13 @@ class Cutscene extends Component {
                         <JumpList jumpList={this.props.jumps} />
                     </DialogContent>
                 </Dialog>
+
+                <ConfirmationDialogue
+                    message="Delete the current cutscene?"
+                    isOpen={this.state.deleteConfirmationOpen}
+                    confirmAction={this.handleClearCutscene}
+                    handleClose={this.handleDialogueClose("deleteConfirmationOpen")}
+                />
 
             </div>
         );

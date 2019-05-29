@@ -2,61 +2,51 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { 
     Dialog, 
-    DialogContent,
     DialogActions,
-    DialogContentText,
+    DialogTitle,
     Button
 } from '@material-ui/core';
 import red from '@material-ui/core/colors/red';
 
 const styles = theme => ({
     cancelButton: {
-        backgroundColor: red[500],
+        color: red[500],
     },
 });
 
 class ConfirmationDialogue extends React.Component {
 
-    state = {
+    props = {
         isOpen: false
-    }
-
-    handleClose = () => {
-        this.setState({isOpen: false});
     }
 
     handleConfirm = () => {
         const { confirmAction } = this.props;
-        this.setState({isOpen: false});
         confirmAction();
     }
 
     render() {
-        const { message, classes } = this.props;
+        const { message, classes, isOpen, handleClose } = this.props;
         return (
             <Dialog
-                open={this.state.isOpen}
+                open={isOpen}
                 onClose={this.handleClose}
+                fullWidth={true}
+                maxWidth='sm'
             >
-                <DialogContent>
-                    <DialogContentText>
-                        {message}
-                    </DialogContentText>
-                </DialogContent>
+                <DialogTitle>{message}</DialogTitle>
                 <DialogActions>
                     <Button 
                         className={classes.cancelButton}
-                        onClick={this.handleClose}
-                        variant='contained'
+                        onClick={handleClose}
                     >
                         No
                     </Button>
                     <Button 
                         onClick={this.handleConfirm} 
                         color='primary'
-                        variant='contained'
                     >
-                        Yea
+                        Yes
                     </Button>
                 </DialogActions>
             </Dialog>

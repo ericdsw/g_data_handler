@@ -20,7 +20,7 @@ import {
     updateDialogueFilename
 } from '../actions/dialogueActions';
 import { downloadJSON } from '../functions';
-import { CreateConversationForm } from './elements';
+import { CreateConversationForm, ConfirmationDialogue } from './elements';
 
 const styles = theme => ({
     root: {
@@ -41,7 +41,8 @@ const styles = theme => ({
 class Dialogue extends React.Component {
 
     state = {
-        addConversationDialogueOpen: false
+        addConversationDialogueOpen: false,
+        deleteConfirmationOpen: false
     }
 
     // Handlers
@@ -155,7 +156,7 @@ class Dialogue extends React.Component {
                             <Button 
                                 className={classes.deleteButton}
                                 color='secondary'
-                                onClick={this.handleClearDialogue}
+                                onClick={this.handleDialogueOpen("deleteConfirmationOpen")}
                             >
                                 Clear Dialogue File
                             </Button>
@@ -221,6 +222,13 @@ class Dialogue extends React.Component {
                         />
                     </DialogContent>
                 </Dialog>
+
+                <ConfirmationDialogue
+                    message="Delete the current loaded dialogues?"
+                    isOpen={this.state.deleteConfirmationOpen}
+                    confirmAction={this.handleClearDialogue}
+                    handleClose={this.handleDialogueClose("deleteConfirmationOpen")}
+                />
 
             </div>
         );

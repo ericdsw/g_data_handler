@@ -29,6 +29,7 @@ const styles = theme => ({
 
 class NoCutscene extends React.Component {
 
+    // Rip
     fillWithDefaultValues = cutsceneData => {
         return cutsceneData.map(event => {
             if (!Array.isArray(event)) {
