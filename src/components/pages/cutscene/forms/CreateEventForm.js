@@ -13,12 +13,12 @@ import {
     Switch,
 } from '@material-ui/core';
 
-import { eventSchema } from '../../globals';
+import { eventSchema } from '../../../../globals';
 import { 
     createInput,
     checkForRequired,
     processRegularInputs,
-} from '../../functions';
+} from '../../../../functions';
 
 const styles = theme => ({
     errorMessage: {

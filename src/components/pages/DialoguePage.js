@@ -13,10 +13,12 @@ class DialoguePage extends React.Component {
             content = <NoDialogue />
         } else {
             content = (
-                <Dialogue 
-                    fileName={fileName}
-                    conversations={currentDialogueData}
-                />
+                <React.Fragment>
+                    <Dialogue 
+                        fileName={fileName}
+                        conversations={currentDialogueData}
+                    />
+                </React.Fragment>
             );
         }
 

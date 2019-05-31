@@ -4,6 +4,7 @@ import checkForRequired from './checkForRequired';
 import processRegularInputs from './processRegularInputs';
 import parseFile from './parseFile';
 import downloadJSON from './downloadJSON';
+import fillCutsceneWithDefaults from './fillCutsceneWithDefaults';
 
 export {
     createEventDescription,
@@ -12,4 +13,5 @@ export {
     createInput,
     parseFile,
     downloadJSON,
+    fillCutsceneWithDefaults
 }
