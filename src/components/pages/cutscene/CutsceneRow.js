@@ -1,17 +1,9 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { 
-    Paper, Grid, Typography, IconButton, Tooltip
-} from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
-// import InputIcon from '@material-ui/icons/Input';
-
-import VerticalAlignBottomIcon from '@material-ui/icons/VerticalAlignBottom';
-import VerticalAlignTopIcon from '@material-ui/icons/VerticalAlignTop';
-
-import CutsceneEventContainer from '../../containers/CutsceneEventContainer';
+import { Paper, Grid, Typography } from '@material-ui/core';
+import { CutsceneRowToolbar } from './elements';
 import { CreateEventForm } from './forms';
+import CutsceneEventContainer from '../../containers/CutsceneEventContainer';
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
 
@@ -34,19 +26,6 @@ const CutsceneRow = props => {
         'confirmDelete', 'createEvent'
     );
 
-    let data = rowData;
-
-    const cutsceneArray = data.map((cutsceneData, index) => {
-        return (
-            <CutsceneEventContainer
-                key={index}
-                rowNumber={rowNumber}
-                eventNumber={index}
-                cutsceneEventData={cutsceneData}
-            />
-        );
-    })
-
     return (
         <Grid item xs={12}>
             <Paper className={classes.cutsceneRow} elevation={1}>
@@ -57,56 +36,16 @@ const CutsceneRow = props => {
                         </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <Typography variant='h6' gutterBottom align='right'>
-                            <Tooltip
-                                title='Add row above'
-                                enterDelay={200}
-                            >
-                                <IconButton
-                                    onClick={() => handleAddRowAbove()}
-                                    aria-label='add-row-above'
-                                >
-                                    <VerticalAlignTopIcon />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip
-                                title='Add row below'
-                                enterDelay={200}
-                            >
-                                <IconButton
-                                    onClick={() => handleAddRowBelow()}
-                                    aria-label='add-row-below'
-                                >
-                                    <VerticalAlignBottomIcon />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip 
-                                title='Add Cutscene Event' 
-                                enterDelay={200}
-                            >
-                                <IconButton 
-                                    onClick={() => {
-                                        toggleDialogue('createEvent', 'show')
-                                    }}
-                                    aria-label='add'
-                                >
-                                    <AddIcon />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip 
-                                title='Delete Row'
-                                enterDelay={200}
-                            >
-                                <IconButton 
-                                    onClick={() => {
-                                        toggleDialogue('confirmDelete', 'show')
-                                    }}
-                                    aria-label='delete'
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                            </Tooltip>
-                        </Typography>
+                        <CutsceneRowToolbar
+                            addAboveClick={() => handleAddRowAbove()}
+                            addBelowClick={() => handleAddRowBelow()}
+                            addEventClick={() => {
+                                toggleDialogue('createEvent', 'show')
+                            }}
+                            deleteRowClick={() => {
+                                toggleDialogue('confirmDelete', 'show')
+                            }}
+                        />
                     </Grid>
                 </Grid>
                 <Grid 
@@ -115,7 +54,14 @@ const CutsceneRow = props => {
                     justify="center" 
                     spacing={16}
                 >
-                    {cutsceneArray}
+                    {rowData.map((cutsceneData, index) => (
+                        <CutsceneEventContainer
+                            key={index}
+                            rowNumber={rowNumber}
+                            eventNumber={index}
+                            cutsceneEventData={cutsceneData}
+                        />
+                    ))}
                 </Grid>
             </Paper>
 
