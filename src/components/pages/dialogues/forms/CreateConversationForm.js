@@ -8,8 +8,7 @@ import {
 } from '@material-ui/core';
 
 const styles = theme => ({
-
-    
+ 
 });
 
 class CreateConversationForm extends React.Component {

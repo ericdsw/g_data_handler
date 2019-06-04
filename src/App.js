@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { purple, green } from '@material-ui/core/colors';
+import { indigo, teal } from '@material-ui/core/colors';
 import { CssBaseline, withStyles } from '@material-ui/core';
 import { NavigationDrawer, ApplicationBar } from './components/elements';
 import { drawerWidth } from './globals';
@@ -12,16 +12,9 @@ import store from './store';
 
 const applicationTheme = createMuiTheme({
     palette: {
-        primary: {
-            light: purple[300],
-            main: purple[500],
-            dark: purple[700]
-        },
-        secondary: {
-            light: green[300],
-            main: green[500],
-            dark: green[700]
-        },
+        type: 'dark',
+        primary: indigo,
+        secondary: teal
     },
     typography: {
         useNextVariants: true

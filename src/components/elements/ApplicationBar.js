@@ -2,13 +2,9 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { 
-    AppBar, 
-    Toolbar, 
-    Typography,
-    IconButton
+    AppBar, Toolbar, Typography, IconButton
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-
 import { drawerWidth, applicationName } from '../../globals';
 import { toggleDrawer } from '../../actions/appActions';
 

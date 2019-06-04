@@ -2,66 +2,47 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { 
     Dialog, 
-    DialogContent,
     DialogActions,
-    DialogContentText,
+    DialogTitle,
     Button
 } from '@material-ui/core';
-import red from '@material-ui/core/colors/red';
+import { red, green } from '@material-ui/core/colors';
 
 const styles = theme => ({
     cancelButton: {
-        backgroundColor: red[500],
+        color: red[500],
     },
+    confirmButton: {
+        color: green[500]
+    }
 });
 
-class ConfirmationDialogue extends React.Component {
-
-    state = {
-        isOpen: false
-    }
-
-    handleClose = () => {
-        this.setState({isOpen: false});
-    }
-
-    handleConfirm = () => {
-        const { confirmAction } = this.props;
-        this.setState({isOpen: false});
-        confirmAction();
-    }
-
-    render() {
-        const { message, classes } = this.props;
-        return (
-            <Dialog
-                open={this.state.isOpen}
-                onClose={this.handleClose}
-            >
-                <DialogContent>
-                    <DialogContentText>
-                        {message}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button 
-                        className={classes.cancelButton}
-                        onClick={this.handleClose}
-                        variant='contained'
-                    >
-                        No
-                    </Button>
-                    <Button 
-                        onClick={this.handleConfirm} 
-                        color='primary'
-                        variant='contained'
-                    >
-                        Yea
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        );
-    }
+const ConfirmationDialogue = (props) => {
+    const { isOpen, handleClose, handleConfirm, message, classes } = props;
+    return (
+        <Dialog
+            open={isOpen}
+            onClose={handleClose}
+            fullWidth={true}
+            maxWidth='sm'
+        >
+            <DialogTitle>{message}</DialogTitle>
+            <DialogActions>
+                <Button 
+                    className={classes.cancelButton}
+                    onClick={handleClose}
+                >
+                    No
+                </Button>
+                <Button 
+                    className={classes.confirmButton}
+                    onClick={handleConfirm} 
+                >
+                    Yes
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
 }
 
 export default withStyles(styles)(ConfirmationDialogue);

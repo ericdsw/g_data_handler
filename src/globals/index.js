@@ -1,7 +1,8 @@
 import eventSchema from './eventSchema';
 import speakerSchema from './speakerSchema';
 
-const applicationName = 'Game Data Manager v1.0';
+const appVersion = 0.2;
+const applicationName = `Game Data Manager v${appVersion}`;
 const drawerWidth = 240;
 
 export {

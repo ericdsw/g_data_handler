@@ -1,10 +1,8 @@
-import MainPage from './MainPage';
-import DialoguePage from './DialoguePage';
-import CutscenePage from './CutscenePage';
-import NotFound from './NotFound';
+import { DialoguePage } from './dialogues';
+import { CutscenePage } from './cutscene';
+import { NotFound } from './notFound';
 
 export {
-    MainPage,
     DialoguePage,
     CutscenePage,
     NotFound

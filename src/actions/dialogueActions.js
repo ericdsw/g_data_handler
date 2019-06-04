@@ -4,6 +4,7 @@ import {
     EDIT_CONVERSATION,
     DELETE_CONVERSATION,
     ADD_CONVERSATION_MESSAGE,
+    ADD_CONVERSATION_MESSAGE_AT_POS,
     EDIT_CONVERSATION_MESSAGE,
     DELETE_CONVERSATION_MESSAGE,
     UPDATE_DIALOGUE_FILENAME,
@@ -48,6 +49,15 @@ export const addMessageToConversation = (conversationName, data) => dispatch => 
         type: ADD_CONVERSATION_MESSAGE,
         payload: {
             conversationName, data
+        }
+    });
+}
+
+export const addMessageAtPosition = (conversation, offset, data) => dispatch => {
+    dispatch({
+        type: ADD_CONVERSATION_MESSAGE_AT_POS,
+        payload: {
+            conversation, offset, data
         }
     });
 }

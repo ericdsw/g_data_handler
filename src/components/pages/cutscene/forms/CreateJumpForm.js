@@ -19,6 +19,7 @@ class CreateJumpForm extends React.Component {
     }
 
     submitData = event => {
+
         event.preventDefault();
         event.stopPropagation();
 
