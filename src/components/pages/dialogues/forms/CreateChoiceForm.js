@@ -9,8 +9,7 @@ import {
     Tooltip,
     Typography,
 } from '@material-ui/core';
-
-import SimpleCollapse from './SimpleCollapse';
+import { SimpleCollapse } from '../../../elements';
 
 const styles = theme => ({
     container: {

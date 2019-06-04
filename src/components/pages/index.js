@@ -1,6 +1,6 @@
-import DialoguePage from './DialoguePage';
+import { DialoguePage } from './dialogues';
 import { CutscenePage } from './cutscene';
-import NotFound from './NotFound';
+import { NotFound } from './notFound';
 
 export {
     DialoguePage,

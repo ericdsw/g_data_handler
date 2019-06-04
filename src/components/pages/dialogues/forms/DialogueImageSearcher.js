@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { speakerImages } from '../../globals/speakerSchema';
+import { speakerImages } from '../../../../globals/speakerSchema';
 
 const ITEM_HEIGHT = 48;
 const PAPER_PROPS = {

@@ -3,6 +3,7 @@ import {
     ADD_CONVERSATION,
     DELETE_CONVERSATION,
     ADD_CONVERSATION_MESSAGE,
+    ADD_CONVERSATION_MESSAGE_AT_POS,
     EDIT_CONVERSATION_MESSAGE,
     DELETE_CONVERSATION_MESSAGE,
     UPDATE_DIALOGUE_FILENAME,
@@ -23,6 +24,8 @@ export default function(state = initialState, action) {
             return deleteDialogueConversation(state, action);
         case ADD_CONVERSATION_MESSAGE:
             return addConversationMessage(state, action);
+        case ADD_CONVERSATION_MESSAGE_AT_POS:
+            return addConversationMessageAtPos(state, action);
         case EDIT_CONVERSATION_MESSAGE:
             return editConversationMessage(state, action);
         case DELETE_CONVERSATION_MESSAGE:
@@ -66,6 +69,16 @@ function addConversationMessage(state, action) {
     let newConversations = {...state.currentDialogueData};
     newConversations[conversationName] = [...newConversations[conversationName]];
     newConversations[conversationName].push(data);
+    return Object.assign({}, state, {
+        currentDialogueData: newConversations
+    });
+}
+
+function addConversationMessageAtPos(state, action) {
+    const { conversation, offset, data } = action.payload;
+    let newConversations = {...state.currentDialogueData};
+    newConversations[conversation] = [...newConversations[conversation]];
+    newConversations[conversation].splice(offset, 0, data);
     return Object.assign({}, state, {
         currentDialogueData: newConversations
     });

@@ -3,7 +3,7 @@ import {
     Typography, Grid, Card, CardHeader, CardContent,
     CardActions, Collapse, IconButton, Avatar, Icon
 } from '@material-ui/core';
-import { purple } from '@material-ui/core/colors';
+import { blue, grey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import EditIcon from '@material-ui/icons/Edit';
@@ -33,10 +33,11 @@ const styles = theme => ({
         transform: 'rotate(180deg)',
     },
     avatar: {
-        backgroundColor: purple[500]
+        backgroundColor: blue[500]
     },
     avatarNonImportant: {
-        backgroundColor: purple[100]
+        backgroundColor: grey[300],
+        opacity: 0.7
     }
 });
 

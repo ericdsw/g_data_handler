@@ -4,7 +4,9 @@ import { withSnackbar } from 'notistack';
 import NoCutscene from '../pages/cutscene/NoCutscene';
 import Cutscene from '../pages/cutscene/Cutscene';
 import CutsceneToolbar from '../pages/cutscene/CutsceneToolbar';
-import { fillCutsceneWithDefaults, downloadJSON } from '../../functions';
+import { 
+    downloadJSON, parseFile, fillCutsceneWithDefaults 
+} from '../../functions';
 import {
     updateCutsceneFileName,
     updateCutscene,
@@ -33,26 +35,20 @@ class CutsceneContainer extends React.Component {
     }
 
     updateCutsceneFromFile = targetFile => {
-        if (targetFile.type !== 'application/json') {
-            this.showError("File must be of type application/json");
-            return;
-        }
-        const fileReader = new FileReader();
-        fileReader.onLoad = event => {
-            try {
-                const jsonData = JSON.parse(event.target.result);
-                const cutscene = fillCutsceneWithDefaults(jsonData['data']);
-                const fileName = targetFile.name;
-                let jumps = {};
-                if (jsonData['cutscene_jumps']) {
-                    jumps = jsonData['cutscene_jumps'];
+        const { updateCutscene } = this.props;
+        parseFile(targetFile, 'application/json')
+            .then(json => {
+                let jumps = {}
+                if (json['cutscene_jumps']) {
+                    jumps = json['cutscene_jumps']
                 }
-                this.props.updateCutscene({cutscene, jumps, fileName});
-            } catch (exception) {
-                this.showError("Malformed JSON file");
-            }
-        }
-        fileReader.readAsText(targetFile);
+                updateCutscene({
+                    cutscene: fillCutsceneWithDefaults(json['data']),
+                    jumps: jumps,
+                    fileName: targetFile.name
+                });
+            })
+            .catch(error => this.showError(error.message));
     }
 
     changeFileName = newFileName => {

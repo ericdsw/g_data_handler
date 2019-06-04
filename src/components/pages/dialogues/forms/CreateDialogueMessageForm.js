@@ -10,10 +10,10 @@ import {
     Switch
 } from '@material-ui/core';
 
-import { speakerSchema } from '../../globals';
+import { speakerSchema } from '../../../../globals';
+import { SimpleCollapse } from '../../../elements';
 
 import CreateChoiceForm from './CreateChoiceForm';
-import SimpleCollapse from './SimpleCollapse';
 import DialogueImageSearcher from './DialogueImageSearcher';
 
 const styles = theme => ({

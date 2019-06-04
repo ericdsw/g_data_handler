@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Typography, TextField, Button } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
+import { red, blue } from '@material-ui/core/colors';
 import CutsceneRowContainer from '../../containers/CutsceneRowContainer';
 
 const styles = theme => ({
@@ -12,6 +12,9 @@ const styles = theme => ({
     },
     deleteButton: {
         color: red[500],
+    },
+    defaultButton: {
+        color: blue[500]
     },
     emptyText: {
         padding: 32,
@@ -65,6 +68,7 @@ const Cutscene = props => {
                 <Grid container justify='center'>
                     <Button 
                         color='primary'
+                        className={classes.defaultButton}
                         onClick={() => handleAddRow()}
                     >
                         Add Row
