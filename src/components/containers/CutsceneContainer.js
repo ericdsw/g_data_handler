@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withSnackbar } from 'notistack';
-import NoCutscene from '../pages/cutscene/NoCutscene';
 import Cutscene from '../pages/cutscene/Cutscene';
 import CutsceneToolbar from '../pages/cutscene/CutsceneToolbar';
+import { Icon, Typography } from '@material-ui/core';
+import { DragJsonFileManager } from '../elements';
 import { 
     downloadJSON, parseFile, fillCutsceneWithDefaults 
 } from '../../functions';
@@ -132,8 +133,18 @@ class CutsceneContainer extends React.Component {
             );
         } else {
             content = (
-                <NoCutscene 
-                    handleEmptyCutscene={this.updateWithEmptyCutscene}
+                <DragJsonFileManager
+                    buttonString='New Cutscene'
+                    dragString={
+                        <React.Fragment>
+                            <Typography gutterBottom>
+                                <Icon fontSize='large'>subscriptions</Icon>
+                            </Typography>
+                            Drag a <code>.json</code> here to edit
+                            an existing cutscene.
+                        </React.Fragment>
+                    }
+                    handleEmpty={this.updateWithEmptyCutscene}
                     handleUpdateFromFile={this.updateCutsceneFromFile}
                 />
             );

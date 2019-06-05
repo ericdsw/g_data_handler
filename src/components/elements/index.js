@@ -4,6 +4,7 @@ import ConfirmationDialogue from './ConfirmationDialogue';
 import GenericDialogue from './GenericDialogue';
 import DragAndDrop from './DragAndDrop';
 import SimpleCollapse from './SimpleCollapse';
+import DragJsonFileManager from './DragJsonFileManager';
 
 export {
     NavigationDrawer,
@@ -11,5 +12,6 @@ export {
     ConfirmationDialogue,
     GenericDialogue,
     DragAndDrop,
-    SimpleCollapse
+    SimpleCollapse,
+    DragJsonFileManager
 }

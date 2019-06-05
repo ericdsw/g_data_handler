@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withSnackbar } from 'notistack';
+import { Icon, Typography } from '@material-ui/core';
 import {
     updateDialogue,
     addDialogueConversation,
     updateDialogueFilename
 } from '../../actions/dialogueActions';
 import { parseFile, downloadJSON } from '../../functions';
-
+import { DragJsonFileManager } from '../elements';
 import Dialogue from '../pages/dialogues/Dialogue';
-import NoDialogue from '../pages/dialogues/elements/NoDialogue';
 import DialogueToolbar from '../pages/dialogues/elements/DialogueToolbar';
 
 class DialogueContainer extends React.Component {
@@ -105,8 +105,18 @@ class DialogueContainer extends React.Component {
             );
         } else {
             content = (
-                <NoDialogue
-                    handleEmptyDialogue={this.updateWithEmptyDialogue}
+                <DragJsonFileManager
+                    buttonString='New Dialogue'
+                    dragString={
+                        <React.Fragment>
+                            <Typography gutterBottom>
+                                <Icon fontSize='large'>question_answer</Icon>
+                            </Typography>
+                            Drag a <code>.json</code> here to edit
+                            an existing dialogue.
+                        </React.Fragment>
+                    }
+                    handleEmpty={this.updateWithEmptyDialogue}
                     handleUpdateFromFile={this.updateDialogueFromFile}
                 />
             );

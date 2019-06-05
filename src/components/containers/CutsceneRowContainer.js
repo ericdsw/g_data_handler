@@ -17,7 +17,7 @@ class CutsceneRowContainer extends React.Component {
 
     addRowAbove = () => {
         const { rowNumber, addCutsceneRowAtPosition } = this.props;
-        addCutsceneRowAtPosition(rowNumber - 1);
+        addCutsceneRowAtPosition(rowNumber);
     }
 
     deleteCutsceneRow = () => {

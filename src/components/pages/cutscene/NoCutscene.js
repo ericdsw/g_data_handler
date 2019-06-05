@@ -1,6 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Button, Divider, Paper, Grid, Typography } from '@material-ui/core';
+import { 
+    Button, Divider, Paper, Grid, Typography 
+} from '@material-ui/core';
 import { DragAndDrop } from '../../elements';
 
 const styles = theme => ({

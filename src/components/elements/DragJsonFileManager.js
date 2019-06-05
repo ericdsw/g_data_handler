@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { 
     Button, Divider, Paper, Grid, Typography
 } from '@material-ui/core';
-import { DragAndDrop } from '../../../elements';
+import DragAndDrop from './DragAndDrop';
 
 const styles = theme => ({
     button: {
@@ -21,8 +21,8 @@ const styles = theme => ({
 
 const NoDialogue = props => {
 
-    const { classes } = props;
-    const { handleEmptyDialogue, handleUpdateFromFile } = props;
+    const { classes, buttonString, dragString } = props;
+    const { handleEmpty, handleUpdateFromFile } = props;
 
     const [loading, toggleLoading] = useState(false);
 
@@ -36,9 +36,9 @@ const NoDialogue = props => {
             <Button
                 variant='contained' 
                 color='primary' 
-                onClick={() => handleEmptyDialogue()}
+                onClick={() => handleEmpty()}
                 className={classes.button}>
-                New Dialogue
+                {buttonString}
             </Button>
             <Divider /> 
             <DragAndDrop handleDrop={files => handleDrop(files)}>
@@ -58,16 +58,11 @@ const NoDialogue = props => {
                                 variant='h4'
                             >
                                 {loading && 
-                                    <p>
+                                    <React.Fragment>
                                         Loading...
-                                    </p>
+                                    </React.Fragment>
                                 }
-                                {!loading &&
-                                    <p>
-                                        Drag a <code>.json</code> here to edit 
-                                        an existing dialogue file
-                                    </p>
-                                }
+                                {!loading && dragString}
                             </Typography>
                         </Grid>
                     </Grid>
