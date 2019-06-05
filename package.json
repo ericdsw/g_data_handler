@@ -1,6 +1,9 @@
 {
   "name": "g-data-handler",
-  "version": "0.1.0",
+  "description": "Manage the game's data",
+  "version": "0.2.0",
+  "author": "Eric De Sedas <eric.desedas.w@gmail.com>",
+  "license": "PROPIETARY",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.3",
