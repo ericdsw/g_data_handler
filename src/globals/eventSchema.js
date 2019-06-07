@@ -445,7 +445,6 @@ const eventSchema = {
         }
     },
 
-    //TODO: finish
     "move": {
         name: 'Move',
         icon: 'directions_walk',
@@ -456,6 +455,12 @@ const eventSchema = {
                 type: 'number',
                 default: 90,
                 tooltip: 'How fast the target will move'
+            },
+            use_time_instead: {
+                label: 'Overwrite speed with time',
+                type: 'boolean',
+                default: false,
+                tooltip: 'If true, the speed value will be used as a duration instead'
             },
             control: {
                 label: 'Controlled Node',
