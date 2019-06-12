@@ -47,6 +47,8 @@ const DialogueMessageToolbar = props => {
             case 'delete':
                 toggleDialogue('confirmDelete', 'show');
                 break;
+            default:
+                break;
         }
         setAnchorEl(null);
     }

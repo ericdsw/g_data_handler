@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { 
-    Typography, Grid, Card, CardHeader, CardContent,
+    Grid, Card, CardHeader, CardContent,
     CardActions, Collapse, IconButton, Avatar, Icon,
-    Table, TableBody, TableHead, TableCell, TableRow
+    Table, TableBody, TableCell, TableRow
 } from '@material-ui/core';
 import { blue, grey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
