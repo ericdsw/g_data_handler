@@ -10,6 +10,7 @@ function valueIsValid(value) {
 }
 
 export default function checkForRequired(eventType, inputName, value) {
+
     const inputData = eventSchema[eventType]['parameters'][inputName];
 
     if (inputName !== 'is_important' && 

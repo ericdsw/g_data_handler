@@ -10,7 +10,10 @@ import { useDialogueManager } from '../../../hooks';
 const styles = theme => ({
     cutsceneRow: {
         margin: `${theme.spacing.unit}px auto`,
-        padding: 16,
+        padding: 8,
+        [theme.breakpoints.up('sm')] : {
+            padding: 16,
+        },
         paddingBottom: 24,
     }
 });
@@ -32,7 +35,7 @@ const CutsceneRow = props => {
                 <Grid container alignItems='center'>
                     <Grid item xs={4}>
                         <Typography variant='h6' gutterBottom align='left'>
-                            {rowNumber}
+                            &nbsp;{rowNumber}
                         </Typography>
                     </Grid>
                     <Grid item xs={8}>

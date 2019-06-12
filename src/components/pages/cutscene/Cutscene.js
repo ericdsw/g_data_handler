@@ -9,6 +9,10 @@ const styles = theme => ({
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 2,
+        [theme.breakpoints.down('xs')]: {
+            paddingLeft: 0,
+            paddingRight: 0
+        }
     },
     deleteButton: {
         color: red[500],
