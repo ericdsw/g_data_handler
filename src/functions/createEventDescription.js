@@ -2,7 +2,7 @@ export default function createEventDescription(type, parameters) {
 
     switch (type) {
         case 'gain_abilities':
-            return 'No description available';
+            return `Max allowed level: ${parameters.max_level}`
         case 'animation':
             return `Animate ${parameters.object} with ${parameters.animation}`;
         case 'battle':

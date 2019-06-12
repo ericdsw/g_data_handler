@@ -45,7 +45,7 @@ function parseParameter(parameter) {
     switch (typeof parameter) {
         case 'boolean':
             return (parameter ? 'True' : 'False');
-        case 'string':
+        case 'object':
             return JSON.stringify(parameter);
         default:
             return parameter;

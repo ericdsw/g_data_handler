@@ -31,7 +31,7 @@ const styles = theme => ({
 
 class CreateEventForm extends React.Component {
 
-    formFields = eventSchema['gain_abilities'].parameters;
+    formFields = eventSchema['ability_toggle'].parameters;
 
     constructor(props) {
         super(props);
@@ -54,8 +54,12 @@ class CreateEventForm extends React.Component {
         } else {
             this.state = {
                 lockType: false,
-                currentEventType: 'gain_abilities',
-                resultData: {'is_important': true}
+                currentEventType: 'ability_toggle',
+                resultData: {
+                    'is_important': false,
+                    'ability_name': '',
+                    'enabled': false
+                }
             };
         }
     }
@@ -142,25 +146,21 @@ class CreateEventForm extends React.Component {
 
     render() {
 
-        let optionTypes = [];
         let fields = [];
 
-        for (const key in eventSchema) {
-            const data = eventSchema[key];
-            optionTypes.push(
-                <MenuItem key={key} value={key}>
-                    <Grid container
-                        alignItems='center'
-                    >
-                        <Icon>{data.icon}</Icon>
-                        &nbsp;
-                        <Typography>
-                            {data.name}
-                        </Typography>
-                    </Grid>
-                </MenuItem>
-            );
-        }
+        const optionTypes = Object.keys(eventSchema).sort().map(key => (
+            <MenuItem key={key} value={key}>
+                <Grid container
+                    alignItems='center'
+                >
+                    <Icon>{eventSchema[key].icon}</Icon>
+                    &nbsp;
+                    <Typography>
+                        {eventSchema[key].name}
+                    </Typography>
+                </Grid>
+            </MenuItem>
+        ));
 
         fields.push(
             <FormControlLabel
@@ -223,7 +223,7 @@ class CreateEventForm extends React.Component {
                         onClick={this.showData}
                     >
                         {(this.state.lockType) ? 
-                            'Edit Cutscene Event':'Add Cutscene Event'
+                            'Edit Cutscene Event' : 'Add Cutscene Event'
                         }
                     </Button>
                 </Grid>

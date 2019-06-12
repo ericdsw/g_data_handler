@@ -4,7 +4,14 @@ const eventSchema = {
         name: "Gain Abilities",
         icon: 'offline_bolt',
         defaultImportant: true,
-        parameters: {}
+        parameters: {
+            max_level: {
+                label: 'Max allowed level',
+                type: 'number',
+                required: true,
+                tooltip: 'Max level allowed by this overlay'
+            }
+        }
     },
 
     "animation": {
