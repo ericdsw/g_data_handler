@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { 
     Typography, Grid, Card, CardHeader, CardContent,
-    CardActions, Collapse, IconButton, Avatar, Icon
+    CardActions, Collapse, IconButton, Avatar, Icon,
+    Table, TableBody, TableHead, TableCell, TableRow
 } from '@material-ui/core';
 import { blue, grey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
@@ -74,13 +75,18 @@ const CutsceneEvent = props => {
 
     const paramNames = Object.keys(cutsceneEventData.parameters);
     const listParams = paramNames.map((paramName, index) => ( 
-        <li key={index} className={classes.listParamItem}>
-            <Typography variant='body1' gutterBottom>
-                <b>{paramName}</b> : {
-                    parseParameter(cutsceneEventData.parameters[paramName])
-                }
-            </Typography>
-        </li>
+        <TableRow key={index}>
+            <TableCell 
+                align='left'
+                padding='none'
+                size='small'
+            >
+                <b>{paramName}</b>
+            </TableCell>
+            <TableCell align='left'>
+                {parseParameter(cutsceneEventData.parameters[paramName])}
+            </TableCell>
+        </TableRow>
     ));
 
     return (
@@ -127,7 +133,11 @@ const CutsceneEvent = props => {
                 </CardActions>
                 <Collapse in={expanded} timeout='auto' unmountOnExit>
                     <CardContent>
-                        <ul>{listParams}</ul>
+                        <Table>
+                            <TableBody>
+                                {listParams}
+                            </TableBody>
+                        </Table>
                     </CardContent>
                 </Collapse>
             </Card>

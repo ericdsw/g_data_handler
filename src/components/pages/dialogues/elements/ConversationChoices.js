@@ -5,6 +5,9 @@ import { Chip, Tooltip } from '@material-ui/core';
 const styles = theme => ({
     chip: {
         marginRight: theme.spacing.unit,
+        [theme.breakpoints.down('xs')]: {
+            marginBottom: theme.spacing.unit
+        }
     },
     chipContainer: {
         borderTop: '1px solid white',

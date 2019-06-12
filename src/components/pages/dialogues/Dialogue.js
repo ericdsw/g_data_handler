@@ -18,6 +18,10 @@ const styles = theme => ({
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 2,
         width: '100%',
+        [theme.breakpoints.down('xs')]: {
+            paddingLeft: 0,
+            paddingRight: 0
+        }
     },
     deleteButton: {
         color: red[500],
