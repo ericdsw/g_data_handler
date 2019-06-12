@@ -1,3 +1,5 @@
+// This method will generate the appropiate description for the defined
+// event type and parameters
 export default function createEventDescription(type, parameters) {
 
     switch (type) {
@@ -16,6 +18,7 @@ export default function createEventDescription(type, parameters) {
         case 'change_enemy':
             return `New Enemy: ${parameters.new_enemy}`;
         case 'change_map':
+            
             return `${parameters.map} at position ${
                 (typeof parameters.position === 'object') ?
                     JSON.stringify(parameters.position) : parameters.position
@@ -29,7 +32,8 @@ export default function createEventDescription(type, parameters) {
                 color_hex, in_duration, 
                 stay_duration, out_duration 
             } = parameters;
-            return `${color_hex} (${in_duration} | ${stay_duration} | ${out_duration})`;
+            const data = `${in_duration} | ${stay_duration} } ${out_duration}`
+            return `${color_hex} (${data})`;
         case 'conditional_state_change':
             const checkMapAmount = Object.keys(parameters.checked_maps).length;
             const changedMapAmount = Object.keys(parameters.target_maps).length;
@@ -59,7 +63,16 @@ export default function createEventDescription(type, parameters) {
         case 'move_camera':
             return `Focus ${parameters.target}`;
         case 'move':
-            return `Will move ${parameters.control}`;
+            const { control, destination } = parameters;
+            if (typeof destination === 'object') {
+                if (destination.length <= 1) {
+                    return `Will move ${control} to ${destination[0]}`;
+                } else {
+                    return `Will move ${control} ${destination.length} positions`;
+                }
+            } else {
+                return `Will move ${control} to ${destination}`;
+            }
         case 'remove_item':
             return `Remove the item ${parameters.item_id}`;
         case 'save':
@@ -70,7 +83,8 @@ export default function createEventDescription(type, parameters) {
                 return 'Partial Save';
             }
         case 'shake':
-            return `For ${parameters.duration} seconds, with ${parameters.shake_amount} intensity`;
+            const { duration, shake_amount } = parameters;
+            return `For ${duration} seconds, with ${shake_amount} intensity`;
         case 'sound':
             return `Play sound ${parameters.sound}`;
         case 'spawn_object':
@@ -81,13 +95,16 @@ export default function createEventDescription(type, parameters) {
         case 'toggle_hud':
             return `Visible: ${(parameters.should_show) ? 'true' : 'false'}`;
         case 'visible':
-            return `${(parameters.visible) ? 'Show' : 'Hide'} object ${parameters.object}`;
+            const { visible, object } = parameters;
+            return `${(visible) ? 'Show' : 'Hide'} object ${object}`;
         case 'wait':
             return `Wait for ${parameters.duration} seconds`;
         case 'zoom':
-            return `To ${parameters.target_zoom} for ${parameters.zoom_duration} seconds`;
+            const { target_zoom, zoom_duration } = parameters;
+            return `To ${target_zoom} for ${zoom_duration} seconds`;
         case 'ability_toggle':
-            return `${parameters.enabled ? 'Enable' : 'Disable'} the ability ${parameters.ability_name}`
+            const { enabled, ability_name } = parameters;
+            return `${enabled ? 'Enable' : 'Disable'} the ability ${ability_name}`
         default:
             return '';
     }
