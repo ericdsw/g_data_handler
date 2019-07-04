@@ -5,7 +5,9 @@ import {
     CardContent,
     Avatar,
     Typography,
+    Icon
 } from '@material-ui/core';
+import { red, blue } from '@material-ui/core/colors';
 
 import { ConversationChoices, ConversationExtraParams } from './elements';
 import { DialogueMessageToolbar } from './elements';
@@ -15,6 +17,7 @@ const styles = theme => ({
     messageContainer: {
         width: '100%',
         backgroundColor: "#222",
+        position: 'relative'
     },
     details: {
         display: 'flex',
@@ -29,6 +32,9 @@ const styles = theme => ({
     },
     subTitle: {
         color: '#ccc',
+    },
+    targetObject: {
+        color: blue[200]
     },
     content: {
         flex: 4,
@@ -47,6 +53,11 @@ const styles = theme => ({
     },
     chip: {
         marginRight: theme.spacing.unit,
+    },
+    interruptDiv: {
+        background: red[600],
+        color: 'white',
+        padding: 6
     }
 })
 
@@ -75,6 +86,16 @@ const DialogueMessage = props => {
 
     return (
         <Card className={classes.messageContainer}>
+            {message.interrupts &&
+                <div className={classes.interruptDiv}>
+                    <Typography
+                        align='center'
+                        variant='body2'
+                    >
+                        <b>Interrupts Previous</b>
+                    </Typography>
+                </div>
+            }
             <CardContent>
                 <div style={{display: 'flex', alignItems: 'flex-start'}}>
                     <div style={{flex:1}}>
@@ -87,6 +108,7 @@ const DialogueMessage = props => {
                                 Speaker: {message.speaker}
                             </Typography>
                         }
+                        
                         <Typography
                             variant='h6'
                             className={classes.title}
@@ -120,6 +142,16 @@ const DialogueMessage = props => {
                 </div>
                 <ConversationExtraParams message={message} />
                 <ConversationChoices message={message} />
+                {message.target_object &&
+                    <Typography
+                        variant='body1'
+                        className={classes.targetObject}
+                        align='right'
+                    >
+                        <Icon>directions_walk</Icon>
+                        {message.target_object}
+                    </Typography>
+                }
             </CardContent>
 
         </Card>
