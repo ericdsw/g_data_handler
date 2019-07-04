@@ -39,6 +39,8 @@ const DEFAULT_STATE = {
     control_level: '',
     autopilot_offset: '',
     choices: [],
+    interrupts: false,
+    target_object: ''
 };
 
 class CreateDialogueMessageForm extends React.Component {
@@ -91,7 +93,8 @@ class CreateDialogueMessageForm extends React.Component {
         }
 
         let messageData = {
-            message: this.state.message
+            message: this.state.message,
+            interrupts: this.state.interrupts
         }
         if (this.state.speaker) { 
             messageData.speaker = this.state.speaker; 
@@ -116,6 +119,9 @@ class CreateDialogueMessageForm extends React.Component {
         }
         if (this.state.choices.length > 0) {
             messageData.choices = this.state.choices;
+        }
+        if (this.state.target_object) {
+            messageData.target_object = this.state.target_object;
         }
 
         this.props.creationHandler(messageData, this.state.createAndContinue);
@@ -257,6 +263,34 @@ class CreateDialogueMessageForm extends React.Component {
                             label='Image'
                             onChange={this.handleInputChange('image')}
                             value={this.state.image}
+                            variant='outlined'
+                            margin='normal'
+                        />
+                    </Grid>
+                </Grid>
+                <Grid 
+                    container 
+                    alignItems='center'
+                >
+                    <Grid item xs={12} md={4}>
+                        <FormControlLabel
+                            key='interrupts'
+                            label='Interrupts Previous'
+                            control={
+                                <Switch
+                                    checked={this.state.interrupts}
+                                    onChange={this.handleInputChange('interrupts', true)}
+                                    value={this.state.interrupts}
+                                />
+                            }
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={8}>
+                        <TextField
+                            fullWidth
+                            label='Target Object'
+                            onChange={this.handleInputChange('target_object')}
+                            value={this.state.target_object}
                             variant='outlined'
                             margin='normal'
                         />
