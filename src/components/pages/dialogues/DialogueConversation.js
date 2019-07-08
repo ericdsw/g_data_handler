@@ -14,7 +14,10 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
-import { CreateDialogueMessageForm } from './forms';
+import { 
+    CreateDialogueMessageForm,
+    CreateEmoteForm
+} from './forms';
 import DialogueMessageContainer from '../../containers/DialogueMessageContainer';
 
 const styles = theme => ({
@@ -44,7 +47,7 @@ const DialogueConversation = props => {
     const { handleDeleteConversation, handleAddMessage } = props;
 
     const [dialogues, toggleDialogue] = useDialogueManager(
-        'addMessage', 'confirmDelete'
+        'addMessage', 'addEmote', 'confirmDelete'
     );
 
     return (
@@ -112,6 +115,17 @@ const DialogueConversation = props => {
                                 >
                                     Add message to conversation
                                 </Button>
+                                &nbsp;
+                                <Button
+                                    style={{marginTop: 8}}
+                                    color='secondary'
+                                    variant='contained'
+                                    onClick={() => {
+                                        toggleDialogue('addEmote', 'show');
+                                    }}
+                                >
+                                    Add emote to conversation
+                                </Button>
                             </Grid>
                     </Grid>
                 </div>
@@ -129,6 +143,19 @@ const DialogueConversation = props => {
                         if (! createAndContinue) {
                             toggleDialogue('addMessage', 'hide');
                         }
+                    }}
+                />
+            </GenericDialogue>
+
+            <GenericDialogue
+                title='Add Emote'
+                open={dialogues['addEmote']}
+                onClose={() => toggleDialogue('addEmote', 'hide')}
+            >
+                <CreateEmoteForm
+                    creationHandler={messageData => {
+                        handleAddMessage(messageData);
+                        toggleDialogue('addEmote', 'hide');
                     }}
                 />
             </GenericDialogue>
