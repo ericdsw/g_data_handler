@@ -40,7 +40,8 @@ const DEFAULT_STATE = {
     autopilot_offset: '',
     choices: [],
     interrupts: false,
-    target_object: ''
+    target_object: '',
+    is_emote: false
 };
 
 class CreateDialogueMessageForm extends React.Component {

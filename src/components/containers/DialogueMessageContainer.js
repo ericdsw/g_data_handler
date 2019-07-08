@@ -6,6 +6,7 @@ import {
     addMessageAtPosition
 } from '../../actions/dialogueActions';
 import DialogueMessage from '../pages/dialogues/DialogueMessage';
+import DialogueEmote from '../pages/dialogues/DialogueEmote';
 
 class DialogueMessageContainer extends React.Component {
 
@@ -26,7 +27,6 @@ class DialogueMessageContainer extends React.Component {
 
     addBelow = messageData => {
         const { conversation, offset, addMessageAtPosition } = this.props;
-        console.log(`Will add to ${offset + 1}`);
         addMessageAtPosition(conversation, offset + 1, messageData);
     }
 
@@ -34,17 +34,30 @@ class DialogueMessageContainer extends React.Component {
 
         const { offset, conversation, message } = this.props;
 
-        return (
-            <DialogueMessage 
-                offset={offset}
-                conversation={conversation}
-                message={message}
-                handleEdit={this.editMessage}
-                handleDelete={this.deleteMessage}
-                handleAddAbove={this.addAbove}
-                handleAddBelow={this.addBelow}
-            />
-        );
+        if (message.is_emote) {
+            return (
+                <DialogueEmote
+                    offset={offset}
+                    conversation={conversation}
+                    message={message}
+                    handleDelete={this.deleteMessage}
+                    handleAddAbove={this.addAbove}
+                    handleAddBelow={this.addBelow}
+                />
+            );
+        } else {
+            return (
+                <DialogueMessage 
+                    offset={offset}
+                    conversation={conversation}
+                    message={message}
+                    handleEdit={this.editMessage}
+                    handleDelete={this.deleteMessage}
+                    handleAddAbove={this.addAbove}
+                    handleAddBelow={this.addBelow}
+                />
+            );
+        }
     }
 }
 

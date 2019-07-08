@@ -124,6 +124,7 @@ const DialogueMessage = props => {
                         handleAddBelow={data => handleAddBelow(data)}
                         handleEdit={data => handleEdit(data)}
                         handleDelete={() => handleDelete()}
+                        omitEdit={false}
                     />
                 </div>
                 
