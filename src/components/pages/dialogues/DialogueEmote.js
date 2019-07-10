@@ -17,8 +17,8 @@ const styles = theme => ({
         backgroundColor: '#222'
     },
     emoteImage: {
-        width: 72,
-        height: 72,
+        width: 64,
+        height: 64,
         padding: 8,
         backgroundColor: '#fff',
         margin: 0
@@ -48,17 +48,19 @@ const DialogueEmote = props => {
                 <Card className={classes.emoteContainer}>
                     <CardContent>
 
-                        <center>
+                        <Grid
+                            container
+                            justify='flex-end'
+                        >
                             <DialogueMessageToolbar
                                 message={message}
-                                handleAddAbove={data => handleAddAbove(data)}
-                                handleAddBelow={data => handleAddBelow(data)}
-                                handleEdit={data => handleEdit(data)}
+                                handleAddAbove={isEmote => handleAddAbove(isEmote)}
+                                handleAddBelow={isEmote => handleAddBelow(isEmote)}
+                                handleEdit={() => handleEdit()}
                                 handleDelete={() => handleDelete()}
                                 omitEdit={true}
                             />
-                        </center>
-                        <br />
+                        </Grid>
 
                         <Grid 
                             container 

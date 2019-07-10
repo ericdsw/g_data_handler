@@ -2,10 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withSnackbar } from 'notistack';
 import { Icon, Typography } from '@material-ui/core';
+
 import {
     updateDialogue,
     addDialogueConversation,
-    updateDialogueFilename
+    updateDialogueFilename,
+    updateEditingMessage,
+    editConversationMessage,
+    addMessageAtPosition,
 } from '../../actions/dialogueActions';
 import { parseFile, downloadJSON } from '../../functions';
 import { DragJsonFileManager } from '../elements';
@@ -52,6 +56,57 @@ class DialogueContainer extends React.Component {
         updateDialogueFilename(newFileName);
     }
 
+    createDialogueMessage = messageData => {
+
+        const { 
+            addMessageAtPosition, editingMessageConversation,
+            editingMessageOffset 
+        } = this.props;
+        
+        addMessageAtPosition(
+            editingMessageConversation, editingMessageOffset, messageData
+        );
+
+    }
+
+    editDialogueMessage = messageData => {
+
+        const { 
+            editConversationMessage,
+            editingMessageConversation, editingMessageOffset
+        } = this.props;
+
+        editConversationMessage(
+            editingMessageConversation, editingMessageOffset, messageData
+        );
+    }
+
+    closeForm = () => {
+        const { updateEditingMessage } = this.props;
+        const emptyInfo = {
+            conversationName: '',
+            messageOffset: 0
+        };
+        updateEditingMessage(emptyInfo, null);
+    }
+
+    advanceForm = () => {
+
+        const { 
+            updateEditingMessage,
+            editingMessageConversation,
+            editingMessageOffset,
+            editingMessage
+        } = this.props;
+
+        const newSourceData = {
+            conversationName: editingMessageConversation,
+            messageOffset: editingMessageOffset + 1
+        }
+        updateEditingMessage(newSourceData, editingMessage);
+
+    }
+
     export = () => {
         const { currentDialogueData, fileName } = this.props;
 
@@ -84,9 +139,13 @@ class DialogueContainer extends React.Component {
 
     render() {
 
-        const { currentDialogueData, fileName } = this.props;
+        const { 
+            currentDialogueData, fileName, 
+            editingMessage, editingMessageConversation
+        } = this.props;
 
         let content;
+
         if (currentDialogueData !== null) {
             content = (
                 <React.Fragment>
@@ -98,8 +157,14 @@ class DialogueContainer extends React.Component {
                     <Dialogue 
                         fileName={fileName}
                         conversations={currentDialogueData}
+                        editingMessage={editingMessage}
+                        editingMessageConversation={editingMessageConversation}
                         handleFileNameChange={this.changeFileName}
                         handleAddConversation={this.addConversation}
+                        handleFormClose={this.closeForm}
+                        handleCreateMessage={this.createDialogueMessage}
+                        handleEditMessage={this.editDialogueMessage}
+                        handleAdvanceForm={this.advanceForm}
                     />
                 </React.Fragment>
             );
@@ -129,11 +194,18 @@ class DialogueContainer extends React.Component {
 
 const mapStateToProps = state => ({
     currentDialogueData: state.dialogue.currentDialogueData,
-    fileName: state.dialogue.fileName
+    fileName: state.dialogue.fileName,
+    editingConversation: state.dialogue.editingConversation,
+    editingMessage: state.dialogue.editingMessage,
+    editingMessageConversation: state.dialogue.editingMessageConversation,
+    editingMessageOffset: state.dialogue.editingMessageOffset,
 });
 
 export default connect(mapStateToProps, {
     updateDialogue,
     addDialogueConversation,
-    updateDialogueFilename
+    updateDialogueFilename,
+    updateEditingMessage,
+    addMessageAtPosition,
+    editConversationMessage
 })(withSnackbar(DialogueContainer));

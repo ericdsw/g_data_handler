@@ -7,11 +7,15 @@ import {
     EDIT_CONVERSATION_MESSAGE,
     DELETE_CONVERSATION_MESSAGE,
     UPDATE_DIALOGUE_FILENAME,
+    UPDATE_EDITING_MESSAGE
 } from '../actions/types'
 
 const initialState = {
     currentDialogueData: null,
-    fileName: ''
+    fileName: '',
+    editingMessage: '',
+    editingMessageConversation: '',
+    editingMessageOffset: 0,
 };
 
 export default function(state = initialState, action) {
@@ -32,6 +36,8 @@ export default function(state = initialState, action) {
             return deleteConversationMessage(state, action);
         case UPDATE_DIALOGUE_FILENAME:
             return updateDialogueFilename(state, action);
+        case UPDATE_EDITING_MESSAGE:
+            return updateEditingMessage(state, action);
         default:
             return state;
     }
@@ -108,5 +114,14 @@ function updateDialogueFilename(state, action) {
     const { fileName } = action.payload;
     return Object.assign({}, state, {
         fileName
+    });
+}
+
+function updateEditingMessage(state, action) {
+    const { editSourceInfo, data } = action.payload;
+    return Object.assign({}, state, {
+        editingMessage: data,
+        editingMessageConversation: editSourceInfo.conversationName,
+        editingMessageOffset: editSourceInfo.messageOffset
     });
 }

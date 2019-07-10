@@ -8,6 +8,7 @@ import {
     EDIT_CONVERSATION_MESSAGE,
     DELETE_CONVERSATION_MESSAGE,
     UPDATE_DIALOGUE_FILENAME,
+    UPDATE_EDITING_MESSAGE
 } from './types';
 
 export const updateDialogue = dialogueData => dispatch => {
@@ -86,5 +87,12 @@ export const updateDialogueFilename = fileName => dispatch => {
         payload: {
             fileName
         }
+    });
+}
+
+export const updateEditingMessage = (editSourceInfo, data) => dispatch => {
+    dispatch({
+        type: UPDATE_EDITING_MESSAGE,
+        payload: { editSourceInfo, data }
     });
 }

@@ -2,15 +2,20 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { 
     Grid, 
-    Typography,
     TextField,
     Button
 } from '@material-ui/core';
 import { red, blue } from '@material-ui/core/colors';
 import { GenericDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
-import { CreateConversationForm } from './forms';
-import DialogueConversationContainer from '../../containers/DialogueConversationContainer';
+import ConversationContainer from '../../containers/DialogueConversationContainer';
+
+import { NoConversationsNotifier } from './elements';
+import { 
+    CreateConversationForm,
+    CreateDialogueMessageForm,
+    CreateEmoteForm
+} from './forms';
 
 const styles = theme => ({
     root: {
@@ -28,22 +33,54 @@ const styles = theme => ({
     },
     defaultButton: {
         color: blue[500]
-    },
-    emptyText: {
-        padding: 32,
-        width: '100%'
-    },
+    }
 });
 
 const Dialogue = props => {
 
-    const { fileName, conversations, classes } = props;
-    const { handleFileNameChange, handleAddConversation } = props;
+    const { 
+        fileName, conversations, classes, 
+        editingMessage, editingMessageConversation
+    } = props;
+
+    const { 
+        handleFormClose, handleFileNameChange, handleAddConversation,
+        handleCreateMessage, handleEditMessage,
+        handleAdvanceForm
+    } = props;
+
+    const messageFormOpen = (
+        editingMessage !== null && editingMessageConversation !== '' &&
+        !editingMessage.is_emote
+    );
+
+    const emoteFormOpen = (
+        editingMessage !== null && editingMessageConversation !== '' &&
+        editingMessage.is_emote
+    );
 
     const [dialogues, toggleDialogue] = useDialogueManager('addConversation');
-    
-    const conversationNames = Object.keys(conversations);
 
+    // Called when the message form is submitted
+    function handleMessageForm(messageData, createAndContinue) {
+        if (!editingMessage.message) {
+            handleCreateMessage(messageData);
+        } else {
+            handleEditMessage(messageData); 
+        }
+        if (! createAndContinue) {
+            handleFormClose() 
+        } else {
+            handleAdvanceForm()
+        }
+    }
+
+    // Called when the emote form is submitted
+    function handleEmoteForm(messageData) {
+        handleCreateMessage(messageData);
+        handleFormClose();
+    }
+    
     return (
         <React.Fragment>
             <Grid
@@ -62,18 +99,9 @@ const Dialogue = props => {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    {conversationNames.length === 0 && 
-                        <Typography 
-                            variant='h5' 
-                            color='textSecondary' 
-                            align='center' 
-                            className={classes.emptyText}
-                        >
-                            No conversations for this dialogue
-                        </Typography>
-                    }
-                    {conversationNames.map(name => (
-                        <DialogueConversationContainer
+                    <NoConversationsNotifier conversations={conversations} />
+                    {Object.keys(conversations).map(name => (
+                        <ConversationContainer
                             key={name}
                             conversationName={name}
                             messages={conversations[name]} 
@@ -97,6 +125,7 @@ const Dialogue = props => {
 
             </Grid>
 
+            {/* Conversation Form */}
             <GenericDialogue
                 title='Create Conversation'
                 open={dialogues['addConversation']}
@@ -108,6 +137,29 @@ const Dialogue = props => {
                         toggleDialogue('addConversation', 'hide');
                     }}
                 />
+            </GenericDialogue>
+
+            {/* Message form */}
+            <GenericDialogue
+                title={`${
+                    editingMessage && ! editingMessage.message ? 'Create' : 'Edit'
+                } Message`}
+                open={messageFormOpen}
+                onClose={handleFormClose}
+            >
+                <CreateDialogueMessageForm
+                    messageData={editingMessage}
+                    creationHandler={handleMessageForm}
+                />
+            </GenericDialogue>
+
+            {/* Emote Form */}
+            <GenericDialogue
+                title='Create Emote'
+                open={typeof emoteFormOpen !== 'undefined' && emoteFormOpen}
+                onClose={handleFormClose}
+            >
+                <CreateEmoteForm creationHandler={handleEmoteForm} />
             </GenericDialogue>
 
         </React.Fragment>
