@@ -150,6 +150,7 @@ const Dialogue = props => {
                 <CreateDialogueMessageForm
                     messageData={editingMessage}
                     creationHandler={handleMessageForm}
+                    isEdit={editingMessage && editingMessage.message}
                 />
             </GenericDialogue>
 

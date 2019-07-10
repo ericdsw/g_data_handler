@@ -104,7 +104,10 @@ export default function createEventDescription(type, parameters) {
             return `To ${target_zoom} for ${zoom_duration} seconds`;
         case 'ability_toggle':
             const { enabled, ability_name } = parameters;
-            return `${enabled ? 'Enable' : 'Disable'} the ability ${ability_name}`
+            return `${enabled ? 'Enable' : 'Disable'} the ability ${ability_name}`;
+        case 'emote':
+            const { target_object, emote } = parameters;
+            return `${target_object} will show '${emote}'`;
         default:
             return '';
     }

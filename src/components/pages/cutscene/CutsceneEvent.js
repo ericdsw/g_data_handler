@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { 
     Grid, Card, CardHeader, CardContent,
     CardActions, Collapse, IconButton, Avatar, Icon,
-    Table, TableBody, TableCell, TableRow
+    Table, TableBody, TableCell, TableRow,
+    Tooltip, Typography
 } from '@material-ui/core';
 import { blue, grey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
@@ -73,21 +74,32 @@ const CutsceneEvent = props => {
     const { name, icon } = eventSchema[cutsceneEventData.type];
     const important = cutsceneEventData.parameters.is_important;
 
+    const eventDescription = createEventDescription(
+        cutsceneEventData.type,cutsceneEventData.parameters
+    )
+
     const paramNames = Object.keys(cutsceneEventData.parameters);
-    const listParams = paramNames.map((paramName, index) => ( 
-        <TableRow key={index}>
-            <TableCell 
-                align='left'
-                padding='none'
-                size='small'
-            >
-                <b>{paramName}</b>
-            </TableCell>
-            <TableCell align='left'>
-                {parseParameter(cutsceneEventData.parameters[paramName])}
-            </TableCell>
-        </TableRow>
-    ));
+    const listParams = paramNames.map((paramName, index) => {
+        const data = parseParameter(cutsceneEventData.parameters[paramName]);
+        return (
+            <TableRow key={index}>
+                <TableCell 
+                    align='left'
+                    padding='none'
+                    size='small'
+                >
+                    <b>{paramName}</b>
+                </TableCell>
+                <TableCell align='left'>
+                    <Tooltip title={data} enterDelay={300}>
+                        <Typography>
+                            {data}
+                        </Typography>
+                    </Tooltip>
+                </TableCell>
+            </TableRow>
+        );
+    });
 
     return (
         <Grid item>
@@ -103,10 +115,9 @@ const CutsceneEvent = props => {
                     }
                     title={name}
                     subheader={
-                        createEventDescription(
-                            cutsceneEventData.type,
-                            cutsceneEventData.parameters
-                        )
+                        <Tooltip title={eventDescription} enterDelay={300}>
+                            <Typography>{eventDescription}</Typography>
+                        </Tooltip>
                     }
                 />
                 <CardActions className={classes.actions} disableActionSpacing>
