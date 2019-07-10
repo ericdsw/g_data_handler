@@ -3,6 +3,8 @@ import {
     TextField,
     FormControlLabel,
     Switch,
+    MenuItem,
+    Typography
 } from '@material-ui/core';
 
 export default function createInput(paramName, inputData, value, handleChange) {
@@ -43,6 +45,30 @@ export default function createInput(paramName, inputData, value, handleChange) {
                     value={value}
                     variant='outlined' margin='normal' 
                 />
+            );
+        case 'dropdown':
+            let options = [];
+            for (const key in inputData.elements) {
+                options.push(
+                    <MenuItem key={key} value={key}>
+                        <Typography variant='body1'>
+                            {inputData.elements[key]}
+                        </Typography>
+                    </MenuItem>
+                );
+            }
+            return (
+                <TextField
+                    label={label}
+                    id={paramName}
+                    select
+                    fullWidth
+                    value={value}
+                    onChange={handleChange(paramName)}
+                    variant='outlined' margin='normal'
+                >
+                    {options}
+                </TextField>
             );
 
         case 'positionArray':

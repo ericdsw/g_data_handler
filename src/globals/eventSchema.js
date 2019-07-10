@@ -689,13 +689,40 @@ const eventSchema = {
                 label: 'Ability Name',
                 type: 'text',
                 required: true,
-                tooltip: 'The node name of the ability to enable/disable (on either PlayerOverworld or PlayerBattle'
+                tooltip: 'The node name of the ability to enable/disable (on either PlayerOverworld or PlayerBattle)'
             },
             enabled: {
                 label: 'Enabled',
                 type: 'boolean',
                 default: false,
                 tooltip: 'Whether the ability will be enabled or disabled'
+            }
+        }
+    },
+
+    "emote": {
+        name: 'Show Emotion',
+        icon: 'not_listed_location',
+        defaultImportant: true,
+        parameters: {
+            target_object: {
+                label: 'Target Object',
+                type: 'text',
+                required: true,
+                tooltip: 'The object that will display the emote'
+            },
+            emote: {
+                label: 'Emote',
+                type: 'dropdown',
+                elements: {
+                    'angry' : 'Angry',
+                    'exclamation': 'Exclamation',
+                    'question': 'Question',
+                    'three_dots': 'Three Dots',
+                    'sweat': 'Sweat'
+                },
+                required: true,
+                tooltip: 'The emote to display'
             }
         }
     }
