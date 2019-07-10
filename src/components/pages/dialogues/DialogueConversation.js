@@ -12,12 +12,8 @@ import {
     Tooltip
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { GenericDialogue, ConfirmationDialogue } from '../../elements';
+import { ConfirmationDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
-import { 
-    CreateDialogueMessageForm,
-    CreateEmoteForm
-} from './forms';
 import DialogueMessageContainer from '../../containers/DialogueMessageContainer';
 
 const styles = theme => ({
@@ -44,11 +40,9 @@ const DialogueConversation = props => {
 
     const { conversationName, messages, classes } = props;
 
-    const { handleDeleteConversation, handleAddMessage } = props;
+    const { handleDeleteConversation, handleAddToConversation } = props;
 
-    const [dialogues, toggleDialogue] = useDialogueManager(
-        'addMessage', 'addEmote', 'confirmDelete'
-    );
+    const [dialogues, toggleDialogue] = useDialogueManager('confirmDelete');
 
     return (
         <ExpansionPanel style={{width: '100%'}}>
@@ -109,56 +103,24 @@ const DialogueConversation = props => {
                                     style={{marginTop: 8}}
                                     color='primary'
                                     variant='contained'
-                                    onClick={() => {
-                                        toggleDialogue('addMessage', 'show');
-                                    }}
+                                    onClick={() => handleAddToConversation(false)}
                                 >
-                                    Add message to conversation
+                                    Add message
                                 </Button>
                                 &nbsp;
                                 <Button
                                     style={{marginTop: 8}}
                                     color='secondary'
                                     variant='contained'
-                                    onClick={() => {
-                                        toggleDialogue('addEmote', 'show');
-                                    }}
+                                    onClick={() => handleAddToConversation(true)}
                                 >
-                                    Add emote to conversation
+                                    Add emote
                                 </Button>
                             </Grid>
                     </Grid>
                 </div>
                 
             </ExpansionPanelDetails>
-
-            <GenericDialogue
-                title='Add Message'
-                open={dialogues['addMessage']}
-                onClose={() => toggleDialogue('addMessage', 'hide')}
-            >
-                <CreateDialogueMessageForm
-                    creationHandler={(messageData, createAndContinue) => {
-                        handleAddMessage(messageData);
-                        if (! createAndContinue) {
-                            toggleDialogue('addMessage', 'hide');
-                        }
-                    }}
-                />
-            </GenericDialogue>
-
-            <GenericDialogue
-                title='Add Emote'
-                open={dialogues['addEmote']}
-                onClose={() => toggleDialogue('addEmote', 'hide')}
-            >
-                <CreateEmoteForm
-                    creationHandler={messageData => {
-                        handleAddMessage(messageData);
-                        toggleDialogue('addEmote', 'hide');
-                    }}
-                />
-            </GenericDialogue>
 
             <ConfirmationDialogue
                 message='Delete the current conversation?'

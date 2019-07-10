@@ -3,31 +3,44 @@ import { connect } from 'react-redux';
 import {
     editConversationMessage, 
     deleteConversationMessage,
-    addMessageAtPosition
+    addMessageAtPosition,
+    updateEditingMessage
 } from '../../actions/dialogueActions';
 import DialogueMessage from '../pages/dialogues/DialogueMessage';
 import DialogueEmote from '../pages/dialogues/DialogueEmote';
 
 class DialogueMessageContainer extends React.Component {
 
-    editMessage = messageData => {
-        const { conversation , offset, editConversationMessage } = this.props;
-        editConversationMessage(conversation, offset, messageData);
+    editMessage = () => {
+        const { updateEditingMessage, conversation , offset, message } = this.props;
+        const sourceInfo = {
+            conversationName: conversation,
+            messageOffset: offset
+        };
+        updateEditingMessage(sourceInfo, message);
+    }
+
+    addAbove = (isEmote = false) => {
+        const { updateEditingMessage, conversation , offset } = this.props;
+        const sourceInfo = {
+            conversationName: conversation,
+            messageOffset: offset
+        };
+        updateEditingMessage(sourceInfo, {is_emote: isEmote});
+    }
+
+    addBelow = (isEmote = false) => {
+        const { updateEditingMessage, conversation , offset } = this.props;
+        const sourceInfo = {
+            conversationName: conversation,
+            messageOffset: offset + 1
+        };
+        updateEditingMessage(sourceInfo, {is_emote: isEmote});
     }
 
     deleteMessage = () => {
         const { conversation, offset, deleteConversationMessage } = this.props;
         deleteConversationMessage(conversation, offset);
-    }
-
-    addAbove = messageData => {
-        const { conversation, offset, addMessageAtPosition } = this.props;
-        addMessageAtPosition(conversation, offset, messageData);
-    }
-
-    addBelow = messageData => {
-        const { conversation, offset, addMessageAtPosition } = this.props;
-        addMessageAtPosition(conversation, offset + 1, messageData);
     }
 
     render() {
@@ -64,5 +77,6 @@ class DialogueMessageContainer extends React.Component {
 export default connect(null, {
     editConversationMessage,
     deleteConversationMessage,
-    addMessageAtPosition
+    addMessageAtPosition,
+    updateEditingMessage
 })(DialogueMessageContainer);

@@ -120,9 +120,9 @@ const DialogueMessage = props => {
                     </div>
                     <DialogueMessageToolbar
                         message={message}
-                        handleAddAbove={data => handleAddAbove(data)}
-                        handleAddBelow={data => handleAddBelow(data)}
-                        handleEdit={data => handleEdit(data)}
+                        handleAddAbove={isEmote => handleAddAbove(isEmote)}
+                        handleAddBelow={isEmote => handleAddBelow(isEmote)}
+                        handleEdit={() => handleEdit()}
                         handleDelete={() => handleDelete()}
                         omitEdit={false}
                     />

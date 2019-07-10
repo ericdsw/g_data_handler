@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-    addMessageToConversation,
-    deleteDialogueConversation
+    deleteDialogueConversation,
+    updateEditingMessage
 } from '../../actions/dialogueActions';
 import DialogueConversation from '../pages/dialogues/DialogueConversation';
 
@@ -13,9 +13,13 @@ class DialogueConversationContainer extends React.Component {
         deleteDialogueConversation(conversationName);
     }
 
-    createMessage = messageData => {
-        const { conversationName, addMessageToConversation } = this.props;
-        addMessageToConversation(conversationName, messageData);
+    addNewToConversation = (isEmote = false) => {
+        const { conversationName, messages, updateEditingMessage } = this.props;
+        const sourceInfo = {
+            conversationName: conversationName,
+            messageOffset: messages.length + 1
+        };
+        updateEditingMessage(sourceInfo, {is_emote: isEmote});
     }
 
     render() {
@@ -26,7 +30,7 @@ class DialogueConversationContainer extends React.Component {
                 conversationName={conversationName}
                 messages={messages}
                 handleDeleteConversation={this.deleteConversation}
-                handleAddMessage={this.createMessage}
+                handleAddToConversation={this.addNewToConversation}
             />
         );
     }
@@ -34,6 +38,6 @@ class DialogueConversationContainer extends React.Component {
 }
 
 export default connect(null, {
-    addMessageToConversation,
-    deleteDialogueConversation
+    deleteDialogueConversation,
+    updateEditingMessage
 })(DialogueConversationContainer);
