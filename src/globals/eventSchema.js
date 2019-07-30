@@ -725,6 +725,75 @@ const eventSchema = {
                 tooltip: 'The emote to display'
             }
         }
+    },
+
+    "create_follower": {
+        name: 'Create Follower',
+        icon: 'person_add',
+        defaultImportant: false,
+        parameters: {
+            object_path: {
+                label: 'Object Path',
+                type: 'text',
+                required: true,
+                tooltip: 'The path to the follower scene'
+            },
+            position: {
+                label: 'Object Position',
+                type: 'position',
+                required: true,
+                tooltip: 'Where the follower will spawn'
+            },
+            follower_id: {
+                label: 'Follower ID',
+                type: 'text',
+                required: true,
+                tooltip: 'An unique identifier for the follower, used to delete it'
+            }
+        }
+    },
+
+    "remove_follower": {
+        name: 'Remove Follower',
+        icon: 'person_add_disabled',
+        defaultImportant: false,
+        parameters: {
+            follower_id: {
+                label: 'Follower ID',
+                type: 'text',
+                required: true,
+                tooltip: 'The follower id to be removed'
+            }
+        }
+    },
+
+    "remove_all_followers": {
+        name: 'Remove all Followers',
+        icon: 'layers_clear',
+        defaultImportant: false,
+        parameters: {
+
+        }
+    },
+
+    "capture_follower": {
+        name: 'Capture Follower',
+        icon: 'supervisor_account',
+        defaultImportant: false,
+        parameters: {
+            target_object: {
+                label: 'Target Object',
+                type: 'text',
+                required: true,
+                tooltip: 'The object that will be set as the follower'
+            },
+            follower_id: {
+                label: 'Follower ID',
+                type: 'text',
+                required: true,
+                tooltip: 'An unique identifier for the follower, used to delete it'
+            }
+        }
     }
 
 }
