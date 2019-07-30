@@ -108,6 +108,12 @@ export default function createEventDescription(type, parameters) {
         case 'emote':
             const { target_object, emote } = parameters;
             return `${target_object} will show '${emote}'`;
+        case 'create_follower':
+            return `Create follower with id: ${parameters.follower_id}`;
+        case 'remove_follower':
+            return `Remove follower with id: ${parameters.follower_id}`;
+        case 'capture_follower':
+            return `Capture ${parameters.target_object} with id ${parameters.follower_id}`;
         default:
             return '';
     }
