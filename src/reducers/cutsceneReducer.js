@@ -18,39 +18,27 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-
     switch(action.type) {
-
         case UPDATE_CUTSCENE:
             return updateCutscene(state, action);
-            
         case ADD_CUTSCENE_ROW:
             return addCutsceneRow(state, action);
-
         case ADD_CUTSCENE_ROW_AT_POS:
             return addCutsceneRowAtPosition(state, action);
-
         case DELETE_CUTSCENE_ROW:
             return deleteCutsceneRow(state, action);
-            
         case ADD_CUTSCENE_EVENT:
             return addCutsceneEvent(state, action);
-
         case DELETE_CUTSCENE_EVENT:
             return deleteCutsceneEvent(state, action);
-
         case EDIT_CUTSCENE_EVENT:
             return editCutsceneEvent(state, action);
-
         case UPDATE_CUTSCENE_FILE_NAME:
             return updateCutsceneFileName(state, action);
-
         case ADD_CUTSCENE_JUMP:
             return addCutsceneJump(state, action);
-
         case DELETE_CUTSCENE_JUMP:
             return deleteCutsceneJump(state, action);
-
         default:
             return state;
     }

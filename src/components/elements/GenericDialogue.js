@@ -5,13 +5,13 @@ import {
     DialogContent
 } from '@material-ui/core'
 
-const GenericDialogue = ({title, open, onClose, children}) => {
+const GenericDialogue = ({title, open, onClose, children, maxWidth = 'md'}) => {
     return (
         <Dialog
             open={open}
             onClose={onClose}
             fullWidth={true}
-            maxWidth='md'
+            maxWidth={maxWidth}
             aria-labelledby='form-dialog-title'
         >
             <DialogTitle id='form-dialog-title'>
