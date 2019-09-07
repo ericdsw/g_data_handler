@@ -6,7 +6,9 @@ import {
     CardContent,
     Grid,
     IconButton,
-    Icon
+    Icon,
+    Avatar,
+    Typography
 } from '@material-ui/core';
 
 import StepMapEntityContainer from '../../containers/StepMapEntityContainer';
@@ -42,7 +44,16 @@ const StepMap = props => {
     return (
         <Card className={classes.mapCard}>
             <CardHeader
-                title={stepMap.map_name}
+                avatar={
+                    <Avatar>
+                        <Icon>map</Icon>
+                    </Avatar>
+                }
+                title={
+                    <Typography variant='h6'>
+                        {stepMap.map_name}
+                    </Typography>
+                }
                 action={
                     <IconButton
                         onClick={() => toggleDialogue('createMapEntity', 'show')}

@@ -36,7 +36,8 @@ const styles = theme => ({
         padding: 16,
         cursor: 'pointer',
         color: '#fff',
-        width: '100%'
+        width: '100%',
+        fontSize: 14
     },
     redButton: {
         color: '#fff',

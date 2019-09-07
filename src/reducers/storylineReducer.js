@@ -36,7 +36,6 @@ export default function(state = initialState, action) {
             return updateWithEmptyStoryline(state, action);
         case UPDATE_STORYLINE_NAME:
             return updateStorylineName(state, action);
-
         case ADD_STORYLINE_STEP:
             return
         case ADD_STEP_MAP_ELEMENT_CONFIG:
