@@ -11,11 +11,13 @@ import {
     Divider,
     ButtonBase,
     Paper,
+    Tooltip
 } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 
 import StepMapEntityParameterList from './elements/StepMapEntityParameterList';
-import { GenericDialogue } from '../../elements';
+import EditEntityNameForm from './forms/EditEntityNameForm';
+import { GenericDialogue, ConfirmationDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
 
 const styles = theme => ({
@@ -53,16 +55,21 @@ const StepMapEntity = props => {
     // Methods
     const {
         handleAddParameter, handleEditParameter, handleDeleteParameter,
-        handleAddInteraction, handleEditInteraction, handleDeleteInteraction
+        handleAddInteraction, handleEditInteraction, handleDeleteInteraction,
+        handleUpdateName, handleDeleteEntity
     } = props;
 
     const [dialogues, toggleDialogue] = useDialogueManager(
-        'viewParameters', 'viewInteractions'
+        'viewParameters', 'viewInteractions', 'editName', 'confirmDelete',
+        'confirmParameterDelete'
     );
 
     const paramKeys = Object.keys(stepMapEntity.parameters)
     const paramAmount = paramKeys.length;
-    const interactAmount = stepMapEntity.configurator_data.length;
+    let interactAmount = 0;
+    if (typeof(stepMapEntity.configurator_data) !== 'undefined') {
+        interactAmount = stepMapEntity.configurator_data.length;
+    }
 
     function getEntityType(entity) {
         switch(entity.type) {
@@ -122,13 +129,36 @@ const StepMapEntity = props => {
             </CardContent>
 
             <CardActions className={classes.actions}>
-                <IconButton>
-                    <Icon fontSize='small'>edit</Icon>
-                </IconButton>
-                <IconButton>
-                    <Icon fontSize='small'>delete</Icon>
-                </IconButton>
+                <Tooltip title='Edit entity name'>
+                    <IconButton
+                        onClick={() => toggleDialogue('editName', 'show')}
+                    >
+                        <Icon fontSize='small'>edit</Icon>
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title='Delete entity'>
+                    <IconButton
+                        onClick={() => toggleDialogue('confirmDelete', 'show')}
+                    >
+                        <Icon fontSize='small'>delete</Icon>
+                    </IconButton>
+                </Tooltip>
             </CardActions>
+
+            <GenericDialogue
+                title='Edit entity name'
+                open={dialogues['editName']}
+                onClose={() => toggleDialogue('editName', 'hide')}
+                maxWidth='sm'
+            >
+                <EditEntityNameForm
+                    curName={stepMapEntity.name}
+                    handleSubmit={newName => {
+                        toggleDialogue('editName', 'hide');
+                        handleUpdateName(newName);
+                    }}
+                />
+            </GenericDialogue>
 
             <GenericDialogue
                 title='Add Parameters'
@@ -141,7 +171,9 @@ const StepMapEntity = props => {
                     handleAddParameter={(name, val) => {
                         handleAddParameter(name, val)
                     }}
-                    handleEditParameter={() => handleEditParameter()}
+                    handleEditParameter={(name, val) => {
+                        handleEditParameter(name, val);
+                    }}
                     handleDeleteParameter={(name) => handleDeleteParameter(name)}
                 />
             </GenericDialogue>
@@ -154,6 +186,16 @@ const StepMapEntity = props => {
             >
                 {JSON.stringify(stepMapEntity.configurator_data)}
             </GenericDialogue>
+
+            <ConfirmationDialogue
+                message={`Delete the entity ${stepMapEntity.name}?`}
+                isOpen={dialogues['confirmDelete']}
+                handleClose={() => toggleDialogue('confirmDelete', 'hide')}
+                handleConfirm={() => {
+                    toggleDialogue('confirmDelete', 'hide');
+                    handleDeleteEntity();
+                }}
+            />
 
         </Card>
     );

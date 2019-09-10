@@ -18,7 +18,7 @@ const styles = theme => ({
 });
 
 const ConfirmationDialogue = (props) => {
-    const { isOpen, handleClose, handleConfirm, message, classes } = props;
+    const { isOpen = false, handleClose, handleConfirm, message, classes } = props;
     return (
         <Dialog
             open={isOpen}

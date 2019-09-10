@@ -4,7 +4,17 @@ import { withSnackbar } from 'notistack';
 
 import StepMap from '../pages/storylines/StepMap';
 
+import {
+    addEntityToExistingMap
+} from '../../actions/storylineActions';
+
 class StepMapContainer extends React.Component {
+
+    addEntity = data => {
+        const { addEntityToExistingMap, currentMapId } = this.props;
+        addEntityToExistingMap(currentMapId, data);
+    }
+
     render() {
         const { currentMapId, maps } = this.props;
         const currentMap = maps[currentMapId];
@@ -12,6 +22,7 @@ class StepMapContainer extends React.Component {
         return (
             <StepMap
                 stepMap={currentMap}
+                handleAddEntity={this.addEntity}
             />
         );
     }
@@ -22,5 +33,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-
+    addEntityToExistingMap
 })(withSnackbar(StepMapContainer));

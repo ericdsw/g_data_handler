@@ -8,7 +8,8 @@ import {
     IconButton,
     Icon,
     Avatar,
-    Typography
+    Typography,
+    Tooltip
 } from '@material-ui/core';
 
 import StepMapEntityContainer from '../../containers/StepMapEntityContainer';
@@ -27,9 +28,20 @@ const StepMap = props => {
     // Parameters
     const { classes, stepMap } = props;
 
+    // Methods
+    const { handleAddEntity } = props;
+
     const [dialogues, toggleDialogue] = useDialogueManager(
         'CreateMapEntity'
     );
+
+    function createEntity(data) {
+        handleAddEntity({
+            name: data.name,
+            type: data.type,
+            parameters: data.parameters
+        });
+    }
 
     const content = (
         stepMap.entity_nodes && stepMap.entity_nodes.map((id, index) => (
@@ -55,11 +67,13 @@ const StepMap = props => {
                     </Typography>
                 }
                 action={
-                    <IconButton
-                        onClick={() => toggleDialogue('createMapEntity', 'show')}
-                    >
-                        <Icon>add_to_photos</Icon>
-                    </IconButton>
+                    <Tooltip title='Add entity to current map'>
+                        <IconButton
+                            onClick={() => toggleDialogue('createMapEntity', 'show')}
+                        >
+                            <Icon>add_to_photos</Icon>
+                        </IconButton>
+                    </Tooltip>
                 }
             />
             <CardContent>
@@ -78,6 +92,10 @@ const StepMap = props => {
             >
                 <CreateMapEntityForm 
                     mapName={stepMap.map_name}
+                    handleSubmit={data => {
+                        toggleDialogue('createMapEntity', 'hide')
+                        createEntity(data);
+                    }}
                 />
             </GenericDialogue>
         </Card>

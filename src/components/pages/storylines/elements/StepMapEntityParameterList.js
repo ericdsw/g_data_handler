@@ -16,6 +16,7 @@ import {
     Divider
 } from '@material-ui/core';
 
+import { ConfirmationDialogue } from '../../../elements';
 import { useDialogueManager } from '../../../../hooks';
 
 const styles = theme => ({
@@ -38,6 +39,10 @@ const StepMapEntityParameterList = props => {
         handleAddParameter, handleEditParameter, handleDeleteParameter
     } = props;
 
+    const [dialogues, toggleDialogue] = useDialogueManager(
+        'confirmParamDelete'
+    );
+
     const paramKeys = Object.keys(entityParams)
 
     const [editingParam, toggleEditingParam] = useState('');
@@ -55,6 +60,9 @@ const StepMapEntityParameterList = props => {
 
     function formSubmitted(event) {
         event.preventDefault();
+        handleAddParameter(newParamName, newParamVal);
+        setNewParamName('');
+        setNewParamVal('');
     }
 
     return (
@@ -164,7 +172,10 @@ const StepMapEntityParameterList = props => {
                                     &nbsp;
                                     <IconButton
                                         onClick={() => {
-                                            handleDeleteParameter(param)
+                                            toggleEditingParam(param);
+                                            toggleDialogue(
+                                                'confirmParamDelete', 'show'
+                                            );
                                         }}
                                     >
                                         <Icon fontSize='small'>delete</Icon>
@@ -175,6 +186,21 @@ const StepMapEntityParameterList = props => {
                     </TableBody>
                 </Table>
             }
+
+            <ConfirmationDialogue
+                message={`Delete the parameter ${editingParam}?`}
+                isOpen={dialogues['confirmParamDelete']}
+                handleClose={() => {
+                    toggleDialogue('confirmParamDelete', 'hide');
+                    toggleEditingParam('');
+                }}
+                handleConfirm={() => {
+                    toggleDialogue('confirmParamDelete', 'hide');
+                    handleDeleteParameter(editingParam);
+                    toggleEditingParam('');
+                }}
+            />
+
         </React.Fragment>
     );
 }

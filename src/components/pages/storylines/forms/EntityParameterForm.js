@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
     TextField,
@@ -13,12 +13,10 @@ const styles = theme => ({
 const EntityParameterForm = props => {
 
     // Parameters
-    const { entityType } = props;
+    const { parameters, entityType } = props;
 
     // Methods
     const { handleParamsChanged } = props;
-
-    const [data, updateData] = useState({});
 
     function makeTextField(label, key) {
 
@@ -27,7 +25,7 @@ const EntityParameterForm = props => {
                 id={key}
                 label={label}
                 onChange={e => handleInputChange(key, e.target.value)}
-                value={data[key]}
+                value={parameters[key]} 
                 type='text'
                 fullWidth
                 variant='outlined'
@@ -43,8 +41,8 @@ const EntityParameterForm = props => {
                 control={
                     <Switch
                         onChange={e => handleInputChange(key, e.target.checked)}
-                        checked={data[key]}
-                        value={data[key]}
+                        checked={parameters[key]}
+                        value={parameters[key]}
                     />
                 }
             />
@@ -52,11 +50,7 @@ const EntityParameterForm = props => {
     }
 
     function handleInputChange(key, value) {
-        var newData = Object.assign({}, data, {
-            [key]: value
-        });
-        updateData(newData);
-        handleParamsChanged(newData);
+        handleParamsChanged(key, value);
     }
 
     let content;

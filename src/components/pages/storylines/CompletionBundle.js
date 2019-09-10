@@ -7,7 +7,8 @@ import {
     Typography,
     IconButton,
     Icon,
-    Divider
+    Divider,
+    Tooltip
 } from '@material-ui/core';
 
 import CompleteConditionContainer from '../../containers/CompleteConditionContainer';
@@ -47,9 +48,11 @@ const CompletionBundle = props => {
                     </Typography>
                 }
                 action={
-                    <IconButton>
-                        <Icon>post_add</Icon>
-                    </IconButton>
+                    <Tooltip title='Add condition to bundle'>
+                        <IconButton>
+                            <Icon>post_add</Icon>
+                        </IconButton>
+                    </Tooltip>
                 }
             />
             <CardContent>

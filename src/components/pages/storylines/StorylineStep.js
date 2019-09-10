@@ -11,14 +11,15 @@ import {
     Collapse,
     IconButton,
     Icon,
-    Divider
+    Divider,
+    Tooltip
 } from '@material-ui/core';
-import { blue, green } from '@material-ui/core/colors';
+import { blue, green, grey } from '@material-ui/core/colors';
 
 import StepMapContainer from '../../containers/StepMapContainer';
 import CompletionBundleContainer from '../../containers/CompletionBundleContainer';
 
-import { GenericDialogue } from '../../elements';
+import { GenericDialogue, ConfirmationDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
 import CreateMapEntityForm from './forms/CreateMapEntityForm';
 import CompletionBundleForm from './forms/CompletionBundleForm';
@@ -48,20 +49,28 @@ const styles = theme => ({
     },
     greenText: {
         color: green[400]
+    },
+    greyText: {
+        color: grey[400]
     }
 });
 
 const StorylineStep = props => {
 
+    // Properties
     const { 
         classes, storylineStep, stepOffset,
         completionDescription, configDescription
     } = props;
 
-    const { handleUpdateStepName } = props;
+    // Methods
+    const { 
+        handleUpdateStepName, handleAddMapConfiguration, handleAddCompletionBundle,
+        handleDeleteStep
+    } = props;
 
     const [dialogues, toggleDialogue] = useDialogueManager(
-        'createMapEntity', 'createCompletionBundle', 'editName'
+        'createMapEntity', 'createCompletionBundle', 'editName', 'confirmDelete'
     );
 
     const [expanded, toggleExpanded] = useState(false);
@@ -87,6 +96,14 @@ const StorylineStep = props => {
             default:
                 return entityName;
         }
+    }
+
+    function createNewEntity(data) {
+        handleAddMapConfiguration(data.mapName, {
+            name: data.name,
+            type: data.type,
+            parameters: data.parameters
+        });
     }
 
     const configDescriptionText = (
@@ -119,11 +136,23 @@ const StorylineStep = props => {
                     </span>
                 </Typography>
                 <ul>
-                    {data.conditions.map((condition, index) => (
-                        <li className={classes.greenText} key={condition.id}>
-                            {condition.unique_name}
+                    {
+                        data.conditions.length > 0 &&
+                        data.conditions.map((condition, index) => (
+                            <li className={classes.greenText} key={condition.id}>
+                                <Typography className={classes.greenText}>
+                                    {condition.unique_name}
+                                </Typography>
+                            </li>
+                        ))
+                    }
+                    {data.conditions.length <= 0 &&
+                        <li className={classes.greyText}>
+                            <Typography className={classes.greyText}>
+                                <i>No conditions defined</i>
+                            </Typography>
                         </li>
-                    ))}
+                    }
                 </ul>
             </li>
         ))
@@ -171,37 +200,78 @@ const StorylineStep = props => {
 
             <CardContent>
                 <Grid container spacing={16}>
-                    <Grid item xs={12} md={6}>
-                        <ul className={classes.descriptionList}>
-                            {configDescriptionText} 
-                        </ul>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <ul className={classes.descriptionList}>
-                            {completionDescriptionText}
-                        </ul>
-                    </Grid>
+                    {(storylineStep.configuration.length <= 0 && storylineStep.completion <= 0) &&
+                        <Grid item xs={12}>
+                            <Typography variant='body1' align='center'>
+                                <i>Empty step</i>
+                            </Typography>
+                        </Grid>
+                    }
+                    {(storylineStep.configuration.length > 0 || storylineStep.completion.length > 0) &&
+                        <React.Fragment>
+                            <Grid item xs={12} md={6}>
+                                {storylineStep.configuration.length > 0 &&
+                                    <ul className={classes.descriptionList}>
+                                        {configDescriptionText} 
+                                    </ul>
+                                }
+                                {storylineStep.configuration.length <= 0 &&
+                                    <Typography variant='body2'>
+                                        <br />
+                                        <i>No entities defined for this step</i>
+                                    </Typography>
+                                }
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                {storylineStep.completion.length > 0 &&
+                                    <ul className={classes.descriptionList}>
+                                        {completionDescriptionText}
+                                    </ul>
+                                }
+                                {storylineStep.completion.length <= 0 &&
+                                    <Typography variant='body2'>
+                                        <br />
+                                        <i>No completion bundles configured, the storyline will finish here</i>
+                                    </Typography>
+                                }
+                            </Grid>
+                        </React.Fragment>
+                    }
                 </Grid>
             </CardContent>
 
             <Divider />
 
             <CardActions disableActionSpacing>
-                <IconButton
-                    onClick={() => toggleDialogue('editName', 'show')}
-                >
-                    <Icon>edit</Icon>
-                </IconButton>
-                <IconButton
-                    onClick={() => toggleDialogue('createMapEntity', 'show')}
-                >
-                    <Icon>add_to_photos</Icon>
-                </IconButton>
-                <IconButton
-                    onClick={() => toggleDialogue('createConditionBundle', 'show')}
-                >
-                    <Icon>add_alert</Icon>
-                </IconButton>
+                <Tooltip title='Edit step name'>
+                    <IconButton
+                        onClick={() => toggleDialogue('editName', 'show')}
+                    >
+                        <Icon>edit</Icon>
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title='Delete step'>
+                    <IconButton
+                        onClick={() => toggleDialogue('confirmDelete', 'show')}
+                    >
+                        <Icon>delete</Icon>
+                    </IconButton>
+                </Tooltip>
+                <Typography variant='h5'>&nbsp;-&nbsp;</Typography>
+                <Tooltip title='Create Entity'>
+                    <IconButton
+                        onClick={() => toggleDialogue('createMapEntity', 'show')}
+                    >
+                        <Icon>add_to_photos</Icon>
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title='Add condition bundle'>
+                    <IconButton
+                        onClick={() => toggleDialogue('createConditionBundle', 'show')}
+                    >
+                        <Icon>add_alert</Icon>
+                    </IconButton>
+                </Tooltip>
                 <IconButton
                     className={classnames(classes.expand, {
                         [classes.expandOpen]: expanded
@@ -259,7 +329,12 @@ const StorylineStep = props => {
                 }
                 onClose={() => toggleDialogue('createMapEntity', 'hide')}
             >
-                <CreateMapEntityForm />
+                <CreateMapEntityForm
+                    handleSubmit={data => {
+                        toggleDialogue('createMapEntity', 'hide');
+                        createNewEntity(data);
+                    }}
+                />
             </GenericDialogue>
 
             <GenericDialogue
@@ -270,19 +345,38 @@ const StorylineStep = props => {
                 }
                 onClose={() => toggleDialogue('createConditionBundle', 'hide')}
             >
-                <CompletionBundleForm />
+                <CompletionBundleForm 
+                    handleSubmit={data => {
+                        toggleDialogue('createConditionBundle', 'hide');
+                        handleAddCompletionBundle(data);
+                    }}
+                />
             </GenericDialogue>
 
             <GenericDialogue
                 title='Edit step name'
+                maxWidth='sm'
                 open={dialogues['editName']}
                 onClose={() => toggleDialogue('editName', 'hide')}
             >
                 <StorylineStepForm 
                     stepName={storylineStep.name}
-                    handleSubmit={newName => handleUpdateStepName(newName)}
+                    handleSubmit={newName => {
+                        toggleDialogue('editName', 'hide');
+                        handleUpdateStepName(newName);
+                    }}
                 />
-        </GenericDialogue>
+            </GenericDialogue>
+
+            <ConfirmationDialogue
+                message={`Delete the step ${storylineStep.name}?`}
+                isOpen={dialogues['confirmDelete']}
+                handleClose={() => toggleDialogue('confirmDelete', 'hide')}
+                handleConfirm={() => {
+                    toggleDialogue('confirmDelete', 'hide');
+                    handleDeleteStep();
+                }}
+            />
 
         </Card>
     );

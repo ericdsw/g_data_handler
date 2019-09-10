@@ -17,11 +17,13 @@ const styles = theme => ({
 const CreateMapEntityForm = props => {
 
     const [formData, updateFormData] = useState({
-        entityName: '',
-        entityType: 'create_npc',
+        name: '',
+        type: 'create_npc',
         mapName: props.mapName ? props.mapName : '',
-        paramData: {}
+        parameters: {}
     });
+
+    const { handleSubmit } = props;
 
     const possibleTypes = {
         'create_npc': 'Create NPC',
@@ -29,9 +31,11 @@ const CreateMapEntityForm = props => {
         'create_area': 'Create Area'
     }
 
-    function parametersChanged(newData) {
+    function parametersChanged(paramName, paramValue) {
+        const newParamData = {...formData.parameters};
+        newParamData[paramName] = paramValue;
         updateFormData(Object.assign({}, formData, {
-            paramData: newData
+            parameters: newParamData
         }));
     }
 
@@ -44,6 +48,7 @@ const CreateMapEntityForm = props => {
 
     function submitData(event) {
         event.preventDefault();
+        handleSubmit(formData);
     }
 
     return (
@@ -51,8 +56,8 @@ const CreateMapEntityForm = props => {
             <TextField
                 id='entity_name'
                 label='Entity Name'
-                onChange={e => handleInputChange('entityName', e.target.value)}
-                value={formData.entityName}
+                onChange={e => handleInputChange('name', e.target.value)}
+                value={formData.name}
                 type='text'
                 fullWidth
                 variant='outlined'
@@ -63,8 +68,8 @@ const CreateMapEntityForm = props => {
                 label='Type'
                 select
                 fullWidth
-                value={formData.entityType}
-                onChange={e => handleInputChange('entityType', e.target.value)}
+                value={formData.type}
+                onChange={e => handleInputChange('type', e.target.value)}
                 variant='outlined'
                 margin='normal'
             >
@@ -94,8 +99,11 @@ const CreateMapEntityForm = props => {
             </Typography>
 
             <EntityParameterForm
-                entityType={formData.entityType}
-                handleParamsChanged={newData => parametersChanged(newData)}
+                entityType={formData.type}
+                parameters={formData.parameters}
+                handleParamsChanged={(key, val) => {
+                    parametersChanged(key, val);
+                }}
             />
 
             <br /> <br />

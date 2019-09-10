@@ -4,15 +4,21 @@ import {
     UPDATE_STORYLINE_NAME,
 
     ADD_STORYLINE_STEP,
-    ADD_STEP_MAP_ELEMENT_CONFIG,
+    ADD_ENTITY_TO_NEW_MAP,
+    ADD_ENTITY_TO_EXISTING_MAP,
     ADD_STEP_COMPLETION_BUNDLE,
+
+    UPDATE_MAP_ENTITY_NAME,
+    UPDATE_OR_ADD_MAP_ENTITY_PARAM,
+
+    DELETE_STEP,
+    DELETE_MAP_ENTITY,
+    DELETE_MAP_ENTITY_PARAM,
+
     ADD_COMPLETION_BUNDLE_CONDITION,
     UPDATE_STEP_NAME,
-    UPDATE_STEP_MAP_ELEMENT_CONFIG,
     UPDATE_STEP_COMPLETION_BUNDLE,
     UPDATE_COMPLETION_BUNDLE_COND,
-    DELETE_STEP,
-    DELETE_STEP_MAP_ELEMENT_CONFIG,
     DELETE_STEP_COMPLETION_BUNDLE,
     DELETE_COMPLETION_BUNDLE_COND
 } from './types';
@@ -42,47 +48,85 @@ export const updateStorylineName = (storylineId, name) => dispatch => {
     });
 }
 
-export const addStorylineStep = stepName => dispatch => {
+export const addStorylineStep = (storylineId, stepName) => dispatch => {
     dispatch({
         type: ADD_STORYLINE_STEP,
-        payload: { stepName }
+        payload: { storylineId, stepName }
     });
 }
 
-export const addStepMapElementConfig = (stepName, mapName, elementName, data) => dispatch => {
+export const addEntityToNewMap = (stepId, mapName, entityData) => dispatch => {
     dispatch({
-        type: ADD_STEP_MAP_ELEMENT_CONFIG,
-        payload: { stepName, mapName, elementName, data }
+        type: ADD_ENTITY_TO_NEW_MAP,
+        payload: {
+            stepId, mapName, entityData
+        }
     });
 }
 
-export const addStepCompletionBundle = (stepName, data) => dispatch => {
+export const addEntityToExistingMap = (mapId, entityData) => dispatch => {
+    dispatch({
+        type: ADD_ENTITY_TO_EXISTING_MAP,
+        payload: { mapId, entityData }
+    });
+}
+
+export const addStepCompletionBundle = (stepId, data) => dispatch => {
     dispatch({
         type: ADD_STEP_COMPLETION_BUNDLE,
-        payload: { stepName, data }
+        payload: { stepId, data }
     });
 }
+
+export const updateStepName = (stepId, newName) => dispatch => {
+    dispatch({
+        type: UPDATE_STEP_NAME,
+        payload: { stepId, newName }
+    });
+}
+
+export const deleteStep = stepId => dispatch => {
+    dispatch({
+        type: DELETE_STEP,
+        payload: { stepId }
+    });
+}
+
+export const updateMapEntityName = (entityId, newName) => dispatch => {
+    dispatch({
+        type: UPDATE_MAP_ENTITY_NAME,
+        payload: { entityId, newName }
+    });
+}
+
+export const deleteMapEntity = entityId => dispatch => {
+    dispatch({
+        type: DELETE_MAP_ENTITY,
+        payload: { entityId }
+    });
+}
+
+export const updateOrAddMapEntityParam = (entityId, name, value) => dispatch => {
+    dispatch({
+        type: UPDATE_OR_ADD_MAP_ENTITY_PARAM,
+        payload: { entityId, name, value }
+    });
+}
+
+export const deleteMapEntityParam = (entityId, name) => dispatch => {
+    dispatch({
+        type: DELETE_MAP_ENTITY_PARAM,
+        payload: { entityId, name }
+    });
+}
+
+
+
 
 export const addCompletionBundleCondition = (stepName, bundleOffset, data) => dispatch => {
     dispatch({
         type: ADD_COMPLETION_BUNDLE_CONDITION,
         payload: { stepName, bundleOffset, data }
-    });
-}
-
-export const updateStepName = (oldName, newName) => dispatch => {
-    dispatch({
-        type: UPDATE_STEP_NAME,
-        payload: { oldName, newName }
-    });
-}
-
-export const updateStepMapElementConfig = (stepName, mapName, elementName, data) => dispatch => {
-    dispatch({
-        type: UPDATE_STEP_MAP_ELEMENT_CONFIG,
-        payload: {
-            stepName, mapName, elementName, data
-        }
     });
 }
 
@@ -100,22 +144,6 @@ export const updateCompletionBundleCond = (stepName, bundleOffset, conditionOffs
         type: UPDATE_COMPLETION_BUNDLE_COND,
         payload: {
             stepName, bundleOffset, conditionOffset, data
-        }
-    });
-}
-
-export const deleteStep = stepName => dispatch => {
-    dispatch({
-        type: DELETE_STEP,
-        payload: { stepName }
-    });
-}
-
-export const deleteStepMapElementConfig = (stepName, mapName, elementName) => dispatch => {
-    dispatch({
-        type: DELETE_STEP_MAP_ELEMENT_CONFIG,
-        payload: {
-            stepName, mapName, elementName
         }
     });
 }

@@ -11,7 +11,8 @@ import StorylineSchema from '../../schemas/StorylineSchema';
 import {
     updateStoryline,
     updateWithEmptyStoryline,
-    updateStorylineName
+    updateStorylineName,
+    addStorylineStep
 } from '../../actions/storylineActions';
 
 class StorylineContainer extends React.Component {
@@ -37,6 +38,11 @@ class StorylineContainer extends React.Component {
         updateStorylineName(currentStoryline, newName);
     }
 
+    addStep = stepName => {
+        const { currentStoryline, addStorylineStep } = this.props;
+        addStorylineStep(currentStoryline, stepName);
+    }
+
     // Extra
     showError = errorMessage => {
         this.props.enqueueSnackbar(errorMessage, { variant: 'error' });
@@ -53,6 +59,7 @@ class StorylineContainer extends React.Component {
                 <Storyline
                     storyline={storylines[currentStoryline]}
                     handleNameChange={this.updateName}
+                    handleAddStep={this.addStep}
                 />
             );
         } else { 
@@ -62,7 +69,7 @@ class StorylineContainer extends React.Component {
                     dragString={
                         <React.Fragment>
                             <Typography gutterBottom>
-                                <Icon fontSize='large'>subscriptions</Icon>
+                                <Icon fontSize='large'>bubble_chart</Icon>
                             </Typography>
                             Drag a <code>.json</code> here to edit
                             an existing storyline
@@ -85,6 +92,7 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
     updateStoryline,
     updateWithEmptyStoryline,
-    updateStorylineName
+    updateStorylineName,
+    addStorylineStep
 })(withSnackbar(StorylineContainer));
 

@@ -14,6 +14,8 @@ const styles = theme => ({
 
 const CompletionBundleForm = props => {
 
+    const { handleSubmit } = props;
+
     const [data, updateData] = useState({
         next_step: '',
         use_fade: false,
@@ -22,8 +24,9 @@ const CompletionBundleForm = props => {
         conditions: []
     });
 
-    function handleSubmit (event) {
+    function onSubmit(event) {
         event.preventDefault();
+        handleSubmit(data);
     }
 
     function handleInputChange(key, value) {
@@ -33,7 +36,7 @@ const CompletionBundleForm = props => {
     }
 
     return (
-        <form onSubmit={e => handleSubmit(e)}>
+        <form onSubmit={e => onSubmit(e)}>
             <TextField
                 label='Next Step'
                 id='next_step'

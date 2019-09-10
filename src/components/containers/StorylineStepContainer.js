@@ -3,18 +3,33 @@ import { connect } from 'react-redux';
 import { withSnackbar } from 'notistack';
 import StorylineStep from '../pages/storylines/StorylineStep';
 
+import {
+    updateStepName,
+    addEntityToNewMap,
+    addStepCompletionBundle,
+    deleteStep
+} from '../../actions/storylineActions';
+
 class StorylineStepContainer extends React.Component {
 
-    addMapConfiguration = (mapId, data) => {
-
+    addEntityWithMap = (mapName, entityData) => {
+        const { addEntityToNewMap, currentStepId } = this.props;
+        addEntityToNewMap(currentStepId, mapName, entityData);
     }
 
-    addCompletionBundle = (completionBundleId, data) => {
-
+    addStepCompletionBundle = data => {
+        const { currentStepId, addStepCompletionBundle } = this.props;
+        addStepCompletionBundle(currentStepId, data);
     }
 
     updateStepName = newName => {
-        console.log(newName);
+        const { currentStepId, updateStepName } = this.props;
+        updateStepName(currentStepId, newName);
+    }
+
+    deleteStep = () => {
+        const { currentStepId, deleteStep } = this.props;
+        deleteStep(currentStepId);
     }
 
     render() {
@@ -55,9 +70,10 @@ class StorylineStepContainer extends React.Component {
                 stepOffset={stepOffset}
                 configDescription={confDescription}
                 completionDescription={completionDesc}
-                handleAppMapConfiguration={this.addMapConfiguration}
-                handleAddCompletionBundle={this.addCompletionBundle}
+                handleAddMapConfiguration={this.addEntityWithMap}
+                handleAddCompletionBundle={this.addStepCompletionBundle}
                 handleUpdateStepName={this.updateStepName}
+                handleDeleteStep={this.deleteStep}
             />
         );
     }
@@ -73,5 +89,8 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-
+    updateStepName,
+    addEntityToNewMap,
+    addStepCompletionBundle,
+    deleteStep
 })(withSnackbar(StorylineStepContainer));

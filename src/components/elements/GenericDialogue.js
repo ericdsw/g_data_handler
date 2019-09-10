@@ -5,7 +5,7 @@ import {
     DialogContent
 } from '@material-ui/core'
 
-const GenericDialogue = ({title, open, onClose, children, maxWidth = 'md'}) => {
+const GenericDialogue = ({title, open = false, onClose, children, maxWidth = 'md'}) => {
     return (
         <Dialog
             open={open}

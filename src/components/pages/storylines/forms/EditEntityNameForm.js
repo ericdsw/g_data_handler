@@ -1,33 +1,32 @@
 import React, { useState } from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import {
     Grid,
     TextField,
     Button
 } from '@material-ui/core';
 
-const styles = theme => ({
+const EditEntityNameForm = props => {
 
-});
+    // Parameters
+    const { curName } = props;
 
-const StorylineStepForm = props => {
+    // Methods
+    const { handleSubmit } = props;
 
-    const [stepName, updateStepName] = useState(
-        props.stepName ? props.stepName : ''
-    );
+    const [entityName, updateEntityName] = useState(curName);
 
-    function handleSubmit(event) {
+    function onSubmit(event) {
         event.preventDefault();
-        props.handleSubmit(stepName);
+        handleSubmit(entityName);
     }
 
     return (
-        <form onSubmit={e => handleSubmit(e)}>
+        <form onSubmit={e => onSubmit(e)}>
             <TextField
-                id='step_name'
-                label='Step Name'
-                value={stepName}
-                onChange={e => updateStepName(e.target.value)}
+                id='entity_name'
+                label='Entity Name'
+                value={entityName}
+                onChange={e => updateEntityName(e.target.value)}
                 autoFocus
                 fullWidth
                 variant='outlined'
@@ -41,7 +40,7 @@ const StorylineStepForm = props => {
                         variant='contained'
                         type='submit'
                     >
-                        {props.stepName ? 'Update' : 'Create'}
+                        Update
                     </Button>
                 </Grid>
             </Grid>
@@ -49,4 +48,4 @@ const StorylineStepForm = props => {
     );
 }
 
-export default withStyles(styles)(StorylineStepForm);
+export default EditEntityNameForm;
