@@ -12,10 +12,12 @@ import {
     ADD_STEP_COMPLETION_BUNDLE,
     ADD_ENTITY_TO_NEW_MAP,
     ADD_ENTITY_TO_EXISTING_MAP,
+    ADD_NPC_INTERACTION,
 
     DELETE_STEP,
     DELETE_MAP_ENTITY,
-    DELETE_MAP_ENTITY_PARAM
+    DELETE_MAP_ENTITY_PARAM,
+    DELETE_NPC_INTERACTION
 } from '../actions/types';
 
 const initialState = {
@@ -57,6 +59,10 @@ export default function(state = initialState, action) {
             return updateOrAddMapEntityParam(state, action);
         case DELETE_MAP_ENTITY_PARAM:
             return deleteMapEntityParam(state, action);
+        case DELETE_NPC_INTERACTION:
+            return deleteNPCInteraction(state, action);
+        case ADD_NPC_INTERACTION:
+            return addNPCInteraction(state, action);
         default:
             return state;
     }
@@ -309,3 +315,49 @@ function deleteMapEntityParam(state, action) {
     });
 }
 
+function deleteNPCInteraction(state, action) {
+
+    const { interactionId } = action.payload;
+
+    const interactions = {...state.entityConfigurators};
+    delete interactions[interactionId];
+
+    const entities = {...state.stepMapEntities};
+    for (const entityId in entities) {
+        const curEntity = entities[entityId];
+        if (curEntity.configurator_data.includes(interactionId)) {
+            curEntity.configurator_data.splice(
+                curEntity.configurator_data.indexOf(interactionId), 1
+            );
+        }
+    }
+
+    return Object.assign({}, state, {
+        entityConfigurators: interactions,
+        stepMapEntities: entities
+    });
+}
+
+function addNPCInteraction(state, action) {
+
+    const { entityId, type, parameters } = action.payload;
+
+    const interactions = {...state.entityConfigurators};
+    const entities = {...state.stepMapEntities};
+
+    const interactionId = uuidv4();
+
+    const newInteraction = {
+        id: interactionId,
+        type: type,
+        parameters: parameters
+    }
+
+    interactions[interactionId] = newInteraction;
+    entities[entityId].configurator_data.push(interactionId);
+
+    return Object.assign({}, state, {
+        entityConfigurators: interactions,
+        stepMapEntities: entities
+    });
+}

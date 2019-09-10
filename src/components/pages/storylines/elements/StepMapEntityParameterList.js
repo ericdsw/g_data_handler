@@ -159,27 +159,29 @@ const StepMapEntityParameterList = props => {
                                     />
                                 </TableCell>
                                 <TableCell>
-                                    <IconButton
-                                        onClick={() => modifyParam(param)}
-                                    >
-                                        {editingParam !== param &&
-                                            <Icon fontSize='small'>edit</Icon>
-                                        }
-                                        {editingParam === param && 
-                                            <Icon fontSize='small'>done</Icon>
-                                        }
-                                    </IconButton>
-                                    &nbsp;
-                                    <IconButton
-                                        onClick={() => {
-                                            toggleEditingParam(param);
-                                            toggleDialogue(
-                                                'confirmParamDelete', 'show'
-                                            );
-                                        }}
-                                    >
-                                        <Icon fontSize='small'>delete</Icon>
-                                    </IconButton>
+                                    <Typography align='right'>
+                                        <IconButton
+                                            onClick={() => modifyParam(param)}
+                                        >
+                                            {editingParam !== param &&
+                                                <Icon fontSize='small'>edit</Icon>
+                                            }
+                                            {editingParam === param && 
+                                                <Icon fontSize='small'>done</Icon>
+                                            }
+                                        </IconButton>
+                                        &nbsp;
+                                        <IconButton
+                                            onClick={() => {
+                                                toggleEditingParam(param);
+                                                toggleDialogue(
+                                                    'confirmParamDelete', 'show'
+                                                );
+                                            }}
+                                        >
+                                            <Icon fontSize='small'>delete</Icon>
+                                        </IconButton>
+                                    </Typography>
                                 </TableCell>
                             </TableRow>
                         ))}

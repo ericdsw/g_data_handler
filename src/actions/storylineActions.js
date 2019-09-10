@@ -7,6 +7,7 @@ import {
     ADD_ENTITY_TO_NEW_MAP,
     ADD_ENTITY_TO_EXISTING_MAP,
     ADD_STEP_COMPLETION_BUNDLE,
+    ADD_NPC_INTERACTION,
 
     UPDATE_MAP_ENTITY_NAME,
     UPDATE_OR_ADD_MAP_ENTITY_PARAM,
@@ -14,13 +15,9 @@ import {
     DELETE_STEP,
     DELETE_MAP_ENTITY,
     DELETE_MAP_ENTITY_PARAM,
+    DELETE_NPC_INTERACTION,
 
-    ADD_COMPLETION_BUNDLE_CONDITION,
     UPDATE_STEP_NAME,
-    UPDATE_STEP_COMPLETION_BUNDLE,
-    UPDATE_COMPLETION_BUNDLE_COND,
-    DELETE_STEP_COMPLETION_BUNDLE,
-    DELETE_COMPLETION_BUNDLE_COND
 } from './types';
 
 export const updateStoryline = (currentStoryline, data) => dispatch => {
@@ -120,48 +117,17 @@ export const deleteMapEntityParam = (entityId, name) => dispatch => {
     });
 }
 
-
-
-
-export const addCompletionBundleCondition = (stepName, bundleOffset, data) => dispatch => {
+export const deleteNPCInteraction = interactionId => dispatch => {
     dispatch({
-        type: ADD_COMPLETION_BUNDLE_CONDITION,
-        payload: { stepName, bundleOffset, data }
+        type: DELETE_NPC_INTERACTION,
+        payload: { interactionId }
     });
 }
 
-export const updateStepCompletionBundle = (stepName, bundleOffset, data) => dispatch => {
+export const addNPCInteraction = (entityId, type, parameters) => dispatch => {
     dispatch({
-        type: UPDATE_STEP_COMPLETION_BUNDLE,
-        payload: {
-            stepName, bundleOffset, data
-        }
+        type: ADD_NPC_INTERACTION,
+        payload: { entityId, type, parameters }
     });
 }
 
-export const updateCompletionBundleCond = (stepName, bundleOffset, conditionOffset, data) => dispatch => {
-    dispatch({
-        type: UPDATE_COMPLETION_BUNDLE_COND,
-        payload: {
-            stepName, bundleOffset, conditionOffset, data
-        }
-    });
-}
-
-export const deleteStepCompletionBundle = (stepName, bundleOffset) => dispatch => {
-    dispatch({
-        type: DELETE_STEP_COMPLETION_BUNDLE,
-        payload: {
-            stepName, bundleOffset
-        }
-    });
-}
-
-export const deleteCompletionBundleCond = (stepName, bundleOffset, conditionOffset) => dispatch => {
-    dispatch({
-        type: DELETE_COMPLETION_BUNDLE_COND,
-        payload: {
-            stepName, bundleOffset, conditionOffset
-        }
-    });
-}

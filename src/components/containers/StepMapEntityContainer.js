@@ -8,7 +8,8 @@ import {
     updateMapEntityName,
     deleteMapEntity,
     updateOrAddMapEntityParam,
-    deleteMapEntityParam
+    deleteMapEntityParam,
+    addNPCInteraction
 } from '../../actions/storylineActions';
 
 class StepMapEntityContainer extends React.Component {
@@ -23,8 +24,9 @@ class StepMapEntityContainer extends React.Component {
         deleteMapEntityParam(currentMapEntityId, paramName);
     }
 
-    addInteraction = (interactionId, type, parameters) => {
-
+    addInteraction = (type, parameters) => {
+        const { addNPCInteraction, currentMapEntityId } = this.props;
+        addNPCInteraction(currentMapEntityId, type, parameters);
     }
 
     editInteraction = (interactionId, parameters) => {
@@ -72,5 +74,6 @@ export default connect(mapStateToProps, {
     updateMapEntityName,
     updateOrAddMapEntityParam,
     deleteMapEntity,
-    deleteMapEntityParam
+    deleteMapEntityParam,
+    addNPCInteraction
 })(withSnackbar(StepMapEntityContainer));

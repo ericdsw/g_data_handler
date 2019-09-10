@@ -133,14 +133,14 @@ const StorylineStep = props => {
                     Go to step&nbsp;
                     <span className={classes.greenText}>
                         {data.bundle.next_step}
-                    </span>
+                    </span> after:
                 </Typography>
                 <ul>
                     {
                         data.conditions.length > 0 &&
                         data.conditions.map((condition, index) => (
-                            <li className={classes.greenText} key={condition.id}>
-                                <Typography className={classes.greenText}>
+                            <li className={classes.blueText} key={condition.id}>
+                                <Typography className={classes.blueText}>
                                     {condition.unique_name}
                                 </Typography>
                             </li>
