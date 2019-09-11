@@ -8,14 +8,17 @@ import {
     ADD_ENTITY_TO_EXISTING_MAP,
     ADD_STEP_COMPLETION_BUNDLE,
     ADD_NPC_INTERACTION,
+    ADD_STEP_COMPLETE_CONDITION,
 
     UPDATE_MAP_ENTITY_NAME,
     UPDATE_OR_ADD_MAP_ENTITY_PARAM,
+    UPDATE_CONDITION,
 
     DELETE_STEP,
     DELETE_MAP_ENTITY,
     DELETE_MAP_ENTITY_PARAM,
     DELETE_NPC_INTERACTION,
+    DELETE_CONDITION,
 
     UPDATE_STEP_NAME,
 } from './types';
@@ -131,3 +134,23 @@ export const addNPCInteraction = (entityId, type, parameters) => dispatch => {
     });
 }
 
+export const addStepCompleteCondition = (bundleId, type, name, parameters) => dispatch => {
+    dispatch({
+        type: ADD_STEP_COMPLETE_CONDITION,
+        payload: { bundleId, type, name, parameters }
+    });
+}
+
+export const deleteCondition = conditionId => dispatch => {
+    dispatch({
+        type: DELETE_CONDITION,
+        payload: { conditionId }
+    });
+}
+
+export const updateCondition = (conditionId, name, parameters) => dispatch => {
+    dispatch({
+        type: UPDATE_CONDITION,
+        payload: { conditionId, name, parameters }
+    });
+}

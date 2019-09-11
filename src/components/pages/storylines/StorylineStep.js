@@ -203,7 +203,7 @@ const StorylineStep = props => {
                     {(storylineStep.configuration.length <= 0 && storylineStep.completion <= 0) &&
                         <Grid item xs={12}>
                             <Typography variant='body1' align='center'>
-                                <i>Empty step</i>
+                                <i>Empty step, will end storyline</i>
                             </Typography>
                         </Grid>
                     }
@@ -291,7 +291,7 @@ const StorylineStep = props => {
                         container
                         spacing={16}
                     >
-                        <Grid item xs={12} lg={9} >
+                        <Grid item xs={12} lg={8} >
                             <Typography 
                                 variant='h5'
                                 align='center'
@@ -304,7 +304,7 @@ const StorylineStep = props => {
                                 {mapConfData}
                             </Grid>
                         </Grid>
-                        <Grid item xs={12} lg={3}>
+                        <Grid item xs={12} lg={4}>
                             <Typography 
                                 variant='h5'
                                 align='center'

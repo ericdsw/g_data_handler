@@ -4,7 +4,22 @@ import { withSnackbar } from 'notistack';
 
 import CompletionBundle from '../pages/storylines/CompletionBundle';
 
+import {
+    addStepCompleteCondition
+} from '../../actions/storylineActions';
+
 class CompletionBundleContainer extends React.Component {
+
+    createCondition = (type, name, data) => {
+        const {
+            currentCompletionBundleId, addStepCompleteCondition
+        } = this.props;
+
+        addStepCompleteCondition(
+            currentCompletionBundleId,
+            type, name, data
+        );
+    }
 
     render() {
 
@@ -14,6 +29,7 @@ class CompletionBundleContainer extends React.Component {
         return (
             <CompletionBundle
                 completionBundle={currentBundle}
+                handleCreateCondition={this.createCondition}
             />
         );
     }
@@ -25,6 +41,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-
+    addStepCompleteCondition
 })(withSnackbar(CompletionBundleContainer));
 

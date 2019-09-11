@@ -7,17 +7,20 @@ import {
     UPDATE_STEP_NAME,
     UPDATE_MAP_ENTITY_NAME,
     UPDATE_OR_ADD_MAP_ENTITY_PARAM,
+    UPDATE_CONDITION,
 
     ADD_STORYLINE_STEP,
     ADD_STEP_COMPLETION_BUNDLE,
     ADD_ENTITY_TO_NEW_MAP,
     ADD_ENTITY_TO_EXISTING_MAP,
     ADD_NPC_INTERACTION,
+    ADD_STEP_COMPLETE_CONDITION,
 
     DELETE_STEP,
     DELETE_MAP_ENTITY,
     DELETE_MAP_ENTITY_PARAM,
-    DELETE_NPC_INTERACTION
+    DELETE_NPC_INTERACTION,
+    DELETE_CONDITION
 } from '../actions/types';
 
 const initialState = {
@@ -63,6 +66,12 @@ export default function(state = initialState, action) {
             return deleteNPCInteraction(state, action);
         case ADD_NPC_INTERACTION:
             return addNPCInteraction(state, action);
+        case ADD_STEP_COMPLETE_CONDITION:
+            return addStepCompleteCondition(state, action);
+        case UPDATE_CONDITION:
+            return updateCondition(state, action);
+        case DELETE_CONDITION:
+            return deleteCondition(state, action);
         default:
             return state;
     }
@@ -360,4 +369,71 @@ function addNPCInteraction(state, action) {
         entityConfigurators: interactions,
         stepMapEntities: entities
     });
+}
+
+function addStepCompleteCondition(state, action) {
+
+    const { bundleId, type, name, parameters } = action.payload;
+    const conditionId = uuidv4();
+
+    const bundles = {...state.completionBundles};
+    const conditions = {...state.completeConditions};
+
+    const newCondition = {
+        id: conditionId,
+        type: type,
+        unique_name: name,
+        parameters: parameters
+    }
+    conditions[conditionId] = newCondition;
+
+    bundles[bundleId].conditions.push(conditionId);
+
+    return Object.assign({}, state, {
+        completionBundles: bundles,
+        completeConditions: conditions
+    });
+}
+
+function updateCondition(state, action) {
+
+    const { conditionId, name, parameters } = action.payload;
+
+    const conditions = {...state.completeConditions};
+
+    conditions[conditionId].unique_name = name;
+    conditions[conditionId].parameters = parameters;
+
+    return Object.assign({}, state, {
+        completeConditions: conditions
+    });
+}
+
+function deleteCondition(state, action) {
+
+    const { conditionId } = action.payload;
+
+    const conditions = {...state.completeConditions};
+    const bundles = {...state.completionBundles};
+
+    delete conditions[conditionId];
+
+    deleteReference(bundles, 'conditions', conditionId);
+
+    return Object.assign({}, state, {
+        completeConditions: conditions,
+        completionBundles: bundles
+    });
+}
+
+
+function deleteReference(fromDictionary, referenceName, value) {
+    for (const dictionaryKey in fromDictionary) {
+        const curElement = fromDictionary[dictionaryKey];
+        if (curElement[referenceName].includes(value)) {
+            curElement[referenceName].splice(
+                curElement[referenceName].indexOf(value), 1
+            )
+        }
+    }
 }

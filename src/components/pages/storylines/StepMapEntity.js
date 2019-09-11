@@ -55,15 +55,6 @@ const styles = theme => ({
 
 const StepMapEntity = props => {
 
-    // const interactionMap = {
-    //     'cutscene_interaction': 'Cutscene Interaction',
-    //     'dialogue_interaction': 'Dialogue Interaction',
-    //     'give_item_interaction': 'Give Item Interaction',
-    //     'item_cutscene_interaction': 'Item Cutscene Interaction',
-    //     'item_dialogue_interaction': 'Item Dialogue Interaction',
-    //     'remove_item_interaction': 'Remove Item Interaction'
-    // }
-
     // Properties
     const { classes, stepMapEntity } = props;
 
