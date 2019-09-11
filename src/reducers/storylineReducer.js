@@ -8,6 +8,7 @@ import {
     UPDATE_MAP_ENTITY_NAME,
     UPDATE_OR_ADD_MAP_ENTITY_PARAM,
     UPDATE_CONDITION,
+    UPDATE_BUNDLE,
 
     ADD_STORYLINE_STEP,
     ADD_STEP_COMPLETION_BUNDLE,
@@ -20,7 +21,8 @@ import {
     DELETE_MAP_ENTITY,
     DELETE_MAP_ENTITY_PARAM,
     DELETE_NPC_INTERACTION,
-    DELETE_CONDITION
+    DELETE_CONDITION,
+    DELETE_BUNDLE,
 } from '../actions/types';
 
 const initialState = {
@@ -72,6 +74,10 @@ export default function(state = initialState, action) {
             return updateCondition(state, action);
         case DELETE_CONDITION:
             return deleteCondition(state, action);
+        case UPDATE_BUNDLE:
+            return updateBundle(state, action);
+        case DELETE_BUNDLE:
+            return deleteBundle(state, action);
         default:
             return state;
     }
@@ -234,13 +240,7 @@ function deleteStorylineStep(state, action) {
     delete steps[stepId];
 
     const storylines = {...state.storylines}
-    for (const storylineId in storylines) {
-        if (storylines[storylineId].steps.includes(stepId)) {
-            storylines[storylineId].steps.splice(
-                storylines[storylineId].steps.indexOf(stepId), 1
-            );
-        }
-    }
+    deleteReference(storylines, 'steps', stepId);
 
     return Object.assign({}, state, {
         storylines: storylines,
@@ -286,14 +286,8 @@ function deleteMapEntity(state, action) {
     const maps = {...state.stepMaps};
 
     delete entities[entityId];
-
-    for (const mapId in maps) {
-        if (maps[mapId].entity_nodes.includes(entityId)) {
-            maps[mapId].entity_nodes.splice(
-                maps[mapId].entity_nodes.indexOf(entityId), 1
-            );
-        }
-    }
+    
+    deleteReference(maps, 'entity_nodes', entityId);
 
     return Object.assign({}, state, {
         stepMapEntities: entities,
@@ -332,14 +326,7 @@ function deleteNPCInteraction(state, action) {
     delete interactions[interactionId];
 
     const entities = {...state.stepMapEntities};
-    for (const entityId in entities) {
-        const curEntity = entities[entityId];
-        if (curEntity.configurator_data.includes(interactionId)) {
-            curEntity.configurator_data.splice(
-                curEntity.configurator_data.indexOf(interactionId), 1
-            );
-        }
-    }
+    deleteReference(entities, 'configurator_data', interactionId);
 
     return Object.assign({}, state, {
         entityConfigurators: interactions,
@@ -426,7 +413,41 @@ function deleteCondition(state, action) {
     });
 }
 
+function updateBundle(state, action) {
 
+    const { bundleId, data } = action.payload;
+
+    const bundles = {...state.completionBundles};
+
+    bundles[bundleId].next_step = data.next_step;
+    bundles[bundleId].use_fade = data.use_fade;
+    bundles[bundleId].change_cutscene = data.change_cutscene;
+    bundles[bundleId].affected_map = data.affected_map;
+
+    return Object.assign({}, state, {
+        completionBundles: bundles
+    });
+}
+
+function deleteBundle(state, action) {
+
+    const { bundleId } = action.payload;
+
+    const bundles = {...state.completionBundles};
+    const steps = {...state.storylineSteps};
+
+    delete bundles[bundleId];
+    deleteReference(steps, 'completion', bundleId);
+
+    return Object.assign({}, state, {
+        completionBundles: bundles,
+        storylineSteps: steps
+    });
+}
+
+/**
+ * Deletes the reference from the provided dictionary
+ */
 function deleteReference(fromDictionary, referenceName, value) {
     for (const dictionaryKey in fromDictionary) {
         const curElement = fromDictionary[dictionaryKey];
@@ -437,3 +458,4 @@ function deleteReference(fromDictionary, referenceName, value) {
         }
     }
 }
+

@@ -5,7 +5,9 @@ import { withSnackbar } from 'notistack';
 import CompletionBundle from '../pages/storylines/CompletionBundle';
 
 import {
-    addStepCompleteCondition
+    addStepCompleteCondition,
+    updateBundle,
+    deleteBundle
 } from '../../actions/storylineActions';
 
 class CompletionBundleContainer extends React.Component {
@@ -21,6 +23,16 @@ class CompletionBundleContainer extends React.Component {
         );
     }
 
+    editBundle = data => {
+        const { currentCompletionBundleId, updateBundle } = this.props;
+        updateBundle(currentCompletionBundleId, data);
+    }
+
+    deleteBundle = () => {
+        const { currentCompletionBundleId, deleteBundle } = this.props;
+        deleteBundle(currentCompletionBundleId);
+    }
+
     render() {
 
         const { currentCompletionBundleId, completionBundles } = this.props;
@@ -30,6 +42,8 @@ class CompletionBundleContainer extends React.Component {
             <CompletionBundle
                 completionBundle={currentBundle}
                 handleCreateCondition={this.createCondition}
+                handleEditBundle={this.editBundle}
+                handleDeleteBundle={this.deleteBundle}
             />
         );
     }
@@ -41,6 +55,8 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-    addStepCompleteCondition
+    addStepCompleteCondition,
+    updateBundle,
+    deleteBundle
 })(withSnackbar(CompletionBundleContainer));
 

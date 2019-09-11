@@ -14,13 +14,13 @@ const styles = theme => ({
 
 const CompletionBundleForm = props => {
 
-    const { handleSubmit } = props;
+    const { handleSubmit, bundle = {} } = props;
 
     const [data, updateData] = useState({
-        next_step: '',
-        use_fade: false,
-        change_cutscene: '',
-        affected_map: '',
+        next_step: bundle.next_step ? bundle.next_step : '',
+        use_fade: bundle.use_fade ? bundle.use_fade : false,
+        change_cutscene: bundle.change_cutscene ? bundle.change_cutscene : '',
+        affected_map: bundle.affected_map ? bundle.affected_map : '',
         conditions: []
     });
 
@@ -91,7 +91,7 @@ const CompletionBundleForm = props => {
                         variant='contained'
                         type='submit'
                     >
-                        Create
+                        {bundle.next_step ? 'Update' : 'Create'}
                     </Button>
                 </Grid>
             </Grid>

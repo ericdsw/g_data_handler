@@ -13,12 +13,14 @@ import {
     UPDATE_MAP_ENTITY_NAME,
     UPDATE_OR_ADD_MAP_ENTITY_PARAM,
     UPDATE_CONDITION,
+    UPDATE_BUNDLE,
 
     DELETE_STEP,
     DELETE_MAP_ENTITY,
     DELETE_MAP_ENTITY_PARAM,
     DELETE_NPC_INTERACTION,
     DELETE_CONDITION,
+    DELETE_BUNDLE,
 
     UPDATE_STEP_NAME,
 } from './types';
@@ -154,3 +156,18 @@ export const updateCondition = (conditionId, name, parameters) => dispatch => {
         payload: { conditionId, name, parameters }
     });
 }
+
+export const updateBundle = (bundleId, data) => dispatch => {
+    dispatch({
+        type: UPDATE_BUNDLE,
+        payload: { bundleId, data }
+    });
+}
+
+export const deleteBundle = bundleId => dispatch => {
+    dispatch({
+        type: DELETE_BUNDLE,
+        payload: { bundleId }
+    });
+}
+

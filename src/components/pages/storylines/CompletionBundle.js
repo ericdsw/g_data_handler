@@ -6,16 +6,29 @@ import {
     CardContent,
     Typography,
     Divider,
+    Tooltip,
+    IconButton,
+    Icon,
 } from '@material-ui/core';
 
 import CompleteConditionContainer from '../../containers/CompleteConditionContainer';
 import CompleteConditionForm from './forms/CompleteConditionForm';
-import { GenericDialogue, MenuIconButton } from '../../elements';
+import CompletionBundleForm from './forms/CompletionBundleForm';
+import { 
+    GenericDialogue, 
+    ConfirmationDialogue, 
+    MenuIconButton 
+} from '../../elements';
 import { completionInputSchema } from '../../../globals';
+import { useDialogueManager } from '../../../hooks';
 
 const styles = theme => ({
     bundleCard: {
         background: '#555',
+    },
+    descriptionText: {
+        marginBottom: 16,
+        fontStyle: 'italic'
     }
 });
 
@@ -25,9 +38,12 @@ const CompletionBundle = props => {
     const { classes, completionBundle } = props;
 
     // Methods
-    const { handleCreateCondition } = props;
+    const { handleCreateCondition, handleEditBundle, handleDeleteBundle } = props;
 
     const [curCompletionType, setCurCompletionType] = useState('');
+    const [dialogues, toggleDialogue] = useDialogueManager(
+        'editBundle', 'confirmDelete'
+    );
 
     const menuContent = {}
     for (const key in completionInputSchema) {
@@ -57,24 +73,71 @@ const CompletionBundle = props => {
         setCurCompletionType(menuValue);
     }
 
+    function generateDescription() {
+        const { affected_map, change_cutscene, use_fade } = completionBundle;
+        if (affected_map) {
+            if (change_cutscene) {
+                return (
+                    <React.Fragment>
+                        Wil trigger cutscene <b>{change_cutscene}</b> if in 
+                        map <b>{affected_map}</b>
+                    </React.Fragment>
+                );
+            } else if(use_fade) {
+                return (
+                    <React.Fragment>
+                        Will use fade if in map <b>{affected_map}</b>
+                    </React.Fragment>
+                );
+            }
+        } 
+        return `No transition will occur`;
+    }
+
     return (
         <Card className={classes.bundleCard}>
             <CardHeader
                 title={
                     <Typography variant='subtitle1'>
                         Next: <b>{completionBundle.next_step}</b>
+                        <br />
                     </Typography>
                 }
                 action={
-                    <MenuIconButton
-                        elementId='add_completion_menu'
-                        icon='post_add'
-                        contentDictionary={menuContent}
-                        handleClick={key => handleMenuClick(key)}
-                    />
+                    <React.Fragment>
+                        <MenuIconButton
+                            elementId='add_completion_menu'
+                            icon='post_add'
+                            tooltip='Add condition'
+                            contentDictionary={menuContent}
+                            handleClick={key => handleMenuClick(key)}
+                        />
+                        
+                        <Tooltip title='Edit bundle'>
+                            <IconButton
+                                onClick={() => {
+                                    toggleDialogue('editBundle', 'show');
+                                }}
+                            >
+                                <Icon>edit</Icon>
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title='Delete bundle'>
+                            <IconButton
+                                onClick={() => {
+                                    toggleDialogue('confirmDelete', 'show')
+                                }}
+                            >
+                                <Icon>delete</Icon>
+                            </IconButton>
+                        </Tooltip>
+                    </React.Fragment>
                 }
             />
             <CardContent>
+                <Typography className={classes.descriptionText} variant='body2'>
+                    {generateDescription()}
+                </Typography>
                 {completionContent}
             </CardContent>
 
@@ -92,6 +155,30 @@ const CompletionBundle = props => {
                     }}
                 />
             </GenericDialogue>
+
+            <GenericDialogue
+                title='Edit Bundle'
+                open={dialogues['editBundle']}
+                onClose={() => toggleDialogue('editBundle', 'hide')}
+            >
+                <CompletionBundleForm
+                    handleSubmit={data => {
+                        toggleDialogue('editBundle', 'hide');
+                        handleEditBundle(data);
+                    }}
+                    bundle={completionBundle}
+                />
+            </GenericDialogue>
+
+            <ConfirmationDialogue
+                message='Delete the completion bundle?'
+                isOpen={dialogues['confirmDelete']}
+                handleClose={() => toggleDialogue('confirmDelete', 'hide')}
+                handleConfirm={() => {
+                    handleDeleteBundle();
+                    toggleDialogue('confirmDelete', 'hide');
+                }}
+            />
 
         </Card>
     );
