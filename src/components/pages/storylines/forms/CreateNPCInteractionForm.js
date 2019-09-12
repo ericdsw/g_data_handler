@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import {
     Grid,
-    Button
+    Button,
+    Typography,
 } from '@material-ui/core';
 
 import { interactionInputSchema } from '../../../../globals';
@@ -33,7 +34,15 @@ const CreateNPCInteractionForm = props => {
 
     function onSubmit(e) {
         e.preventDefault();
-        handleSubmit(formData);
+        if (interactionType !== '') {
+            for (const key in formData) {
+                if (currentSchema[key].type === 'array') {
+                    let value = formData[key].replace(/\s/g, '');
+                    formData[key] = value.split(",");
+                }
+            }
+            handleSubmit(formData);
+        }
     }
     
     return (
@@ -49,6 +58,11 @@ const CreateNPCInteractionForm = props => {
                 </React.Fragment>
             ))}
             <br /><br />
+            {interactionType !== '' &&
+                <Typography variant='body2'>
+                    <i>{interactionInputSchema[interactionType].additionalText}</i>
+                </Typography>
+            }
             <Grid container justify='flex-end'>
                 <Button
                     variant='contained'
