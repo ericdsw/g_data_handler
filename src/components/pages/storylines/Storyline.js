@@ -9,7 +9,7 @@ import {
 import { blue, red } from '@material-ui/core/colors';
 
 import StorylineStepContainer from '../../containers/StorylineStepContainer';
-import { GenericDialogue } from '../../elements';
+import { GenericDialogue, ConfirmationDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
 import StorylineStepForm from './forms/StorylineStepForm';
 
@@ -35,9 +35,11 @@ const Storyline = props => {
 
     const { classes, storyline } = props;
 
-    const { handleNameChange, handleAddStep } = props;
+    const { handleNameChange, handleAddStep, handleClear, handleExport } = props;
 
-    const [dialogues, toggleDialogue] = useDialogueManager('createStepDialogue');
+    const [dialogues, toggleDialogue] = useDialogueManager(
+        'createStepDialogue', 'confirmDelete'
+    );
 
     const fileName = `${storyline.name}.json`;
 
@@ -61,10 +63,16 @@ const Storyline = props => {
                     >
                         Add Step
                     </Button>
-                    <Button color='secondary'>
+                    <Button 
+                        color='secondary'
+                        onClick={() => handleExport()}
+                    >
                         Export
                     </Button>
-                    <Button className={classes.deleteButton}>
+                    <Button 
+                        className={classes.deleteButton}
+                        onClick={() => toggleDialogue('confirmDelete', 'show')}
+                    >
                         Clear Storyline
                     </Button>
                 </Typography>
@@ -123,8 +131,20 @@ const Storyline = props => {
                     handleSubmit={stepName => {
                         toggleDialogue('createStepDialogue', 'hide');
                         handleAddStep(stepName);
-                    }} />
+                    }} 
+                />
             </GenericDialogue>
+
+            <ConfirmationDialogue
+                message='Clear the current storyline?'
+                isOpen={dialogues['confirmDelete']}
+                handleClose={() => toggleDialogue('confirmDelete', 'hide')}
+                handleConfirm={() => {
+                    toggleDialogue('confirmDelete', 'hide');
+                    handleClear();
+                }}
+            />
+
         </Grid>
     );
 }

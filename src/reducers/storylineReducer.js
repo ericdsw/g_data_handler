@@ -1,6 +1,13 @@
 import uuidv4 from 'uuid/v4';
 
 import {
+    ADD_STORYLINE_STEP,
+    ADD_STEP_COMPLETION_BUNDLE,
+    ADD_ENTITY_TO_NEW_MAP,
+    ADD_ENTITY_TO_EXISTING_MAP,
+    ADD_NPC_INTERACTION,
+    ADD_STEP_COMPLETE_CONDITION,
+
     UPDATE_STORYLINE,
     UPDATE_WITH_EMPTY_STORYLINE,
     UPDATE_STORYLINE_NAME,
@@ -9,20 +16,14 @@ import {
     UPDATE_OR_ADD_MAP_ENTITY_PARAM,
     UPDATE_CONDITION,
     UPDATE_BUNDLE,
-
-    ADD_STORYLINE_STEP,
-    ADD_STEP_COMPLETION_BUNDLE,
-    ADD_ENTITY_TO_NEW_MAP,
-    ADD_ENTITY_TO_EXISTING_MAP,
-    ADD_NPC_INTERACTION,
-    ADD_STEP_COMPLETE_CONDITION,
-
+    
     DELETE_STEP,
     DELETE_MAP_ENTITY,
     DELETE_MAP_ENTITY_PARAM,
     DELETE_NPC_INTERACTION,
     DELETE_CONDITION,
     DELETE_BUNDLE,
+    CLEAR_STORYLINE,
 } from '../actions/types';
 
 const initialState = {
@@ -37,13 +38,9 @@ const initialState = {
 }
 
 export default function(state = initialState, action) {
+
     switch(action.type) {
-        case UPDATE_STORYLINE:
-            return updateStoryline(state, action);
-        case UPDATE_WITH_EMPTY_STORYLINE:
-            return updateWithEmptyStoryline(state, action);
-        case UPDATE_STORYLINE_NAME:
-            return updateStorylineName(state, action);
+
         case ADD_STORYLINE_STEP:
             return addStorylineStep(state, action);
         case ADD_ENTITY_TO_NEW_MAP:
@@ -52,71 +49,48 @@ export default function(state = initialState, action) {
             return addEntityToExistingMap(state, action);
         case ADD_STEP_COMPLETION_BUNDLE:
             return addStepCompletionBundle(state, action);
-        case UPDATE_STEP_NAME:
-            return updateStorylineStepName(state, action);
-        case DELETE_STEP:
-            return deleteStorylineStep(state, action);
-        case UPDATE_MAP_ENTITY_NAME:
-            return updateMapEntityName(state, action);
-        case DELETE_MAP_ENTITY:
-            return deleteMapEntity(state, action);
-        case UPDATE_OR_ADD_MAP_ENTITY_PARAM:
-            return updateOrAddMapEntityParam(state, action);
-        case DELETE_MAP_ENTITY_PARAM:
-            return deleteMapEntityParam(state, action);
-        case DELETE_NPC_INTERACTION:
-            return deleteNPCInteraction(state, action);
         case ADD_NPC_INTERACTION:
             return addNPCInteraction(state, action);
         case ADD_STEP_COMPLETE_CONDITION:
             return addStepCompleteCondition(state, action);
+
+        case UPDATE_STORYLINE:
+            return updateStoryline(state, action);
+        case UPDATE_WITH_EMPTY_STORYLINE:
+            return updateWithEmptyStoryline(state, action);
+        case UPDATE_STORYLINE_NAME:
+            return updateStorylineName(state, action);
+        case UPDATE_STEP_NAME:
+            return updateStorylineStepName(state, action);
+        case UPDATE_MAP_ENTITY_NAME:
+            return updateMapEntityName(state, action);
         case UPDATE_CONDITION:
             return updateCondition(state, action);
-        case DELETE_CONDITION:
-            return deleteCondition(state, action);
+        case UPDATE_OR_ADD_MAP_ENTITY_PARAM:
+            return updateOrAddMapEntityParam(state, action);
         case UPDATE_BUNDLE:
             return updateBundle(state, action);
+
+        case DELETE_MAP_ENTITY_PARAM:
+            return deleteMapEntityParam(state, action);
+        case DELETE_NPC_INTERACTION:
+            return deleteNPCInteraction(state, action);
+        case DELETE_STEP:
+            return deleteStorylineStep(state, action);
+        case DELETE_MAP_ENTITY:
+            return deleteMapEntity(state, action);
+        case DELETE_CONDITION:
+            return deleteCondition(state, action);
         case DELETE_BUNDLE:
             return deleteBundle(state, action);
+        case CLEAR_STORYLINE:
+            return clearStoryline(state, action);
         default:
             return state;
     }
 }
 
-function updateStoryline(state, action) {
-    const { currentStoryline, data } = action.payload;
-    return Object.assign({}, {currentStoryline}, data);
-}
-
-function updateWithEmptyStoryline(state, action) {
-
-    const defaultData = {
-        'DefaultStoryline': {
-            id: 'DefaultStoryline',
-            name: 'DefaultStoryline',
-            steps: []
-        }
-    }
-    return {
-        currentStoryline: 'DefaultStoryline',
-        storylines: defaultData,
-        storylineSteps: {},
-        completionBundles: {},
-        stepMaps: {},
-        stepMapEntities: {},
-        completeConditions: {},
-        entityConfigurators: {}
-    }
-}
-
-function updateStorylineName(state, action) {
-    const { storylineId, name } = action.payload;
-    const newStorylines = {...state.storylines};
-    newStorylines[storylineId].name = name;
-    return Object.assign({}, state, {
-        storylines: newStorylines
-    });
-}
+// ADDS
 
 function addStorylineStep(state, action) {
 
@@ -144,21 +118,12 @@ function addStorylineStep(state, action) {
     });
 }
 
-function updateStorylineStepName(state, action) {
-    const { stepId, newName } = action.payload;
-    const steps = {...state.storylineSteps};
-    steps[stepId].name = newName;
-    return Object.assign({}, state, {
-        storylineSteps: steps
-    });
-}
-
 function addEntityToNewMap(state, action) {
 
     const { stepId, mapName, entityData } = action.payload;
 
     let foundMap
-    for(const curMapId in state.stepMaps) {
+    for (const curMapId in state.stepMaps) {
         if (state.stepMaps.hasOwnProperty(curMapId)) {
             const currentMap = state.stepMaps[curMapId];
             if (currentMap.map_name === mapName) {
@@ -169,8 +134,9 @@ function addEntityToNewMap(state, action) {
     }
 
     const entityId = uuidv4();
-
-    const entity = Object.assign({id: entityId}, entityData);
+    const entity = Object.assign({
+        id: entityId, configurator_data: []
+    }, entityData);
 
     let mapId;
     let map;
@@ -232,108 +198,6 @@ function addStepCompletionBundle(state, action) {
     });
 }
 
-function deleteStorylineStep(state, action) {
-
-    const { stepId } = action.payload;
-
-    const steps = {...state.storylineSteps};
-    delete steps[stepId];
-
-    const storylines = {...state.storylines}
-    deleteReference(storylines, 'steps', stepId);
-
-    return Object.assign({}, state, {
-        storylines: storylines,
-        storylineSteps: steps
-    });
-}
-
-function addEntityToExistingMap(state, action) {
-
-    const { mapId, entityData } = action.payload;
-    const entityId = uuidv4();
-
-    const entity = Object.assign({id: entityId}, entityData);
-    const entities = {...state.stepMapEntities};
-    entities[entityId] = entity;
-
-    const maps = {...state.stepMaps};
-    maps[mapId].entity_nodes.push(entityId);
-
-    return Object.assign({}, state, {
-        stepMapEntities: entities,
-        stepMaps: maps
-    });
-}
-
-function updateMapEntityName(state, action) {
-
-    const { entityId, newName } = action.payload;
-
-    const entities = {...state.stepMapEntities};
-    entities[entityId].name = newName;
-
-    return Object.assign({}, state, {
-        stepMapEntities: entities
-    });
-}
-
-function deleteMapEntity(state, action) {
-
-    const { entityId } = action.payload;
-
-    const entities = {...state.stepMapEntities};
-    const maps = {...state.stepMaps};
-
-    delete entities[entityId];
-    
-    deleteReference(maps, 'entity_nodes', entityId);
-
-    return Object.assign({}, state, {
-        stepMapEntities: entities,
-        stepMaps: maps
-    });
-}
-
-function updateOrAddMapEntityParam(state, action) {
-
-    const { entityId, name, value } = action.payload;
-    const entities = {...state.stepMapEntities};
-
-    entities[entityId].parameters[name] = value;
-
-    return Object.assign({}, state, {
-        stepMapEntities: entities
-    });
-}
-
-function deleteMapEntityParam(state, action) {
-
-    const { entityId, name } = action.payload;
-    const entities = {...state.stepMapEntities};
-    delete entities[entityId].parameters[name];
-
-    return Object.assign({}, state, {
-        stepMapEntities: entities
-    });
-}
-
-function deleteNPCInteraction(state, action) {
-
-    const { interactionId } = action.payload;
-
-    const interactions = {...state.entityConfigurators};
-    delete interactions[interactionId];
-
-    const entities = {...state.stepMapEntities};
-    deleteReference(entities, 'configurator_data', interactionId);
-
-    return Object.assign({}, state, {
-        entityConfigurators: interactions,
-        stepMapEntities: entities
-    });
-}
-
 function addNPCInteraction(state, action) {
 
     const { entityId, type, parameters } = action.payload;
@@ -382,6 +246,96 @@ function addStepCompleteCondition(state, action) {
     });
 }
 
+function addEntityToExistingMap(state, action) {
+
+    const { mapId, entityData } = action.payload;
+    const entityId = uuidv4();
+
+    const entity = Object.assign(
+        {id: entityId, configurator_data: []}, entityData
+    );
+    const entities = {...state.stepMapEntities};
+    entities[entityId] = entity;
+
+    const maps = {...state.stepMaps};
+    maps[mapId].entity_nodes.push(entityId);
+
+    return Object.assign({}, state, {
+        stepMapEntities: entities,
+        stepMaps: maps
+    });
+}
+
+// UPDATES
+
+function updateStoryline(state, action) {
+    const { currentStoryline, data } = action.payload;
+    return Object.assign({}, {currentStoryline}, data);
+}
+
+function updateWithEmptyStoryline(state, action) {
+
+    const defaultData = {
+        'DefaultStoryline': {
+            id: 'DefaultStoryline',
+            name: 'DefaultStoryline',
+            steps: []
+        }
+    }
+    return {
+        currentStoryline: 'DefaultStoryline',
+        storylines: defaultData,
+        storylineSteps: {},
+        completionBundles: {},
+        stepMaps: {},
+        stepMapEntities: {},
+        completeConditions: {},
+        entityConfigurators: {}
+    }
+}
+
+function updateStorylineName(state, action) {
+    const { storylineId, name } = action.payload;
+    const newStorylines = {...state.storylines};
+    newStorylines[storylineId].name = name;
+    return Object.assign({}, state, {
+        storylines: newStorylines
+    });
+}
+
+function updateStorylineStepName(state, action) {
+    const { stepId, newName } = action.payload;
+    const steps = {...state.storylineSteps};
+    steps[stepId].name = newName;
+    return Object.assign({}, state, {
+        storylineSteps: steps
+    });
+}
+
+function updateMapEntityName(state, action) {
+
+    const { entityId, newName } = action.payload;
+
+    const entities = {...state.stepMapEntities};
+    entities[entityId].name = newName;
+
+    return Object.assign({}, state, {
+        stepMapEntities: entities
+    });
+}
+
+function updateOrAddMapEntityParam(state, action) {
+
+    const { entityId, name, value } = action.payload;
+    const entities = {...state.stepMapEntities};
+
+    entities[entityId].parameters[name] = value;
+
+    return Object.assign({}, state, {
+        stepMapEntities: entities
+    });
+}
+
 function updateCondition(state, action) {
 
     const { conditionId, name, parameters } = action.payload;
@@ -393,6 +347,84 @@ function updateCondition(state, action) {
 
     return Object.assign({}, state, {
         completeConditions: conditions
+    });
+}
+
+function updateBundle(state, action) {
+
+    const { bundleId, data } = action.payload;
+
+    const bundles = {...state.completionBundles};
+
+    bundles[bundleId].next_step = data.next_step;
+    bundles[bundleId].use_fade = data.use_fade;
+    bundles[bundleId].change_cutscene = data.change_cutscene;
+    bundles[bundleId].affected_map = data.affected_map;
+
+    return Object.assign({}, state, {
+        completionBundles: bundles
+    });
+}
+
+// DELETES
+
+function deleteStorylineStep(state, action) {
+
+    const { stepId } = action.payload;
+
+    const steps = {...state.storylineSteps};
+    delete steps[stepId];
+
+    const storylines = {...state.storylines}
+    deleteReference(storylines, 'steps', stepId);
+
+    return Object.assign({}, state, {
+        storylines: storylines,
+        storylineSteps: steps
+    });
+}
+
+function deleteMapEntity(state, action) {
+
+    const { entityId } = action.payload;
+
+    const entities = {...state.stepMapEntities};
+    const maps = {...state.stepMaps};
+
+    delete entities[entityId];
+    
+    deleteReference(maps, 'entity_nodes', entityId);
+
+    return Object.assign({}, state, {
+        stepMapEntities: entities,
+        stepMaps: maps
+    });
+}
+
+function deleteMapEntityParam(state, action) {
+
+    const { entityId, name } = action.payload;
+    const entities = {...state.stepMapEntities};
+    delete entities[entityId].parameters[name];
+
+    return Object.assign({}, state, {
+        stepMapEntities: entities
+    });
+}
+
+function deleteNPCInteraction(state, action) {
+
+    const { interactionId } = action.payload;
+
+    const interactions = {...state.entityConfigurators};
+    delete interactions[interactionId];
+
+    const entities = {...state.stepMapEntities};
+    deleteReference(entities, 'configurator_data', interactionId);
+
+    return Object.assign({}, state, {
+        entityConfigurators: interactions,
+        stepMapEntities: entities
     });
 }
 
@@ -413,22 +445,6 @@ function deleteCondition(state, action) {
     });
 }
 
-function updateBundle(state, action) {
-
-    const { bundleId, data } = action.payload;
-
-    const bundles = {...state.completionBundles};
-
-    bundles[bundleId].next_step = data.next_step;
-    bundles[bundleId].use_fade = data.use_fade;
-    bundles[bundleId].change_cutscene = data.change_cutscene;
-    bundles[bundleId].affected_map = data.affected_map;
-
-    return Object.assign({}, state, {
-        completionBundles: bundles
-    });
-}
-
 function deleteBundle(state, action) {
 
     const { bundleId } = action.payload;
@@ -445,6 +461,12 @@ function deleteBundle(state, action) {
     });
 }
 
+function clearStoryline(state, action) {
+    return initialState;
+}
+
+// EXTRA
+
 /**
  * Deletes the reference from the provided dictionary
  */
@@ -459,3 +481,42 @@ function deleteReference(fromDictionary, referenceName, value) {
     }
 }
 
+function deleteElementWithChildren(elementId, list, state) {
+    const curList = list[elementId];
+    for (const listKey in curList) {
+        if (curList.hasOwnProperty(listKey)) {
+            const curListVal = curList[listKey];
+            if (Array.isArray(curListVal)) {
+                const newSourceList = getListForProperty(listKey, state);
+                if (!newSourceList) {
+
+                } else {
+                    for (let i = 0; i < curListVal.length; i++) {
+                        deleteElementWithChildren(
+                            curListVal[i], newSourceList, state
+                        );
+                    }
+                }
+            }
+        }
+    }
+}
+
+function getListForProperty(propertyName, state) {
+    switch (propertyName) {
+        case 'configurator_data':
+            return state.entityConfigurators;
+        case 'entity_nodes':
+            return state.stepMapEntities;
+        case 'conditions':
+            return state.completeConditions;
+        case 'configuration':
+            return state.stepMaps;
+        case 'completion':
+            return state.completionBundles;
+        case 'steps':
+            return state.storylineSteps;
+        default:
+            return null;
+    }
+}

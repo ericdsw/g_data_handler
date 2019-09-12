@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withSnackbar } from 'notistack';
 import { Typography, Icon } from '@material-ui/core';
-import { normalize } from 'normalizr';
+import { normalize, denormalize } from 'normalizr';
 
 import Storyline from '../pages/storylines/Storyline';
 import { DragJsonFileManager } from '../elements';
@@ -12,13 +12,29 @@ import {
     updateStoryline,
     updateWithEmptyStoryline,
     updateStorylineName,
-    addStorylineStep
+    addStorylineStep,
+    clearStoryline
 } from '../../actions/storylineActions';
 
 class StorylineContainer extends React.Component {
 
+    clearStoryline = () => {
+        this.props.clearStoryline();
+    }
+
     updateWithEmptyStoryline = () => {
         this.props.updateWithEmptyStoryline();
+    }
+
+    export = () => {
+        const { currentStoryline, storylines, completeState } = this.props;
+        const output = denormalize(
+            currentStoryline, StorylineSchema, completeState
+        );
+        downloadJSON(
+            storylines[currentStoryline].name,
+            output
+        );
     }
 
     updateStorylineFromFile = targetFile => {
@@ -60,6 +76,8 @@ class StorylineContainer extends React.Component {
                     storyline={storylines[currentStoryline]}
                     handleNameChange={this.updateName}
                     handleAddStep={this.addStep}
+                    handleClear={this.clearStoryline}
+                    handleExport={this.export}
                 />
             );
         } else { 
@@ -87,12 +105,14 @@ class StorylineContainer extends React.Component {
 const mapStateToProps = state => ({
     currentStoryline: state.storyline.currentStoryline,
     storylines: state.storyline.storylines,
+    completeState: state.storyline
 });
 
 export default connect(mapStateToProps, {
     updateStoryline,
     updateWithEmptyStoryline,
     updateStorylineName,
-    addStorylineStep
+    addStorylineStep,
+    clearStoryline
 })(withSnackbar(StorylineContainer));
 

@@ -23,6 +23,7 @@ import {
     DELETE_BUNDLE,
 
     UPDATE_STEP_NAME,
+    CLEAR_STORYLINE,
 } from './types';
 
 export const updateStoryline = (currentStoryline, data) => dispatch => {
@@ -171,3 +172,9 @@ export const deleteBundle = bundleId => dispatch => {
     });
 }
 
+export const clearStoryline = () => dispatch => {
+    dispatch({
+        type: CLEAR_STORYLINE,
+        payload: {}
+    });
+}
