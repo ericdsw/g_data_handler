@@ -12,6 +12,7 @@ import {
 
     UPDATE_MAP_ENTITY_NAME,
     UPDATE_OR_ADD_MAP_ENTITY_PARAM,
+    UPDATE_MAP_ENTITY,
     UPDATE_CONDITION,
     UPDATE_BUNDLE,
 
@@ -99,6 +100,13 @@ export const updateMapEntityName = (entityId, newName) => dispatch => {
     dispatch({
         type: UPDATE_MAP_ENTITY_NAME,
         payload: { entityId, newName }
+    });
+}
+
+export const updateMapEntity = (entityId, newName, params) => dispatch => {
+    dispatch({
+        type: UPDATE_MAP_ENTITY,
+        payload: { entityId, newName, params }
     });
 }
 

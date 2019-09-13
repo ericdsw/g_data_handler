@@ -50,6 +50,7 @@ const StepMap = props => {
             <Grid item xs={12} md={4} key={id}>
                 <StepMapEntityContainer
                     currentMapEntityId={id}
+                    curMapName={stepMap.map_name}
                 />
             </Grid>
         ))
@@ -94,15 +95,12 @@ const StepMap = props => {
                 maxWidth='sm'
             >
                 <CreateMapEntityForm 
-                    data={Object.assign({}, stepMap.parameters, {
-                        name: stepMap.name,
-                        map_name: stepMap.map_name
-                    })}
+                    data={{map_name: stepMap.map_name}}
                     curType={curEntityType}
                     disabledInputs={['map_name']}
                     handleSubmit={(name, mapName, parameters) => {
-                        setCurEntityType('');
                         createEntity(name, mapName, parameters);
+                        setCurEntityType('');
                     }}
                 />
             </GenericDialogue>

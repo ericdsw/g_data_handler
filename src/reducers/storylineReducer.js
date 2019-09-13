@@ -14,6 +14,7 @@ import {
     UPDATE_STEP_NAME,
     UPDATE_MAP_ENTITY_NAME,
     UPDATE_OR_ADD_MAP_ENTITY_PARAM,
+    UPDATE_MAP_ENTITY,
     UPDATE_CONDITION,
     UPDATE_BUNDLE,
     
@@ -68,6 +69,8 @@ export default function(state = initialState, action) {
             return updateCondition(state, action);
         case UPDATE_OR_ADD_MAP_ENTITY_PARAM:
             return updateOrAddMapEntityParam(state, action);
+        case UPDATE_MAP_ENTITY:
+            return updateMapEntity(state, action);
         case UPDATE_BUNDLE:
             return updateBundle(state, action);
 
@@ -330,6 +333,19 @@ function updateOrAddMapEntityParam(state, action) {
     const entities = {...state.stepMapEntities};
 
     entities[entityId].parameters[name] = value;
+
+    return Object.assign({}, state, {
+        stepMapEntities: entities
+    });
+}
+
+function updateMapEntity(state, action) {
+
+    const { entityId, newName, params } = action.payload;
+    const entities = {...state.stepMapEntities};
+
+    entities[entityId].name = newName;
+    entities[entityId].parameters = params;
 
     return Object.assign({}, state, {
         stepMapEntities: entities
