@@ -29,7 +29,9 @@ const GenericForm = props => {
     
     const { parameters, additionalText } = schema;
 
-    const [formData, updateFormData] = useState(parseIn(initialDataSet, parameters));
+    const [formData, updateFormData] = useState(
+        parseIn({...initialDataSet}, parameters)
+    );
 
     const handleInputChange = inputName => event => {
 
@@ -52,7 +54,7 @@ const GenericForm = props => {
         const missingRequired = getMissingRequired(resultData, parameters);
 
         if (missingRequired.length <= 0) {
-            handleSubmit(parseOut(formData, parameters));
+            handleSubmit(resultData);
         } else {
             const reqString = missingRequired.map((key, i) => {
                 return parameters[key].label;

@@ -19,7 +19,7 @@ export const parseOut = (outputObject, inputSchema) => {
         switch (inputSchema[key].type) {
             case 'array':
                 outputObject[key] = outputObject[key].replace(/\s/g,'')
-                    .split('.');
+                    .split(',');
                 break;
             case 'json':
                 outputObject[key] = JSON.parse(

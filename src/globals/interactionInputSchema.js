@@ -6,14 +6,16 @@ const interactionInputSchema = {
         name: 'Cutscene Interaction',
         icon: 'subscriptions',
         parameters: {
-            unique_name: { 
-                label: 'Unique Name',
+            custom_name: { 
+                label: 'Custom Name',
                 type: 'text',
+                placeholder: 'Used to identify if this interaction was triggered in a condition'
             },
             cutscene_file: { 
                 label: 'Cutscene File',
                 type: 'text',
-                required: true
+                required: true,
+                placeholder: 'json file, starting from the cutscenes resource folder'
             }
         }
     },
@@ -23,14 +25,16 @@ const interactionInputSchema = {
         name: 'Dialogue Interaction',
         icon: 'question_answer',
         parameters: {
-            unique_name: { 
-                label: 'Unique Name',
+            custom_name: { 
+                label: 'Custom Name',
                 type: 'text',
+                placeholder: 'Used to identify if this interaction was triggered in a condition'
             },
             dialogue_file: { 
                 label: 'Dialogue File',
                 type: 'text',
                 required: true,
+                placeholder: 'json file, starting from the dialogues resource folder'
             },
             dialogues: { 
                 label: 'Dialogues',
@@ -46,9 +50,10 @@ const interactionInputSchema = {
         name: 'Give Item Interaction',
         icon: 'add_shopping_cart',
         parameters: {
-            unique_name: { 
-                label: 'Unique Name',
-                type: 'text'
+            custom_name: { 
+                label: 'Custom Name',
+                type: 'text',
+                placeholder: 'Used to identify if this interaction was triggered in a condition'
             },
             offset: { 
                 label: 'Offset',
@@ -66,6 +71,7 @@ const interactionInputSchema = {
                 label: 'Item ID',
                 type: 'text',
                 required: true,
+                placeholder: 'Which item will the player be given'
             },
             flavor_text: { 
                 label: 'Flavor Text',
@@ -87,24 +93,26 @@ const interactionInputSchema = {
         icon: 'shopping_basket',
         additionalText: 'At least one required or excluding item must be defined',
         parameters: {
-            unique_name: {
-                label: 'Unique Name',
-                type: 'text'
+            custom_name: {
+                label: 'Custom Name',
+                type: 'text',
+                placeholder: 'Used to identify if this interaction was triggered in a condition'
             },
             cutscene_file: { 
                 label: 'Cutscene File',
                 type: 'text',
-                required: true
+                required: true,
+                placeholder: 'json file, starting from the cutscenes resource folder'
             },
             required_items: {
                 label: 'Required Items',
                 type: 'array',
-                placeholder: 'Separate each one with a comma'
+                placeholder: 'Items needed to trigger, separate each one with a comma'
             },
             excluding_items: { 
                 label: 'Excluding Items',
                 type: 'array',
-                placeholder: 'Separate each one with a comma'
+                placeholder: 'Items that will prevent trigger, separate each one with a comma'
             }
         }
     },
@@ -115,29 +123,32 @@ const interactionInputSchema = {
         icon: 'add_comment',
         additionalText: 'At least one required or excluding item must be defined',
         parameters: {
-            unique_name: { 
-                label: 'Unique Name',
-                type: 'text'
+            custom_name: { 
+                label: 'Custom Name',
+                type: 'text',
+                placeholder: 'Used to identify if this interaction was triggered in a condition'
             },
             dialogue_file: { 
                 label: 'Dialogue File',
                 type: 'text',
-                required: true
+                required: true,
+                placeholder: 'json file, starting from the dialogues resource folder'
             },
             dialogues: { 
                 label: 'Dialogues',
                 type: 'text',
-                required: true
+                required: true,
+                placeholder: 'separate each one with a comma'
             },
             required_items: { 
                 label: 'Required Items',
                 type: 'array',
-                placeholder: 'Separate each one with a comma'
+                placeholder: 'Items required to trigger, separate each one with a comma'
             },
             excluding_items: {
                 label: 'Excluding Items',
                 type: 'array',
-                placeholder: 'Separate each one with a comma'
+                placeholder: 'Items that will prevent trigger, separate each one with a comma'
             }
         }
     },
@@ -147,28 +158,33 @@ const interactionInputSchema = {
         name: 'Remove Item Interaction',
         icon: 'remove_shopping_cart',
         parameters: {
-            unique_name: {
-                label: 'Unique Name',
-                type: 'text'
+            custom_name: {
+                label: 'Custom Name',
+                type: 'text',
+                placeholder: 'Used to identify if this interaction was triggered in a condition'
             },
             offset: {
                 label: 'Offset',
                 type: 'number',
                 required: true,
+                placeholder: 'Conversatio offset that will remove the item from the inventory'
             },
             trigger_conversation: {
                 label: 'Trigger Conversation',
                 type: 'text',
-                required: true
+                required: true,
+                placeholder: 'Which conversation will trigger the remove logic'
             },
             item_id: {
                 label: 'Item ID',
                 type: 'text',
-                required: true
+                required: true,
+                placeholder: 'Which item should be removed'
             },
             dialogue_interaction_ref: {
                 label: 'Dialogue Interaction Ref',
-                type: 'text'
+                type: 'text',
+                placeholder: 'Relative nodepath to the trigger dialogue interaction node'
             }
         }
     }

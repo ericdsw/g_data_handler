@@ -281,9 +281,8 @@ const StepMapEntity = props => {
             <GenericDialogue
                 title='Create Interaction'
                 open={curInteractionType !== ''}
-                onClose={() => {
-                    setCurInteractionType('');
-                }}
+                onClose={() => setCurInteractionType('')}
+                maxWidth='sm'
             >
                 <CreateNPCInteractionForm
                     interactionType={curInteractionType}
