@@ -6,6 +6,7 @@ import DragAndDrop from './DragAndDrop';
 import SimpleCollapse from './SimpleCollapse';
 import DragJsonFileManager from './DragJsonFileManager';
 import MenuIconButton from './MenuIconButton';
+import GenericForm from './GenericForm';
 
 export {
     NavigationDrawer,
@@ -15,5 +16,6 @@ export {
     DragAndDrop,
     SimpleCollapse,
     DragJsonFileManager,
-    MenuIconButton
+    MenuIconButton,
+    GenericForm
 }

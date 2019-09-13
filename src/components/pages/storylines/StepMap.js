@@ -1,20 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
     Card,
     CardHeader,
     CardContent,
     Grid,
-    IconButton,
     Icon,
     Avatar,
     Typography,
-    Tooltip
 } from '@material-ui/core';
 
 import StepMapEntityContainer from '../../containers/StepMapEntityContainer';
-import { GenericDialogue } from '../../elements';
-import { useDialogueManager } from '../../../hooks';
+import { GenericDialogue, MenuIconButton } from '../../elements';
+import { storylineEntityInputSchema } from '../../../globals';
 import CreateMapEntityForm from './forms/CreateMapEntityForm';
 
 const styles = theme => ({
@@ -31,15 +29,19 @@ const StepMap = props => {
     // Methods
     const { handleAddEntity } = props;
 
-    const [dialogues, toggleDialogue] = useDialogueManager(
-        'CreateMapEntity'
-    );
+    const [curEntityType, setCurEntityType] = useState('');
 
-    function createEntity(data) {
+    const eTypeOptions = {};
+    for (const entityTypeKey in storylineEntityInputSchema) {
+        const curEntity = storylineEntityInputSchema[entityTypeKey]
+        eTypeOptions[entityTypeKey] = curEntity.name;
+    }
+
+    function createEntity(name, mapName, parameters) {
         handleAddEntity({
-            name: data.name,
-            type: data.type,
-            parameters: data.parameters
+            name: name, 
+            type: curEntityType, 
+            parameters: parameters
         });
     }
 
@@ -67,13 +69,13 @@ const StepMap = props => {
                     </Typography>
                 }
                 action={
-                    <Tooltip title='Add entity to current map'>
-                        <IconButton
-                            onClick={() => toggleDialogue('createMapEntity', 'show')}
-                        >
-                            <Icon>add_to_photos</Icon>
-                        </IconButton>
-                    </Tooltip>
+                    <MenuIconButton
+                        elementId={`create_entity_menu_${stepMap.id}`}
+                        icon='add_to_photos'
+                        tooltip='Add entity to current map'
+                        contentDictionary={eTypeOptions}
+                        handleClick={key => setCurEntityType(key)}
+                    />
                 }
             />
             <CardContent>
@@ -87,14 +89,20 @@ const StepMap = props => {
 
             <GenericDialogue
                 title='Add Entity'
-                open={dialogues['createMapEntity']}
-                onClose={() => toggleDialogue('createMapEntity', 'hide')}
+                open={curEntityType !== ''}
+                onClose={() => setCurEntityType('')}
+                maxWidth='sm'
             >
                 <CreateMapEntityForm 
-                    mapName={stepMap.map_name}
-                    handleSubmit={data => {
-                        toggleDialogue('createMapEntity', 'hide')
-                        createEntity(data);
+                    data={Object.assign({}, stepMap.parameters, {
+                        name: stepMap.name,
+                        map_name: stepMap.map_name
+                    })}
+                    curType={curEntityType}
+                    disabledInputs={['map_name']}
+                    handleSubmit={(name, mapName, parameters) => {
+                        setCurEntityType('');
+                        createEntity(name, mapName, parameters);
                     }}
                 />
             </GenericDialogue>

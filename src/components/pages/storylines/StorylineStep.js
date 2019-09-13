@@ -19,8 +19,11 @@ import { blue, green, grey } from '@material-ui/core/colors';
 import StepMapContainer from '../../containers/StepMapContainer';
 import CompletionBundleContainer from '../../containers/CompletionBundleContainer';
 
-import { GenericDialogue, ConfirmationDialogue } from '../../elements';
+import { 
+    GenericDialogue, ConfirmationDialogue, MenuIconButton
+} from '../../elements';
 import { useDialogueManager } from '../../../hooks';
+import { storylineEntityInputSchema } from '../../../globals';
 import CreateMapEntityForm from './forms/CreateMapEntityForm';
 import CompletionBundleForm from './forms/CompletionBundleForm';
 import StorylineStepForm from './forms/StorylineStepForm';
@@ -44,15 +47,9 @@ const styles = theme => ({
         color: '#fff',
         lineHeight: '200%'
     },
-    blueText: {
-        color: blue[400]
-    },
-    greenText: {
-        color: green[400]
-    },
-    greyText: {
-        color: grey[400]
-    }
+    blueText: { color: blue[400] },
+    greenText: { color: green[400] },
+    greyText: { color: grey[400] }
 });
 
 const StorylineStep = props => {
@@ -65,19 +62,27 @@ const StorylineStep = props => {
 
     // Methods
     const { 
-        handleUpdateStepName, handleAddMapConfiguration, handleAddCompletionBundle,
+        handleUpdateStepName, handleAddMapConfiguration, 
+        handleAddCompletionBundle,
         handleDeleteStep
     } = props;
 
     const [dialogues, toggleDialogue] = useDialogueManager(
-        'createMapEntity', 'createCompletionBundle', 'editName', 'confirmDelete'
+        'createCompletionBundle', 'editName', 'confirmDelete'
     );
 
     const [expanded, toggleExpanded] = useState(false);
+    const [curEntityType, setCurEntityType] = useState('');
 
     const mapCount = storylineStep.configuration.length
     const bundleCount = storylineStep.completion.length
     const subHeader = `Configure ${mapCount} maps, watch ${bundleCount} bundles`;
+
+    const eTypeOptions = {};
+    for (const entityTypeKey in storylineEntityInputSchema) {
+        const curEntity = storylineEntityInputSchema[entityTypeKey]
+        eTypeOptions[entityTypeKey] = curEntity.name;
+    }
 
     let fString = '';
     if (stepOffset === 0) {
@@ -98,11 +103,11 @@ const StorylineStep = props => {
         }
     }
 
-    function createNewEntity(data) {
-        handleAddMapConfiguration(data.mapName, {
-            name: data.name,
-            type: data.type,
-            parameters: data.parameters
+    function createNewEntity(name, mapName, parameters) {
+        handleAddMapConfiguration(mapName, {
+            name: name,
+            type: curEntityType,
+            parameters: parameters
         });
     }
 
@@ -258,16 +263,19 @@ const StorylineStep = props => {
                     </IconButton>
                 </Tooltip>
                 <Typography variant='h5'>&nbsp;-&nbsp;</Typography>
-                <Tooltip title='Create Entity'>
-                    <IconButton
-                        onClick={() => toggleDialogue('createMapEntity', 'show')}
-                    >
-                        <Icon>add_to_photos</Icon>
-                    </IconButton>
-                </Tooltip>
+                <MenuIconButton
+                    elementId={`create_entity_menu_${storylineStep.id}`}
+                    icon='add_to_photos'
+                    tooltip='Create Entity'
+                    contentDictionary={eTypeOptions}
+                    handleClick={key => setCurEntityType(key)}
+                />
+                
                 <Tooltip title='Add condition bundle'>
                     <IconButton
-                        onClick={() => toggleDialogue('createConditionBundle', 'show')}
+                        onClick={() => {
+                            toggleDialogue('createConditionBundle', 'show')
+                        }}
                     >
                         <Icon>add_alert</Icon>
                     </IconButton>
@@ -323,27 +331,24 @@ const StorylineStep = props => {
 
             <GenericDialogue
                 title='Add Entity'
-                open={
-                    typeof(dialogues['createMapEntity']) === 'undefined' ?
-                        false : dialogues['createMapEntity']
-                }
-                onClose={() => toggleDialogue('createMapEntity', 'hide')}
+                open={curEntityType !== ''}
+                onClose={() => setCurEntityType('')}
+                maxWidth='sm'
             >
                 <CreateMapEntityForm
-                    handleSubmit={data => {
-                        toggleDialogue('createMapEntity', 'hide');
-                        createNewEntity(data);
+                    curType={curEntityType}
+                    handleSubmit={(name, mapName, parameters) => {
+                        createNewEntity(name, mapName, parameters);
+                        setCurEntityType('');
                     }}
                 />
             </GenericDialogue>
 
             <GenericDialogue
                 title='Add Condition Bundle'
-                open={
-                    typeof(dialogues['createConditionBundle']) === 'undefined' ?
-                        false : dialogues['createConditionBundle']
-                }
+                open={dialogues['createConditionBundle']}
                 onClose={() => toggleDialogue('createConditionBundle', 'hide')}
+                maxWidth='sm'
             >
                 <CompletionBundleForm 
                     handleSubmit={data => {
