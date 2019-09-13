@@ -8,7 +8,8 @@ import {
     List,
     ListItem,
     IconButton,
-    Icon
+    Icon,
+    Divider
 } from '@material-ui/core';
 import { blue, green } from '@material-ui/core/colors';
 
@@ -122,6 +123,7 @@ const CompleteCondition = props => {
                 timeout='auto'
                 unmountOnExit
             >
+                <Divider />
                 <Paper 
                     square 
                     elevation={0}

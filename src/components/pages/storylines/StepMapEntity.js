@@ -3,7 +3,6 @@ import { withStyles } from '@material-ui/core/styles';
 import {
     Card,
     CardHeader,
-    CardContent,
     CardActions,
     Typography,
     IconButton,
@@ -13,18 +12,21 @@ import {
     Paper,
     Tooltip,
     Grid,
-    Menu,
-    MenuItem
+    List,
+    ListItem,
+    Collapse,
 } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 
 import { interactionInputSchema } from '../../../globals';
 import NPCInteractionContainer from '../../containers/NPCInteractionContainer';
 import StepMapEntityParameterList from './elements/StepMapEntityParameterList';
-import EditEntityNameForm from './forms/EditEntityNameForm';
 import CreateNPCInteractionForm from './forms/CreateNPCInteractionForm';
-import { GenericDialogue, ConfirmationDialogue } from '../../elements';
+import { 
+    GenericDialogue, ConfirmationDialogue, MenuIconButton
+} from '../../elements';
 import { useDialogueManager } from '../../../hooks';
+import CreateMapEntityForm from './forms/CreateMapEntityForm';
 
 const styles = theme => ({
     typeSubheader: {
@@ -39,6 +41,8 @@ const styles = theme => ({
     descriptionWrapper: {
         display: 'flex',
         width: '100%',
+        paddingLeft: 16,
+        paddingRight: 16
     },
     descriptionElement: {
         padding: 16,
@@ -56,35 +60,38 @@ const styles = theme => ({
 const StepMapEntity = props => {
 
     // Properties
-    const { classes, stepMapEntity } = props;
+    const { classes, stepMapEntity, curMapName } = props;
 
     // Methods
     const {
         handleAddParameter, handleEditParameter, handleDeleteParameter,
         handleAddInteraction,
-        handleUpdateName, handleDeleteEntity
+        handleUpdateEntity, handleDeleteEntity
     } = props;
 
     const [dialogues, toggleDialogue] = useDialogueManager(
-        'viewParameters', 'viewInteractions', 'editName', 'confirmDelete',
+        'viewParameters', 'viewInteractions', 'confirmDelete', 'editEntity',
         'confirmParameterDelete', 'addInteraction'
     );
-
     const [curInteractionType, setCurInteractionType] = useState('');
-    const [anchorEl, setAnchorEl] = useState(null);
-
-    const interactionTypes = Object.keys(interactionInputSchema);
-    const createMenuContent = interactionTypes.map((key, index) => {
-        const name = interactionInputSchema[key].name;
-        return (
-            <MenuItem key={key} onClick={() => handleMenuClick(key)}>
-                {name}
-            </MenuItem>
-        );
-    });
+    const [paramsExpanded, toggleParamsExpanded] = useState(false);
+    
+    const interactionTypes = {};
+    for (const key in interactionInputSchema) {
+        interactionTypes[key] = interactionInputSchema[key].name;
+    }
 
     const paramKeys = Object.keys(stepMapEntity.parameters)
     const paramAmount = paramKeys.length;
+    const paramList = paramKeys.map((key, index) => (
+        <ListItem key={key}>
+            <Tooltip title={stepMapEntity.parameters[key]}>
+                <Typography variant='caption'>
+                    <b>{key}</b>: <i>{stepMapEntity.parameters[key]}</i>
+                </Typography>
+            </Tooltip>
+        </ListItem>
+    ));
 
     let inAmount = 0;
     if (typeof(stepMapEntity.configurator_data) !== 'undefined') {
@@ -102,11 +109,6 @@ const StepMapEntity = props => {
             default:
                 return entity.type;
         }
-    }
-
-    function handleMenuClick(menuValue) {
-        setCurInteractionType(menuValue);
-        setAnchorEl(null);
     }
 
     return (
@@ -127,36 +129,55 @@ const StepMapEntity = props => {
                 }
             />
 
-            <CardContent>
-                <ButtonBase 
-                    className={classes.descriptionWrapper}
-                    onClick={() => toggleDialogue('viewParameters', 'show')}
+            <Divider />
+            <ButtonBase 
+                className={classes.descriptionWrapper}
+                onClick={() => toggleParamsExpanded(!paramsExpanded)}
+            >
+                <Paper 
+                    elevation={0}
+                    className={classes.descriptionElement}
                 >
-                    <Paper 
-                        elevation={0}
-                        className={classes.descriptionElement}
-                    >
-                        Has {paramAmount} parameter{paramAmount === 1 ? '' : 's'}
-                    </Paper>
-                </ButtonBase>
-                <Divider />
-                <ButtonBase
-                    className={classes.descriptionWrapper}
-                    onClick={() => toggleDialogue('viewInteractions', 'show')}
+                    {paramsExpanded ? 'Hide' : 'Show'} parameters
+                </Paper>
+            </ButtonBase>
+            <Collapse
+                in={paramsExpanded}
+                timeout='auto'
+                unmountOnExit
+            >
+                {paramAmount <= 0 &&
+                    <Typography variant='caption' align='center'>
+                        No parameters configured
+                    </Typography>
+                }
+                <Paper
+                    square
+                    elevation={0}
                 >
-                    <Paper
-                        elevation={0}
-                        className={classes.descriptionElement}
-                    >
-                        Contains {inAmount} interaction{inAmount === 1 ? '' : 's'}
-                    </Paper>
-                </ButtonBase>
-            </CardContent>
+                    <List component='nav'>
+                        {paramList}
+                    </List>
+                </Paper>
+            </Collapse>
+            <Divider />
+            <ButtonBase
+                className={classes.descriptionWrapper}
+                onClick={() => toggleDialogue('viewInteractions', 'show')}
+            >
+                <Paper
+                    elevation={0}
+                    className={classes.descriptionElement}
+                >
+                    Contains {inAmount} interaction{inAmount === 1 ? '' : 's'}
+                </Paper>
+            </ButtonBase>
+            <Divider />
 
             <CardActions className={classes.actions}>
                 <Tooltip title='Edit entity name'>
                     <IconButton
-                        onClick={() => toggleDialogue('editName', 'show')}
+                        onClick={() => toggleDialogue('editEntity', 'show')}
                     >
                         <Icon fontSize='small'>edit</Icon>
                     </IconButton>
@@ -171,17 +192,23 @@ const StepMapEntity = props => {
             </CardActions>
 
             <GenericDialogue
-                title='Edit entity name'
-                open={dialogues['editName']}
-                onClose={() => toggleDialogue('editName', 'hide')}
+                title='Edit Current Entity'
+                open={dialogues['editEntity']}
+                onClose={() => toggleDialogue('editEntity', 'hide')}
                 maxWidth='sm'
             >
-                <EditEntityNameForm
-                    curName={stepMapEntity.name}
-                    handleSubmit={newName => {
-                        toggleDialogue('editName', 'hide');
-                        handleUpdateName(newName);
+                <CreateMapEntityForm
+                    data={Object.assign({}, stepMapEntity.parameters, {
+                        name: stepMapEntity.name,
+                        map_name: curMapName
+                    })}
+                    curType={stepMapEntity.type}
+                    disabledInputs={['map_name']}
+                    handleSubmit={(name, mapName, parameters) => {
+                        toggleDialogue('editEntity', 'hide');
+                        handleUpdateEntity(name, parameters);
                     }}
+                    buttonText='Edit'
                 />
             </GenericDialogue>
 
@@ -213,21 +240,13 @@ const StepMapEntity = props => {
                         </Grid>
                         <Grid item xs={3}>
                             <Typography align='right'>
-                                <IconButton
-                                    aria-owns={anchorEl ? 'add_menu' : undefined}
-                                    aria-haspopup='true'
-                                    onClick={e => setAnchorEl(e.currentTarget)}
-                                >
-                                    <Icon>add_circle_outline</Icon>
-                                </IconButton>
-                                <Menu
-                                    id='add_menu'
-                                    anchorEl={anchorEl}
-                                    open={Boolean(anchorEl)}
-                                    onClose={() => setAnchorEl(null)}
-                                >
-                                    {createMenuContent}
-                                </Menu>
+                                <MenuIconButton
+                                    elementId={`add_inter_${stepMapEntity.id}`}
+                                    contentDictionary={interactionTypes}
+                                    tooltip='Add new Interaction'
+                                    icon='add_circle_outline'
+                                    handleClick={key => setCurInteractionType(key)}
+                                />
                             </Typography>
                         </Grid>
                     </Grid>
@@ -262,9 +281,8 @@ const StepMapEntity = props => {
             <GenericDialogue
                 title='Create Interaction'
                 open={curInteractionType !== ''}
-                onClose={() => {
-                    setCurInteractionType('');
-                }}
+                onClose={() => setCurInteractionType('')}
+                maxWidth='sm'
             >
                 <CreateNPCInteractionForm
                     interactionType={curInteractionType}

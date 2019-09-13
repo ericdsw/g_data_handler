@@ -12,8 +12,10 @@ import {
 
     UPDATE_MAP_ENTITY_NAME,
     UPDATE_OR_ADD_MAP_ENTITY_PARAM,
+    UPDATE_MAP_ENTITY,
     UPDATE_CONDITION,
     UPDATE_BUNDLE,
+    UPDATE_INTERACTION,
 
     DELETE_STEP,
     DELETE_MAP_ENTITY,
@@ -102,6 +104,13 @@ export const updateMapEntityName = (entityId, newName) => dispatch => {
     });
 }
 
+export const updateMapEntity = (entityId, newName, params) => dispatch => {
+    dispatch({
+        type: UPDATE_MAP_ENTITY,
+        payload: { entityId, newName, params }
+    });
+}
+
 export const deleteMapEntity = entityId => dispatch => {
     dispatch({
         type: DELETE_MAP_ENTITY,
@@ -134,6 +143,13 @@ export const addNPCInteraction = (entityId, type, parameters) => dispatch => {
     dispatch({
         type: ADD_NPC_INTERACTION,
         payload: { entityId, type, parameters }
+    });
+}
+
+export const updateNPCInteraction = (entityId, parameters) => dispatch => {
+    dispatch({
+        type: UPDATE_INTERACTION,
+        payload: { entityId, parameters } 
     });
 }
 

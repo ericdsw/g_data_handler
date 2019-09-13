@@ -14,8 +14,10 @@ import {
     UPDATE_STEP_NAME,
     UPDATE_MAP_ENTITY_NAME,
     UPDATE_OR_ADD_MAP_ENTITY_PARAM,
+    UPDATE_MAP_ENTITY,
     UPDATE_CONDITION,
     UPDATE_BUNDLE,
+    UPDATE_INTERACTION,
     
     DELETE_STEP,
     DELETE_MAP_ENTITY,
@@ -68,8 +70,12 @@ export default function(state = initialState, action) {
             return updateCondition(state, action);
         case UPDATE_OR_ADD_MAP_ENTITY_PARAM:
             return updateOrAddMapEntityParam(state, action);
+        case UPDATE_MAP_ENTITY:
+            return updateMapEntity(state, action);
         case UPDATE_BUNDLE:
             return updateBundle(state, action);
+        case UPDATE_INTERACTION:
+            return updateInteraction(state, action);
 
         case DELETE_MAP_ENTITY_PARAM:
             return deleteMapEntityParam(state, action);
@@ -336,6 +342,19 @@ function updateOrAddMapEntityParam(state, action) {
     });
 }
 
+function updateMapEntity(state, action) {
+
+    const { entityId, newName, params } = action.payload;
+    const entities = {...state.stepMapEntities};
+
+    entities[entityId].name = newName;
+    entities[entityId].parameters = params;
+
+    return Object.assign({}, state, {
+        stepMapEntities: entities
+    });
+}
+
 function updateCondition(state, action) {
 
     const { conditionId, name, parameters } = action.payload;
@@ -363,6 +382,18 @@ function updateBundle(state, action) {
 
     return Object.assign({}, state, {
         completionBundles: bundles
+    });
+}
+
+function updateInteraction(state, action) {
+
+    const { entityId, parameters } = action.payload;
+
+    const interactions = {...state.entityConfigurators};
+    interactions[entityId].parameters = parameters;
+
+    return Object.assign({}, state, {
+        entityConfigurators: interactions
     });
 }
 

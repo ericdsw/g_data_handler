@@ -12,9 +12,9 @@ import {
     Icon,
     IconButton
 } from '@material-ui/core';
-import { ConfirmationDialogue } from '../../elements';
+import { ConfirmationDialogue, GenericDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
-
+import CreateNPCInteractionForm from './forms/CreateNPCInteractionForm';
 import { interactionInputSchema } from '../../../globals';
 
 const styles = theme => ({
@@ -29,11 +29,13 @@ const NPCInteraction = props => {
     const { npcInteraction, classes } = props;
 
     // Methods
-    const { handleDelete } = props;
+    const { handleEdit, handleDelete } = props;
 
     const paramKeys = Object.keys(npcInteraction.parameters);
 
-    const [dialogues, toggleDialogue] = useDialogueManager('confirmDelete');
+    const [dialogues, toggleDialogue] = useDialogueManager(
+        'confirmDelete', 'edit'
+    );
 
     function getHeader(type) {
 
@@ -52,11 +54,18 @@ const NPCInteraction = props => {
                     </Avatar>
                 }
                 action={
-                    <IconButton
-                        onClick={() => toggleDialogue('confirmDelete', 'show')}
-                    >
-                        <Icon>delete</Icon>
-                    </IconButton>
+                    <React.Fragment>
+                        <IconButton
+                            onClick={() => toggleDialogue('edit', 'show')}
+                        >
+                            <Icon>edit</Icon>
+                        </IconButton>
+                        <IconButton
+                            onClick={() => toggleDialogue('confirmDelete', 'show')}
+                        >
+                            <Icon>delete</Icon>
+                        </IconButton>
+                    </React.Fragment>
                 }
             />
         );
@@ -100,6 +109,23 @@ const NPCInteraction = props => {
                 </TableBody>
             </Table>
             <br />
+
+            <GenericDialogue
+                title='Edit Interaction'
+                open={dialogues['edit']}
+                onClose={() => toggleDialogue('edit', 'hide')}
+                maxWidth='sm'
+            >
+                <CreateNPCInteractionForm
+                    interactionType={npcInteraction.type}
+                    data={npcInteraction.parameters}
+                    buttonText='Edit'
+                    handleSubmit={data => {
+                        toggleDialogue('edit', 'hide');
+                        handleEdit(data);
+                    }}
+                />
+            </GenericDialogue>
 
             <ConfirmationDialogue
                 message='Delete the current NPC Interaction?'

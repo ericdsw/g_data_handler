@@ -5,11 +5,11 @@ import { withSnackbar } from 'notistack';
 import StepMapEntity from '../pages/storylines/StepMapEntity';
 
 import {
-    updateMapEntityName,
     deleteMapEntity,
     updateOrAddMapEntityParam,
     deleteMapEntityParam,
-    addNPCInteraction
+    addNPCInteraction,
+    updateMapEntity
 } from '../../actions/storylineActions';
 
 class StepMapEntityContainer extends React.Component {
@@ -29,17 +29,9 @@ class StepMapEntityContainer extends React.Component {
         addNPCInteraction(currentMapEntityId, type, parameters);
     }
 
-    editInteraction = (interactionId, parameters) => {
-
-    }
-
-    deleteInteraction = interactionId => {
-
-    }
-
-    updateEntityName = newName => {
-        const { updateMapEntityName, currentMapEntityId } = this.props;
-        updateMapEntityName(currentMapEntityId, newName);
+    updateEntity = (newName, params) => {
+        const { updateMapEntity, currentMapEntityId } = this.props;
+        updateMapEntity(currentMapEntityId, newName, params);
     }
 
     deleteEntity = () => {
@@ -48,19 +40,20 @@ class StepMapEntityContainer extends React.Component {
     }
 
     render() {
-        const { currentMapEntityId, stepMapEntities } = this.props;
+        const { currentMapEntityId, stepMapEntities, curMapName } = this.props;
         const currentMapEntity = stepMapEntities[currentMapEntityId];
         return (
             <StepMapEntity
                 stepMapEntity={currentMapEntity}
+                curMapName={curMapName}
                 handleAddParameter={this.editOrAddParameter}
                 handleEditParameter={this.editOrAddParameter}
                 handleDeleteParameter={this.deleteParameter}
                 handleAddInteraction={this.addInteraction}
                 handleEditInteraction={this.editInteraction}
                 handleDeleteInteraction={this.deleteInteraction}
-                handleUpdateName={this.updateEntityName}
                 handleDeleteEntity={this.deleteEntity}
+                handleUpdateEntity={this.updateEntity}
             />
         );
     }
@@ -71,9 +64,9 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-    updateMapEntityName,
     updateOrAddMapEntityParam,
     deleteMapEntity,
     deleteMapEntityParam,
-    addNPCInteraction
+    addNPCInteraction,
+    updateMapEntity
 })(withSnackbar(StepMapEntityContainer));

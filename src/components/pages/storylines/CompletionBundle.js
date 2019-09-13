@@ -160,6 +160,7 @@ const CompletionBundle = props => {
                 title='Edit Bundle'
                 open={dialogues['editBundle']}
                 onClose={() => toggleDialogue('editBundle', 'hide')}
+                maxWidth='sm'
             >
                 <CompletionBundleForm
                     handleSubmit={data => {

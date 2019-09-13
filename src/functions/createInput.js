@@ -7,14 +7,16 @@ import {
     Typography
 } from '@material-ui/core';
 
-export default function createInput(paramName, inputData, value, handleChange) {
+export default function createInput(
+    paramName, inputData, value, handleChange, disabled = false
+) {
 
     let label = inputData.label;
     if (inputData.required) {
         label += '*';
     }
 
-    if (value === null) {
+    if (value === null || typeof(value) === 'undefined') {
         value = '';
     }
 
@@ -28,7 +30,8 @@ export default function createInput(paramName, inputData, value, handleChange) {
                         <Switch
                             onChange={handleChange(paramName)}
                             checked={value} 
-                            value={value} 
+                            value={value}
+                            disabled={disabled}
                         />
                     } 
                 />
@@ -43,7 +46,9 @@ export default function createInput(paramName, inputData, value, handleChange) {
                     multiline fullWidth rows={5}
                     onChange={handleChange(paramName)}
                     value={value}
-                    variant='outlined' margin='normal' 
+                    variant='outlined' 
+                    margin='normal'
+                    disabled={disabled}
                 />
             );
         case 'dropdown':
@@ -57,6 +62,16 @@ export default function createInput(paramName, inputData, value, handleChange) {
                     </MenuItem>
                 );
             }
+            if (value === '') {
+                options.unshift(
+                    <MenuItem key='_EMPTY_VAL_' value=''>
+                        <Typography variant='body1'>
+                            <i>---</i>
+                        </Typography>
+                    </MenuItem>
+
+                );
+            }
             return (
                 <TextField
                     label={label}
@@ -65,7 +80,9 @@ export default function createInput(paramName, inputData, value, handleChange) {
                     fullWidth
                     value={value}
                     onChange={handleChange(paramName)}
-                    variant='outlined' margin='normal'
+                    disabled={disabled}
+                    variant='outlined' 
+                    margin='normal'
                 >
                     {options}
                 </TextField>
@@ -76,14 +93,20 @@ export default function createInput(paramName, inputData, value, handleChange) {
         case 'number':
         case 'text':
         default:
-            return <TextField 
-                id={paramName}
-                label={label}
-                placeholder={inputData.placeholder}
-                onChange={handleChange(paramName)}
-                value={value}
-                type={inputData.type === 'number' ? 'number' : 'text'}
-                fullWidth variant='outlined' margin='normal' />;
+            return (
+                <TextField 
+                    id={paramName}
+                    label={label}
+                    placeholder={inputData.placeholder}
+                    onChange={handleChange(paramName)}
+                    value={value}
+                    type={inputData.type === 'number' ? 'number' : 'text'}
+                    fullWidth 
+                    variant='outlined' 
+                    margin='normal'
+                    disabled={disabled}
+                />
+            );
             
     }
 }
