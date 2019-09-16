@@ -71,7 +71,8 @@ const GenericForm = props => {
                     {createInput(
                         inputName, parameters[inputName], 
                         formData[inputName], handleInputChange,
-                        disabledInputs.includes(inputName)
+                        disabledInputs.includes(inputName),
+                        (index === 0) ? {autoFocus: true} : {}
                     )}
                 </React.Fragment>
             ))}

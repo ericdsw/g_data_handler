@@ -8,7 +8,8 @@ import {
 } from '@material-ui/core';
 
 export default function createInput(
-    paramName, inputData, value, handleChange, disabled = false
+    paramName, inputData, value, handleChange, disabled = false,
+    extraParams = {}
 ) {
 
     let label = inputData.label;
@@ -49,6 +50,7 @@ export default function createInput(
                     variant='outlined' 
                     margin='normal'
                     disabled={disabled}
+                    {...extraParams}
                 />
             );
         case 'dropdown':
@@ -83,6 +85,7 @@ export default function createInput(
                     disabled={disabled}
                     variant='outlined' 
                     margin='normal'
+                    {...extraParams}
                 >
                     {options}
                 </TextField>
@@ -105,6 +108,7 @@ export default function createInput(
                     variant='outlined' 
                     margin='normal'
                     disabled={disabled}
+                    {...extraParams}
                 />
             );
             
