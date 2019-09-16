@@ -163,11 +163,12 @@ const CompletionBundle = props => {
                 maxWidth='sm'
             >
                 <CompletionBundleForm
+                    data={completionBundle}
+                    buttonText='Update'
                     handleSubmit={data => {
                         toggleDialogue('editBundle', 'hide');
                         handleEditBundle(data);
                     }}
-                    bundle={completionBundle}
                 />
             </GenericDialogue>
 

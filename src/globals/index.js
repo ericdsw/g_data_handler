@@ -3,6 +3,7 @@ import speakerSchema from './speakerSchema';
 import interactionInputSchema from './interactionInputSchema';
 import completionInputSchema from './completionInputSchema';
 import storylineEntityInputSchema from './storylineEntityInputSchema';
+import bundleEntityInputSchema from './bundleEntityInputSchema';
 
 const appVersion = 0.2;
 const applicationName = `Game Data Manager v${appVersion}`;
@@ -15,5 +16,6 @@ export {
     speakerSchema,
     interactionInputSchema,
     completionInputSchema,
-    storylineEntityInputSchema
+    storylineEntityInputSchema,
+    bundleEntityInputSchema
 }
