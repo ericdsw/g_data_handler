@@ -128,8 +128,10 @@ function addEntityToNewMap(state, action) {
 
     const { stepId, mapName, entityData } = action.payload;
 
+    const steps = {...state.storylineSteps};
+
     let foundMap
-    for (const curMapId in state.stepMaps) {
+    for (const curMapId in steps[stepId].configuration) {
         if (state.stepMaps.hasOwnProperty(curMapId)) {
             const currentMap = state.stepMaps[curMapId];
             if (currentMap.map_name === mapName) {
@@ -166,7 +168,6 @@ function addEntityToNewMap(state, action) {
     const mapEntities = {...state.stepMapEntities};
     mapEntities[entityId] = entity;
 
-    const steps = {...state.storylineSteps};
     if (!steps[stepId].configuration.includes(mapId)) {
         steps[stepId].configuration.push(mapId);
     }
@@ -419,14 +420,23 @@ function deleteMapEntity(state, action) {
 
     const { entityId } = action.payload;
 
+    const steps = {...state.storylineSteps};
     const entities = {...state.stepMapEntities};
     const maps = {...state.stepMaps};
 
     delete entities[entityId];
     
     deleteReference(maps, 'entity_nodes', entityId);
+    for (const mapId in maps) {
+        var mapEntityAmount = maps[mapId].entity_nodes.length;
+        if (mapEntityAmount <= 0) {
+            delete maps[mapId];
+            deleteReference(steps, 'configuration', mapId);
+        }
+    }
 
     return Object.assign({}, state, {
+        storylineSteps: steps,
         stepMapEntities: entities,
         stepMaps: maps
     });
@@ -512,42 +522,3 @@ function deleteReference(fromDictionary, referenceName, value) {
     }
 }
 
-function deleteElementWithChildren(elementId, list, state) {
-    const curList = list[elementId];
-    for (const listKey in curList) {
-        if (curList.hasOwnProperty(listKey)) {
-            const curListVal = curList[listKey];
-            if (Array.isArray(curListVal)) {
-                const newSourceList = getListForProperty(listKey, state);
-                if (!newSourceList) {
-
-                } else {
-                    for (let i = 0; i < curListVal.length; i++) {
-                        deleteElementWithChildren(
-                            curListVal[i], newSourceList, state
-                        );
-                    }
-                }
-            }
-        }
-    }
-}
-
-function getListForProperty(propertyName, state) {
-    switch (propertyName) {
-        case 'configurator_data':
-            return state.entityConfigurators;
-        case 'entity_nodes':
-            return state.stepMapEntities;
-        case 'conditions':
-            return state.completeConditions;
-        case 'configuration':
-            return state.stepMaps;
-        case 'completion':
-            return state.completionBundles;
-        case 'steps':
-            return state.storylineSteps;
-        default:
-            return null;
-    }
-}
