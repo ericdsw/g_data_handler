@@ -1,5 +1,13 @@
+
 export const parseIn = (inputObject, inputSchema) => {
+
     for (const key in inputObject) {
+
+        // Skip invalid entries
+        if (!(key in inputSchema)) {
+            continue;
+        }
+
         switch (inputSchema[key].type) {
             case 'array':
                 inputObject[key] = inputObject[key].join(',');
@@ -15,7 +23,18 @@ export const parseIn = (inputObject, inputSchema) => {
 }
 
 export const parseOut = (outputObject, inputSchema) => {
+
+    // Make sure were are not passing the ID
+    if ('id' in outputObject) {
+        delete outputObject['id'];
+    }
+
     for (const key in outputObject) {
+
+        if (!(key in inputSchema)) {
+            continue;
+        }
+
         switch (inputSchema[key].type) {
             case 'array':
                 outputObject[key] = outputObject[key].replace(/\s/g,'')
