@@ -83,7 +83,8 @@ const storylineEntityInputSchema = {
     },
 
     'create_area': {
-        name: 'Create Area',
+        name: 'Create Notification Area',
+        additional_text: 'Will only notify when the player enters, nothing more',
         parameters: {
             name: {
                 label: 'NPC Name',
@@ -101,6 +102,66 @@ const storylineEntityInputSchema = {
                 required: true
             }
         }
+    },
+
+    'create_dialogue_area': {
+        name: 'Create Dialogue Area',
+        parameters: {
+            name: {
+                label: 'NPC Name',
+                type: 'text',
+                required: true
+            },
+            map_name: {
+                label: 'Will appear in map',
+                type: 'text',
+                required: true
+            },
+            initial_position: {
+                label: 'Initial Position',
+                type: 'text',
+                required: true
+            },
+            dialogue_file: {
+                label: 'Dialogue file',
+                type: 'text',
+                required: true,
+                placeholder: 'json file, starting from the dialogues resource folder'
+            },
+            message: {
+                label: 'Message',
+                type: 'text',
+                required: true
+            }
+        }
+    },
+
+    'create_cutscene_area': {
+        name: 'Create Cutscene Area',
+        parameters: {
+            name: {
+                label: 'NPC Name',
+                type: 'text',
+                required: true
+            },
+            map_name: {
+                label: 'Will appear in map',
+                type: 'text',
+                required: true
+            },
+            initial_position: {
+                label: 'Initial Position',
+                type: 'text',
+                required: true
+            },
+            cutscene_file: {
+                label: 'Cutscene File',
+                type: 'text',
+                require: true,
+                placeholder: 'json file, starting from the cutscenes resource folder'
+            }
+        }
     }
+
 }
 export default storylineEntityInputSchema;

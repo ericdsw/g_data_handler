@@ -105,7 +105,11 @@ const StepMapEntity = props => {
             case 'configure_npc':
                 return 'Configure NPC';
             case 'create_area':
-                return 'Create Area';
+                return 'Create Notification Area';
+            case 'create_dialogue_area':
+                return 'Create Dialogue Area';
+            case 'create_cutscene_area':
+                return 'Create Cutscene Area';
             default:
                 return entity.type;
         }
