@@ -45,6 +45,9 @@ export const parseOut = (outputObject, inputSchema) => {
                     outputObject[key].replace(/'/g,'"')
                 );
                 break;
+            case 'number':
+                outputObject[key] = parseFloat(outputObject[key]);
+                break;
             default:
                 break;
         }
