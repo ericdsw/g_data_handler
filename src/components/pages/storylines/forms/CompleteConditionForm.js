@@ -17,12 +17,12 @@ const CompleteConditionForm = props => {
         currentSchema = completionInputSchema[completionType];
     }
 
-    const initialDataSet = Object.assign(conditionParams, {name: name});
+    const initialDataSet = Object.assign(conditionParams, {unique_name: name});
     
     const onSubmit = data => {
         const newData = {...data}
-        delete newData.name;
-        handleSubmit(data.name, newData);
+        delete newData.unique_name;
+        handleSubmit(data.unique_name, newData);
     }
 
     if (completionType === '') {

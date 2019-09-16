@@ -119,7 +119,7 @@ const CompleteCondition = props => {
             <GenericDialogue
                 title={`Edit the current condition`}
                 open={dialogues['editDialogue']}
-                handleClose={() => toggleDialogue('editDialogue', 'hide')}
+                onClose={() => toggleDialogue('editDialogue', 'hide')}
                 maxWidth='sm'
             >
                 <CompleteConditionForm
