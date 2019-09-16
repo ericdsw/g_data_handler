@@ -18,6 +18,7 @@ import {
 } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
 import CompleteConditionForm from './forms/CompleteConditionForm';
+import createConditionDescription from './functions/createConditionDescription';
 
 const styles = theme => ({
     conditionContainer: {
@@ -38,49 +39,7 @@ const styles = theme => ({
 });
 
 const CompleteCondition = props => {
-
-    function getTypeString(condition) {
-        switch(condition.type) {
-            case 'npc_interaction':
-                return (
-                    <React.Fragment>
-                        Interact with&nbsp;
-                        <span className={classes.greenText}>
-                            {condition.parameters.target_npc}
-                        </span>
-                    </React.Fragment>
-                );
-            case 'npc_finished_dialogues':
-                return (
-                    <React.Fragment>
-                        Exhaust&nbsp;
-                        <span className={classes.greenText}>
-                            {condition.parameters.target_npc}
-                        </span> dialogues
-                    </React.Fragment>
-                );
-            case 'enter_trigger_area':
-                return (
-                    <React.Fragment>
-                        Enter Area&nbsp;
-                        <span className={classes.greenText}>
-                            {condition.parameters.target_area_name}
-                        </span>
-                    </React.Fragment>
-                );
-            case 'got_item':
-                return 'Get Item';
-            case 'choice_selected':
-                return 'Select Choice in Dialogue';
-            case 'advance_storyline':
-                return 'Advance Storyline';
-            case 'storyline_message':
-                return 'Listen to Message';
-            default:
-                return condition;
-        }
-    }
-
+    
     const { classes, completeCondition } = props;
 
     const { handleDeleteCondition, handleEditCondition } = props;
@@ -114,7 +73,7 @@ const CompleteCondition = props => {
                         variant='caption'
                         className={classes.interactionTypeText}
                     >
-                        {getTypeString(completeCondition)}
+                        {createConditionDescription(completeCondition)}
                     </Typography>
                 </Paper>
             </ButtonBase>
@@ -161,11 +120,13 @@ const CompleteCondition = props => {
                 title={`Edit the current condition`}
                 open={dialogues['editDialogue']}
                 handleClose={() => toggleDialogue('editDialogue', 'hide')}
+                maxWidth='sm'
             >
                 <CompleteConditionForm
                     completionType={completeCondition.type}
                     conditionParams={completeCondition.parameters}
                     name={completeCondition.unique_name}
+                    buttonText='Update'
                     handleSubmit={(name, data) => {
                         toggleDialogue('editDialogue', 'hide');
                         handleEditCondition(name, data);

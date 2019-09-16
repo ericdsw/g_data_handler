@@ -1,52 +1,31 @@
-import React, { useState } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import {
-    Grid,
-    TextField,
-    Button
-} from '@material-ui/core';
+import React from 'react';
+import { GenericForm } from '../../../elements';
 
-const styles = theme => ({
-
-});
+const schema = {
+    parameters: {
+        name: {
+            label: 'Step Name',
+            type: 'text',
+            required: true,
+        }
+    }
+}
 
 const StorylineStepForm = props => {
 
-    const [stepName, updateStepName] = useState(
-        props.stepName ? props.stepName : ''
-    );
+    const { stepName = '', buttonText = 'Create' } = props;
+    const { handleSubmit } = props;
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        props.handleSubmit(stepName);
-    }
+    const data = { name: stepName };
 
     return (
-        <form onSubmit={e => handleSubmit(e)}>
-            <TextField
-                id='step_name'
-                label='Step Name'
-                value={stepName}
-                onChange={e => updateStepName(e.target.value)}
-                autoFocus
-                fullWidth
-                variant='outlined'
-                margin='normal'
-            />
-            <br /><br />
-            <Grid container justify='flex-end'>
-                <Grid item>
-                    <Button
-                        color='primary'
-                        variant='contained'
-                        type='submit'
-                    >
-                        {props.stepName ? 'Update' : 'Create'}
-                    </Button>
-                </Grid>
-            </Grid>
-        </form>
+        <GenericForm
+            initialDataSet={data}
+            schema={schema}
+            buttonText={buttonText}
+            handleSubmit={data => handleSubmit(data.name)}
+        />
     );
 }
 
-export default withStyles(styles)(StorylineStepForm);
+export default StorylineStepForm;

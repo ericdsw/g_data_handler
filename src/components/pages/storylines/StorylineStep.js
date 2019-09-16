@@ -205,14 +205,18 @@ const StorylineStep = props => {
 
             <CardContent>
                 <Grid container spacing={16}>
-                    {(storylineStep.configuration.length <= 0 && storylineStep.completion <= 0) &&
+                    {
+                        (storylineStep.configuration.length <= 0 && 
+                        storylineStep.completion <= 0) &&
                         <Grid item xs={12}>
                             <Typography variant='body1' align='center'>
                                 <i>Empty step, will end storyline</i>
                             </Typography>
                         </Grid>
                     }
-                    {(storylineStep.configuration.length > 0 || storylineStep.completion.length > 0) &&
+                    {
+                        (storylineStep.configuration.length > 0 || 
+                        storylineStep.completion.length > 0) &&
                         <React.Fragment>
                             <Grid item xs={12} md={6}>
                                 {storylineStep.configuration.length > 0 &&
@@ -236,7 +240,10 @@ const StorylineStep = props => {
                                 {storylineStep.completion.length <= 0 &&
                                     <Typography variant='body2'>
                                         <br />
-                                        <i>No completion bundles configured, the storyline will finish here</i>
+                                        <i>
+                                            No completion bundles configured,&nbsp;
+                                            the storyline will finish here
+                                        </i>
                                     </Typography>
                                 }
                             </Grid>
@@ -366,6 +373,7 @@ const StorylineStep = props => {
             >
                 <StorylineStepForm 
                     stepName={storylineStep.name}
+                    buttonText='Update'
                     handleSubmit={newName => {
                         toggleDialogue('editName', 'hide');
                         handleUpdateStepName(newName);
