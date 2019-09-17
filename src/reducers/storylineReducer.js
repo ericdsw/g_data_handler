@@ -131,13 +131,12 @@ function addEntityToNewMap(state, action) {
     const steps = {...state.storylineSteps};
 
     let foundMap
-    for (const curMapId in steps[stepId].configuration) {
-        if (state.stepMaps.hasOwnProperty(curMapId)) {
-            const currentMap = state.stepMaps[curMapId];
-            if (currentMap.map_name === mapName) {
-                foundMap = currentMap;
-                break;
-            }
+    for (let i = 0; i < steps[stepId].configuration.length; i++) {
+        const curMapId = steps[stepId].configuration[i];
+        const currentMap = state.stepMaps[curMapId];
+        if (currentMap.map_name === mapName) {
+            foundMap = currentMap;
+            break;
         }
     }
 
