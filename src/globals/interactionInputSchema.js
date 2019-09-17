@@ -136,7 +136,7 @@ const interactionInputSchema = {
             },
             dialogues: { 
                 label: 'Dialogues',
-                type: 'text',
+                type: 'array',
                 required: true,
                 placeholder: 'separate each one with a comma'
             },
