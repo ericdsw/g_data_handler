@@ -16,7 +16,8 @@ const CreateMapEntityForm = props => {
         delete newData.map_name;
 
         for (const key in newData) {
-            if (!newData[key]) {
+            const curType = usedSchema.parameters[key].type;
+            if (curType !== 'boolean' && !newData[key]) {
                 delete newData[key];
             }
         }

@@ -85,9 +85,22 @@ const StepMapEntity = props => {
     const paramAmount = paramKeys.length;
     const paramList = paramKeys.map((key, index) => (
         <ListItem key={key}>
-            <Tooltip title={stepMapEntity.parameters[key]}>
+            <Tooltip title={`${stepMapEntity.parameters[key]}`}>
                 <Typography variant='caption'>
-                    <b>{key}</b>: <i>{stepMapEntity.parameters[key]}</i>
+                    {typeof stepMapEntity.parameters[key] === 'boolean' &&
+                        <React.Fragment>
+                            <b>{key}</b>: <i>
+                                {
+                                stepMapEntity.parameters[key] ? `True`:`False`
+                                }
+                            </i>
+                        </React.Fragment>
+                    }
+                    {typeof stepMapEntity.parameters[key] !== 'boolean' &&
+                        <React.Fragment>
+                            <b>{key}</b>: <i>{stepMapEntity.parameters[key]}</i>
+                        </React.Fragment>
+                    }
                 </Typography>
             </Tooltip>
         </ListItem>
