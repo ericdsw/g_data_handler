@@ -155,9 +155,15 @@ const eventSchema = {
             },
             finish_early: {
                 label: 'Should Finish Early',
-                type: 'boolean', 
+                type: 'boolean',
                 default: false,
                 tooltip: 'If true, the event will finish when the screen is still black'
+            },
+            keep_sprites: {
+                label: 'Keep Sprites',
+                type: 'text',
+                placeholder: 'node_name=next_pos,another_node=next_pos,yet_another_node',
+                tooltip: 'Which nodes will be visible between changes, must have a Sprite child'
             }
         }
     },

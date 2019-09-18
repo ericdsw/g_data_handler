@@ -7,7 +7,8 @@ import {
     updateStepName,
     addEntityToNewMap,
     addStepCompletionBundle,
-    deleteStep
+    deleteStep,
+    duplicateConfigurations
 } from '../../actions/storylineActions';
 
 class StorylineStepContainer extends React.Component {
@@ -30,6 +31,11 @@ class StorylineStepContainer extends React.Component {
     deleteStep = () => {
         const { currentStepId, deleteStep } = this.props;
         deleteStep(currentStepId);
+    }
+
+    duplicateConfigurations = targetStepId => {
+        const { currentStepId, duplicateConfigurations } = this.props;
+        duplicateConfigurations(currentStepId, targetStepId);
     }
 
     render() {
@@ -68,12 +74,14 @@ class StorylineStepContainer extends React.Component {
             <StorylineStep
                 storylineStep={currentStep}
                 stepOffset={stepOffset}
+                allSteps={steps}
                 configDescription={confDescription}
                 completionDescription={completionDesc}
                 handleAddMapConfiguration={this.addEntityWithMap}
                 handleAddCompletionBundle={this.addStepCompletionBundle}
                 handleUpdateStepName={this.updateStepName}
                 handleDeleteStep={this.deleteStep}
+                handleDuplicateConfigs={this.duplicateConfigurations}
             />
         );
     }
@@ -92,5 +100,6 @@ export default connect(mapStateToProps, {
     updateStepName,
     addEntityToNewMap,
     addStepCompletionBundle,
-    deleteStep
+    deleteStep,
+    duplicateConfigurations
 })(withSnackbar(StorylineStepContainer));
