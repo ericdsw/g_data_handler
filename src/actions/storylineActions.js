@@ -26,6 +26,7 @@ import {
 
     UPDATE_STEP_NAME,
     CLEAR_STORYLINE,
+    DUPLICATE_CONFIGURATIONS
 } from './types';
 
 export const updateStoryline = (currentStoryline, data) => dispatch => {
@@ -194,3 +195,11 @@ export const clearStoryline = () => dispatch => {
         payload: {}
     });
 }
+
+export const duplicateConfigurations = (sourceStepId, targetStepId) => dispatch => {
+    dispatch({
+        type: DUPLICATE_CONFIGURATIONS,
+        payload: { sourceStepId, targetStepId }
+    });
+}
+

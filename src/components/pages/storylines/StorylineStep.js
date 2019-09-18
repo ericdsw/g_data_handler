@@ -20,7 +20,7 @@ import StepMapContainer from '../../containers/StepMapContainer';
 import CompletionBundleContainer from '../../containers/CompletionBundleContainer';
 
 import { 
-    GenericDialogue, ConfirmationDialogue, MenuIconButton
+    GenericDialogue, ConfirmationDialogue, MenuIconButton, MenuButton
 } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
 import { storylineEntityInputSchema } from '../../../globals';
@@ -56,7 +56,7 @@ const StorylineStep = props => {
 
     // Properties
     const { 
-        classes, storylineStep, stepOffset,
+        classes, storylineStep, stepOffset, allSteps,
         completionDescription, configDescription
     } = props;
 
@@ -64,7 +64,8 @@ const StorylineStep = props => {
     const { 
         handleUpdateStepName, handleAddMapConfiguration, 
         handleAddCompletionBundle,
-        handleDeleteStep
+        handleDeleteStep,
+        handleDuplicateConfigs
     } = props;
 
     const [dialogues, toggleDialogue] = useDialogueManager(
@@ -82,6 +83,13 @@ const StorylineStep = props => {
     for (const entityTypeKey in storylineEntityInputSchema) {
         const curEntity = storylineEntityInputSchema[entityTypeKey]
         eTypeOptions[entityTypeKey] = curEntity.name;
+    }
+
+    const duplicateOptions = {};
+    for (const stepId in allSteps) {
+        if (stepId !== storylineStep.id) {
+            duplicateOptions[stepId] = allSteps[stepId].name;
+        }
     }
 
     let fString = '';
@@ -109,6 +117,10 @@ const StorylineStep = props => {
             type: curEntityType,
             parameters: parameters
         });
+    }
+
+    function duplicateConfigurationInStep(stepId) {
+        handleDuplicateConfigs(stepId);
     }
 
     const configDescriptionText = (
@@ -313,6 +325,16 @@ const StorylineStep = props => {
                                 gutterBottom
                             >
                                 Configurations
+                                &nbsp;
+                                <MenuButton
+                                    elementId={`duplicate-c-${storylineStep.id}`}
+                                    contentDictionary={duplicateOptions}
+                                    tooltip="Copy all of this step's configuratons to another step"
+                                    buttonText='Duplicate in Step'
+                                    handleClick={key => {
+                                        duplicateConfigurationInStep(key)
+                                    }}
+                                />
                             </Typography>
                             <br />
                             <Grid container spacing={16}>

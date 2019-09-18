@@ -26,6 +26,8 @@ import {
     DELETE_CONDITION,
     DELETE_BUNDLE,
     CLEAR_STORYLINE,
+
+    DUPLICATE_CONFIGURATIONS
 } from '../actions/types';
 
 const initialState = {
@@ -91,6 +93,10 @@ export default function(state = initialState, action) {
             return deleteBundle(state, action);
         case CLEAR_STORYLINE:
             return clearStoryline(state, action);
+
+        case DUPLICATE_CONFIGURATIONS:
+            return duplicateConfigurations(state, action);
+
         default:
             return state;
     }
@@ -503,6 +509,72 @@ function deleteBundle(state, action) {
 
 function clearStoryline(state, action) {
     return initialState;
+}
+
+function duplicateConfigurations(state, action) {
+
+    const { sourceStepId, targetStepId } = action.payload;
+
+    const steps = {...state.storylineSteps};
+    const maps = {...state.stepMaps};
+    const entities = {...state.stepMapEntities};
+    const configurators = {...state.configurators};
+
+    steps[sourceStepId].configuration.forEach(curMapId => {
+
+        const curMap = maps[curMapId];
+
+        let duplicateMap;
+
+        // Check if a map with that name already exist
+        for (let i = 0; i < steps[targetStepId].configuration.length; i++) {
+            const foundMap = maps[steps[targetStepId].configuration[i]];
+            if (foundMap.map_name === curMap.map_name) {
+                duplicateMap = foundMap;
+                break;
+            }
+        }
+
+        if (!duplicateMap) {
+
+            duplicateMap = {...curMap};
+            duplicateMap.id = uuidv4();
+            duplicateMap.entity_nodes = [];
+
+            steps[targetStepId].configuration.push(duplicateMap.id);
+            maps[duplicateMap.id] = duplicateMap;
+        }
+
+        curMap.entity_nodes.forEach(curEntityNodeId => {
+
+            const curEntityNode = entities[curEntityNodeId];
+            const duplicateEntity = {...curEntityNode}
+            duplicateEntity.id = uuidv4();
+            duplicateEntity.configurator_data = []
+
+            curEntityNode.configurator_data.forEach(curConfId => {
+
+                const curConf = configurators[curConfId];
+                const duplicateConf = {...curConf};
+                duplicateConf.id = uuidv4();
+
+                duplicateEntity.configurator_data.push(duplicateConf.id);
+                configurators[duplicateConf.id] = duplicateConf;
+            });
+
+            duplicateMap.entity_nodes.push(duplicateEntity.id);
+            entities[duplicateEntity.id] = duplicateEntity;
+        });
+
+    });
+
+    return Object.assign({}, state, {
+        storylineSteps: steps,
+        stepMaps: maps,
+        stepMapEntities: entities,
+        configurators: configurators
+    });
+
 }
 
 // EXTRA
