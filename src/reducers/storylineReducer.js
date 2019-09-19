@@ -518,7 +518,7 @@ function duplicateConfigurations(state, action) {
     const steps = {...state.storylineSteps};
     const maps = {...state.stepMaps};
     const entities = {...state.stepMapEntities};
-    const configurators = {...state.configurators};
+    const configurators = {...state.entityConfigurators};
 
     steps[sourceStepId].configuration.forEach(curMapId => {
 
@@ -560,6 +560,9 @@ function duplicateConfigurations(state, action) {
 
                 duplicateEntity.configurator_data.push(duplicateConf.id);
                 configurators[duplicateConf.id] = duplicateConf;
+
+                console.log(duplicateConf);
+                console.log(configurators);
             });
 
             duplicateMap.entity_nodes.push(duplicateEntity.id);
@@ -572,7 +575,7 @@ function duplicateConfigurations(state, action) {
         storylineSteps: steps,
         stepMaps: maps,
         stepMapEntities: entities,
-        configurators: configurators
+        entityConfigurators: configurators
     });
 
 }
