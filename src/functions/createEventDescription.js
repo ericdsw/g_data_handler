@@ -114,6 +114,8 @@ export default function createEventDescription(type, parameters) {
             return `Remove follower with id: ${parameters.follower_id}`;
         case 'capture_follower':
             return `Capture ${parameters.target_object} with id ${parameters.follower_id}`;
+        case 'action_command':
+            return `Wait for action ${parameters.action}`;
         default:
             return '';
     }
