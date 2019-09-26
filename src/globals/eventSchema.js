@@ -800,6 +800,38 @@ const eventSchema = {
                 tooltip: 'An unique identifier for the follower, used to delete it'
             }
         }
+    },
+
+    "action_command": {
+        name: "Action Command",
+        icon: "error_outline",
+        defaultImportant: true,
+        parameters: {
+            target_zoom: {
+                label: "Target Zoom",
+                type: "number",
+                required: true,
+                tooltip: "How much will the camera zoom"
+            },
+            target_zoom_duration: {
+                label: "Zoom Duration",
+                type: "number",
+                required: true,
+                tooltip: "How long will the zoom last"
+            },
+            action: {
+                label: "Required Action",
+                type: "text",
+                required: true,
+                tooltip: "Action to listen to"
+            },
+            message: {
+                label: "Prompt Message",
+                type: "text",
+                required: true,
+                tooltip: "Prompt text"
+            }
+        }
     }
 
 }
