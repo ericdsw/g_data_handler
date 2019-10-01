@@ -832,6 +832,21 @@ const eventSchema = {
                 tooltip: "Prompt text"
             }
         }
+    },
+
+    "glitch": {
+        name: 'Glitch',
+        icon: 'gesture',
+        defaultImportant: false,
+        parameters: {
+            duration: {
+                label: 'Custom Duration',
+                type: 'number',
+                default: 0,
+                tooltip: 'Leave at 0 to play for the default duration'
+
+            }
+        }
     }
 
 }

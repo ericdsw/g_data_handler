@@ -116,6 +116,8 @@ export default function createEventDescription(type, parameters) {
             return `Capture ${parameters.target_object} with id ${parameters.follower_id}`;
         case 'action_command':
             return `Wait for action ${parameters.action}`;
+        case 'glitch':
+            return 'Will show graphical glitch';
         default:
             return '';
     }
