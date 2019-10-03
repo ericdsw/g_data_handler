@@ -40,6 +40,22 @@ const storylineEntityInputSchema = {
                     left: 'Left',
                     right: 'Right'
                 }
+            },
+            parent_walker: {
+                label: 'Spawn in NPC Walker',
+                type: 'text',
+                placeholder: 'If defined, the NPC will spawn inside the provided walker',
+                afterSeparator: 'Optional Walker parameters'
+            },
+            parent_walker_speed: {
+                label: 'Movement Speed',
+                type: 'number',
+                placeholder: 'How fast the NPC will walk'
+            },
+            walk_delay: {
+                label: 'Walk Delay',
+                type: 'number',
+                placeholder: 'Time to wait between each point'
             }
         }
     },
@@ -78,6 +94,22 @@ const storylineEntityInputSchema = {
                     left: 'Left',
                     right: 'Right'
                 }
+            },
+            parent_walker: {
+                label: 'Spawn in NPC Walker',
+                type: 'text',
+                placeholder: 'If defined, the NPC will spawn inside the provided walker',
+                afterSeparator: 'Optional Walker parameters'
+            },
+            parent_walker_speed: {
+                label: 'Movement Speed',
+                type: 'number',
+                placeholder: 'How fast the NPC will walk'
+            },
+            walk_delay: {
+                label: 'Walk Delay',
+                type: 'number',
+                placeholder: 'Time to wait between each point'
             }
         }
     },

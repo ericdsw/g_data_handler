@@ -4,7 +4,8 @@ import {
     FormControlLabel,
     Switch,
     MenuItem,
-    Typography
+    Typography,
+    Divider
 } from '@material-ui/core';
 
 export default function createInput(
@@ -21,10 +22,12 @@ export default function createInput(
         value = '';
     }
 
+    var returnValue;
+
     switch (inputData.type) {
 
         case 'boolean':
-            return (
+            returnValue = (
                 <FormControlLabel
                     label={label}
                     control={
@@ -37,9 +40,10 @@ export default function createInput(
                     } 
                 />
             );
+            break;
 
         case 'json':
-            return (
+            returnValue = (
                 <TextField
                     id={paramName}
                     label={label}
@@ -53,6 +57,8 @@ export default function createInput(
                     {...extraParams}
                 />
             );
+            break;
+
         case 'dropdown':
             let options = [];
             for (const key in inputData.elements) {
@@ -74,7 +80,7 @@ export default function createInput(
 
                 );
             }
-            return (
+            returnValue = (
                 <TextField
                     label={label}
                     id={paramName}
@@ -90,13 +96,14 @@ export default function createInput(
                     {options}
                 </TextField>
             );
+            break;
 
         case 'positionArray':
         case 'position':
         case 'number':
         case 'text':
         default:
-            return (
+            returnValue = (
                 <TextField 
                     id={paramName}
                     label={label}
@@ -112,5 +119,31 @@ export default function createInput(
                 />
             );
             
+    }
+
+    if (inputData.afterSeparator) {
+        return (
+            <React.Fragment>
+                <div 
+                    style={{ 
+                        marginTop: 20, 
+                        marginBottom: 10,
+                        marginLeft: 6, 
+                        marginRight: 6 
+                    }} 
+                >
+                    <Typography 
+                        gutterBottom 
+                        variant='subtitle1'
+                    >
+                        {inputData.afterSeparator}
+                    </Typography>
+                    <Divider />
+                </div>
+                {returnValue}
+            </React.Fragment>
+        );
+    } else {
+        return returnValue;
     }
 }
