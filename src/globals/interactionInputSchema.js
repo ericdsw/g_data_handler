@@ -187,7 +187,50 @@ const interactionInputSchema = {
                 placeholder: 'Relative nodepath to the trigger dialogue interaction node'
             }
         }
-    }
+    },
+
+    'select_item_interaction': {
+        name: 'Select Item Interaction',
+        icon: 'shopping_basket',
+        parameters: {
+            custom_name: {
+                label: 'Custom Name',
+                type: 'text',
+                placeholder: 'Used to identify if this interaction was triggered in a condition'
+            },
+            triggers_without_items: {
+                label: 'Triggers without having required items',
+                type: 'boolean',
+                default: true,
+                tooltip: 'If false, will not be triggered when the player doesn\'t have any of the required items'
+            },
+            dialogue_file: { 
+                label: 'Dialogue File',
+                type: 'text',
+                placeholder: 'JSON file, starting from the dialogues resource folder'
+            },
+            trigger_conversation: {
+                label: 'Trigger Conversation',
+                type: 'text',
+                placeholder: 'Conversation that will trigger the item picker'
+            },
+            fallback_interaction: {
+                label: 'Fallback Interaction',
+                type: 'text',
+                placeholder: 'Interaction to trigger when an invalid item is selected'
+            },
+            cancel_interaction: {
+                label: 'Cancel Interaction',
+                type: 'text',
+                placeholder: 'Interaction to trigger when the user presses cancel'
+            },
+            item_bundles: {
+                label: 'Item Bundles',
+                type: 'array',
+                placeholder: 'Format: item_id:interaction:consumes (separated by comma)'
+            }
+        }
+    },
 
 };
 
