@@ -25,7 +25,8 @@ const styles = theme => ({
     imagePreview: {
         backgroundColor: '#ccc',
         marginTop: 16,
-        height: 215,
+        height: 225,
+        borderRadius: 4
     },
     largeAvatar: {
         width: 150,

@@ -107,7 +107,7 @@ const DialogueConversation = props => {
                                 >
                                     Add message
                                 </Button>
-                                &nbsp;
+                                &nbsp;&nbsp;
                                 <Button
                                     style={{marginTop: 8}}
                                     color='secondary'
