@@ -7,7 +7,8 @@ import {
     Grid,
     Button,
     FormControlLabel,
-    Switch
+    Switch,
+    Divider
 } from '@material-ui/core';
 
 import { speakerSchema } from '../../../../globals';
@@ -20,15 +21,19 @@ const styles = theme => ({
     imagePreview: {
         backgroundColor: '#ccc',
         width: '100%',
-        height: 105,
+        height: 125,
         marginTop: 12,
     }
 });
 
 const DEFAULT_STATE = {
+
+    // Control Variables
     isEdit: false,
     createAndContinue: false,
     freshStart: false,
+
+    // Conversation variables
     imagePreview: '',
     speaker: '',
     message: '',
@@ -41,7 +46,9 @@ const DEFAULT_STATE = {
     choices: [],
     interrupts: false,
     target_object: '',
-    is_emote: false
+    is_emote: false,
+    enter_sound: '',
+    exit_sound: '',
 };
 
 class CreateDialogueMessageForm extends React.Component {
@@ -123,6 +130,13 @@ class CreateDialogueMessageForm extends React.Component {
         }
         if (this.state.target_object) {
             messageData.target_object = this.state.target_object;
+        }
+
+        if (this.state.enter_sound) {
+            messageData.enter_sound = this.state.enter_sound;
+        }
+        if (this.state.exit_sound) {
+            messageData.exit_sound = this.state.exit_sound;
         }
 
         this.props.creationHandler(messageData, this.state.createAndContinue);
@@ -232,15 +246,23 @@ class CreateDialogueMessageForm extends React.Component {
             <form onSubmit={this.submitData}>
                 <Grid 
                     container 
-                    spacing={16}
+                    spacing={24}
                 >
-                    <Grid item xs md={4}>
+                    <Grid item xs={12} md={4}>
                         <DialogueImageSearcher
                             image={this.state.imagePreview}
                             updateImage={this.handleImageChange}
                         />
+                        <TextField
+                            fullWidth
+                            label='Image'
+                            onChange={this.handleInputChange('image')}
+                            value={this.state.image}
+                            variant='outlined'
+                            margin='normal'
+                        />
                     </Grid>
-                    <Grid item xs md={8}>
+                    <Grid item xs={12} md={8}>
                         <TextField
                             select fullWidth
                             label='Speaker'
@@ -256,24 +278,67 @@ class CreateDialogueMessageForm extends React.Component {
                             label='Name'
                             onChange={this.handleInputChange('name')}
                             value={this.state.name}
+                            placeholder='The name that will be displayed on top of the Dialogue'
                             variant='outlined'
                             margin='normal'
                         />
+                        <Grid container spacing={16}>
+                            <Grid item xs={12} md={6}>
+                                <TextField
+                                    fullWidth
+                                    label='Enter Sound'
+                                    onChange={this.handleInputChange('enter_sound')}
+                                    value={this.state.enter_sound}
+                                    variant='outlined'
+                                    margin='normal'
+                                    placeholder='Sound when dialogue enters'
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <TextField
+                                    fullWidth
+                                    label='Exit Sound'
+                                    onChange={this.handleInputChange('exit_sound')}
+                                    value={this.state.exit_sound}
+                                    variant='outlined'
+                                    margin='normal'
+                                    placeholder='Sound when dialogue exits'
+                                />
+                            </Grid>
+                        </Grid>
+
                         <TextField
                             fullWidth
-                            label='Image'
-                            onChange={this.handleInputChange('image')}
-                            value={this.state.image}
+                            label='Target Object'
+                            onChange={this.handleInputChange('target_object')}
+                            value={this.state.target_object}
                             variant='outlined'
                             margin='normal'
+                            placeholder='Object that the dialogue will attach to (node name only)'
                         />
+
                     </Grid>
                 </Grid>
-                <Grid 
-                    container 
-                    alignItems='center'
-                >
-                    <Grid item xs={12} md={4}>
+
+                <br />
+                <Divider />
+                <br />
+
+                <Grid container spacing={16} alignItems='center'>
+                    <Grid item xs={12} md={10}>
+                        <TextField
+                            fullWidth
+                            variant='outlined'
+                            margin='normal'
+                            label='Message*'
+                            multiline
+                            rows='5'
+                            autoFocus
+                            value={this.state.message}
+                            onChange={this.handleInputChange('message')}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={2}>
                         <FormControlLabel
                             key='interrupts'
                             label='Interrupts Previous'
@@ -286,28 +351,12 @@ class CreateDialogueMessageForm extends React.Component {
                             }
                         />
                     </Grid>
-                    <Grid item xs={12} md={8}>
-                        <TextField
-                            fullWidth
-                            label='Target Object'
-                            onChange={this.handleInputChange('target_object')}
-                            value={this.state.target_object}
-                            variant='outlined'
-                            margin='normal'
-                        />
-                    </Grid>
                 </Grid>
-                <TextField
-                    fullWidth
-                    variant='outlined'
-                    margin='normal'
-                    label='Message'
-                    multiline
-                    rows='3'
-                    autoFocus
-                    value={this.state.message}
-                    onChange={this.handleInputChange('message')}
-                />
+
+                <br />
+                <Divider />
+                <br />
+                
                 <SimpleCollapse
                     collapsedMessage='Show Advanced Options'
                     openedMessage='Hide Advanced Options'
