@@ -7,6 +7,7 @@ import {
     DELETE_CUTSCENE_EVENT,
     EDIT_CUTSCENE_EVENT,
     UPDATE_CUTSCENE_FILE_NAME,
+    UPDATE_CUTSCENE_HIDE_BARS,
     ADD_CUTSCENE_JUMP,
     DELETE_CUTSCENE_JUMP
 } from '../actions/types';
@@ -14,7 +15,8 @@ import {
 const initialState = {
     currentCutscene: null,
     currentCutsceneJumps: {},
-    fileName: ''
+    fileName: '',
+    hideBars: false
 };
 
 export default function(state = initialState, action) {
@@ -35,6 +37,8 @@ export default function(state = initialState, action) {
             return editCutsceneEvent(state, action);
         case UPDATE_CUTSCENE_FILE_NAME:
             return updateCutsceneFileName(state, action);
+        case UPDATE_CUTSCENE_HIDE_BARS:
+            return updateCutsceneHideBars(state, action);
         case ADD_CUTSCENE_JUMP:
             return addCutsceneJump(state, action);
         case DELETE_CUTSCENE_JUMP:
@@ -45,10 +49,12 @@ export default function(state = initialState, action) {
 }
 
 function updateCutscene(state, action) {
+    const { cutscene, jumps, fileName, hideBars } = action.payload;
     return Object.assign({}, state, {
-        currentCutscene: action.payload.cutscene,
-        currentCutsceneJumps: action.payload.jumps,
-        fileName: action.payload.fileName
+        currentCutscene: cutscene,
+        currentCutsceneJumps: jumps,
+        fileName: fileName,
+        hideBars: hideBars
     });
 }
 
@@ -128,4 +134,9 @@ function deleteCutsceneJump(state, action) {
     return Object.assign({}, state, {
         currentCutsceneJumps: newJumps
     });
+}
+
+function updateCutsceneHideBars(state, action) {
+    const { hideBars } = action.payload;
+    return Object.assign({}, state, { hideBars });
 }

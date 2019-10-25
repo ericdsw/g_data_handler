@@ -1,6 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Typography, TextField, Button } from '@material-ui/core';
+import { 
+    Grid, Typography, TextField, Button, FormControlLabel, Switch, Tooltip
+} from '@material-ui/core';
 import { red, blue } from '@material-ui/core/colors';
 import CutsceneRowContainer from '../../containers/CutsceneRowContainer';
 
@@ -29,10 +31,10 @@ const styles = theme => ({
 const Cutscene = props => {
 
     // Extract value properties
-    const { classes, cutsceneRows, fileName } = props;
+    const { classes, cutsceneRows, fileName, hideBars } = props;
 
     // Extract method properties
-    const { handleFileNameChange, handleAddRow } = props;
+    const { handleFileNameChange, handleAddRow, handleShouldHideBars } = props;
     
     return (
         <Grid 
@@ -41,7 +43,7 @@ const Cutscene = props => {
             spacing={16}
             alignItems="center"
         >
-            <Grid item xs={12}>
+            <Grid item xs={12} md={10}>
                 <TextField
                     id='file_name'
                     label='File Name'
@@ -50,6 +52,24 @@ const Cutscene = props => {
                     variant='outlined' margin='normal' 
                     onChange={e => handleFileNameChange(e.target.value)}
                 />
+            </Grid>
+            <Grid item xs={12} md={2}>
+                <Tooltip 
+                    title='If true, top and bottom black bars will not show'
+                >    
+                    <FormControlLabel
+                        label='Hide black bars'
+                        control={
+                            <Switch
+                                onChange={e => {
+                                    handleShouldHideBars(e.target.checked)
+                                }}
+                                checked={hideBars}
+                                value={hideBars}
+                            />
+                        }
+                    />
+                </Tooltip>
             </Grid>
             {cutsceneRows.length === 0 && 
                 <Typography 
