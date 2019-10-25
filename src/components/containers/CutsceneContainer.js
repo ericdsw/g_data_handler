@@ -14,7 +14,8 @@ import {
     addCutsceneRow,
     deleteCutsceneRow,
     addCutsceneJump,
-    deleteCutsceneJump
+    deleteCutsceneJump,
+    updateCutsceneHideBars
 } from '../../actions/cutsceneActions';
 
 class CutsceneContainer extends React.Component {
@@ -23,7 +24,8 @@ class CutsceneContainer extends React.Component {
         this.props.updateCutscene({
             cutscene: null,
             fileName: '',
-            jumps: {}
+            jumps: {},
+            hideBars: false
         });
     }
 
@@ -31,7 +33,8 @@ class CutsceneContainer extends React.Component {
         this.props.updateCutscene({
             cutscene: [],
             jumps: {},
-            fileName: 'cutscene_file_name.json'
+            fileName: 'cutscene_file_name.json',
+            hideBars: false
         });
     }
 
@@ -52,6 +55,10 @@ class CutsceneContainer extends React.Component {
             .catch(error => this.showError(error.message));
     }
 
+    updateCutsceneHideBars = shouldHide => {
+        this.props.updateCutsceneHideBars(shouldHide);
+    }
+
     changeFileName = newFileName => {
         this.props.updateCutsceneFileName(newFileName);
     }
@@ -70,7 +77,9 @@ class CutsceneContainer extends React.Component {
 
     export = () => {
 
-        const { fileName, currentCutscene, currentCutsceneJumps } = this.props;
+        const { 
+            fileName, currentCutscene, currentCutsceneJumps, hideBars
+        } = this.props;
 
         // Check that the cutscene is not empty
         if (currentCutscene.length <= 0) {
@@ -95,7 +104,8 @@ class CutsceneContainer extends React.Component {
         // Perform download
         downloadJSON(fileName, {
             data: currentCutscene,
-            cutscene_jumps: currentCutsceneJumps
+            cutscene_jumps: currentCutsceneJumps,
+            hide_black_bars: hideBars
         });
 
     }
@@ -108,7 +118,9 @@ class CutsceneContainer extends React.Component {
     // Render logic
     render() {
 
-        const { currentCutscene, currentCutsceneJumps, fileName } = this.props;
+        const { 
+            currentCutscene, currentCutsceneJumps, fileName, hideBars
+        } = this.props;
 
         let content;
         if (this.props.currentCutscene !== null) {
@@ -126,8 +138,10 @@ class CutsceneContainer extends React.Component {
                         fileName={fileName}
                         cutsceneRows={currentCutscene}
                         jumps={currentCutsceneJumps}
+                        hideBars={hideBars}
                         handleFileNameChange={this.changeFileName}
                         handleAddRow={this.addCutsceneRow}
+                        handleShouldHideBars={this.updateCutsceneHideBars}
                     />
                 </React.Fragment>
             );
@@ -156,7 +170,8 @@ class CutsceneContainer extends React.Component {
 const mapStateToProps = state => ({
     currentCutscene: state.cutscene.currentCutscene,
     currentCutsceneJumps: state.cutscene.currentCutsceneJumps,
-    fileName: state.cutscene.fileName
+    fileName: state.cutscene.fileName,
+    hideBars: state.cutscene.hideBars
 });
 
 export default connect(mapStateToProps, {
@@ -165,5 +180,6 @@ export default connect(mapStateToProps, {
     addCutsceneRow,
     deleteCutsceneRow,
     addCutsceneJump,
-    deleteCutsceneJump
+    deleteCutsceneJump,
+    updateCutsceneHideBars
 })(withSnackbar(CutsceneContainer));

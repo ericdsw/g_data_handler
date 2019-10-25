@@ -7,6 +7,7 @@ import {
     DELETE_CUTSCENE_EVENT,
     EDIT_CUTSCENE_EVENT,
     UPDATE_CUTSCENE_FILE_NAME,
+    UPDATE_CUTSCENE_HIDE_BARS,
     ADD_CUTSCENE_JUMP,
     DELETE_CUTSCENE_JUMP
 } from './types';
@@ -72,6 +73,15 @@ export const updateCutsceneFileName = newFileName => dispatch => {
         type: UPDATE_CUTSCENE_FILE_NAME,
         payload: {
             newFileName
+        }
+    });
+}
+
+export const updateCutsceneHideBars = hideBars => dispatch => {
+    dispatch({
+        type: UPDATE_CUTSCENE_HIDE_BARS,
+        payload: {
+            hideBars
         }
     });
 }
