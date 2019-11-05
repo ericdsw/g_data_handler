@@ -2,33 +2,30 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
     deleteDialogueConversation,
-    updateEditingMessage
+    addMessageToConversation
 } from '../../actions/dialogueActions';
 import DialogueConversation from '../pages/dialogues/DialogueConversation';
 
 class DialogueConversationContainer extends React.Component {
 
     deleteConversation = () => {
-        const { deleteDialogueConversation, conversationName } = this.props;
-        deleteDialogueConversation(conversationName);
+        const { deleteDialogueConversation, conversationId } = this.props;
+        deleteDialogueConversation(conversationId);
     }
 
-    addNewToConversation = (isEmote = false) => {
-        const { conversationName, messages, updateEditingMessage } = this.props;
-        const sourceInfo = {
-            conversationName: conversationName,
-            messageOffset: messages.length + 1
-        };
-        updateEditingMessage(sourceInfo, {is_emote: isEmote});
+    addNewToConversation = newEntryData => {
+        const { addMessageToConversation, conversationId } = this.props;
+        addMessageToConversation(conversationId, newEntryData);
     }
-
+    
     render() {
 
-        const { conversationName, messages } = this.props;
+        const { conversationId, conversations } = this.props;
+        const currentConversation = conversations[conversationId];
+
         return (
             <DialogueConversation
-                conversationName={conversationName}
-                messages={messages}
+                conversation={currentConversation}
                 handleDeleteConversation={this.deleteConversation}
                 handleAddToConversation={this.addNewToConversation}
             />
@@ -37,7 +34,11 @@ class DialogueConversationContainer extends React.Component {
 
 }
 
-export default connect(null, {
+const mapStateToProps = state => ({
+    conversations: state.dialogue.conversations
+});
+
+export default connect(mapStateToProps, {
     deleteDialogueConversation,
-    updateEditingMessage
+    addMessageToConversation
 })(DialogueConversationContainer);

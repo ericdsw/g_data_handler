@@ -5,7 +5,8 @@ import {
     CardContent,
     Avatar,
     Typography,
-    Icon
+    Icon,
+    Grid
 } from '@material-ui/core';
 import { red, blue } from '@material-ui/core/colors';
 
@@ -88,71 +89,75 @@ const DialogueMessage = props => {
         <Card className={classes.messageContainer}>
             {message.interrupts &&
                 <div className={classes.interruptDiv}>
-                    <Typography
-                        align='center'
-                        variant='body2'
-                    >
+                    <Typography align='center' variant='body2'>
                         <b>Interrupts Previous</b>
                     </Typography>
                 </div>
             }
             <CardContent>
-                <div style={{display: 'flex', alignItems: 'flex-start'}}>
-                    <div style={{flex:1}}>
-                        {message.speaker &&
-                            <Typography
-                                variant='caption'
-                                className={classes.subTitle}
-                                align='left'
-                            >
-                                Speaker: {message.speaker}
-                            </Typography>
-                        }
-                        
-                        <Typography
-                            variant='h6'
-                            className={classes.title}
-                            align='left'
-                            gutterBottom
-                        >
-                            {speakerName}
-                        </Typography>
-                    </div>
-                    <DialogueMessageToolbar
-                        message={message}
-                        handleAddAbove={isEmote => handleAddAbove(isEmote)}
-                        handleAddBelow={isEmote => handleAddBelow(isEmote)}
-                        handleEdit={() => handleEdit()}
-                        handleDelete={() => handleDelete()}
-                        omitEdit={false}
-                    />
-                </div>
-                
-                <div className={classes.details}>
-                    {usedImagePath &&
-                        <div className={classes.contentImage}>
-                            <Avatar
-                                className={classes.avatar}
-                                src={`/images/${usedImagePath}`} 
+                <Grid container spacing={16}>
+                    <Grid item xs={12}>
+                        <div style={{display: 'flex', alignItems: 'flex-start'}}>
+                            <div style={{flex:1}}>
+                                {message.speaker &&
+                                    <Typography
+                                        variant='caption'
+                                        className={classes.subTitle}
+                                        align='left'
+                                    >
+                                        Speaker: {message.speaker}
+                                    </Typography>
+                                }
+                                
+                                <Typography
+                                    variant='h6'
+                                    className={classes.title}
+                                    align='left'
+                                    gutterBottom
+                                >
+                                    {speakerName}
+                                </Typography>
+                            </div>
+                            <DialogueMessageToolbar
+                                message={message}
+                                handleAddAbove={data => handleAddAbove(data)}
+                                handleAddBelow={data => handleAddBelow(data)}
+                                handleEdit={data => handleEdit(data)}
+                                handleDelete={() => handleDelete()}
+                                omitEdit={false}
                             />
                         </div>
-                    }
-                    <div className={classes.content}>
-                        {message.message}
-                    </div>
-                </div>
-                <ConversationExtraParams message={message} />
-                <ConversationChoices message={message} />
-                {message.target_object &&
-                    <Typography
-                        variant='body1'
-                        className={classes.targetObject}
-                        align='right'
-                    >
-                        <Icon>directions_walk</Icon>
-                        {message.target_object}
-                    </Typography>
-                }
+                        <div className={classes.details}>
+                            {usedImagePath &&
+                                <div className={classes.contentImage}>
+                                    <Avatar
+                                        className={classes.avatar}
+                                        src={`/images/${usedImagePath}`} 
+                                    />
+                                </div>
+                            }
+                            <div className={classes.content}>
+                                {message.message}
+                            </div>
+                        </div>
+
+                        <ConversationExtraParams message={message} />
+
+                        <ConversationChoices message={message} />
+                        {message.target_object &&
+                            <Typography
+                                variant='body1'
+                                className={classes.targetObject}
+                                align='right'
+                            >
+                                <Icon>directions_walk</Icon>
+                                {message.target_object}
+                            </Typography>
+                        }
+                    </Grid>
+
+                </Grid>
+                                
             </CardContent>
 
         </Card>

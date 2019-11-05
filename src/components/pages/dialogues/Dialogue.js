@@ -3,7 +3,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { 
     Grid, 
     TextField,
-    Button
+    Button,
+    Fab,
+    Icon
 } from '@material-ui/core';
 import { red, blue } from '@material-ui/core/colors';
 import { GenericDialogue } from '../../elements';
@@ -11,11 +13,7 @@ import { useDialogueManager } from '../../../hooks';
 import ConversationContainer from '../../containers/DialogueConversationContainer';
 
 import { NoConversationsNotifier } from './elements';
-import { 
-    CreateConversationForm,
-    CreateDialogueMessageForm,
-    CreateEmoteForm
-} from './forms';
+import { CreateConversationForm } from './forms';
 
 const styles = theme => ({
     root: {
@@ -33,54 +31,25 @@ const styles = theme => ({
     },
     defaultButton: {
         color: blue[500]
+    },
+    mergeFab: {
+        position: 'fixed',
+        right: 16,
+        bottom: 16,
+        margin: theme.spacing.unit
     }
 });
 
 const Dialogue = props => {
 
     const { 
-        fileName, conversations, classes, 
-        editingMessage, editingMessageConversation
+        fileName, dialogueData, classes, 
     } = props;
-
-    const { 
-        handleFormClose, handleFileNameChange, handleAddConversation,
-        handleCreateMessage, handleEditMessage,
-        handleAdvanceForm
-    } = props;
-
-    const messageFormOpen = (
-        editingMessage !== null && editingMessageConversation !== '' &&
-        !editingMessage.is_emote
-    );
-
-    const emoteFormOpen = (
-        editingMessage !== null && editingMessageConversation !== '' &&
-        editingMessage.is_emote
-    );
+    
+    const { handleFileNameChange, handleAddConversation } = props;
 
     const [dialogues, toggleDialogue] = useDialogueManager('addConversation');
 
-    // Called when the message form is submitted
-    function handleMessageForm(messageData, createAndContinue) {
-        if (!editingMessage.message) {
-            handleCreateMessage(messageData);
-        } else {
-            handleEditMessage(messageData); 
-        }
-        if (! createAndContinue) {
-            handleFormClose() 
-        } else {
-            handleAdvanceForm()
-        }
-    }
-
-    // Called when the emote form is submitted
-    function handleEmoteForm(messageData) {
-        handleCreateMessage(messageData);
-        handleFormClose();
-    }
-    
     return (
         <React.Fragment>
             <Grid
@@ -88,6 +57,7 @@ const Dialogue = props => {
                 container
                 spacing={16}
             >
+                {/* File Name Manager */}
                 <Grid item xs={12}>
                     <TextField
                         id='file_name'
@@ -98,17 +68,21 @@ const Dialogue = props => {
                         variant='outlined' margin='normal' 
                     />
                 </Grid>
+
+                {/* The conversation list */}
                 <Grid item xs={12}>
-                    <NoConversationsNotifier conversations={conversations} />
-                    {Object.keys(conversations).map(name => (
+                    <NoConversationsNotifier 
+                        conversations={dialogueData.conversations} 
+                    />
+                    {dialogueData.conversations.map(conversationId => (
                         <ConversationContainer
-                            key={name}
-                            conversationName={name}
-                            messages={conversations[name]} 
+                            key={conversationId}
+                            conversationId={conversationId}
                         />
                     ))}
                 </Grid>
 
+                {/* Additional Add Conversation Button */}
                 <Grid item xs={12}>
                     <Grid container justify='center'>
                         <Button
@@ -125,11 +99,21 @@ const Dialogue = props => {
 
             </Grid>
 
+            {/* Merge Conversations Button */}
+            <Fab 
+                color='primary' 
+                aria-label='Merge Conversations'
+                className={classes.mergeFab}
+            >
+                <Icon>merge_type</Icon>
+            </Fab>
+
             {/* Conversation Form */}
             <GenericDialogue
                 title='Create Conversation'
                 open={dialogues['addConversation']}
                 onClose={() => toggleDialogue('addConversation', 'hide')}
+                maxWidth='sm'
             >
                 <CreateConversationForm
                     creationHandler={conversationName => {
@@ -137,30 +121,6 @@ const Dialogue = props => {
                         toggleDialogue('addConversation', 'hide');
                     }}
                 />
-            </GenericDialogue>
-
-            {/* Message form */}
-            <GenericDialogue
-                title={`${
-                    editingMessage && ! editingMessage.message ? 'Create' : 'Edit'
-                } Message`}
-                open={messageFormOpen}
-                onClose={handleFormClose}
-            >
-                <CreateDialogueMessageForm
-                    messageData={editingMessage}
-                    creationHandler={handleMessageForm}
-                    isEdit={editingMessage && editingMessage.message}
-                />
-            </GenericDialogue>
-
-            {/* Emote Form */}
-            <GenericDialogue
-                title='Create Emote'
-                open={typeof emoteFormOpen !== 'undefined' && emoteFormOpen}
-                onClose={handleFormClose}
-            >
-                <CreateEmoteForm creationHandler={handleEmoteForm} />
             </GenericDialogue>
 
         </React.Fragment>

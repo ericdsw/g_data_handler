@@ -33,7 +33,7 @@ const DEFAULT_STATE = {
     createAndContinue: false,
     freshStart: false,
 
-    // Conversation variables
+    // Message variables
     imagePreview: '',
     speaker: '',
     message: '',
@@ -104,6 +104,8 @@ class CreateDialogueMessageForm extends React.Component {
             message: this.state.message,
             interrupts: this.state.interrupts
         }
+
+        // Filters
         if (this.state.speaker) { 
             messageData.speaker = this.state.speaker; 
         }
@@ -131,7 +133,6 @@ class CreateDialogueMessageForm extends React.Component {
         if (this.state.target_object) {
             messageData.target_object = this.state.target_object;
         }
-
         if (this.state.enter_sound) {
             messageData.enter_sound = this.state.enter_sound;
         }
@@ -460,4 +461,6 @@ class CreateDialogueMessageForm extends React.Component {
     }
 }
 
-export default withSnackbar(withStyles(styles)(CreateDialogueMessageForm));
+export default withSnackbar(
+    withStyles(styles)(CreateDialogueMessageForm)
+);

@@ -7,7 +7,7 @@ import { normalize, denormalize } from 'normalizr';
 import Storyline from '../pages/storylines/Storyline';
 import { DragJsonFileManager } from '../elements';
 import { downloadJSON, parseFile } from '../../functions';
-import StorylineSchema from '../../schemas/StorylineSchema';
+import StorylineSchema from '../../models/schemas/StorylineSchema';
 import {
     updateStoryline,
     updateWithEmptyStoryline,

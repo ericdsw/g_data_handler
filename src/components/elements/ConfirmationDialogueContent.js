@@ -1,11 +1,10 @@
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import { 
-    Dialog,
     DialogActions,
     DialogTitle,
     Button
 } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
 import { red, green } from '@material-ui/core/colors';
 
 const styles = theme => ({
@@ -16,16 +15,11 @@ const styles = theme => ({
         color: green[500]
     }
 });
-
-const ConfirmationDialogue = props => {
-    const { isOpen = false, handleClose, handleConfirm, message, classes } = props;
+const confirmationDialogueContent = props => {
+    const { message, classes } = props;
+    const { handleClose, handleConfirm } = props;
     return (
-        <Dialog
-            open={isOpen}
-            onClose={handleClose}
-            fullWidth={true}
-            maxWidth='sm'
-        >
+        <React.Component>
             <DialogTitle>{message}</DialogTitle>
             <DialogActions>
                 <Button 
@@ -41,8 +35,8 @@ const ConfirmationDialogue = props => {
                     Yes
                 </Button>
             </DialogActions>
-        </Dialog>
+        </React.Component>
     );
 }
 
-export default withStyles(styles)(ConfirmationDialogue);
+export default withStyles(styles)(confirmationDialogueContent);

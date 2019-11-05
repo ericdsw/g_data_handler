@@ -1,10 +1,18 @@
 import React , { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { 
-    IconButton, Icon, Menu, MenuItem
+    IconButton, 
+    Icon, 
+    Menu, 
+    MenuItem,
+    Divider,
+    ListItemIcon,
+    ListItemText
 } from '@material-ui/core';
 import { useDialogueManager } from '../../../../hooks';
-import { ConfirmationDialogue } from '../../../elements';
+import { GenericDialogue, ConfirmationDialogue } from '../../../elements';
+import { CreateDialogueMessageForm, CreateEmoteForm } from '../forms';
+
 
 const styles = theme => ({
     button: {
@@ -14,15 +22,23 @@ const styles = theme => ({
 
 const DialogueMessageToolbar = props => {
 
+    // Parameters
     const { message, omitEdit } = props;
 
-    const { handleAddAbove, handleAddBelow, handleEdit, handleDelete } = props; 
+    // Methods
+    const { 
+        handleAddAbove, handleAddBelow, handleEdit, handleDelete 
+    } = props; 
 
-    const [dialogues, toggleDialogue] = useDialogueManager('confirmDelete');
+    const [dialogues, toggleDialogue] = useDialogueManager(
+        'confirmDelete', 'addMessage', 'addEmote'
+    );
 
     const [selectedOption, setSelectedOption] = useState('');
     const [anchorEl, setAnchorEl] = useState(null);
     const [typeAnchorEl, setTypeAnchorEl] = useState(null);
+
+    // Anchor Management
 
     function handleMenuOpen(event) {
         setAnchorEl(event.currentTarget);
@@ -49,6 +65,8 @@ const DialogueMessageToolbar = props => {
                 handleTypeMenuOpen(event);
                 break;
             case 'edit':
+                setSelectedOption('edit');
+                toggleDialogue('addMessage', 'show')
                 handleEdit();
                 break;
             case 'delete':
@@ -61,23 +79,36 @@ const DialogueMessageToolbar = props => {
     }
 
     function handleTypeMenuSelect(itemName) {
-        const isEmote = (itemName === 'emote');
+        if (itemName === 'emote') {
+            toggleDialogue('addEmote', 'show');
+        } else {
+            toggleDialogue('addMessage', 'show');
+        }
+        setTypeAnchorEl(null);
+    }
+
+    // Form Submit Management
+
+    function handleDialogueFormSubmit(data) {
         switch (selectedOption) {
             case 'addAbove':
-                handleAddAbove(isEmote);
+                handleAddAbove(data);
                 break;
             case 'addBelow':
-                handleAddBelow(isEmote);
+                handleAddBelow(data);
+                break;
+            case 'edit':
+                handleEdit(data);
                 break;
             default:
                 break;
         }
-        setTypeAnchorEl(null);
     }
 
     return (
         <div>
 
+            {/* Button that shows the menu */}
             <IconButton
                 aria-controls='simple-menu'
                 aria-haspopup='true'
@@ -86,44 +117,70 @@ const DialogueMessageToolbar = props => {
                 <Icon>more_vert</Icon>
             </IconButton>
 
+            {/* Menu Elements */}
             <Menu
                 id='simple-menu'
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
+                mountOnEnter
+                unmountOnExit
             >
                 <MenuItem 
                     aria-controls='simple-type-menu'
                     aria-haspopup='true'
                     onClick={(e) => handleMenuSelect(e, 'addAbove')}
                 >
-                    Add Above
+                    <ListItemIcon>
+                        <Icon>arrow_upward</Icon>
+                    </ListItemIcon>
+                    <ListItemText primary="Add Above" />
                 </MenuItem>
                 <MenuItem 
                     aria-controls='simple-type-menu'
                     aria-haspopup='true'
                     onClick={(e) => handleMenuSelect(e, 'addBelow')}
                 >
-                    Add Below
+                    <ListItemIcon>
+                        <Icon>arrow_downward</Icon>
+                    </ListItemIcon>
+                    <ListItemText primary="Add Below" />
                 </MenuItem>
                 {!omitEdit && 
                     <MenuItem 
                         aria-controls='simple-type-menu'
                         aria-haspopup='true'
-                        onClick={(e) => handleMenuSelect(e, 'edit')}>
-                    Edit
+                        onClick={(e) => handleMenuSelect(e, 'edit')}
+                    >
+                        <ListItemIcon>
+                            <Icon>edit</Icon>
+                        </ListItemIcon>
+                        <ListItemText primary="Edit" />
                     </MenuItem>
                 }
                 <MenuItem onClick={(e) => handleMenuSelect(e, 'delete')}>
-                    Delete
+                    <ListItemIcon>
+                        <Icon>delete</Icon>
+                    </ListItemIcon>
+                    <ListItemText primary="Delete" />
+                </MenuItem>
+                <Divider />
+                <MenuItem>
+                    <ListItemIcon>
+                        <Icon>vertical_align_bottom</Icon>
+                    </ListItemIcon>
+                    <ListItemText primary="Split Below" />
                 </MenuItem>
             </Menu>
 
+            {/* Creation Type menu elements */}
             <Menu
                 id='simple-type-menu'
                 anchorEl={typeAnchorEl}
                 open={Boolean(typeAnchorEl)}
                 onClose={handleTypeClose}
+                mountOnEnter
+                unmountOnExit
             >
                 <MenuItem onClick={() => handleTypeMenuSelect('message')}>
                     Message
@@ -133,6 +190,7 @@ const DialogueMessageToolbar = props => {
                 </MenuItem>
            </Menu>
 
+            {/* Delete Dialogue */}
             <ConfirmationDialogue
                 message={`Delete the ${message.is_emote ? 'emote' : 'message'}?`}
                 isOpen={dialogues['confirmDelete']}
@@ -142,6 +200,39 @@ const DialogueMessageToolbar = props => {
                     toggleDialogue('confirmDelete', 'hide');
                 }}
             />
+
+            {/* Create Message Form */}
+            <GenericDialogue
+                title='Create Conversation'
+                open={dialogues['addMessage']}
+                onClose={() => toggleDialogue('addMessage', 'hide')}
+            >
+                <CreateDialogueMessageForm
+                    isEdit={selectedOption === 'edit'}
+                    messageData={(selectedOption === 'edit') ? message : {}}
+                    creationHandler={(data, createAndContinue) => {
+                        if (! createAndContinue) {
+                            toggleDialogue('addMessage', 'hide');
+                        }
+                        handleDialogueFormSubmit(data);
+                    }}
+                />
+            </GenericDialogue>
+
+            {/* Create Emote form */}
+            <GenericDialogue
+                title='Create Emote'
+                open={dialogues['addEmote']}
+                onClose={() => toggleDialogue('addEmote', 'hide')}
+                maxWidth='sm'
+            >
+                <CreateEmoteForm
+                    creationHandler={data => {
+                        toggleDialogue('addEmote', 'hide');
+                        handleDialogueFormSubmit(data);
+                    }}
+                /> 
+            </GenericDialogue>
 
         </div>
     );

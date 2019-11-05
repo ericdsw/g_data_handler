@@ -3,55 +3,53 @@ import { connect } from 'react-redux';
 import {
     editConversationMessage, 
     deleteConversationMessage,
-    addMessageAtPosition,
-    updateEditingMessage
+    addMessageAtPosition
 } from '../../actions/dialogueActions';
 import DialogueMessage from '../pages/dialogues/DialogueMessage';
 import DialogueEmote from '../pages/dialogues/DialogueEmote';
 
 class DialogueMessageContainer extends React.Component {
 
-    editMessage = () => {
-        const { updateEditingMessage, conversation , offset, message } = this.props;
-        const sourceInfo = {
-            conversationName: conversation,
-            messageOffset: offset
-        };
-        updateEditingMessage(sourceInfo, message);
+    editMessage = data => {
+        const { messageId, editConversationMessage } = this.props;
+        editConversationMessage(messageId, data);
     }
 
-    addAbove = (isEmote = false) => {
-        const { updateEditingMessage, conversation , offset } = this.props;
-        const sourceInfo = {
-            conversationName: conversation,
-            messageOffset: offset
-        };
-        updateEditingMessage(sourceInfo, {is_emote: isEmote});
+    addAbove = data => {
+        const { 
+            conversationId, messageId, conversations,
+            addMessageAtPosition
+        } = this.props;
+        const currentConversation = conversations[conversationId];
+        const offset = currentConversation.messages.indexOf(messageId)
+
+        addMessageAtPosition(conversationId, offset, data)
     }
 
-    addBelow = (isEmote = false) => {
-        const { updateEditingMessage, conversation , offset } = this.props;
-        const sourceInfo = {
-            conversationName: conversation,
-            messageOffset: offset + 1
-        };
-        updateEditingMessage(sourceInfo, {is_emote: isEmote});
+    addBelow = data => {
+        const { 
+            conversationId, messageId, conversations,
+            addMessageAtPosition
+        } = this.props;
+        const currentConversation = conversations[conversationId];
+        const offset = currentConversation.messages.indexOf(messageId)
+
+        addMessageAtPosition(conversationId, offset + 1, data)
     }
 
     deleteMessage = () => {
-        const { conversation, offset, deleteConversationMessage } = this.props;
-        deleteConversationMessage(conversation, offset);
+        const { messageId, deleteConversationMessage } = this.props;
+        deleteConversationMessage(messageId);
     }
 
     render() {
 
-        const { offset, conversation, message } = this.props;
+        const { messageId, messages } = this.props;
+        const message = messages[messageId];
 
         if (message.is_emote) {
             return (
                 <DialogueEmote
-                    offset={offset}
-                    conversation={conversation}
                     message={message}
                     handleDelete={this.deleteMessage}
                     handleAddAbove={this.addAbove}
@@ -61,8 +59,6 @@ class DialogueMessageContainer extends React.Component {
         } else {
             return (
                 <DialogueMessage 
-                    offset={offset}
-                    conversation={conversation}
                     message={message}
                     handleEdit={this.editMessage}
                     handleDelete={this.deleteMessage}
@@ -74,9 +70,13 @@ class DialogueMessageContainer extends React.Component {
     }
 }
 
-export default connect(null, {
+const mapStateToProps = state => ({
+    conversations: state.dialogue.conversations,
+    messages: state.dialogue.messages
+})
+
+export default connect(mapStateToProps, {
     editConversationMessage,
     deleteConversationMessage,
-    addMessageAtPosition,
-    updateEditingMessage
+    addMessageAtPosition
 })(DialogueMessageContainer);

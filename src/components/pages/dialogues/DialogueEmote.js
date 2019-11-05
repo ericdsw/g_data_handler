@@ -36,13 +36,14 @@ const DialogueEmote = props => {
 
     const { message, classes } = props;
 
-    const { handleEdit, handleDelete, handleAddAbove, handleAddBelow } = props;
+    const { handleDelete, handleAddAbove, handleAddBelow } = props;
     
     const imagePath = `/images/emotes/${message.message}.png`;
 
     return (
         <Grid container>
             <Grid item xs={1} md={4}>
+                {/* Empty grid item */}
             </Grid>
             <Grid item xs={10} md={4}>
                 <Card className={classes.emoteContainer}>
@@ -54,9 +55,9 @@ const DialogueEmote = props => {
                         >
                             <DialogueMessageToolbar
                                 message={message}
-                                handleAddAbove={isEmote => handleAddAbove(isEmote)}
-                                handleAddBelow={isEmote => handleAddBelow(isEmote)}
-                                handleEdit={() => handleEdit()}
+                                handleAddAbove={data => handleAddAbove(data)}
+                                handleAddBelow={data => handleAddBelow(data)}
+                                handleEdit={data => {/* No edit logic */}}
                                 handleDelete={() => handleDelete()}
                                 omitEdit={true}
                             />
@@ -88,6 +89,7 @@ const DialogueEmote = props => {
                 </Card>
             </Grid>
             <Grid item xs={1} md={4}>
+                {/* Empty grid item */}
             </Grid>
 
         </Grid>
