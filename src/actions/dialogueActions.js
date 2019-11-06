@@ -10,7 +10,9 @@ import {
     DELETE_CONVERSATION_MESSAGE,
     UPDATE_DIALOGUE_FILENAME,
     DELETE_DIALOGUE,
-    REORDER_CONVERSATION
+    REORDER_CONVERSATION,
+    REORDER_MESSAGE,
+    MOVE_MESSAGE
 } from './types';
 
 // Create
@@ -125,4 +127,26 @@ export const reorderConversations = (
     })
 }
 
+export const reorderMessage = (
+    sourcePosition, destinationPosition, conversationId, messageId
+) => dispatch => {
+    dispatch({
+        type: REORDER_MESSAGE,
+        payload: {
+            sourcePosition, destinationPosition, conversationId, messageId
+        }
+    })
+}
 
+export const moveMessage = (
+    sourcePosition, destinationPosition,
+    sourceConversationId, destinationConversationId, messageId
+) => dispatch => {
+    dispatch({
+        type: MOVE_MESSAGE,
+        payload: {
+            sourcePosition, destinationPosition,
+            sourceConversationId, destinationConversationId, messageId
+        }
+    })
+}

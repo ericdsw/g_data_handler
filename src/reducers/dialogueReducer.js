@@ -12,7 +12,9 @@ import {
     DELETE_CONVERSATION_MESSAGE,
     UPDATE_DIALOGUE_FILENAME,
     DELETE_DIALOGUE,
-    REORDER_CONVERSATION
+    REORDER_CONVERSATION,
+    REORDER_MESSAGE,
+    MOVE_MESSAGE
 } from '../actions/types'
 
 const initialState = {
@@ -56,6 +58,10 @@ export default function(state = initialState, action) {
 
         case REORDER_CONVERSATION:
             return reorderConversations(state, action);
+        case REORDER_MESSAGE:
+            return reorderMessage(state, action);
+        case MOVE_MESSAGE:
+            return moveMessage(state, action);
         
         default:
             return state;
@@ -226,7 +232,45 @@ function reorderConversations(state, action) {
 
     dialogues[dialogueId].conversations = newConversationArray;
 
-    return Object.assign({}, state,{
+    return Object.assign({}, state, {
         dialogues
+    });
+}
+
+function reorderMessage(state, action) {
+
+    const {
+        sourcePosition, destinationPosition, conversationId, messageId
+    } = action.payload;
+
+    const conversations = {...state.conversations};
+    const messagesArray = conversations[conversationId].messages;
+
+    messagesArray.splice(sourcePosition, 1);
+    messagesArray.splice(destinationPosition, 0, messageId);
+
+    conversations[conversationId].messages = messagesArray;
+
+    return Object.assign({}, state, {
+        conversations
+    });
+}
+
+function moveMessage(state, action) {
+
+    const {
+        sourcePosition, destinationPosition,
+        sourceConversationId, destinationConversationId, messageId
+    } = action.payload;
+
+    const conversations = {...state.conversations};
+
+    conversations[sourceConversationId].messages.splice(sourcePosition, 1);
+    conversations[destinationConversationId].messages.splice(
+        destinationPosition, 0, messageId
+    )
+
+    return Object.assign({}, state, {
+        conversations
     });
 }

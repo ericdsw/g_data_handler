@@ -18,7 +18,8 @@ const styles = theme => ({
     messageContainer: {
         width: '100%',
         backgroundColor: "#222",
-        position: 'relative'
+        position: 'relative',
+        borderBottom: '1px solid #555'
     },
     details: {
         display: 'flex',
@@ -86,7 +87,10 @@ const DialogueMessage = props => {
     }
 
     return (
-        <Card className={classes.messageContainer}>
+        <Card 
+            square={true}
+            className={classes.messageContainer}
+        >
             {message.interrupts &&
                 <div className={classes.interruptDiv}>
                     <Typography align='center' variant='body2'>

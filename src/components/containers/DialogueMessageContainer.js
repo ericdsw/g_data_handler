@@ -5,6 +5,7 @@ import {
     deleteConversationMessage,
     addMessageAtPosition
 } from '../../actions/dialogueActions';
+import { Draggable } from 'react-beautiful-dnd';
 import DialogueMessage from '../pages/dialogues/DialogueMessage';
 import DialogueEmote from '../pages/dialogues/DialogueEmote';
 
@@ -44,11 +45,13 @@ class DialogueMessageContainer extends React.Component {
 
     render() {
 
-        const { messageId, messages } = this.props;
+        const { messageId, messages, index } = this.props;
         const message = messages[messageId];
 
+        let content;
+
         if (message.is_emote) {
-            return (
+            content = (
                 <DialogueEmote
                     message={message}
                     handleDelete={this.deleteMessage}
@@ -57,7 +60,7 @@ class DialogueMessageContainer extends React.Component {
                 />
             );
         } else {
-            return (
+            content = (
                 <DialogueMessage 
                     message={message}
                     handleEdit={this.editMessage}
@@ -67,6 +70,23 @@ class DialogueMessageContainer extends React.Component {
                 />
             );
         }
+
+        return (
+            <Draggable
+                draggableId={messageId}
+                index={index}
+            >
+                {(provided) => (
+                    <div
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                    >
+                        {content}
+                    </div>
+                )}
+            </Draggable>
+        );
     }
 }
 

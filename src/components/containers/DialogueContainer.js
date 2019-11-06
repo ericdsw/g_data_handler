@@ -10,7 +10,9 @@ import {
     updateDialogueFilename,
     addDialogueConversation,
     deleteCurrentDialogue,
-    reorderConversations
+    reorderConversations,
+    reorderMessage,
+    moveMessage
 } from '../../actions/dialogueActions';
 import { parseFile, downloadJSON } from '../../functions';
 import { DragJsonFileManager } from '../elements';
@@ -108,20 +110,40 @@ class DialogueContainer extends React.Component {
     onDragEnd = result => {
 
         const { source, destination, draggableId } = result;
-        const { reorderConversations, currentDialogue } = this.props;
-
-        if (!destination) {
-            return;
-        }
+        
+        // If no destination is defined or no movement needs to be made, skip
         if (
-            destination.droppableId === source.droppableId &&
-            destination.index === source.index
+            !destination ||
+            (
+                destination.droppableId === source.droppableId &&
+                destination.index === source.index
+            )
         ) {
             return;
         }
-        reorderConversations(
-            source.index, destination.index, currentDialogue, draggableId
-        );
+
+        if (result.type === 'conversations') {
+            const { reorderConversations, currentDialogue } = this.props;
+            reorderConversations(
+                source.index, destination.index, currentDialogue, draggableId
+            );
+        } else if (result.type === 'messages') {
+            if (source.droppableId === destination.droppableId) {
+                // Move inside
+                const { reorderMessage } = this.props;
+                reorderMessage(
+                    source.index, destination.index, source.droppableId, draggableId
+                )
+            } else {
+                // Move outside
+                const { moveMessage } = this.props;
+                moveMessage(
+                    source.index, destination.index,
+                    source.droppableId, destination.droppableId, draggableId
+                )
+            }
+
+        }
     }
 
     /**
@@ -191,5 +213,7 @@ export default connect(mapStateToProps, {
     updateDialogueFilename,
     addDialogueConversation,
     deleteCurrentDialogue,
-    reorderConversations
+    reorderConversations,
+    reorderMessage,
+    moveMessage
 })(withSnackbar(DialogueContainer));

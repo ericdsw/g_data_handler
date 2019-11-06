@@ -56,92 +56,88 @@ const Dialogue = props => {
 
     return (
         <DragDropContext onDragEnd={result => handleDragEnd(result)}>
-            <React.Fragment>
-                <Grid
-                    className={classes.root}
-                    container
-                    spacing={16}
-                >
-                    {/* File Name Manager */}
-                    <Grid item xs={12}>
-                        <TextField
-                            id='file_name'
-                            label='File Name'
-                            fullWidth
-                            value={fileName}
-                            onChange={e => handleFileNameChange(e.target.value)}
-                            variant='outlined' margin='normal' 
-                        />
-                    </Grid>
-
-                    {/* The conversation list */}
-                    <Grid item xs={12}>
-                        <NoConversationsNotifier 
-                            conversations={dialogueData.conversations} 
-                        />
-                        <Droppable 
-                            droppableId={dialogueData.id}
-                            type='conversations'
-                        >
-                            {(provided) => (
-                                <div ref={provided.innerRef} {...provided.droppableProps}>
-                                    {dialogueData.conversations.map((conversationId, index) => (
-                                        <DialogueConversationContainer
-                                            key={conversationId}
-                                            conversationId={conversationId}
-                                            index={index}
-                                            innerRef={provided.innerRef}
-                                            {...provided.droppableProps}
-                                        />
-                                    ))}
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                    </Grid>
-
-                    {/* Additional Add Conversation Button */}
-                    <Grid item xs={12}>
-                        <Grid container justify='center'>
-                            <Button
-                                color='primary'
-                                className={classes.defaultButton}
-                                onClick={() => {
-                                    toggleDialogue('addConversation', 'show')
-                                }}
-                            >
-                                Add Conversation
-                            </Button>
-                        </Grid>
-                    </Grid>
-
+            <Grid
+                className={classes.root}
+                container
+                spacing={16}
+            >
+                {/* File Name Manager */}
+                <Grid item xs={12}>
+                    <TextField
+                        id='file_name'
+                        label='File Name'
+                        fullWidth
+                        value={fileName}
+                        onChange={e => handleFileNameChange(e.target.value)}
+                        variant='outlined' margin='normal' 
+                    />
                 </Grid>
 
-                {/* Merge Conversations Button */}
-                <Fab 
-                    color='primary' 
-                    aria-label='Merge Conversations'
-                    className={classes.mergeFab}
-                >
-                    <Icon>merge_type</Icon>
-                </Fab>
-
-                {/* Conversation Form */}
-                <GenericDialogue
-                    title='Create Conversation'
-                    open={dialogues['addConversation']}
-                    onClose={() => toggleDialogue('addConversation', 'hide')}
-                    maxWidth='sm'
-                >
-                    <CreateConversationForm
-                        creationHandler={conversationName => {
-                            handleAddConversation(conversationName);
-                            toggleDialogue('addConversation', 'hide');
-                        }}
+                {/* The conversation list */}
+                <Grid item xs={12}>
+                    <NoConversationsNotifier 
+                        conversations={dialogueData.conversations} 
                     />
-                </GenericDialogue>
+                    <Droppable 
+                        droppableId={dialogueData.id}
+                        type='conversations'
+                    >
+                        {(provided) => (
+                            <div ref={provided.innerRef} {...provided.droppableProps}>
+                                {dialogueData.conversations.map((conversationId, index) => (
+                                    <DialogueConversationContainer
+                                        key={conversationId}
+                                        conversationId={conversationId}
+                                        index={index}
+                                        innerRef={provided.innerRef}
+                                    />
+                                ))}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </Grid>
 
-            </React.Fragment>
+                {/* Additional Add Conversation Button */}
+                <Grid item xs={12}>
+                    <Grid container justify='center'>
+                        <Button
+                            color='primary'
+                            className={classes.defaultButton}
+                            onClick={() => {
+                                toggleDialogue('addConversation', 'show')
+                            }}
+                        >
+                            Add Conversation
+                        </Button>
+                    </Grid>
+                </Grid>
+
+            </Grid>
+
+            {/* Merge Conversations Button */}
+            <Fab 
+                color='primary' 
+                aria-label='Merge Conversations'
+                className={classes.mergeFab}
+            >
+                <Icon>merge_type</Icon>
+            </Fab>
+
+            {/* Conversation Form */}
+            <GenericDialogue
+                title='Create Conversation'
+                open={dialogues['addConversation']}
+                onClose={() => toggleDialogue('addConversation', 'hide')}
+                maxWidth='sm'
+            >
+                <CreateConversationForm
+                    creationHandler={conversationName => {
+                        handleAddConversation(conversationName);
+                        toggleDialogue('addConversation', 'hide');
+                    }}
+                />
+            </GenericDialogue>
         </DragDropContext>
     );
 }

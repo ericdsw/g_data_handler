@@ -12,6 +12,7 @@ import {
     Tooltip,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Droppable } from 'react-beautiful-dnd';
 
 import { ConfirmationDialogue, GenericDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
@@ -22,9 +23,12 @@ import {
     CreateDialogueMessageForm,
     CreateEmoteForm
 } from './forms';
-import { white } from 'ansi-colors';
 
 const styles = theme => ({
+    conversationContainer: {
+        width: '100%',
+        borderBottom: '1px solid #666'
+    },
     heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightBold,
@@ -46,6 +50,16 @@ const styles = theme => ({
         width: 50,
         height: 40,
         color: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    detailsContainer: {
+        width: '100%',
+        minHeight: 50
+    },
+    buttonContainer: {
+        marginTop: 16,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
@@ -74,10 +88,7 @@ const DialogueConversation = props => {
     }
 
     return (
-        <ExpansionPanel 
-            style={{width: '100%', borderBottom: '1px solid #666'}}
-            square={true}
-        >
+        <ExpansionPanel className={classes.conversationContainer} square={true}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Grid container alignItems='center'>
 
@@ -129,51 +140,57 @@ const DialogueConversation = props => {
             </ExpansionPanelSummary>
 
             <ExpansionPanelDetails>
-                <div className={classes.messageContainer}>
-                    <Grid 
-                        container 
-                        direction='column'
-                        alignItems='center'
-                        spacing={8}
+                <div className={classes.detailsContainer}>
+
+                    <Droppable
+                        droppableId={conversation.id}
+                        type='messages'
                     >
-                        {conversation.messages.map(messageId => (
-                            <Grid 
-                                item xs 
-                                key={messageId}
-                                className={classes.messageElement}
+                        {(provided) => (
+                            <div 
+                                className={classes.messageContainer}
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
                             >
-                                <DialogueMessageContainer 
-                                    conversationId={conversation.id}
-                                    messageId={messageId}
-                                />
-                            </Grid>
-                        ))}
-                        <Grid item xs>
-                            <Button 
-                                style={{marginTop: 8}}
-                                color='primary'
-                                variant='contained'
-                                onClick={() => {
-                                    toggleDialogue('addMessage', 'show');
-                                }}
-                            >
-                                Add message
-                            </Button>
-                            &nbsp;&nbsp;&nbsp;
-                            <Button
-                                style={{marginTop: 8}}
-                                color='secondary'
-                                variant='contained'
-                                onClick={() => {
-                                    toggleDialogue('addEmote', 'show');
-                                }}
-                            >
-                                Add emote
-                            </Button>
-                        </Grid>
-                    </Grid>
+                                {conversation.messages.map((messageId, index) => (
+                                    <DialogueMessageContainer 
+                                        key={messageId}
+                                        conversationId={conversation.id}
+                                        messageId={messageId}
+                                        index={index}
+                                    />
+                                ))}
+                                {provided.placeholder}
+                                
+                            </div>
+                        )}
+                    </Droppable>
+
+                    <div className={classes.buttonContainer}>
+                        <Button 
+                            style={{marginTop: 8}}
+                            color='primary'
+                            variant='contained'
+                            onClick={() => {
+                                toggleDialogue('addMessage', 'show');
+                            }}
+                        >
+                            Add message
+                        </Button>
+                        &nbsp;&nbsp;&nbsp;
+                        <Button
+                            style={{marginTop: 8}}
+                            color='secondary'
+                            variant='contained'
+                            onClick={() => {
+                                toggleDialogue('addEmote', 'show');
+                            }}
+                        >
+                            Add emote
+                        </Button>
+                    </div>
                 </div>
-                
+
             </ExpansionPanelDetails>
 
             {/* Create Message Form */}
