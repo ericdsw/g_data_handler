@@ -11,7 +11,8 @@ import {
     EDIT_CONVERSATION_MESSAGE,
     DELETE_CONVERSATION_MESSAGE,
     UPDATE_DIALOGUE_FILENAME,
-    DELETE_DIALOGUE
+    DELETE_DIALOGUE,
+    REORDER_CONVERSATION
 } from '../actions/types'
 
 const initialState = {
@@ -52,6 +53,9 @@ export default function(state = initialState, action) {
             return deleteDialogueConversation(state, action);
         case DELETE_CONVERSATION_MESSAGE:
             return deleteConversationMessage(state, action);
+
+        case REORDER_CONVERSATION:
+            return reorderConversations(state, action);
         
         default:
             return state;
@@ -204,4 +208,25 @@ function deleteConversationMessage(state, action) {
     deleteReference(conversations, 'messages', messageId);
 
     return Object.assign({}, state, { conversations, messages });
+}
+
+// Extra
+
+function reorderConversations(state, action) {
+
+    const {
+        sourcePosition, destinationPosition, dialogueId, conversationId
+    } = action.payload;
+
+    const dialogues = {...state.dialogues};
+    const newConversationArray = dialogues[dialogueId].conversations;
+
+    newConversationArray.splice(sourcePosition, 1);
+    newConversationArray.splice(destinationPosition, 0, conversationId);
+
+    dialogues[dialogueId].conversations = newConversationArray;
+
+    return Object.assign({}, state,{
+        dialogues
+    });
 }

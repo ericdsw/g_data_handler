@@ -2,13 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withSnackbar } from 'notistack';
 import { Icon, Typography } from '@material-ui/core';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 import {
     updateDialogue,
     updateWithEmptyDialogue,
     updateDialogueFilename,
     addDialogueConversation,
-    deleteCurrentDialogue
+    deleteCurrentDialogue,
+    reorderConversations
 } from '../../actions/dialogueActions';
 import { parseFile, downloadJSON } from '../../functions';
 import { DragJsonFileManager } from '../elements';
@@ -103,6 +105,25 @@ class DialogueContainer extends React.Component {
         this.props.enqueueSnackbar(errorMessage, { variant: 'error' });
     }
 
+    onDragEnd = result => {
+
+        const { source, destination, draggableId } = result;
+        const { reorderConversations, currentDialogue } = this.props;
+
+        if (!destination) {
+            return;
+        }
+        if (
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return;
+        }
+        reorderConversations(
+            source.index, destination.index, currentDialogue, draggableId
+        );
+    }
+
     /**
      * Render Method
      */
@@ -120,12 +141,15 @@ class DialogueContainer extends React.Component {
                         handleClear={this.clearDialogue}
                         handleAddConversation={this.addConversation}
                     />
-                    <Dialogue 
-                        fileName={fileName}
-                        dialogueData={dialogues[currentDialogue]}
-                        handleFileNameChange={this.changeFileName}
-                        handleAddConversation={this.addConversation}
-                    />
+                    <DragDropContext onDragEnd={this.onDragEnd}>
+                        <Dialogue 
+                            fileName={fileName}
+                            dialogueData={dialogues[currentDialogue]}
+                            handleFileNameChange={this.changeFileName}
+                            handleAddConversation={this.addConversation}
+                            handleDragEnd={this.onDragEnd}
+                        />
+                    </DragDropContext>
                 </React.Fragment>
             );
         } else {
@@ -166,5 +190,6 @@ export default connect(mapStateToProps, {
     updateWithEmptyDialogue,
     updateDialogueFilename,
     addDialogueConversation,
-    deleteCurrentDialogue
+    deleteCurrentDialogue,
+    reorderConversations
 })(withSnackbar(DialogueContainer));

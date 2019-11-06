@@ -10,17 +10,19 @@ import {
     IconButton,
     Icon,
     Tooltip,
-    Checkbox
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 import { ConfirmationDialogue, GenericDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
+import { CreateConversationForm } from './forms';
 import DialogueMessageContainer from '../../containers/DialogueMessageContainer';
 
 import {
     CreateDialogueMessageForm,
     CreateEmoteForm
 } from './forms';
+import { white } from 'ansi-colors';
 
 const styles = theme => ({
     heading: {
@@ -39,17 +41,32 @@ const styles = theme => ({
     },
     messageElement: {
         width: '100%',
+    },
+    dragHandleElement: {
+        width: 50,
+        height: 40,
+        color: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 
 const DialogueConversation = props => {
 
     const { conversation, classes } = props;
-    const { handleDeleteConversation, handleAddToConversation } = props;
+    const { 
+        handleDeleteConversation, handleAddToConversation, handleUpdateConversation
+    } = props;
 
     const [dialogues, toggleDialogue] = useDialogueManager(
-        'confirmDelete', 'addMessage', 'addEmote'
+        'confirmDelete', 'updateConversation', 'addMessage', 'addEmote'
     );
+
+    function onEditClick(event) {
+        event.stopPropagation();
+        toggleDialogue('updateConversation', 'show');
+    }
 
     function onDeleteClick(event) {
         event.stopPropagation();
@@ -57,7 +74,10 @@ const DialogueConversation = props => {
     }
 
     return (
-        <ExpansionPanel style={{width: '100%'}}>
+        <ExpansionPanel 
+            style={{width: '100%', borderBottom: '1px solid #666'}}
+            square={true}
+        >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Grid container alignItems='center'>
 
@@ -65,7 +85,12 @@ const DialogueConversation = props => {
                     <Grid item xs={12} md={6}>
                         <Grid container>
                             <Grid item>
-                                <Checkbox />
+                                <div 
+                                    className={classes.dragHandleElement}
+                                    {...props.dragHandleProps}
+                                >
+                                    <Icon>drag_handle</Icon>
+                                </div>
                             </Grid>
                             <Grid item xs>
                                 <Typography className={classes.heading}>
@@ -81,9 +106,17 @@ const DialogueConversation = props => {
                         </Grid>
                     </Grid>
 
-                    {/* Delete Button */}
+                    {/* Buttons */}
                     <Grid item xs={12} md={6}>
                         <Grid container justify='flex-end'>
+                            <Tooltip 
+                                title='Edit Conversation Name'
+                                enterDelay={200}
+                            >
+                                <IconButton onClick={e => onEditClick(e)}>
+                                    <Icon>edit</Icon>
+                                </IconButton>
+                            </Tooltip>
                             <Tooltip title='Delete Conversation' enterDelay={200}>
                                 <IconButton onClick={e => onDeleteClick(e)}>
                                     <Icon>delete</Icon>
@@ -126,7 +159,7 @@ const DialogueConversation = props => {
                             >
                                 Add message
                             </Button>
-                            &nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;
                             <Button
                                 style={{marginTop: 8}}
                                 color='secondary'
@@ -173,6 +206,22 @@ const DialogueConversation = props => {
                         handleAddToConversation(data);
                     }}
                 /> 
+            </GenericDialogue>
+
+            {/* Edit Conversation Name */}
+            <GenericDialogue
+                title='Edit Conversation'
+                open={dialogues['updateConversation']}
+                onClose={() => toggleDialogue('updateConversation', 'hide')}
+                maxWidth='sm'
+            >
+                <CreateConversationForm
+                    conversationName={conversation.conversationName}
+                    creationHandler={newName => {
+                        toggleDialogue('updateConversation', 'hide');
+                        handleUpdateConversation(newName);
+                    }}
+                />
             </GenericDialogue>
 
             {/* Delete Confirmation */}
