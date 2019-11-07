@@ -19,7 +19,7 @@ const styles = theme => ({
         width: '100%',
         backgroundColor: "#222",
         position: 'relative',
-        borderBottom: '1px solid #555'
+        borderBottom: '1px solid #666',
     },
     details: {
         display: 'flex',

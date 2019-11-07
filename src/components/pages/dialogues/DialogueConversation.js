@@ -27,7 +27,7 @@ import {
 const styles = theme => ({
     conversationContainer: {
         width: '100%',
-        borderBottom: '1px solid #666'
+        borderBottom: '1px solid #666',
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
