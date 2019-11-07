@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import {
     deleteDialogueConversation,
     addMessageToConversation,
-    editDialogueConversation
+    editDialogueConversation,
+    addToConversationMerger
 } from '../../actions/dialogueActions';
 import { Draggable } from 'react-beautiful-dnd';
 
@@ -28,9 +29,16 @@ class DialogueConversationContainer extends React.Component {
         });
     }
 
+    handleToggleFromMerger = checked => {
+        const { addToConversationMerger, conversationId } = this.props;
+        addToConversationMerger(conversationId, checked);
+    }
+
     render() {
 
-        const { conversationId, conversations } = this.props;
+        const { 
+            conversationId, conversations, conversationsToMerge
+        } = this.props;
         const currentConversation = conversations[conversationId];
 
         return (
@@ -45,9 +53,11 @@ class DialogueConversationContainer extends React.Component {
                     >
                         <DialogueConversation
                             conversation={currentConversation}
+                            conversationsToMerge={conversationsToMerge}
                             handleDeleteConversation={this.deleteConversation}
                             handleAddToConversation={this.addNewToConversation}
                             handleUpdateConversation={this.updateConversation}
+                            handleToggleFromMerger={this.handleToggleFromMerger}
                             dragHandleProps={provided.dragHandleProps}
                         />
                     </div>
@@ -59,11 +69,13 @@ class DialogueConversationContainer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    conversations: state.dialogue.conversations
+    conversations: state.dialogue.conversations,
+    conversationsToMerge: state.dialogue.conversationsToMerge
 });
 
 export default connect(mapStateToProps, {
     deleteDialogueConversation,
     addMessageToConversation,
-    editDialogueConversation
+    editDialogueConversation,
+    addToConversationMerger
 })(DialogueConversationContainer);

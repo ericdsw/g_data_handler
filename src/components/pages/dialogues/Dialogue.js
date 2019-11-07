@@ -38,18 +38,20 @@ const styles = theme => ({
         position: 'fixed',
         right: 16,
         bottom: 16,
-        margin: theme.spacing.unit
+        margin: theme.spacing.unit,
+        transition: 'transform 0.2s ease'
     }
 });
 
 const Dialogue = props => {
 
     const { 
-        fileName, dialogueData, classes, 
+        fileName, dialogueData, classes, conversationsToMerge 
     } = props;
     
     const { 
-        handleFileNameChange, handleAddConversation, handleDragEnd
+        handleFileNameChange, handleAddConversation, handleDragEnd,
+        handleConfirmMerge
     } = props;
 
     const [dialogues, toggleDialogue] = useDialogueManager('addConversation');
@@ -122,6 +124,10 @@ const Dialogue = props => {
                 color='primary' 
                 aria-label='Merge Conversations'
                 className={classes.mergeFab}
+                style={{
+                    transform: (conversationsToMerge.length <= 0) ? 'scale(0.0)' : 'scale(1.0)'
+                }}
+                onClick={e => handleConfirmMerge()}
             >
                 <Icon>merge_type</Icon>
             </Fab>

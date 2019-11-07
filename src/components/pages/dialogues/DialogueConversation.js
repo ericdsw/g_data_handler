@@ -10,6 +10,7 @@ import {
     IconButton,
     Icon,
     Tooltip,
+    Checkbox
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Droppable } from 'react-beautiful-dnd';
@@ -68,9 +69,10 @@ const styles = theme => ({
 
 const DialogueConversation = props => {
 
-    const { conversation, classes } = props;
+    const { conversation, classes, conversationsToMerge } = props;
     const { 
-        handleDeleteConversation, handleAddToConversation, handleUpdateConversation
+        handleDeleteConversation, handleAddToConversation, 
+        handleUpdateConversation, handleToggleFromMerger
     } = props;
 
     const [dialogues, toggleDialogue] = useDialogueManager(
@@ -90,6 +92,10 @@ const DialogueConversation = props => {
 
     function handlePanelChange(expanded) {
         setIsExpanded(expanded);
+    }
+
+    function handleCheckboxChange(event) {
+        handleToggleFromMerger(event.target.checked);
     }
 
     return (
@@ -129,7 +135,15 @@ const DialogueConversation = props => {
                     {/* Buttons */}
                     <Grid item xs={12} md={6}>
                         <Grid container justify='flex-end'>
-                            <Tooltip 
+                            <Tooltip title='Merge'>
+                                <Checkbox 
+                                    checked={conversationsToMerge.includes(conversation.id)}
+                                    value={conversation.id}
+                                    onChange={e => handleCheckboxChange(e)}
+                                    onClick={e => e.stopPropagation()}
+                                />
+                            </Tooltip>
+                            <Tooltip
                                 title='Edit Conversation Name'
                                 enterDelay={200}
                             >

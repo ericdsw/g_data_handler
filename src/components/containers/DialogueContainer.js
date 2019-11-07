@@ -12,7 +12,8 @@ import {
     deleteCurrentDialogue,
     reorderConversations,
     reorderMessage,
-    moveMessage
+    moveMessage,
+    confirmConversationMerge
 } from '../../actions/dialogueActions';
 import { parseFile, downloadJSON } from '../../functions';
 import { DragJsonFileManager } from '../elements';
@@ -146,12 +147,18 @@ class DialogueContainer extends React.Component {
         }
     }
 
+    confirmMerge = () => {
+        this.props.confirmConversationMerge();
+    }
+
     /**
      * Render Method
      */
     render() {
 
-        const { currentDialogue, dialogues, fileName } = this.props;
+        const { 
+            currentDialogue, dialogues, fileName, conversationsToMerge 
+        } = this.props;
 
         let content;
 
@@ -167,9 +174,11 @@ class DialogueContainer extends React.Component {
                         <Dialogue 
                             fileName={fileName}
                             dialogueData={dialogues[currentDialogue]}
+                            conversationsToMerge={conversationsToMerge}
                             handleFileNameChange={this.changeFileName}
                             handleAddConversation={this.addConversation}
                             handleDragEnd={this.onDragEnd}
+                            handleConfirmMerge={this.confirmMerge}
                         />
                     </DragDropContext>
                 </React.Fragment>
@@ -204,6 +213,7 @@ const mapStateToProps = state => ({
     fileName: state.dialogue.fileName,
     currentDialogue: state.dialogue.currentDialogue,
     dialogues: state.dialogue.dialogues,
+    conversationsToMerge: state.dialogue.conversationsToMerge,
     allData: state.dialogue
 });
 
@@ -215,5 +225,6 @@ export default connect(mapStateToProps, {
     deleteCurrentDialogue,
     reorderConversations,
     reorderMessage,
-    moveMessage
+    moveMessage,
+    confirmConversationMerge
 })(withSnackbar(DialogueContainer));

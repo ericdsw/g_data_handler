@@ -2,6 +2,7 @@ import {
     UPDATE_DIALOGUE,
     UPDATE_EMPTY_DIALOGUE,
     ADD_CONVERSATION,
+    ADD_TO_CONVERSATION_MERGER,
     EDIT_CONVERSATION,
     DELETE_CONVERSATION,
     ADD_CONVERSATION_MESSAGE,
@@ -13,7 +14,8 @@ import {
     REORDER_CONVERSATION,
     REORDER_MESSAGE,
     MOVE_MESSAGE,
-    SPLIT_CONVERSATION
+    SPLIT_CONVERSATION,
+    CONFIRM_CONVERSATION_MERGE,
 } from './types';
 
 // Create
@@ -43,6 +45,15 @@ export const addMessageAtPosition = (conversationId, offset, data) => dispatch =
             conversationId, offset, data
         }
     });
+}
+
+export const addToConversationMerger = (conversationId, shouldAdd) => dispatch => {
+    dispatch({
+        type: ADD_TO_CONVERSATION_MERGER,
+        payload: {
+            conversationId, shouldAdd
+        }
+    })
 }
 
 // Edit / Update
@@ -161,4 +172,11 @@ export const splitConversation = (
             conversationId, messageId, newName
         }
     })
+}
+
+export const confirmConversationMerge = () => dispatch => {
+    dispatch({
+        type: CONFIRM_CONVERSATION_MERGE,
+        payload: {}
+    });
 }

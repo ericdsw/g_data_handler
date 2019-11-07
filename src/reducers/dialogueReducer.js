@@ -4,6 +4,7 @@ import {
     UPDATE_DIALOGUE,
     UPDATE_EMPTY_DIALOGUE,
     ADD_CONVERSATION,
+    ADD_TO_CONVERSATION_MERGER,
     DELETE_CONVERSATION,
     ADD_CONVERSATION_MESSAGE,
     ADD_CONVERSATION_MESSAGE_AT_POS,
@@ -15,13 +16,15 @@ import {
     REORDER_CONVERSATION,
     REORDER_MESSAGE,
     MOVE_MESSAGE,
-    SPLIT_CONVERSATION
+    SPLIT_CONVERSATION,
+    CONFIRM_CONVERSATION_MERGE
 } from '../actions/types'
 
 const initialState = {
 
     fileName: '',
     currentDialogue: '',
+    conversationsToMerge: [],
 
     dialogues: {},
     conversations: {},
@@ -38,6 +41,8 @@ export default function(state = initialState, action) {
             return addConversationMessage(state, action);
         case ADD_CONVERSATION_MESSAGE_AT_POS:
             return addConversationMessageAtPos(state, action);
+        case ADD_TO_CONVERSATION_MERGER:
+            return addToConversationMerger(state, action);
 
         case UPDATE_DIALOGUE:
             return updateDialogue(state, action);
@@ -65,6 +70,8 @@ export default function(state = initialState, action) {
             return moveMessage(state, action);
         case SPLIT_CONVERSATION:
             return splitConversation(state, action);
+        case CONFIRM_CONVERSATION_MERGE:
+            return confirmConversationMerge(state, action);
         
         default:
             return state;
@@ -127,6 +134,23 @@ function addConversationMessageAtPos(state, action) {
     messages[newMessageId] = newMessage;
 
     return Object.assign({}, state, { conversations, messages });
+}
+
+function addToConversationMerger(state, action) {
+
+    const { conversationId, shouldAdd }= action.payload;
+    const conversationsToMerge = [...state.conversationsToMerge];
+    if (shouldAdd) {
+        conversationsToMerge.push(conversationId);
+    } else {
+        conversationsToMerge.splice(
+            conversationsToMerge.indexOf(conversationId, 1)
+        )
+    }
+
+    return Object.assign({}, state, {
+        conversationsToMerge
+    })
 }
 
 // Update / Edit
@@ -200,10 +224,19 @@ function deleteDialogueConversation(state, action) {
     const conversations = {...state.conversations};
     delete conversations[conversationId];
 
+    const conversationsToMerge = [...state.conversationsToMerge];
+    if (conversationsToMerge.includes(conversationId)) {
+        conversationsToMerge.splice(
+            conversationsToMerge.indexOf(conversationId, 1)
+        )
+    }
+
     const dialogues = {...state.dialogues};
     deleteReference(dialogues, 'conversations', conversationId);
 
-    return Object.assign({}, state, { dialogues, conversations });
+    return Object.assign({}, state, { 
+        dialogues, conversations, conversationsToMerge
+    });
 }
 
 function deleteConversationMessage(state, action) {
@@ -308,4 +341,37 @@ function splitConversation(state, action) {
     return Object.assign({}, state, {
         dialogues, conversations
     });
+}
+
+function confirmConversationMerge(state, action) {
+
+    const dialogues = {...state.dialogues};
+    const conversations = {...state.conversations};
+    const conversationsToMerge = [...state.conversationsToMerge];
+
+    const finalConversationId = conversationsToMerge[0];
+
+    conversationsToMerge.forEach(conversationId => {
+        if (conversationId !== finalConversationId) {
+
+            // Add conversations to the final conversation
+            const convMessages = conversations[conversationId].messages;
+            conversations[finalConversationId].messages = [
+                ...conversations[finalConversationId].messages, ...convMessages
+            ]
+
+            // Delete the conversation form the state
+            delete conversations[conversationId];
+
+            // Delete any reference to this conversation
+            deleteReference(dialogues, 'conversations', conversationId);
+        }
+    });
+
+    conversationsToMerge.length = 0;
+
+    return Object.assign({}, state, {
+        dialogues, conversations, conversationsToMerge
+    })
+
 }

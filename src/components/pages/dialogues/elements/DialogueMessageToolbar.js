@@ -12,7 +12,6 @@ import {
 import { useDialogueManager } from '../../../../hooks';
 import { GenericDialogue, ConfirmationDialogue } from '../../../elements';
 import { CreateDialogueMessageForm, CreateConversationForm } from '../forms';
-import DialogueConversationContainer from '../../../containers/DialogueConversationContainer';
 
 
 const styles = theme => ({
