@@ -10,7 +10,7 @@ const styles = theme => ({
         }
     },
     chipContainer: {
-        borderTop: '1px solid white',
+        borderTop: '1px solid #333',
         marginTop: 12,
         paddingTop: 12,
     }

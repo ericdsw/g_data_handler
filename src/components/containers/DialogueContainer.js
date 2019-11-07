@@ -2,125 +2,93 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withSnackbar } from 'notistack';
 import { Icon, Typography } from '@material-ui/core';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 import {
     updateDialogue,
-    addDialogueConversation,
+    updateWithEmptyDialogue,
     updateDialogueFilename,
-    updateEditingMessage,
-    editConversationMessage,
-    addMessageAtPosition,
+    addDialogueConversation,
+    deleteCurrentDialogue,
+    reorderConversations,
+    reorderMessage,
+    moveMessage,
+    confirmConversationMerge
 } from '../../actions/dialogueActions';
 import { parseFile, downloadJSON } from '../../functions';
 import { DragJsonFileManager } from '../elements';
+import { transformIn, transformOut } from '../../models/transformers/DialogueTransformer';
 import Dialogue from '../pages/dialogues/Dialogue';
 import DialogueToolbar from '../pages/dialogues/elements/DialogueToolbar';
 
 class DialogueContainer extends React.Component {
 
+    /**
+     * Erases the current dialogue and restores the view to its default
+     * state
+     */
     clearDialogue = () => {
-        const { updateDialogue } = this.props;
-        updateDialogue({
-            dialogueData: null,
-            fileName: ''
-        });
+        const { deleteCurrentDialogue } = this.props;
+        deleteCurrentDialogue();
     }
 
+    /**
+     * Sets an empty dialogue as the current dialogue
+     */
     updateWithEmptyDialogue = () => {
-        const { updateDialogue } = this.props;
-        updateDialogue({
-            dialogueData: {},
-            fileName: 'file_name.json'
-        });
+        const { updateWithEmptyDialogue } = this.props;
+        updateWithEmptyDialogue('file_name.json');
     }
 
+    /**
+     * Sets the dialogue contained in the file as the current dialaogue
+     */
     updateDialogueFromFile = targetFile => {
         const { updateDialogue } = this.props;
         parseFile(targetFile, 'application/json')
             .then(json => {
-                updateDialogue({
-                    fileName: targetFile.name,
-                    dialogueData: json
-                });
+                const { result, entities } = transformIn(json);
+                updateDialogue(targetFile.name, result, entities);
             })
             .catch(error => this.showError(error.message));
     }
 
+    /**
+     * Adds a conversation to the current dialogue
+     */
     addConversation = conversationName => {
-        const { addDialogueConversation } = this.props;
-        addDialogueConversation(conversationName);
+        const { currentDialogue, addDialogueConversation } = this.props;
+        addDialogueConversation(currentDialogue, conversationName);
     }
 
+    /**
+     * Updates the current file name
+     */
     changeFileName = newFileName => {
         const { updateDialogueFilename } = this.props;
         updateDialogueFilename(newFileName);
     }
 
-    createDialogueMessage = messageData => {
-
-        const { 
-            addMessageAtPosition, editingMessageConversation,
-            editingMessageOffset 
-        } = this.props;
-        
-        addMessageAtPosition(
-            editingMessageConversation, editingMessageOffset, messageData
-        );
-
-    }
-
-    editDialogueMessage = messageData => {
-
-        const { 
-            editConversationMessage,
-            editingMessageConversation, editingMessageOffset
-        } = this.props;
-
-        editConversationMessage(
-            editingMessageConversation, editingMessageOffset, messageData
-        );
-    }
-
-    closeForm = () => {
-        const { updateEditingMessage } = this.props;
-        const emptyInfo = {
-            conversationName: '',
-            messageOffset: 0
-        };
-        updateEditingMessage(emptyInfo, null);
-    }
-
-    advanceForm = () => {
-
-        const { 
-            updateEditingMessage,
-            editingMessageConversation,
-            editingMessageOffset,
-            editingMessage
-        } = this.props;
-
-        const newSourceData = {
-            conversationName: editingMessageConversation,
-            messageOffset: editingMessageOffset + 1
-        }
-        updateEditingMessage(newSourceData, editingMessage);
-
-    }
-
+    /**
+     * Exports the current data as a JSON file
+     */
     export = () => {
-        const { currentDialogueData, fileName } = this.props;
 
-        if (Object.keys(currentDialogueData).length <= 0) {
+        const { allData, fileName, currentDialogue } = this.props;
+
+        if (Object.keys(allData.conversations).length <= 0) {
             this.showError('Cannot export an empty dialogue file');
             return;
         }
 
         let emptyConversations = 0;
-        for (const conversationName in currentDialogueData) {
-            if (currentDialogueData[conversationName].length <= 0) {
+        Object.keys(allData.conversations).forEach(conversationId => {
+            const conversation = allData.conversations[conversationId];
+            if (conversation.messages.length <= 0) {
                 emptyConversations++;
-            }
-        }
+            } 
+        });
+        
         if (emptyConversations > 0) {
             this.showError(
                 `${emptyConversations} conversation${
@@ -130,23 +98,71 @@ class DialogueContainer extends React.Component {
             return;
         }
 
-        downloadJSON(fileName, currentDialogueData); 
+        downloadJSON(fileName, transformOut(currentDialogue, allData)); 
     }
 
+    /**
+     * Displays a "snackbar" with the provided error message
+     */
     showError = errorMessage => {
         this.props.enqueueSnackbar(errorMessage, { variant: 'error' });
     }
 
+    onDragEnd = result => {
+
+        const { source, destination, draggableId } = result;
+        
+        // If no destination is defined or no movement needs to be made, skip
+        if (
+            !destination ||
+            (
+                destination.droppableId === source.droppableId &&
+                destination.index === source.index
+            )
+        ) {
+            return;
+        }
+
+        if (result.type === 'conversations') {
+            const { reorderConversations, currentDialogue } = this.props;
+            reorderConversations(
+                source.index, destination.index, currentDialogue, draggableId
+            );
+        } else {
+            if (source.droppableId === destination.droppableId) {
+                // Move inside
+                const { reorderMessage } = this.props;
+                reorderMessage(
+                    source.index, destination.index, source.droppableId, draggableId
+                )
+            } else {
+                // Move outside
+                const { moveMessage } = this.props;
+                moveMessage(
+                    source.index, destination.index,
+                    source.droppableId, destination.droppableId, draggableId
+                )
+            }
+
+        }
+    }
+
+    confirmMerge = () => {
+        this.props.confirmConversationMerge();
+    }
+
+    /**
+     * Render Method
+     */
     render() {
 
         const { 
-            currentDialogueData, fileName, 
-            editingMessage, editingMessageConversation
+            currentDialogue, dialogues, fileName, conversationsToMerge 
         } = this.props;
 
         let content;
 
-        if (currentDialogueData !== null) {
+        if (currentDialogue !== '') {
             content = (
                 <React.Fragment>
                     <DialogueToolbar
@@ -154,18 +170,17 @@ class DialogueContainer extends React.Component {
                         handleClear={this.clearDialogue}
                         handleAddConversation={this.addConversation}
                     />
-                    <Dialogue 
-                        fileName={fileName}
-                        conversations={currentDialogueData}
-                        editingMessage={editingMessage}
-                        editingMessageConversation={editingMessageConversation}
-                        handleFileNameChange={this.changeFileName}
-                        handleAddConversation={this.addConversation}
-                        handleFormClose={this.closeForm}
-                        handleCreateMessage={this.createDialogueMessage}
-                        handleEditMessage={this.editDialogueMessage}
-                        handleAdvanceForm={this.advanceForm}
-                    />
+                    <DragDropContext onDragEnd={this.onDragEnd}>
+                        <Dialogue 
+                            fileName={fileName}
+                            dialogueData={dialogues[currentDialogue]}
+                            conversationsToMerge={conversationsToMerge}
+                            handleFileNameChange={this.changeFileName}
+                            handleAddConversation={this.addConversation}
+                            handleDragEnd={this.onDragEnd}
+                            handleConfirmMerge={this.confirmMerge}
+                        />
+                    </DragDropContext>
                 </React.Fragment>
             );
         } else {
@@ -175,7 +190,9 @@ class DialogueContainer extends React.Component {
                     dragString={
                         <React.Fragment>
                             <Typography gutterBottom>
-                                <Icon fontSize='large'>question_answer</Icon>
+                                <Icon fontSize='large'>
+                                    question_answer
+                                </Icon>
                             </Typography>
                             Drag a <code>.json</code> here to edit
                             an existing dialogue.
@@ -193,19 +210,21 @@ class DialogueContainer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    currentDialogueData: state.dialogue.currentDialogueData,
     fileName: state.dialogue.fileName,
-    editingConversation: state.dialogue.editingConversation,
-    editingMessage: state.dialogue.editingMessage,
-    editingMessageConversation: state.dialogue.editingMessageConversation,
-    editingMessageOffset: state.dialogue.editingMessageOffset,
+    currentDialogue: state.dialogue.currentDialogue,
+    dialogues: state.dialogue.dialogues,
+    conversationsToMerge: state.dialogue.conversationsToMerge,
+    allData: state.dialogue
 });
 
 export default connect(mapStateToProps, {
     updateDialogue,
-    addDialogueConversation,
+    updateWithEmptyDialogue,
     updateDialogueFilename,
-    updateEditingMessage,
-    addMessageAtPosition,
-    editConversationMessage
+    addDialogueConversation,
+    deleteCurrentDialogue,
+    reorderConversations,
+    reorderMessage,
+    moveMessage,
+    confirmConversationMerge
 })(withSnackbar(DialogueContainer));

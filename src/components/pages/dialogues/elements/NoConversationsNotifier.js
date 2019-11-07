@@ -11,8 +11,7 @@ const styles = theme => ({
 
 const NoConversationsNotifier = props => {
     const { conversations, classes } = props;
-    const conversationNames = Object.keys(conversations);
-    if (conversationNames.length <=  0) {
+    if (conversations.length <=  0) {
         return (
             <Typography
                 variant='h5'

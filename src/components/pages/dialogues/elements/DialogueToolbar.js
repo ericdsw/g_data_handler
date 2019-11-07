@@ -64,6 +64,7 @@ const DialogueToolbar = props => {
                 title='Create Conversation'
                 open={dialogues['addConversation']}
                 onClose={() => toggleDialogue('addConversation', 'hide')}
+                maxWidth='sm'
             >
                 <CreateConversationForm
                     creationHandler={conversationName => {

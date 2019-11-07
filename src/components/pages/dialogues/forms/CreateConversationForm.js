@@ -17,7 +17,20 @@ class CreateConversationForm extends React.Component {
         conversationName: ''
     }
 
+    isEdit = false;
+
+    constructor(props) {
+        super(props);
+        if (props.conversationName) {
+            this.state = {
+                conversationName: props.conversationName
+            }
+            this.isEdit = true;
+        }
+    }
+
     submitData = event => {
+
         event.preventDefault();
         event.stopPropagation();
 
@@ -38,6 +51,12 @@ class CreateConversationForm extends React.Component {
     }
 
     render() {
+
+        let buttonText = 'Create Conversation';
+        if (this.isEdit) {
+            buttonText = 'Edit Conversation';
+        }
+
         return (
             <form onSubmit={this.submitData}>
                 <Grid container>
@@ -55,9 +74,10 @@ class CreateConversationForm extends React.Component {
                         <Button
                             type='submit'
                             variant='contained'
-                            style={{marginTop:8}}
-                            color='primary'>
-                            Add Conversation
+                            style={{marginTop:16}}
+                            color='primary'
+                        >
+                            {buttonText}
                         </Button>
                     </Grid>
             </form>

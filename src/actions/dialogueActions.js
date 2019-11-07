@@ -1,6 +1,8 @@
 import {
     UPDATE_DIALOGUE,
+    UPDATE_EMPTY_DIALOGUE,
     ADD_CONVERSATION,
+    ADD_TO_CONVERSATION_MERGER,
     EDIT_CONVERSATION,
     DELETE_CONVERSATION,
     ADD_CONVERSATION_MESSAGE,
@@ -8,75 +10,82 @@ import {
     EDIT_CONVERSATION_MESSAGE,
     DELETE_CONVERSATION_MESSAGE,
     UPDATE_DIALOGUE_FILENAME,
-    UPDATE_EDITING_MESSAGE
+    DELETE_DIALOGUE,
+    REORDER_CONVERSATION,
+    REORDER_MESSAGE,
+    MOVE_MESSAGE,
+    SPLIT_CONVERSATION,
+    CONFIRM_CONVERSATION_MERGE,
 } from './types';
 
-export const updateDialogue = dialogueData => dispatch => {
-    dispatch({
-        type: UPDATE_DIALOGUE,
-        payload: dialogueData
-    });
-}
+// Create
 
-export const addDialogueConversation = conversationName => dispatch => {
+export const addDialogueConversation = (dialogueId, conversationName) => dispatch => {
     dispatch({
         type: ADD_CONVERSATION,
         payload: {
-            conversationName
+            dialogueId, conversationName
         }
     });
 }
 
-export const editDialogueConversation = conversation => dispatch => {
-    dispatch({
-        type: EDIT_CONVERSATION,
-        payload: {
-            conversation
-        }
-    });
-}
-
-export const deleteDialogueConversation = conversation => dispatch => {
-    dispatch({
-        type: DELETE_CONVERSATION,
-        payload: {
-            conversation
-        }
-    });
-}
-
-export const addMessageToConversation = (conversationName, data) => dispatch => {
+export const addMessageToConversation = (conversationId, data) => dispatch => {
     dispatch({
         type: ADD_CONVERSATION_MESSAGE,
         payload: {
-            conversationName, data
+            conversationId, data
         }
     });
 }
 
-export const addMessageAtPosition = (conversation, offset, data) => dispatch => {
+export const addMessageAtPosition = (conversationId, offset, data) => dispatch => {
     dispatch({
         type: ADD_CONVERSATION_MESSAGE_AT_POS,
         payload: {
-            conversation, offset, data
+            conversationId, offset, data
         }
     });
 }
 
-export const editConversationMessage = (conversation, offset, data) => dispatch => {
+export const addToConversationMerger = (conversationId, shouldAdd) => dispatch => {
+    dispatch({
+        type: ADD_TO_CONVERSATION_MERGER,
+        payload: {
+            conversationId, shouldAdd
+        }
+    })
+}
+
+// Edit / Update
+
+export const updateDialogue = (fileName, dialogueId, entities) => dispatch => {
+    dispatch({
+        type: UPDATE_DIALOGUE,
+        payload: { fileName, dialogueId, entities }
+    });
+}
+
+export const updateWithEmptyDialogue = fileName => dispatch => {
+    dispatch({
+        type: UPDATE_EMPTY_DIALOGUE,
+        payload: { fileName }
+    });
+}
+
+export const editDialogueConversation = (conversationId, data) => dispatch => {
+    dispatch({
+        type: EDIT_CONVERSATION,
+        payload: {
+            conversationId, data
+        }
+    });
+}
+
+export const editConversationMessage = (messageId, data) => dispatch => {
     dispatch({
         type: EDIT_CONVERSATION_MESSAGE,
         payload: {
-            conversation, offset, data
-        }
-    });
-}
-
-export const deleteConversationMessage = (conversation, offset) => dispatch => {
-    dispatch({
-        type: DELETE_CONVERSATION_MESSAGE,
-        payload: {
-            conversation, offset
+            messageId, data
         }
     });
 }
@@ -90,9 +99,84 @@ export const updateDialogueFilename = fileName => dispatch => {
     });
 }
 
-export const updateEditingMessage = (editSourceInfo, data) => dispatch => {
+// Delete
+
+export const deleteCurrentDialogue = () => dispatch => {
     dispatch({
-        type: UPDATE_EDITING_MESSAGE,
-        payload: { editSourceInfo, data }
+        type: DELETE_DIALOGUE, 
+        payload: {}
+    })
+}
+
+export const deleteDialogueConversation = conversationId => dispatch => {
+    dispatch({
+        type: DELETE_CONVERSATION,
+        payload: {
+            conversationId
+        }
+    });
+}
+
+export const deleteConversationMessage = messageId => dispatch => {
+    dispatch({
+        type: DELETE_CONVERSATION_MESSAGE,
+        payload: {
+            messageId
+        }
+    });
+}
+
+// Extra
+
+export const reorderConversations = (
+    sourcePosition, destinationPosition, dialogueId, conversationId
+) => dispatch => {
+    dispatch({
+        type: REORDER_CONVERSATION,
+        payload: {
+            sourcePosition, destinationPosition, dialogueId, conversationId
+        }
+    })
+}
+
+export const reorderMessage = (
+    sourcePosition, destinationPosition, conversationId, messageId
+) => dispatch => {
+    dispatch({
+        type: REORDER_MESSAGE,
+        payload: {
+            sourcePosition, destinationPosition, conversationId, messageId
+        }
+    })
+}
+
+export const moveMessage = (
+    sourcePosition, destinationPosition,
+    sourceConversationId, destinationConversationId, messageId
+) => dispatch => {
+    dispatch({
+        type: MOVE_MESSAGE,
+        payload: {
+            sourcePosition, destinationPosition,
+            sourceConversationId, destinationConversationId, messageId
+        }
+    })
+}
+
+export const splitConversation = (
+    conversationId, messageId, newName
+) => dispatch => {
+    dispatch({
+        type: SPLIT_CONVERSATION,
+        payload: {
+            conversationId, messageId, newName
+        }
+    })
+}
+
+export const confirmConversationMerge = () => dispatch => {
+    dispatch({
+        type: CONFIRM_CONVERSATION_MERGE,
+        payload: {}
     });
 }
