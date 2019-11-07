@@ -1,20 +1,12 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Typography, Button } from '@material-ui/core';
-import { red, blue } from '@material-ui/core/colors';
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
 import { CreateJumpForm } from './forms';
 import { useDialogueManager } from '../../../hooks';
 import JumpList from './JumpList';
 
-const styles = theme => ({
-    deleteButton: {
-        color: red[500]
-    },
-    defaultButton: {
-        color: blue[500]
-    }
-});
+import { styles } from './styles/CutsceneToolbarStyle';
 
 const CutsceneToolbar = props => {
 

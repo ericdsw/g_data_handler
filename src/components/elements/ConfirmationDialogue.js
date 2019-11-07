@@ -1,9 +1,11 @@
 import React from 'react';
 import { 
     Dialog,
+    DialogContent,
     DialogActions,
     DialogTitle,
-    Button
+    Button,
+    Typography
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { red, green } from '@material-ui/core/colors';
@@ -18,7 +20,12 @@ const styles = theme => ({
 });
 
 const ConfirmationDialogue = props => {
-    const { isOpen = false, handleClose, handleConfirm, message, classes } = props;
+
+    const { 
+        isOpen = false, handleClose, handleConfirm, message, classes,
+        descriptionText = '' 
+    } = props;
+
     if (! isOpen) {
         return <React.Fragment />
     } else {
@@ -30,6 +37,13 @@ const ConfirmationDialogue = props => {
                 maxWidth='sm'
             >
                 <DialogTitle>{message}</DialogTitle>
+                {descriptionText !== '' && 
+                    <DialogContent>
+                        <Typography variant='subtitle2'>
+                            {descriptionText}
+                        </Typography>
+                    </DialogContent>
+                }
                 <DialogActions>
                     <Button 
                         className={classes.cancelButton}

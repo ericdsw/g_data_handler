@@ -11,11 +11,7 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const styles = theme => ({
-    button: {
-        margin: theme.spacing.unit
-    }
-});
+import { styles } from './styles/JumpListStyle';
 
 const JumpList = props => {
 

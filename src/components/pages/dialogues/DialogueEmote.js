@@ -7,30 +7,9 @@ import {
     Typography,
     Grid,
 } from '@material-ui/core';
-
 import { DialogueMessageToolbar } from './elements';
 
-import { blue } from '@material-ui/core/colors';
-
-const styles = theme => ({
-    emoteContainer: {
-        backgroundColor: '#222'
-    },
-    emoteImage: {
-        width: 64,
-        height: 64,
-        padding: 8,
-        backgroundColor: '#fff',
-        margin: 0
-    },
-    emoteTarget: {
-        color: blue[200],
-        fontWeight: 'bold'
-    },
-    toolbarButton: {
-        color: '#fff'
-    }
-});
+import { styles } from './styles/DialogueEmoteStyle';
 
 const DialogueEmote = props => {
 
@@ -62,7 +41,9 @@ const DialogueEmote = props => {
                                 handleAddBelow={data => handleAddBelow(data)}
                                 handleEdit={data => {/* No edit logic */}}
                                 handleDelete={() => handleDelete()}
-                                handleSplitBelow={conversationName => handleSplitBelow(conversationName)}
+                                handleSplitBelow={conversationName => {
+                                    handleSplitBelow(conversationName)
+                                }}
                                 omitEdit={true}
                             />
                         </Grid>

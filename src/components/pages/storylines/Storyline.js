@@ -6,30 +6,13 @@ import {
     TextField,
     Button
 } from '@material-ui/core';
-import { blue, red } from '@material-ui/core/colors';
 
 import StorylineStepContainer from '../../containers/StorylineStepContainer';
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
 import StorylineStepForm from './forms/StorylineStepForm';
 
-const styles = theme => ({
-    defaultButton: {
-        color: blue[500]
-    },
-    deleteButton: {
-        color: red[500]
-    },
-    root: {
-        ...theme.mixins.gutters(),
-        paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2,
-        [theme.breakpoints.down('xs')]: {
-            paddingLeft: 0,
-            paddingRight: 0
-        }
-    }
-});
+import { styles } from './styles/StorylineStyle';
 
 const Storyline = props => {
 
