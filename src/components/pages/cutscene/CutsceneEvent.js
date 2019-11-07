@@ -5,7 +5,6 @@ import {
     Table, TableBody, TableCell, TableRow,
     Tooltip, Typography
 } from '@material-ui/core';
-import { blue, grey } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import EditIcon from '@material-ui/icons/Edit';
@@ -17,31 +16,7 @@ import { CreateEventForm } from './forms';
 import { eventSchema } from '../../../globals';
 import { createEventDescription } from '../../../functions';
 
-const styles = theme => ({
-    eventCard: {
-        width: 300,
-    },
-    actions: {
-        display: 'flex',
-    },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-    },
-    expandOpen: {
-        transform: 'rotate(180deg)',
-    },
-    avatar: {
-        backgroundColor: blue[500]
-    },
-    avatarNonImportant: {
-        backgroundColor: grey[300],
-        opacity: 0.7
-    }
-});
+import { styles } from './styles/CutsceneEventStyle';
 
 function parseParameter(parameter) {
     switch (typeof parameter) {

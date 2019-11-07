@@ -14,7 +14,6 @@ import {
     Divider,
     Tooltip
 } from '@material-ui/core';
-import { blue, green, grey } from '@material-ui/core/colors';
 
 import StepMapContainer from '../../containers/StepMapContainer';
 import CompletionBundleContainer from '../../containers/CompletionBundleContainer';
@@ -28,29 +27,7 @@ import CreateMapEntityForm from './forms/CreateMapEntityForm';
 import CompletionBundleForm from './forms/CompletionBundleForm';
 import StorylineStepForm from './forms/StorylineStepForm';
 
-const styles = theme => ({
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest
-        }),
-    },
-    expandOpen: {
-        transform: 'rotate(180deg)'
-    },
-    headerSmall: {
-        color: '#aaa',
-        fontSize: '0.7em'
-    },
-    descriptionList: {
-        color: '#fff',
-        lineHeight: '200%'
-    },
-    blueText: { color: blue[400] },
-    greenText: { color: green[400] },
-    greyText: { color: grey[400] }
-});
+import { styles } from './styles/StorylineStepStyle';
 
 const StorylineStep = props => {
 
@@ -358,6 +335,7 @@ const StorylineStep = props => {
                 </CardContent>
             </Collapse>
 
+            {/* Add Entity Form */}
             <GenericDialogue
                 title='Add Entity'
                 open={curEntityType !== ''}
@@ -373,6 +351,7 @@ const StorylineStep = props => {
                 />
             </GenericDialogue>
 
+            {/* Condition Bundle Creation Form */}
             <GenericDialogue
                 title='Add Condition Bundle'
                 open={dialogues['createConditionBundle']}
@@ -387,6 +366,7 @@ const StorylineStep = props => {
                 />
             </GenericDialogue>
 
+            {/* Edit Step Name */}
             <GenericDialogue
                 title='Edit step name'
                 maxWidth='sm'
@@ -403,6 +383,7 @@ const StorylineStep = props => {
                 />
             </GenericDialogue>
 
+            {/* Delete Confirmation */}
             <ConfirmationDialogue
                 message={`Delete the step ${storylineStep.name}?`}
                 isOpen={dialogues['confirmDelete']}

@@ -11,7 +11,6 @@ import {
     Icon,
     Divider
 } from '@material-ui/core';
-import { blue, green } from '@material-ui/core/colors';
 
 import { 
     GenericDialogue, ConfirmationDialogue 
@@ -20,23 +19,7 @@ import { useDialogueManager } from '../../../hooks';
 import CompleteConditionForm from './forms/CompleteConditionForm';
 import createConditionDescription from './functions/createConditionDescription';
 
-const styles = theme => ({
-    conditionContainer: {
-        padding: 16,
-        width: '100%'
-    },
-    interactionTypeText: {
-        color: blue[400]
-    },
-    greenText: {
-        color: green[400],
-        fontWeight: 'bold'
-    },
-    summaryWrapper: {
-        display: 'flex',
-        width: '100%'
-    },
-});
+import { styles } from './styles/CompleteConditionStyle';
 
 const CompleteCondition = props => {
     
@@ -49,7 +32,7 @@ const CompleteCondition = props => {
     );
     const [expanded, toggleExpand] = useState(false);
 
-    const paramList = Object.keys(completeCondition.parameters).map((key, i) => (
+    const paramList = Object.keys(completeCondition.parameters).map(key => (
         <ListItem key={key}>
             <Typography variant='caption'>
                 <b>{key}</b>: <i>{completeCondition.parameters[key]}</i>

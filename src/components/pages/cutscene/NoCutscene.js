@@ -5,19 +5,7 @@ import {
 } from '@material-ui/core';
 import { DragAndDrop } from '../../elements';
 
-const styles = theme => ({
-    button: {
-        margin: theme.spacing.unit,
-        marginBottom: 24,
-    },
-    dragCapturer: {
-        padding: 16,
-        marginTop: 24,
-    },
-    gridContainer: {
-        minHeight: 300,
-    }
-});
+import styles from './styles/NoCutsceneStyle';
 
 const NoCutscene = props => {
     

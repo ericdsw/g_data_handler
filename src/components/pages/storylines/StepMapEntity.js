@@ -16,7 +16,6 @@ import {
     ListItem,
     Collapse,
 } from '@material-ui/core';
-import { blue, red } from '@material-ui/core/colors';
 
 import { interactionInputSchema } from '../../../globals';
 import NPCInteractionContainer from '../../containers/NPCInteractionContainer';
@@ -28,34 +27,7 @@ import {
 import { useDialogueManager } from '../../../hooks';
 import CreateMapEntityForm from './forms/CreateMapEntityForm';
 
-const styles = theme => ({
-    typeSubheader: {
-        color: blue[400]
-    },
-    blueText: {
-        color: blue[400]
-    },
-    actions: {
-        display: 'flex'
-    },
-    descriptionWrapper: {
-        display: 'flex',
-        width: '100%',
-        paddingLeft: 16,
-        paddingRight: 16
-    },
-    descriptionElement: {
-        padding: 16,
-        cursor: 'pointer',
-        color: '#fff',
-        width: '100%',
-        fontSize: 14
-    },
-    redButton: {
-        color: '#fff',
-        backgroundColor: red[500]
-    }
-});
+import { styles } from './styles/StepMapEntityStyle';
 
 const StepMapEntity = props => {
 

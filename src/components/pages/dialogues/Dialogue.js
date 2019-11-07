@@ -7,41 +7,16 @@ import {
     Fab,
     Icon
 } from '@material-ui/core';
-import { red, blue } from '@material-ui/core/colors';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-import { GenericDialogue } from '../../elements';
+import { GenericDialogue, ConfirmationDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
 import DialogueConversationContainer from '../../containers/DialogueConversationContainer';
 
 import { NoConversationsNotifier } from './elements';
 import { CreateConversationForm } from './forms';
 
-const styles = theme => ({
-    root: {
-        ...theme.mixins.gutters(),
-        paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2,
-        width: '100%',
-        [theme.breakpoints.down('xs')]: {
-            paddingLeft: 0,
-            paddingRight: 0
-        }
-    },
-    deleteButton: {
-        color: red[500],
-    },
-    defaultButton: {
-        color: blue[500]
-    },
-    mergeFab: {
-        position: 'fixed',
-        right: 16,
-        bottom: 16,
-        margin: theme.spacing.unit,
-        transition: 'transform 0.2s ease'
-    }
-});
+import { styles } from './styles/DialogueStyle';
 
 const Dialogue = props => {
 
@@ -54,7 +29,9 @@ const Dialogue = props => {
         handleConfirmMerge
     } = props;
 
-    const [dialogues, toggleDialogue] = useDialogueManager('addConversation');
+    const [dialogues, toggleDialogue] = useDialogueManager(
+        'addConversation', 'confirmMerge'
+    );
 
     return (
         <DragDropContext onDragEnd={result => handleDragEnd(result)}>
@@ -84,7 +61,7 @@ const Dialogue = props => {
                         droppableId={dialogueData.id}
                         type='conversations'
                     >
-                        {provided => (
+                        { provided => (
                             <div 
                                 ref={provided.innerRef} 
                                 {...provided.droppableProps}
@@ -121,15 +98,18 @@ const Dialogue = props => {
 
             {/* Merge Conversations Button */}
             <Fab 
-                color='primary' 
+                color='primary'
+                size='large'
+                variant='extended'
                 aria-label='Merge Conversations'
                 className={classes.mergeFab}
                 style={{
                     transform: (conversationsToMerge.length <= 0) ? 'scale(0.0)' : 'scale(1.0)'
                 }}
-                onClick={e => handleConfirmMerge()}
+                onClick={e => toggleDialogue('confirmMerge', 'show')}
             >
                 <Icon>merge_type</Icon>
+                Merge
             </Fab>
 
             {/* Conversation Form */}
@@ -146,7 +126,21 @@ const Dialogue = props => {
                     }}
                 />
             </GenericDialogue>
+            
+            {/* Merge Confirmation Form */}
+            <ConfirmationDialogue
+                message={`Merge selected conversations?`}
+                descriptionText={`${conversationsToMerge.length} conversations will be merged`}
+                isOpen={dialogues['confirmMerge']}
+                handleClose={() => toggleDialogue('confirmMerge', 'hide')}
+                handleConfirm={() => {
+                    handleConfirmMerge();
+                    toggleDialogue('confirmMerge', 'hide')        
+                }}
+            />
+
         </DragDropContext>
+
     );
 }
 

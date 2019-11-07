@@ -3,38 +3,21 @@ import { withStyles } from '@material-ui/core/styles';
 import { 
     Grid, Typography, TextField, Button, FormControlLabel, Switch, Tooltip
 } from '@material-ui/core';
-import { red, blue } from '@material-ui/core/colors';
 import CutsceneRowContainer from '../../containers/CutsceneRowContainer';
 
-const styles = theme => ({
-    root: {
-        ...theme.mixins.gutters(),
-        paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2,
-        [theme.breakpoints.down('xs')]: {
-            paddingLeft: 0,
-            paddingRight: 0
-        }
-    },
-    deleteButton: {
-        color: red[500],
-    },
-    defaultButton: {
-        color: blue[500]
-    },
-    emptyText: {
-        padding: 32,
-        width: '100%'
-    },
-});
+import { styles } from './styles/CutsceneStyle';
 
 const Cutscene = props => {
 
     // Extract value properties
-    const { classes, cutsceneRows, fileName, hideBars } = props;
+    const { 
+        classes, cutsceneRows, fileName, hideBars 
+    } = props;
 
     // Extract method properties
-    const { handleFileNameChange, handleAddRow, handleShouldHideBars } = props;
+    const { 
+        handleFileNameChange, handleAddRow, handleShouldHideBars 
+    } = props;
     
     return (
         <Grid 

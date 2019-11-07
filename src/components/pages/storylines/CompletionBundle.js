@@ -22,15 +22,7 @@ import {
 import { completionInputSchema } from '../../../globals';
 import { useDialogueManager } from '../../../hooks';
 
-const styles = theme => ({
-    bundleCard: {
-        background: '#555',
-    },
-    descriptionText: {
-        marginBottom: 16,
-        fontStyle: 'italic'
-    }
-});
+import { styles } from './styles/CompletionBundleStyle';
 
 const CompletionBundle = props => {
 
