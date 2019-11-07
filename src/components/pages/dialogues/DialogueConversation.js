@@ -168,6 +168,7 @@ const DialogueConversation = props => {
                                         conversationId={conversation.id}
                                         messageId={messageId}
                                         index={index}
+                                        isDragDisabled={! isExpanded}
                                     />
                                 ))}
                                 {provided.placeholder}

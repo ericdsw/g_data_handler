@@ -36,7 +36,10 @@ const DialogueEmote = props => {
 
     const { message, classes } = props;
 
-    const { handleDelete, handleAddAbove, handleAddBelow } = props;
+    const { 
+        handleDelete, handleAddAbove, handleAddBelow,
+        handleSplitBelow
+    } = props;
     
     const imagePath = `/images/emotes/${message.message}.png`;
 
@@ -59,6 +62,7 @@ const DialogueEmote = props => {
                                 handleAddBelow={data => handleAddBelow(data)}
                                 handleEdit={data => {/* No edit logic */}}
                                 handleDelete={() => handleDelete()}
+                                handleSplitBelow={conversationName => handleSplitBelow(conversationName)}
                                 omitEdit={true}
                             />
                         </Grid>

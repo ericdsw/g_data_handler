@@ -14,7 +14,8 @@ import {
     DELETE_DIALOGUE,
     REORDER_CONVERSATION,
     REORDER_MESSAGE,
-    MOVE_MESSAGE
+    MOVE_MESSAGE,
+    SPLIT_CONVERSATION
 } from '../actions/types'
 
 const initialState = {
@@ -62,6 +63,8 @@ export default function(state = initialState, action) {
             return reorderMessage(state, action);
         case MOVE_MESSAGE:
             return moveMessage(state, action);
+        case SPLIT_CONVERSATION:
+            return splitConversation(state, action);
         
         default:
             return state;
@@ -272,5 +275,37 @@ function moveMessage(state, action) {
 
     return Object.assign({}, state, {
         conversations
+    });
+}
+
+function splitConversation(state, action) {
+
+    const { conversationId, messageId, newName } = action.payload;
+
+    const conversations = {...state.conversations};
+    const convMessages = [...conversations[conversationId].messages];
+
+    const messageOffset = convMessages.indexOf(messageId);
+    const messagesToMove = convMessages.splice(messageOffset);
+
+    const newConversationId = uuidv4();
+
+    const newConversation = {
+        id: newConversationId,
+        conversationName: newName,
+        messages: messagesToMove
+    }
+
+    conversations[newConversationId] = newConversation;
+
+    const dialogues = {...state.dialogues};
+    const conversationPos = dialogues[state.currentDialogue].conversations.indexOf(conversationId);
+    
+    dialogues[state.currentDialogue].conversations.splice(conversationPos + 1, 0, newConversationId);
+
+    conversations[conversationId].messages = convMessages;
+
+    return Object.assign({}, state, {
+        dialogues, conversations
     });
 }

@@ -12,7 +12,8 @@ import {
     DELETE_DIALOGUE,
     REORDER_CONVERSATION,
     REORDER_MESSAGE,
-    MOVE_MESSAGE
+    MOVE_MESSAGE,
+    SPLIT_CONVERSATION
 } from './types';
 
 // Create
@@ -147,6 +148,17 @@ export const moveMessage = (
         payload: {
             sourcePosition, destinationPosition,
             sourceConversationId, destinationConversationId, messageId
+        }
+    })
+}
+
+export const splitConversation = (
+    conversationId, messageId, newName
+) => dispatch => {
+    dispatch({
+        type: SPLIT_CONVERSATION,
+        payload: {
+            conversationId, messageId, newName
         }
     })
 }

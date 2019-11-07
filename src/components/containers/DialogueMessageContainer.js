@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import {
     editConversationMessage, 
     deleteConversationMessage,
-    addMessageAtPosition
+    addMessageAtPosition,
+    splitConversation
 } from '../../actions/dialogueActions';
 import { Draggable } from 'react-beautiful-dnd';
 import DialogueMessage from '../pages/dialogues/DialogueMessage';
@@ -43,6 +44,11 @@ class DialogueMessageContainer extends React.Component {
         deleteConversationMessage(messageId);
     }
 
+    splitBelow = newConversationName => {
+        const { conversationId, messageId, splitConversation } = this.props;
+        splitConversation(conversationId, messageId, newConversationName);
+    }
+
     render() {
 
         const { messageId, messages, index, isDragDisabled } = this.props;
@@ -57,6 +63,7 @@ class DialogueMessageContainer extends React.Component {
                     handleDelete={this.deleteMessage}
                     handleAddAbove={this.addAbove}
                     handleAddBelow={this.addBelow}
+                    handleSplitBelow={this.splitBelow}
                 />
             );
         } else {
@@ -67,6 +74,7 @@ class DialogueMessageContainer extends React.Component {
                     handleDelete={this.deleteMessage}
                     handleAddAbove={this.addAbove}
                     handleAddBelow={this.addBelow}
+                    handleSplitBelow={this.splitBelow}
                 />
             );
         }
@@ -99,5 +107,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
     editConversationMessage,
     deleteConversationMessage,
-    addMessageAtPosition
+    addMessageAtPosition,
+    splitConversation
 })(DialogueMessageContainer);

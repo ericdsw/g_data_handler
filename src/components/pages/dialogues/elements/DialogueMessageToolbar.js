@@ -11,7 +11,8 @@ import {
 } from '@material-ui/core';
 import { useDialogueManager } from '../../../../hooks';
 import { GenericDialogue, ConfirmationDialogue } from '../../../elements';
-import { CreateDialogueMessageForm, CreateEmoteForm } from '../forms';
+import { CreateDialogueMessageForm, CreateConversationForm } from '../forms';
+import DialogueConversationContainer from '../../../containers/DialogueConversationContainer';
 
 
 const styles = theme => ({
@@ -27,11 +28,12 @@ const DialogueMessageToolbar = props => {
 
     // Methods
     const { 
-        handleAddAbove, handleAddBelow, handleEdit, handleDelete 
+        handleAddAbove, handleAddBelow, handleEdit, handleDelete,
+        handleSplitBelow 
     } = props; 
 
     const [dialogues, toggleDialogue] = useDialogueManager(
-        'confirmDelete', 'addMessage', 'addEmote'
+        'confirmDelete', 'addMessage', 'addEmote', 'splitConversation'
     );
 
     const [selectedOption, setSelectedOption] = useState('');
@@ -71,6 +73,9 @@ const DialogueMessageToolbar = props => {
                 break;
             case 'delete':
                 toggleDialogue('confirmDelete', 'show');
+                break;
+            case 'splitBelow':
+                toggleDialogue('splitConversation', 'show');
                 break;
             default:
                 break;
@@ -123,29 +128,7 @@ const DialogueMessageToolbar = props => {
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
-                mountOnEnter
-                unmountOnExit
             >
-                <MenuItem 
-                    aria-controls='simple-type-menu'
-                    aria-haspopup='true'
-                    onClick={(e) => handleMenuSelect(e, 'addAbove')}
-                >
-                    <ListItemIcon>
-                        <Icon>arrow_upward</Icon>
-                    </ListItemIcon>
-                    <ListItemText primary="Add Above" />
-                </MenuItem>
-                <MenuItem 
-                    aria-controls='simple-type-menu'
-                    aria-haspopup='true'
-                    onClick={(e) => handleMenuSelect(e, 'addBelow')}
-                >
-                    <ListItemIcon>
-                        <Icon>arrow_downward</Icon>
-                    </ListItemIcon>
-                    <ListItemText primary="Add Below" />
-                </MenuItem>
                 {!omitEdit && 
                     <MenuItem 
                         aria-controls='simple-type-menu'
@@ -165,11 +148,11 @@ const DialogueMessageToolbar = props => {
                     <ListItemText primary="Delete" />
                 </MenuItem>
                 <Divider />
-                <MenuItem>
+                <MenuItem onClick={e => handleMenuSelect(e, 'splitBelow')}>
                     <ListItemIcon>
                         <Icon>vertical_align_bottom</Icon>
                     </ListItemIcon>
-                    <ListItemText primary="Split Below" />
+                    <ListItemText primary="Split From This" />
                 </MenuItem>
             </Menu>
 
@@ -179,8 +162,6 @@ const DialogueMessageToolbar = props => {
                 anchorEl={typeAnchorEl}
                 open={Boolean(typeAnchorEl)}
                 onClose={handleTypeClose}
-                mountOnEnter
-                unmountOnExit
             >
                 <MenuItem onClick={() => handleTypeMenuSelect('message')}>
                     Message
@@ -219,19 +200,19 @@ const DialogueMessageToolbar = props => {
                 />
             </GenericDialogue>
 
-            {/* Create Emote form */}
+            {/* Split Conversation Form */}
             <GenericDialogue
-                title='Create Emote'
-                open={dialogues['addEmote']}
-                onClose={() => toggleDialogue('addEmote', 'hide')}
+                title='Splitted Converation Name'
+                open={dialogues['splitConversation']}
+                onClose={() => toggleDialogue('splitConversation', 'hide')}
                 maxWidth='sm'
             >
-                <CreateEmoteForm
-                    creationHandler={data => {
-                        toggleDialogue('addEmote', 'hide');
-                        handleDialogueFormSubmit(data);
+                <CreateConversationForm
+                    creationHandler={conversationName => {
+                        toggleDialogue('splitConversation', 'hide');
+                        handleSplitBelow(conversationName);
                     }}
-                /> 
+                />
             </GenericDialogue>
 
         </div>

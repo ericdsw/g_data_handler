@@ -68,7 +68,8 @@ const DialogueMessage = props => {
     const { message, classes } = props;
 
     const { 
-        handleEdit, handleDelete, handleAddAbove, handleAddBelow 
+        handleEdit, handleDelete, handleAddAbove, handleAddBelow, 
+        handleSplitBelow
     } = props;
 
     let usedImagePath, speakerName;
@@ -128,6 +129,7 @@ const DialogueMessage = props => {
                                 handleAddBelow={data => handleAddBelow(data)}
                                 handleEdit={data => handleEdit(data)}
                                 handleDelete={() => handleDelete()}
+                                handleSplitBelow={conversationName => handleSplitBelow(conversationName)}
                                 omitEdit={false}
                             />
                         </div>
