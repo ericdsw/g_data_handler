@@ -82,14 +82,16 @@ const Dialogue = props => {
                         droppableId={dialogueData.id}
                         type='conversations'
                     >
-                        {(provided) => (
-                            <div ref={provided.innerRef} {...provided.droppableProps}>
+                        {provided => (
+                            <div 
+                                ref={provided.innerRef} 
+                                {...provided.droppableProps}
+                            >
                                 {dialogueData.conversations.map((conversationId, index) => (
                                     <DialogueConversationContainer
                                         key={conversationId}
                                         conversationId={conversationId}
                                         index={index}
-                                        innerRef={provided.innerRef}
                                     />
                                 ))}
                                 {provided.placeholder}

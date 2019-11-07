@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
     ExpansionPanel,
@@ -76,6 +76,7 @@ const DialogueConversation = props => {
     const [dialogues, toggleDialogue] = useDialogueManager(
         'confirmDelete', 'updateConversation', 'addMessage', 'addEmote'
     );
+    const [isExpanded, setIsExpanded] = useState(false);
 
     function onEditClick(event) {
         event.stopPropagation();
@@ -87,8 +88,16 @@ const DialogueConversation = props => {
         toggleDialogue('confirmDelete', 'show');
     }
 
+    function handlePanelChange(expanded) {
+        setIsExpanded(expanded);
+    }
+
     return (
-        <ExpansionPanel className={classes.conversationContainer} square={true}>
+        <ExpansionPanel 
+            className={classes.conversationContainer} 
+            square={true}
+            onChange={(event, expanded) => handlePanelChange(expanded)}
+        >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Grid container alignItems='center'>
 
@@ -144,9 +153,10 @@ const DialogueConversation = props => {
 
                     <Droppable
                         droppableId={conversation.id}
-                        type='messages'
+                        type={`messages`}
+                        isDropDisabled={! isExpanded}
                     >
-                        {(provided) => (
+                        {provided => (
                             <div 
                                 className={classes.messageContainer}
                                 ref={provided.innerRef}
@@ -168,7 +178,7 @@ const DialogueConversation = props => {
 
                     <div className={classes.buttonContainer}>
                         <Button 
-                            style={{marginTop: 8}}
+                            style={{marginTop: 8, marginRight: 16}}
                             color='primary'
                             variant='contained'
                             onClick={() => {
@@ -177,7 +187,6 @@ const DialogueConversation = props => {
                         >
                             Add message
                         </Button>
-                        &nbsp;&nbsp;&nbsp;
                         <Button
                             style={{marginTop: 8}}
                             color='secondary'

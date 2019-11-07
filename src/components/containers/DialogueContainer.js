@@ -127,7 +127,7 @@ class DialogueContainer extends React.Component {
             reorderConversations(
                 source.index, destination.index, currentDialogue, draggableId
             );
-        } else if (result.type === 'messages') {
+        } else {
             if (source.droppableId === destination.droppableId) {
                 // Move inside
                 const { reorderMessage } = this.props;

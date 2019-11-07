@@ -45,7 +45,7 @@ class DialogueMessageContainer extends React.Component {
 
     render() {
 
-        const { messageId, messages, index } = this.props;
+        const { messageId, messages, index, isDragDisabled } = this.props;
         const message = messages[messageId];
 
         let content;
@@ -75,8 +75,9 @@ class DialogueMessageContainer extends React.Component {
             <Draggable
                 draggableId={messageId}
                 index={index}
+                isDragDisabled={isDragDisabled}
             >
-                {(provided) => (
+                {provided => (
                     <div
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}

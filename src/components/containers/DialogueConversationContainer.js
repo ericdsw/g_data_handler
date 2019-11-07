@@ -27,7 +27,7 @@ class DialogueConversationContainer extends React.Component {
             conversationName: newName
         });
     }
-    
+
     render() {
 
         const { conversationId, conversations } = this.props;
