@@ -16,6 +16,7 @@ import {
     MOVE_MESSAGE,
     SPLIT_CONVERSATION,
     CONFIRM_CONVERSATION_MERGE,
+    DELETE_CONVERSATIONS_TO_MERGE
 } from './types';
 
 // Create
@@ -177,6 +178,13 @@ export const splitConversation = (
 export const confirmConversationMerge = () => dispatch => {
     dispatch({
         type: CONFIRM_CONVERSATION_MERGE,
+        payload: {}
+    });
+}
+
+export const deleteConversationsToMerge = () => dispatch => {
+    dispatch({
+        type: DELETE_CONVERSATIONS_TO_MERGE,
         payload: {}
     });
 }

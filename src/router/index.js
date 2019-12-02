@@ -37,11 +37,11 @@ export default [
         text: 'Storylines'
     },
     {
-        path: '/help',
+        path: '/about',
         exact: true,
         component: NotFound,
         icon: <HelpIcon />,
-        text: 'Help',
+        text: 'About',
     }
 ];
 
