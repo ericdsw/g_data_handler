@@ -20,8 +20,22 @@ export const styles = theme => ({
     mergeFab: {
         position: 'fixed',
         right: 16,
+        bottom: 16 + 60,
+        margin: theme.spacing.unit,
+        transition: 'transform 0.2s ease',
+        width: 200,
+    },
+    deleteFab: {
+        position: 'fixed',
+        right: 16,
         bottom: 16,
         margin: theme.spacing.unit,
-        transition: 'transform 0.2s ease'
+        transition: 'transform 0.2s ease',
+        backgroundColor: red[500],
+        color: theme.palette.getContrastText(red[500]),
+        width: 200,
+        '&:hover': {
+            backgroundColor: red[700]
+        }
     }
 });

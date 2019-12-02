@@ -17,7 +17,8 @@ import {
     REORDER_MESSAGE,
     MOVE_MESSAGE,
     SPLIT_CONVERSATION,
-    CONFIRM_CONVERSATION_MERGE
+    CONFIRM_CONVERSATION_MERGE,
+    DELETE_CONVERSATIONS_TO_MERGE
 } from '../actions/types'
 
 const initialState = {
@@ -72,6 +73,8 @@ export default function(state = initialState, action) {
             return splitConversation(state, action);
         case CONFIRM_CONVERSATION_MERGE:
             return confirmConversationMerge(state, action);
+        case DELETE_CONVERSATIONS_TO_MERGE:
+            return deleteAllConversationsToMerge(state, action);
         
         default:
             return state;
@@ -143,9 +146,8 @@ function addToConversationMerger(state, action) {
     if (shouldAdd) {
         conversationsToMerge.push(conversationId);
     } else {
-        conversationsToMerge.splice(
-            conversationsToMerge.indexOf(conversationId, 1)
-        )
+        const removeIndex = conversationsToMerge.indexOf(conversationId)
+        conversationsToMerge.splice(removeIndex, 1)
     }
 
     return Object.assign({}, state, {
@@ -343,11 +345,29 @@ function splitConversation(state, action) {
     });
 }
 
+function deleteAllConversationsToMerge(state, action) {
+
+    const dialogues = {...state.dialogues};
+    const conversations = {...state.conversations};
+    let conversationsToMerge = [...state.conversationsToMerge];
+
+    conversationsToMerge.forEach(conversationId => {
+        delete conversations[conversationId];
+        deleteReference(dialogues, 'conversations', conversationId);
+    });
+
+    conversationsToMerge = [];
+
+    return Object.assign({}, state, {
+        dialogues, conversations, conversationsToMerge
+    });
+}
+
 function confirmConversationMerge(state, action) {
 
     const dialogues = {...state.dialogues};
     const conversations = {...state.conversations};
-    const conversationsToMerge = [...state.conversationsToMerge];
+    let conversationsToMerge = [...state.conversationsToMerge];
 
     const finalConversationId = conversationsToMerge[0];
 
@@ -368,7 +388,7 @@ function confirmConversationMerge(state, action) {
         }
     });
 
-    conversationsToMerge.length = 0;
+    conversationsToMerge = [];
 
     return Object.assign({}, state, {
         dialogues, conversations, conversationsToMerge

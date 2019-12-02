@@ -26,11 +26,11 @@ const Dialogue = props => {
     
     const { 
         handleFileNameChange, handleAddConversation, handleDragEnd,
-        handleConfirmMerge
+        handleConfirmMerge, handleConfirmBulkDelete
     } = props;
 
     const [dialogues, toggleDialogue] = useDialogueManager(
-        'addConversation', 'confirmMerge'
+        'addConversation', 'confirmMerge', 'confirmBulkDelete'
     );
 
     return (
@@ -109,7 +109,21 @@ const Dialogue = props => {
                 onClick={e => toggleDialogue('confirmMerge', 'show')}
             >
                 <Icon>merge_type</Icon>
-                Merge
+                Merge Selected
+            </Fab>
+
+            <Fab 
+                size='large'
+                variant='extended'
+                aria-label='Merge Conversations'
+                className={classes.deleteFab}
+                style={{
+                    transform: (conversationsToMerge.length <= 0) ? 'scale(0.0)' : 'scale(1.0)'
+                }}
+                onClick={e => toggleDialogue('confirmBulkDelete', 'show')}
+            >
+                <Icon>delete</Icon>
+                Delete Selected
             </Fab>
 
             {/* Conversation Form */}
@@ -136,6 +150,18 @@ const Dialogue = props => {
                 handleConfirm={() => {
                     handleConfirmMerge();
                     toggleDialogue('confirmMerge', 'hide')        
+                }}
+            />
+
+            {/* Bulk Delete Confirmation Form */}
+            <ConfirmationDialogue
+                message='Delete selected conversations?'
+                descriptionText={`${conversationsToMerge.length} conversations will be deleted`}
+                isOpen={dialogues['confirmBulkDelete']}
+                handleClose={() => toggleDialogue('confirmBulkDelete', 'hide')}
+                handleConfirm={() => {
+                    handleConfirmBulkDelete();
+                    toggleDialogue('confirmBulkDelete', 'hide');
                 }}
             />
 

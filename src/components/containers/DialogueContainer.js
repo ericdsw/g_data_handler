@@ -13,7 +13,8 @@ import {
     reorderConversations,
     reorderMessage,
     moveMessage,
-    confirmConversationMerge
+    confirmConversationMerge,
+    deleteConversationsToMerge
 } from '../../actions/dialogueActions';
 import { parseFile, downloadJSON } from '../../functions';
 import { DragJsonFileManager } from '../elements';
@@ -151,6 +152,10 @@ class DialogueContainer extends React.Component {
         this.props.confirmConversationMerge();
     }
 
+    confirmBulkDelete = () => {
+        this.props.deleteConversationsToMerge();
+    }
+
     /**
      * Render Method
      */
@@ -179,6 +184,7 @@ class DialogueContainer extends React.Component {
                             handleAddConversation={this.addConversation}
                             handleDragEnd={this.onDragEnd}
                             handleConfirmMerge={this.confirmMerge}
+                            handleConfirmBulkDelete={this.confirmBulkDelete}
                         />
                     </DragDropContext>
                 </React.Fragment>
@@ -226,5 +232,6 @@ export default connect(mapStateToProps, {
     reorderConversations,
     reorderMessage,
     moveMessage,
-    confirmConversationMerge
+    confirmConversationMerge,
+    deleteConversationsToMerge
 })(withSnackbar(DialogueContainer));
