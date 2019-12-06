@@ -37,5 +37,13 @@ export const styles = theme => ({
         '&:hover': {
             backgroundColor: red[700]
         }
+    },
+    selectAllFab: {
+        position: 'fixed',
+        right: 16,
+        bottom: 16 + 120,
+        margin: theme.spacing.unit,
+        transition: 'transform 0.2s ease',
+        width: 200
     }
 });

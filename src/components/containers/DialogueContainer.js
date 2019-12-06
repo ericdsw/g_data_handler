@@ -14,7 +14,9 @@ import {
     reorderMessage,
     moveMessage,
     confirmConversationMerge,
-    deleteConversationsToMerge
+    deleteConversationsToMerge,
+    selectAllConversations,
+    unselectAllConversations
 } from '../../actions/dialogueActions';
 import { parseFile, downloadJSON } from '../../functions';
 import { DragJsonFileManager } from '../elements';
@@ -156,6 +158,14 @@ class DialogueContainer extends React.Component {
         this.props.deleteConversationsToMerge();
     }
 
+    selectAllConversations = () => {
+        this.props.selectAllConversations();
+    }
+
+    unselectAllConversations = () => {
+        this.props.unselectAllConversations();
+    }
+
     /**
      * Render Method
      */
@@ -185,6 +195,8 @@ class DialogueContainer extends React.Component {
                             handleDragEnd={this.onDragEnd}
                             handleConfirmMerge={this.confirmMerge}
                             handleConfirmBulkDelete={this.confirmBulkDelete}
+                            handleSelectAll={this.selectAllConversations}
+                            handleUnselectAll={this.unselectAllConversations}
                         />
                     </DragDropContext>
                 </React.Fragment>
@@ -233,5 +245,7 @@ export default connect(mapStateToProps, {
     reorderMessage,
     moveMessage,
     confirmConversationMerge,
-    deleteConversationsToMerge
+    deleteConversationsToMerge,
+    selectAllConversations,
+    unselectAllConversations
 })(withSnackbar(DialogueContainer));

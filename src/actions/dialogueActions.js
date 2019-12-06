@@ -16,7 +16,9 @@ import {
     MOVE_MESSAGE,
     SPLIT_CONVERSATION,
     CONFIRM_CONVERSATION_MERGE,
-    DELETE_CONVERSATIONS_TO_MERGE
+    DELETE_CONVERSATIONS_TO_MERGE,
+    SELECT_ALL_CONVERSATIONS,
+    UNSELECT_ALL_CONVERSATIONS,
 } from './types';
 
 // Create
@@ -187,4 +189,18 @@ export const deleteConversationsToMerge = () => dispatch => {
         type: DELETE_CONVERSATIONS_TO_MERGE,
         payload: {}
     });
+}
+
+export const selectAllConversations = () => dispatch => {
+    dispatch({
+        type: SELECT_ALL_CONVERSATIONS,
+        payload: {}
+    });
+}
+
+export const unselectAllConversations = () => dispatch => {
+    dispatch({
+        type: UNSELECT_ALL_CONVERSATIONS,
+        payload: {}
+    })
 }

@@ -18,7 +18,9 @@ import {
     MOVE_MESSAGE,
     SPLIT_CONVERSATION,
     CONFIRM_CONVERSATION_MERGE,
-    DELETE_CONVERSATIONS_TO_MERGE
+    DELETE_CONVERSATIONS_TO_MERGE,
+    SELECT_ALL_CONVERSATIONS,
+    UNSELECT_ALL_CONVERSATIONS
 } from '../actions/types'
 
 const initialState = {
@@ -75,7 +77,10 @@ export default function(state = initialState, action) {
             return confirmConversationMerge(state, action);
         case DELETE_CONVERSATIONS_TO_MERGE:
             return deleteAllConversationsToMerge(state, action);
-        
+        case SELECT_ALL_CONVERSATIONS:
+            return selectAllConversations(state, action);
+        case UNSELECT_ALL_CONVERSATIONS:
+            return unselectAllConversations(state, action);
         default:
             return state;
     }
@@ -394,4 +399,17 @@ function confirmConversationMerge(state, action) {
         dialogues, conversations, conversationsToMerge
     })
 
+}
+
+function selectAllConversations(state, action) {
+    const conversationsToMerge = [...state.dialogues[state.currentDialogue].conversations];
+    return Object.assign({}, state, {
+        conversationsToMerge
+    });
+}
+
+function unselectAllConversations(state, action) {
+    return Object.assign({}, state, {
+        conversationsToMerge: []
+    })
 }
