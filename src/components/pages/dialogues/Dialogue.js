@@ -26,12 +26,16 @@ const Dialogue = props => {
     
     const { 
         handleFileNameChange, handleAddConversation, handleDragEnd,
-        handleConfirmMerge, handleConfirmBulkDelete
+        handleConfirmMerge, handleConfirmBulkDelete,
+        handleSelectAll, handleUnselectAll
     } = props;
 
     const [dialogues, toggleDialogue] = useDialogueManager(
         'addConversation', 'confirmMerge', 'confirmBulkDelete'
     );
+
+    const conversationAmount = dialogueData.conversations.length;
+    const mergeAmount = conversationsToMerge.length;
 
     return (
         <DragDropContext onDragEnd={result => handleDragEnd(result)}>
@@ -124,6 +128,33 @@ const Dialogue = props => {
             >
                 <Icon>delete</Icon>
                 Delete Selected
+            </Fab>
+
+            <Fab
+                size='large'
+                variant='extended'
+                color='secondary'
+                aria-label='All'
+                className={classes.selectAllFab}
+                style={{
+                    transform: (conversationsToMerge.length <= 0) ? 'scale(0.0)' : 'scale(1.0)'
+                }}
+                onClick={e => {
+                    if (conversationAmount > mergeAmount) {
+                        handleSelectAll();
+                    } else {
+                        handleUnselectAll();
+                    }
+                }}
+            >
+                {(conversationAmount > mergeAmount) ? 
+                    <React.Fragment>
+                        <Icon>select_all</Icon> Select All
+                    </React.Fragment> :
+                    <React.Fragment>
+                        <Icon>clear_all</Icon> Unselect All
+                    </React.Fragment>
+                }
             </Fab>
 
             {/* Conversation Form */}
