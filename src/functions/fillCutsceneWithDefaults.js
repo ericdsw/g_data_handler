@@ -8,6 +8,13 @@ function fillEventWithDefaults(event) {
             event.parameters[paramName] = defaultValue;
         }
     }
+
+    // is_important is an special parameter that must always be accounted
+    // for, even if the source event does not define it. If this parameter
+    // is not found, force it to whatever defaultImportant is.
+    if (!event.parameters['is_important']) {
+        event.parameters['is_important'] = currentSchema.defaultImportant;
+    }
 }
 
 // This method will ensure that all provided cutscenes follow the same format:
