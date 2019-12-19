@@ -42,14 +42,19 @@ class CutsceneContainer extends React.Component {
         const { updateCutscene } = this.props;
         parseFile(targetFile, 'application/json')
             .then(json => {
-                let jumps = {}
+                let jumps = {};
+                let hideBars = false;
                 if (json['cutscene_jumps']) {
-                    jumps = json['cutscene_jumps']
+                    jumps = json['cutscene_jumps'];
+                }
+                if (json['hide_black_bars']) {
+                    hideBars = json['hide_black_bars'];
                 }
                 updateCutscene({
                     cutscene: fillCutsceneWithDefaults(json['data']),
                     jumps: jumps,
-                    fileName: targetFile.name
+                    fileName: targetFile.name,
+                    hideBars: hideBars,
                 });
             })
             .catch(error => this.showError(error.message));

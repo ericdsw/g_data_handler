@@ -118,6 +118,8 @@ export default function createEventDescription(type, parameters) {
             return `Wait for action ${parameters.action}`;
         case 'glitch':
             return 'Will show graphical glitch';
+        case 'storyline_message':
+            return `Will emit storyline message: "${parameters.message_name}"`
         default:
             return '';
     }

@@ -847,6 +847,19 @@ const eventSchema = {
 
             }
         }
+    },
+
+    "storyline_message": {
+        name: 'Storyline Message',
+        icon: 'notification_important',
+        defaultImportant: false,
+        parameters: {
+            message_name: {
+                label: 'Message Name',
+                type: 'text',
+                required: true
+            }
+        }
     }
 
 }
