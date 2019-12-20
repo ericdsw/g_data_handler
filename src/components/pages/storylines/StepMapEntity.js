@@ -95,6 +95,8 @@ const StepMapEntity = props => {
                 return 'Create Dialogue Area';
             case 'create_cutscene_area':
                 return 'Create Cutscene Area';
+            case 'remove_entity':
+                return 'Remove Entity';
             default:
                 return entity.type;
         }
@@ -119,48 +121,66 @@ const StepMapEntity = props => {
             />
 
             <Divider />
-            <ButtonBase 
-                className={classes.descriptionWrapper}
-                onClick={() => toggleParamsExpanded(!paramsExpanded)}
-            >
-                <Paper 
+            {stepMapEntity.type !== 'remove_entity' &&
+                <React.Fragment>
+                    <ButtonBase 
+                        className={classes.descriptionWrapper}
+                        disabled={true}
+                        onClick={() => toggleParamsExpanded(!paramsExpanded)}
+                    >
+                        <Paper 
+                            elevation={0}
+                            className={classes.descriptionElement}
+                        >
+                            {paramsExpanded ? 'Hide' : 'Show'} parameters
+                        </Paper>
+                    </ButtonBase>
+                    <Collapse
+                        in={paramsExpanded}
+                        timeout='auto'
+                        unmountOnExit
+                    >
+                        {paramAmount <= 0 &&
+                            <Typography variant='caption' align='center'>
+                                No parameters configured
+                            </Typography>
+                        }
+                        <Paper
+                            square
+                            elevation={0}
+                        >
+                            <List component='nav'>
+                                {paramList}
+                            </List>
+                        </Paper>
+                    </Collapse>
+                    <Divider />
+                    <ButtonBase
+                        className={classes.descriptionWrapper}
+                        onClick={() => toggleDialogue('viewInteractions', 'show')}
+                    >
+                        <Paper
+                            elevation={0}
+                            className={classes.descriptionElement}
+                        >
+                            Contains {inAmount} interaction{inAmount === 1 ? '' : 's'}
+                        </Paper>
+                    </ButtonBase>
+                </React.Fragment>
+            }
+            {stepMapEntity.type === 'remove_entity' &&
+                <Paper
                     elevation={0}
-                    className={classes.descriptionElement}
+                    className={classes.descriptionWrapper}
                 >
-                    {paramsExpanded ? 'Hide' : 'Show'} parameters
-                </Paper>
-            </ButtonBase>
-            <Collapse
-                in={paramsExpanded}
-                timeout='auto'
-                unmountOnExit
-            >
-                {paramAmount <= 0 &&
-                    <Typography variant='caption' align='center'>
-                        No parameters configured
+                    <Typography 
+                        variant='caption' 
+                        className={classes.descriptionElement}
+                    >
+                        Remove Entity has no parameters and no interactions
                     </Typography>
-                }
-                <Paper
-                    square
-                    elevation={0}
-                >
-                    <List component='nav'>
-                        {paramList}
-                    </List>
-                </Paper>
-            </Collapse>
-            <Divider />
-            <ButtonBase
-                className={classes.descriptionWrapper}
-                onClick={() => toggleDialogue('viewInteractions', 'show')}
-            >
-                <Paper
-                    elevation={0}
-                    className={classes.descriptionElement}
-                >
-                    Contains {inAmount} interaction{inAmount === 1 ? '' : 's'}
-                </Paper>
-            </ButtonBase>
+                </Paper>        
+            }
             <Divider />
 
             <CardActions className={classes.actions}>

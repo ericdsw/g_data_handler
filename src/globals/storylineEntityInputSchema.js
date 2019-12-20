@@ -303,7 +303,23 @@ const storylineEntityInputSchema = {
                 placeholder: 'json file, starting from the cutscenes resource folder'
             }
         }
-    }
+    },
+
+    'remove_entity': {
+        name: 'Remove Entity',
+        parameters: {
+            name: {
+                label: 'Entity Name',
+                type: 'text',
+                required: true
+            },
+            map_name: {
+                label: 'Remove from map',
+                type: 'text',
+                required: true
+            }
+        }
+    },
 
 }
 export default storylineEntityInputSchema;
