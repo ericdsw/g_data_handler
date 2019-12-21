@@ -147,6 +147,12 @@ const eventSchema = {
                 required: true,
                 tooltip: 'The where the player will appear in the new map. Can be a vector or a nodename'
             },
+            new_target: {
+                label: 'New Target',
+                type: 'text',
+                default: '',
+                tooltip: 'Node that will be the new focus of the camera in the new map'
+            },
             peeks: {
                 label: 'Peeks',
                 type: 'boolean', 

@@ -62,6 +62,7 @@ const CutsceneRow = props => {
             <GenericDialogue
                 title="Create Cutscene Event"
                 open={dialogues['createEvent']}
+                maxWidth='sm'
                 onClose={() => toggleDialogue('createEvent', 'hide')}
             >
                 <CreateEventForm 
