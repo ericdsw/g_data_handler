@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Grid, Typography } from '@material-ui/core';
 import { CutsceneRowToolbar } from './elements';
 import { CreateEventForm } from './forms';
@@ -11,7 +11,9 @@ import { styles } from './styles/CutsceneRowStyle';
 
 const CutsceneRow = props => {
 
-    const { classes, rowData, rowNumber } = props;
+    const classes = makeStyles(styles)();
+
+    const { rowData, rowNumber } = props;
     const { 
         handleAddRowBelow, handleAddRowAbove, handleDeleteRow, handleAddEvent 
     } = props;
@@ -46,7 +48,7 @@ const CutsceneRow = props => {
                     container 
                     direction="row"
                     justify="center" 
-                    spacing={16}
+                    spacing={2}
                 >
                     {rowData.map((cutsceneData, index) => (
                         <CutsceneEventContainer
@@ -87,5 +89,5 @@ const CutsceneRow = props => {
     );
 }
 
-export default withStyles(styles)(CutsceneRow);
+export default CutsceneRow;
 

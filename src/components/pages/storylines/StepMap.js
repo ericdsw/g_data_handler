@@ -82,7 +82,7 @@ const StepMap = props => {
             <CardContent>
                 <Grid 
                     container
-                    spacing={16}
+                    spacing={2}
                 >
                     {content}
                 </Grid>

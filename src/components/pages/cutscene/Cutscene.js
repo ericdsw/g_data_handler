@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { 
     Grid, Typography, TextField, Button, FormControlLabel, Switch, Tooltip
 } from '@material-ui/core';
@@ -9,9 +9,11 @@ import { styles } from './styles/CutsceneStyle';
 
 const Cutscene = props => {
 
+    const classes = makeStyles(styles)();
+
     // Extract value properties
     const { 
-        classes, cutsceneRows, fileName, hideBars 
+        cutsceneRows, fileName, hideBars 
     } = props;
 
     // Extract method properties
@@ -23,7 +25,7 @@ const Cutscene = props => {
         <Grid 
             className={classes.root}
             container 
-            spacing={16}
+            spacing={2}
             alignItems="center"
         >
             <Grid item xs={12} md={10}>
@@ -86,5 +88,5 @@ const Cutscene = props => {
     );
 }
 
-export default withStyles(styles)(Cutscene);
+export default Cutscene;
 

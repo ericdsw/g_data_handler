@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {
     Table,
     TableBody,
@@ -15,7 +15,9 @@ import { styles } from './styles/JumpListStyle';
 
 const JumpList = props => {
 
-    const { jumpList, classes } = props;
+    const classes = makeStyles(styles)();
+
+    const { jumpList } = props;
     const { handleDeleteJump } = props;
 
     let jumpTableRows = [];
@@ -64,4 +66,4 @@ const JumpList = props => {
     );
 }
 
-export default withStyles(styles)(JumpList);
+export default JumpList;

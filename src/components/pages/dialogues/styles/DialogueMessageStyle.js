@@ -40,7 +40,7 @@ export const styles = theme => ({
         paddingTop: 12,
     },
     chip: {
-        marginRight: theme.spacing.unit,
+        marginRight: theme.spacing(1),
     },
     interruptDiv: {
         background: red[600],

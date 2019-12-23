@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { 
     Button, Divider, Paper, Grid, Typography 
 } from '@material-ui/core';
@@ -9,7 +9,8 @@ import styles from './styles/NoCutsceneStyle';
 
 const NoCutscene = props => {
     
-    const { classes } = props;
+    const classes = makeStyles(styles)();
+
     const { handleEmptyCutscene, handleUpdateFromFile } = props;
 
     return (
@@ -46,4 +47,4 @@ const NoCutscene = props => {
     );
 }
 
-export default withStyles(styles)(NoCutscene);
+export default NoCutscene;

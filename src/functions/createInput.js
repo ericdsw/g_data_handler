@@ -5,13 +5,19 @@ import {
     Switch,
     MenuItem,
     Typography,
-    Divider
+    Divider,
+    InputAdornment,
+    Icon,
 } from '@material-ui/core';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { blue, green, yellow, amber } from '@material-ui/core/colors';
 
 export default function createInput(
     paramName, inputData, value, handleChange, disabled = false,
     extraParams = {}
 ) {
+
+    let inputColor = blue[600];
 
     let label = inputData.label;
     if (inputData.required) {
@@ -22,7 +28,8 @@ export default function createInput(
         value = '';
     }
 
-    var returnValue;
+    let returnValue;
+    let adornment = <React.Fragment/>;
 
     switch (inputData.type) {
 
@@ -102,7 +109,32 @@ export default function createInput(
         case 'position':
         case 'number':
         case 'text':
+        case 'node_target':
         default:
+
+            if (inputData.type === 'node_target') {
+                inputColor = green[600];
+                adornment = (
+                    <InputAdornment position='end'>
+                        <Icon>person_pin</Icon>
+                    </InputAdornment>
+                )
+            } else if (inputData.type === 'position') {
+                inputColor = amber[600];
+                adornment = (
+                    <InputAdornment position='end'>
+                        <Icon>my_location</Icon>
+                    </InputAdornment>
+                );
+            } else if (inputData.type === 'positionArray') {
+                inputColor = yellow[600];
+                adornment = (
+                    <InputAdornment position='end'>
+                        <Icon>view_week</Icon>
+                    </InputAdornment>
+                )
+            }
+
             returnValue = (
                 <TextField 
                     id={paramName}
@@ -115,15 +147,27 @@ export default function createInput(
                     variant='outlined' 
                     margin='normal'
                     disabled={disabled}
+                    InputProps={{
+                        endAdornment: adornment,
+                    }}
                     {...extraParams}
                 />
             );
             
     }
 
+    const inputTheme = createMuiTheme({
+        palette: {
+            type: 'dark',
+            primary: {
+                main: inputColor
+            }
+        }
+    });
+
     if (inputData.afterSeparator) {
         return (
-            <React.Fragment>
+            <ThemeProvider theme={inputTheme}>
                 <div 
                     style={{ 
                         marginTop: 20, 
@@ -141,9 +185,13 @@ export default function createInput(
                     <Divider />
                 </div>
                 {returnValue}
-            </React.Fragment>
+            </ThemeProvider>
         );
     } else {
-        return returnValue;
+        return (
+            <ThemeProvider theme={inputTheme}>
+                {returnValue}
+            </ThemeProvider>
+        );
     }
 }

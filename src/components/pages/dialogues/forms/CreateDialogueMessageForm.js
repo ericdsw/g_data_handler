@@ -247,7 +247,7 @@ class CreateDialogueMessageForm extends React.Component {
             <form onSubmit={this.submitData}>
                 <Grid 
                     container 
-                    spacing={24}
+                    spacing={3}
                 >
                     <Grid item xs={12} md={4}>
                         <DialogueImageSearcher
@@ -283,7 +283,7 @@ class CreateDialogueMessageForm extends React.Component {
                             variant='outlined'
                             margin='normal'
                         />
-                        <Grid container spacing={16}>
+                        <Grid container spacing={2}>
                             <Grid item xs={12} md={6}>
                                 <TextField
                                     fullWidth
@@ -325,7 +325,7 @@ class CreateDialogueMessageForm extends React.Component {
                 <Divider />
                 <br />
 
-                <Grid container spacing={16} alignItems='center'>
+                <Grid container spacing={2} alignItems='center'>
                     <Grid item xs={12} md={10}>
                         <TextField
                             fullWidth

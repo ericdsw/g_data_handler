@@ -264,7 +264,7 @@ const StepMapEntity = props => {
                 onClose={() => toggleDialogue('viewInteractions', 'hide')}
                 maxWidth='md'
             >
-                <Grid container spacing={16}>
+                <Grid container spacing={2}>
                     {stepMapEntity.configurator_data.length <= 0 &&
                         <Grid item xs='12'>
                             <Typography 

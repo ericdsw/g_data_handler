@@ -5,7 +5,7 @@ import {
     Table, TableBody, TableCell, TableRow,
     Tooltip, Typography
 } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -31,8 +31,10 @@ function parseParameter(parameter) {
 
 const CutsceneEvent = props => {
 
+    const classes = makeStyles(styles)();
+
     // Extract value properties
-    const { classes, cutsceneEventData, rowNumber, eventNumber } = props;
+    const { cutsceneEventData, rowNumber, eventNumber } = props;
 
     // Extract method properties
     const { handleEditEvent, handleDeleteEvent } = props;
@@ -95,7 +97,7 @@ const CutsceneEvent = props => {
                         </Tooltip>
                     }
                 />
-                <CardActions className={classes.actions} disableActionSpacing>
+                <CardActions className={classes.actions} disableSpacing>
                     <IconButton aria-label='Edit'
                         onClick={() => toggleDialogue('editEvent', 'show')}
                     >
@@ -157,5 +159,5 @@ const CutsceneEvent = props => {
     );
 }
 
-export default withStyles(styles)(CutsceneEvent);
+export default CutsceneEvent;
 

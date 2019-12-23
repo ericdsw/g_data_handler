@@ -3,8 +3,8 @@ import { red, blue } from '@material-ui/core/colors';
 export const styles = theme => ({
     root: {
         ...theme.mixins.gutters(),
-        paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2,
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
         [theme.breakpoints.down('xs')]: {
             paddingLeft: 0,
             paddingRight: 0

@@ -30,7 +30,7 @@ const Storyline = props => {
         <Grid 
             className={classes.root}
             container
-            spacing={16}
+            spacing={2}
             alignItems='center'
         >
             <Grid item xs={8}>

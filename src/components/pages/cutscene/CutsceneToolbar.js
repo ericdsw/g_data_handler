@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, Button } from '@material-ui/core';
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
 import { CreateJumpForm } from './forms';
@@ -10,8 +10,10 @@ import { styles } from './styles/CutsceneToolbarStyle';
 
 const CutsceneToolbar = props => {
 
+    const classes = makeStyles(styles)();
+
     // Extract value properties
-    const { classes, jumps } = props;
+    const { jumps } = props;
 
     // Extract method properties
     const {
@@ -28,7 +30,7 @@ const CutsceneToolbar = props => {
     return (
         <Grid
             container
-            spacing={16}
+            spacing={2}
             alignItems="center"
         >
             <Grid item xs={6}>
@@ -114,4 +116,4 @@ const CutsceneToolbar = props => {
 
 }
 
-export default withStyles(styles)(CutsceneToolbar);
+export default CutsceneToolbar;
