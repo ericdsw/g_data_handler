@@ -4,6 +4,7 @@ const eventSchema = {
         name: "Gain Abilities",
         icon: 'offline_bolt',
         defaultImportant: true,
+        additionalText: 'Will display the level up overlay, allowing the player to level up to the max allowed level defined',
         parameters: {
             max_level: {
                 label: 'Max allowed level',
@@ -11,13 +12,14 @@ const eventSchema = {
                 required: true,
                 tooltip: 'Max level allowed by this overlay'
             }
-        }
+        },
     },
 
     "animation": {
         name: "Animation",
         icon: 'camera_roll',
         defaultImportant: true,
+        additionalText: 'Forces the target object to play an animation',
         parameters: {
             object: {
                 label: 'Object',
@@ -50,6 +52,7 @@ const eventSchema = {
         name: "Battle",
         icon: 'whatshot',
         defaultImportant: true,
+        additionalText: 'Starts a battle with the provided parameters',
         parameters: {
             map_scene: {
                 label: 'Map Scene',
@@ -88,6 +91,7 @@ const eventSchema = {
         name: "Change BGM",
         icon: 'music_note',
         defaultImportant: true,
+        additionalText: 'Update the current BGM to the one provided',
         parameters: {
             BGM: {
                 label: 'BGM file name',
@@ -114,6 +118,7 @@ const eventSchema = {
         name: 'Change Enemy',
         icon: 'swap_horizontal',
         defaultImportant: true,
+        additionalText: 'Only works inside a battle, changes the current enemy to a new enemy instance',
         parameters: {
             new_enemy: {
                 label: 'New Enemy Scene Name',
@@ -134,6 +139,7 @@ const eventSchema = {
         name: 'Change Map',
         icon: 'collections',
         defaultImportant: true,
+        additionalText: 'Teleports to the provided map',
         parameters: {
             map: {
                 label: 'Map Scene Path',
@@ -178,6 +184,7 @@ const eventSchema = {
         name: 'Change Map State',
         icon: 'layers',
         defaultImportant: true,
+        additionalText: 'Updates the target map to the new provided state (if present)',
         parameters: {
             map: {
                 label: 'Map Alias',
@@ -198,6 +205,7 @@ const eventSchema = {
         name: 'Change PlayerOverworld State',
         icon: 'face',
         defaultImportant: true,
+        additionalText: 'Updates what state will be forced to the player overworld once the cutscene finishes',
         parameters: {
             new_state: {
                 label: 'New State',
@@ -212,6 +220,7 @@ const eventSchema = {
         name: 'Color Flash',
         icon: 'wb_sunny',
         defaultImportant: true,
+        additionalText: 'Flash a color overlay that covers the entire screen',
         parameters: {
             color_hex: {
                 label: 'Color (Hex Value)',
@@ -250,6 +259,7 @@ const eventSchema = {
         name: 'Conditional State Change',
         icon: 'developer_board',
         defaultImportant: true,
+        additionalText: 'Updates one or more map states depending on the states present on other maps',
         parameters: {
             checked_maps: {
                 label: 'Maps To Check',
@@ -278,6 +288,7 @@ const eventSchema = {
         name: 'Cutscene Jump',
         icon: 'flight_takeoff',
         defaultImportant: true,
+        additionalText: 'Halts the execution of the current cutscene and fires a new cutscene defined in the cutscene_jumps reference',
         parameters: {
             jump_name: {
                 label: 'Jump Name',
@@ -292,6 +303,7 @@ const eventSchema = {
         name: 'Damage Enemy',
         icon: 'mood_bad',
         defaultImportant: true,
+        additionalText: 'Applies the provided amount of damage to the enemy (will always leave at least 1 hp)',
         parameters: {
             amount: {
                 label: 'Damage Amount',
@@ -306,6 +318,7 @@ const eventSchema = {
         name: 'Damage Player',
         icon: 'mood_bad',
         defaultImportant: true,
+        additionalText: 'Applies the provided amount of damage to the player (will always leave at least 1 hp)',
         parameters: {
             amount: {
                 label: 'Damage Amount',
@@ -320,6 +333,7 @@ const eventSchema = {
         name: 'Destroy Object',
         icon: 'cancel',
         defaultImportant: true,
+        additionalText: 'Frees the provided instance',
         parameters: {
             object: {
                 label: 'Object to Destroy',
@@ -334,6 +348,7 @@ const eventSchema = {
         name: 'Dialogue',
         icon: 'chat_bubble',
         defaultImportant: true,
+        additionalText: 'Starts a dialogue with the provided parameters',
         parameters: {
             file: {
                 label: 'JSON file',
@@ -354,6 +369,7 @@ const eventSchema = {
         name: 'Exit Battle',
         icon: 'exit_to_app',
         defaultImportant: true,
+        additionalText: 'Forces a battle to finish early and returns to the overworld',
         parameters: {
             finish_early: {
                 label: 'Should Finish Early',
@@ -380,6 +396,7 @@ const eventSchema = {
         name: 'Give Item',
         icon: 'add_shopping_cart',
         defaultImportant: true,
+        additionalText: 'Adds the item to the player\'s inventory',
         parameters: {
             item_type: {
                 label: 'Item Type',
@@ -406,6 +423,7 @@ const eventSchema = {
         name: 'Go to Next Run',
         icon: 'fast_forward',
         defaultImportant: true,
+        additionalText: 'Updates the current active game run and returns to the title screen',
         parameters: {
             next_run_name: {
                 label: 'Next Run',
@@ -420,6 +438,7 @@ const eventSchema = {
         name: 'Level Up',
         icon: 'star',
         defaultImportant: true,
+        additionalText: 'Forces the provided level to the player, without any UI or interaction required',
         parameters: {
             target_level: {
                 label: 'Target Level',
@@ -434,6 +453,7 @@ const eventSchema = {
         name: 'Minigame',
         icon: 'games',
         defaultImportant: true,
+        additionalText: 'Starts a minigame, which will display a custom UI and prevent the player from moving or interacting',
         parameters: {
             game: {
                 label: 'Minigame Identifier',
@@ -448,6 +468,7 @@ const eventSchema = {
         name: 'Move Camera',
         icon: 'switch_camera',
         defaultImportant: true,
+        additionalText: 'Moves the camera to the new target',
         parameters: {
             target: {
                 label: 'New Camera Target',
@@ -468,6 +489,7 @@ const eventSchema = {
         name: 'Move',
         icon: 'directions_walk',
         defaultImportant: true,
+        additionalText: 'Moves the provided control target to a new position',
         parameters: {
             at_speed: {
                 label: 'Movement Speed',
@@ -519,6 +541,7 @@ const eventSchema = {
         name: 'Remove Item',
         icon: 'remove_shopping_cart',
         defaultImportant: true,
+        additionalText: 'Removes the provided item from the player\'s inventory',
         parameters: {
             item_type: {
                 label: 'Item Type',
@@ -539,6 +562,7 @@ const eventSchema = {
         name: 'Save',
         icon: 'save',
         defaultImportant: true,
+        additionalText: 'Performs a save operation with the required parameters (full save if nothing is provided)',
         parameters: {
             map_data: {
                 label: 'Map Data',
@@ -568,6 +592,7 @@ const eventSchema = {
         name: 'Shake',
         icon: 'leak_add',
         defaultImportant: true,
+        additionalText: 'Causes the camera to shake with the provided parameters',
         parameters: {
             duration: {
                 label: 'Shake Duration',
@@ -588,6 +613,7 @@ const eventSchema = {
         name: 'Sound',
         icon: 'mic',
         defaultImportant: false,
+        additionalText: 'Plays the provided sound effect',
         parameters: {
             sound: {
                 label: 'Sound File Name',
@@ -602,6 +628,7 @@ const eventSchema = {
         name: 'Spawn Object',
         icon: 'library_add',
         defaultImportant: true,
+        additionalText: 'Adds the specified object to the map, inside the specified parent',
         parameters: {
             object: {
                 label: 'Object Scene Full Path',
@@ -628,6 +655,7 @@ const eventSchema = {
         name: 'Toggle HUD',
         icon: 'subtitles',
         defaultImportant: true,
+        additionalText: 'Will show/hide the battle HUD',
         parameters: {
             should_show: {
                 label: 'Should Show',
@@ -642,6 +670,7 @@ const eventSchema = {
         name: 'Visible',
         icon: 'flip',
         defaultImportant: true,
+        additionalText: 'Toggles the target object\'s visibility',
         parameters: {
             object: {
                 label: 'Target Object',
@@ -662,6 +691,7 @@ const eventSchema = {
         name: 'Wait',
         icon: 'timer',
         defaultImportant: true,
+        additionalText: 'Pauses the cutscene execution for a set amount of time',
         parameters: {
             duration: {
                 label: 'Duration',
@@ -676,6 +706,7 @@ const eventSchema = {
         name: 'Zoom Camera',
         icon: 'zoom_out_map',
         defaultImportant: true,
+        additionalText: 'Zooms the camera to the provided scale',
         parameters: {
             target_zoom: {
                 label: 'Target Zoom',
@@ -696,6 +727,7 @@ const eventSchema = {
         name: 'Ability Toggle',
         icon: 'toggle_on',
         defaultImportant: false,
+        additionalText: 'Enables/disables a player ability (example: dash, roll, phase)',
         parameters: {
             ability_name: {
                 label: 'Ability Name',
@@ -716,6 +748,7 @@ const eventSchema = {
         name: 'Show Emotion',
         icon: 'not_listed_location',
         defaultImportant: true,
+        additionalText: 'Forces the node to display one of the pre-defined emotes',
         parameters: {
             target_object: {
                 label: 'Target Object',
@@ -743,6 +776,7 @@ const eventSchema = {
         name: 'Create Follower',
         icon: 'person_add',
         defaultImportant: false,
+        additionalText: 'Creates a new object and assigns it as a player follower',
         parameters: {
             object_path: {
                 label: 'Object Path',
@@ -769,6 +803,7 @@ const eventSchema = {
         name: 'Remove Follower',
         icon: 'person_add_disabled',
         defaultImportant: false,
+        additionalText: 'Removes the follower identified by the provided unique id',
         parameters: {
             follower_id: {
                 label: 'Follower ID',
@@ -783,6 +818,7 @@ const eventSchema = {
         name: 'Remove all Followers',
         icon: 'layers_clear',
         defaultImportant: false,
+        additionalText: 'Removes all followers currently registered to the player',
         parameters: {
 
         }
@@ -792,6 +828,7 @@ const eventSchema = {
         name: 'Capture Follower',
         icon: 'supervisor_account',
         defaultImportant: false,
+        additionalText: 'Sets an already existing object as a player follower',
         parameters: {
             target_object: {
                 label: 'Target Object',
@@ -812,6 +849,7 @@ const eventSchema = {
         name: "Action Command",
         icon: "error_outline",
         defaultImportant: true,
+        additionalText: 'Pauses the cutscene execution and waits for a user input to continue',
         parameters: {
             target_zoom: {
                 label: "Target Zoom",
@@ -844,6 +882,7 @@ const eventSchema = {
         name: 'Glitch',
         icon: 'gesture',
         defaultImportant: false,
+        additionalText: 'Displays a static glitch overlay',
         parameters: {
             duration: {
                 label: 'Custom Duration',
@@ -859,6 +898,7 @@ const eventSchema = {
         name: 'Storyline Message',
         icon: 'notification_important',
         defaultImportant: false,
+        additionalText: 'Emits a message that the StorylineManager can detect to check if any storyline needs to be updated',
         parameters: {
             message_name: {
                 label: 'Message Name',
