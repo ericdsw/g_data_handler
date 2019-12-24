@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { withSnackbar } from 'notistack';
 import {
     TextField,
@@ -10,7 +10,6 @@ import {
     Switch,
     Divider
 } from '@material-ui/core';
-import { blue } from '@material-ui/core/colors';
 
 import { speakerSchema } from '../../../../globals';
 import { SimpleCollapse } from '../../../elements';
@@ -51,15 +50,6 @@ const DEFAULT_STATE = {
     enter_sound: '',
     exit_sound: '',
 };
-
-const theme = createMuiTheme({
-    palette: {
-        type: 'dark',
-        primary: {
-            main: blue[600]
-        }
-    }
-});
 
 class CreateDialogueMessageForm extends React.Component {
 
@@ -254,222 +244,219 @@ class CreateDialogueMessageForm extends React.Component {
         }
 
         return (
-            <ThemeProvider theme={theme}>
-
-                <form onSubmit={this.submitData}>
-                    <Grid 
-                        container 
-                        spacing={3}
-                    >
-                        <Grid item xs={12} md={4}>
-                            <DialogueImageSearcher
-                                image={this.state.imagePreview}
-                                updateImage={this.handleImageChange}
-                            />
-                            <TextField
-                                fullWidth
-                                label='Image'
-                                onChange={this.handleInputChange('image')}
-                                value={this.state.image}
-                                variant='outlined'
-                                margin='normal'
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={8}>
-                            <TextField
-                                select fullWidth
-                                label='Speaker'
-                                onChange={this.handleInputChange('speaker')}
-                                value={this.state.speaker}
-                                variant='outlined'
-                                margin='normal'
-                            >
-                                {speakerMenuItems}
-                            </TextField>
-                            <TextField
-                                fullWidth
-                                label='Name'
-                                onChange={this.handleInputChange('name')}
-                                value={this.state.name}
-                                placeholder='The name that will be displayed on top of the Dialogue'
-                                variant='outlined'
-                                margin='normal'
-                            />
-                            <Grid container spacing={2}>
-                                <Grid item xs={12} md={6}>
-                                    <TextField
-                                        fullWidth
-                                        label='Enter Sound'
-                                        onChange={this.handleInputChange('enter_sound')}
-                                        value={this.state.enter_sound}
-                                        variant='outlined'
-                                        margin='normal'
-                                        placeholder='Sound when dialogue enters'
-                                    />
-                                </Grid>
-                                <Grid item xs={12} md={6}>
-                                    <TextField
-                                        fullWidth
-                                        label='Exit Sound'
-                                        onChange={this.handleInputChange('exit_sound')}
-                                        value={this.state.exit_sound}
-                                        variant='outlined'
-                                        margin='normal'
-                                        placeholder='Sound when dialogue exits'
-                                    />
-                                </Grid>
+            <form onSubmit={this.submitData}>
+                <Grid 
+                    container 
+                    spacing={3}
+                >
+                    <Grid item xs={12} md={4}>
+                        <DialogueImageSearcher
+                            image={this.state.imagePreview}
+                            updateImage={this.handleImageChange}
+                        />
+                        <TextField
+                            fullWidth
+                            label='Image'
+                            onChange={this.handleInputChange('image')}
+                            value={this.state.image}
+                            variant='outlined'
+                            margin='normal'
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={8}>
+                        <TextField
+                            select fullWidth
+                            label='Speaker'
+                            onChange={this.handleInputChange('speaker')}
+                            value={this.state.speaker}
+                            variant='outlined'
+                            margin='normal'
+                        >
+                            {speakerMenuItems}
+                        </TextField>
+                        <TextField
+                            fullWidth
+                            label='Name'
+                            onChange={this.handleInputChange('name')}
+                            value={this.state.name}
+                            placeholder='The name that will be displayed on top of the Dialogue'
+                            variant='outlined'
+                            margin='normal'
+                        />
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} md={6}>
+                                <TextField
+                                    fullWidth
+                                    label='Enter Sound'
+                                    onChange={this.handleInputChange('enter_sound')}
+                                    value={this.state.enter_sound}
+                                    variant='outlined'
+                                    margin='normal'
+                                    placeholder='Sound when dialogue enters'
+                                />
                             </Grid>
-
-                            <TextField
-                                fullWidth
-                                label='Target Object'
-                                onChange={this.handleInputChange('target_object')}
-                                value={this.state.target_object}
-                                variant='outlined'
-                                margin='normal'
-                                placeholder='Object that the dialogue will attach to (node name only)'
-                            />
-
+                            <Grid item xs={12} md={6}>
+                                <TextField
+                                    fullWidth
+                                    label='Exit Sound'
+                                    onChange={this.handleInputChange('exit_sound')}
+                                    value={this.state.exit_sound}
+                                    variant='outlined'
+                                    margin='normal'
+                                    placeholder='Sound when dialogue exits'
+                                />
+                            </Grid>
                         </Grid>
-                    </Grid>
 
-                    <br />
-                    <Divider />
-                    <br />
-
-                    <Grid container spacing={2} alignItems='center'>
-                        <Grid item xs={12} md={10}>
-                            <TextField
-                                fullWidth
-                                variant='outlined'
-                                margin='normal'
-                                label='Message*'
-                                multiline
-                                rows='5'
-                                autoFocus
-                                value={this.state.message}
-                                onChange={this.handleInputChange('message')}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={2}>
-                            <FormControlLabel
-                                key='interrupts'
-                                label='Interrupts Previous'
-                                control={
-                                    <Switch
-                                        checked={this.state.interrupts}
-                                        onChange={this.handleInputChange('interrupts', true)}
-                                        value={this.state.interrupts}
-                                    />
-                                }
-                            />
-                        </Grid>
-                    </Grid>
-
-                    <br />
-                    <Divider />
-                    <br />
-                    
-                    <SimpleCollapse
-                        collapsedMessage='Show Advanced Options'
-                        openedMessage='Hide Advanced Options'
-                    >
                         <TextField
-                            select fullWidth
-                            label='Location'
-                            onChange={this.handleInputChange('location')}
-                            value={this.state.location}
-                            variant='outlined'
-                            margin='normal'
-                        >
-                            <MenuItem value=''>---</MenuItem>
-                            <MenuItem value='top'>Top</MenuItem>
-                            <MenuItem value='bottom'>Bottom</MenuItem>
-                        </TextField>
-                        <TextField
-                            label='Voice File'
-                            variant='outlined'
                             fullWidth
+                            label='Target Object'
+                            onChange={this.handleInputChange('target_object')}
+                            value={this.state.target_object}
+                            variant='outlined'
                             margin='normal'
-                            onChange={this.handleInputChange('voice_file')}
-                            value={this.state.voice_file} 
+                            placeholder='Object that the dialogue will attach to (node name only)'
                         />
+
+                    </Grid>
+                </Grid>
+
+                <br />
+                <Divider />
+                <br />
+
+                <Grid container spacing={2} alignItems='center'>
+                    <Grid item xs={12} md={10}>
                         <TextField
-                            select fullWidth
-                            label='Control Level'
-                            onChange={this.handleInputChange('control_level')}
-                            value={this.state.control_level}
-                            variant='outlined'
-                            margin='normal'
-                        >
-                            <MenuItem value='' selected>Default</MenuItem>
-                            <MenuItem value='autopilot'>Autopilot</MenuItem>
-                            <MenuItem value='non_blocking'>Non Blocking</MenuItem>
-                        </TextField>
-                        <TextField
-                            label='Autopilot Offset'
-                            type='number'
-                            variant='outlined'
                             fullWidth
+                            variant='outlined'
                             margin='normal'
-                            onChange={this.handleInputChange('autopilot_offset')}
-                            value={this.state.autopilot_offset} 
+                            label='Message*'
+                            multiline
+                            rows='5'
+                            autoFocus
+                            value={this.state.message}
+                            onChange={this.handleInputChange('message')}
                         />
-                    </SimpleCollapse>
-                    <CreateChoiceForm 
-                        choices={this.state.choices}
-                        creationHandler={this.addNewChoice}
-                        deletionHandler={this.removeChoice}
-                    />
-                    <Grid 
-                        container
-                        alignItems='flex-end'
-                    >
-                        <Grid item xs md={6}>
-                            { ! this.props.isEdit &&
-                                <Grid container justify='flex-start'>
-                                    <FormControlLabel
-                                        label='Create and Continue'
-                                        control={
-                                            <Switch
-                                                checked={this.state.createAndContinue}
-                                                value={this.state.createAndContinue}
-                                                onChange={this.handleInputChange(
-                                                    'createAndContinue', true
-                                                )}
-                                            />
-                                        }
-                                    />
-                                    <FormControlLabel
-                                        label='Start Fresh'
-                                        control={
-                                            <Switch
-                                                checked={this.state.freshStart}
-                                                value={this.state.freshStart}
-                                                onChange={this.handleInputChange(
-                                                    'freshStart', true
-                                                )}
-                                            />
-                                        }
-                                    />
-                                </Grid>
+                    </Grid>
+                    <Grid item xs={12} md={2}>
+                        <FormControlLabel
+                            key='interrupts'
+                            label='Interrupts Previous'
+                            control={
+                                <Switch
+                                    checked={this.state.interrupts}
+                                    onChange={this.handleInputChange('interrupts', true)}
+                                    value={this.state.interrupts}
+                                />
                             }
-                        </Grid>
-                        <Grid item xs md={6}>
-                            <Grid container justify='flex-end'>
-                                <Button
-                                    type='submit'
-                                    variant='contained'
-                                    style={{ marginTop: 8 }}
-                                    color='primary'
-                                >
-                                    {(this.props.isEdit) ? 'Edit' : 'Create'}
-                                </Button>
+                        />
+                    </Grid>
+                </Grid>
+
+                <br />
+                <Divider />
+                <br />
+                
+                <SimpleCollapse
+                    collapsedMessage='Show Advanced Options'
+                    openedMessage='Hide Advanced Options'
+                >
+                    <TextField
+                        select fullWidth
+                        label='Location'
+                        onChange={this.handleInputChange('location')}
+                        value={this.state.location}
+                        variant='outlined'
+                        margin='normal'
+                    >
+                        <MenuItem value=''>---</MenuItem>
+                        <MenuItem value='top'>Top</MenuItem>
+                        <MenuItem value='bottom'>Bottom</MenuItem>
+                    </TextField>
+                    <TextField
+                        label='Voice File'
+                        variant='outlined'
+                        fullWidth
+                        margin='normal'
+                        onChange={this.handleInputChange('voice_file')}
+                        value={this.state.voice_file} 
+                    />
+                    <TextField
+                        select fullWidth
+                        label='Control Level'
+                        onChange={this.handleInputChange('control_level')}
+                        value={this.state.control_level}
+                        variant='outlined'
+                        margin='normal'
+                    >
+                        <MenuItem value='' selected>Default</MenuItem>
+                        <MenuItem value='autopilot'>Autopilot</MenuItem>
+                        <MenuItem value='non_blocking'>Non Blocking</MenuItem>
+                    </TextField>
+                    <TextField
+                        label='Autopilot Offset'
+                        type='number'
+                        variant='outlined'
+                        fullWidth
+                        margin='normal'
+                        onChange={this.handleInputChange('autopilot_offset')}
+                        value={this.state.autopilot_offset} 
+                    />
+                </SimpleCollapse>
+                <CreateChoiceForm 
+                    choices={this.state.choices}
+                    creationHandler={this.addNewChoice}
+                    deletionHandler={this.removeChoice}
+                />
+                <Grid 
+                    container
+                    alignItems='flex-end'
+                >
+                    <Grid item xs md={6}>
+                        { ! this.props.isEdit &&
+                            <Grid container justify='flex-start'>
+                                <FormControlLabel
+                                    label='Create and Continue'
+                                    control={
+                                        <Switch
+                                            checked={this.state.createAndContinue}
+                                            value={this.state.createAndContinue}
+                                            onChange={this.handleInputChange(
+                                                'createAndContinue', true
+                                            )}
+                                        />
+                                    }
+                                />
+                                <FormControlLabel
+                                    label='Start Fresh'
+                                    control={
+                                        <Switch
+                                            checked={this.state.freshStart}
+                                            value={this.state.freshStart}
+                                            onChange={this.handleInputChange(
+                                                'freshStart', true
+                                            )}
+                                        />
+                                    }
+                                />
                             </Grid>
+                        }
+                    </Grid>
+                    <Grid item xs md={6}>
+                        <Grid container justify='flex-end'>
+                            <Button
+                                type='submit'
+                                variant='contained'
+                                style={{ marginTop: 8 }}
+                                color='primary'
+                            >
+                                {(this.props.isEdit) ? 'Edit' : 'Create'}
+                            </Button>
                         </Grid>
                     </Grid>
-                </form>
-            </ThemeProvider>
+                </Grid>
+            </form>
         );
     }
 }

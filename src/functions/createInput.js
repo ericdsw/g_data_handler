@@ -12,6 +12,50 @@ import {
 } from '@material-ui/core';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { blue, green, yellow, amber } from '@material-ui/core/colors';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+
+function makeCustomTheme(color) {
+
+    const customTheme = parentTheme => createMuiTheme({
+        ...parentTheme,
+        overrides: {
+            ...parentTheme.overrides,
+            MuiOutlinedInput: {
+                ...parentTheme.overrides.MuiOutlinedInput,
+                root: {
+                    ...parentTheme.overrides.MuiOutlinedInput.root,
+                    '&:hover:not($disabled):not($focused):not($error) $notchedOutline': {
+                        borderColor: color,
+                        // Reset on touch devices, it doesn't add specificity
+                        '@media (hover: none)': {
+                            borderColor: fade(color, 0.5)
+                        },
+                    },
+                    '&$focused $notchedOutline': {
+                        borderColor: color,
+                        borderWidth: 1,
+                    },
+                },
+            },
+            MuiFormLabel: {
+                ...parentTheme.overrides.MuiFormLabel,
+                root: {
+                    ...parentTheme.overrides.MuiFormLabel.root,
+                    '&$focused': {
+                        color: color
+                    }
+                }
+            },
+            MuiInputAdornment: {
+                ...parentTheme.overrides.MuiInputAdornment,
+                root: {
+                    color: color
+                }
+            }
+        }
+    });
+    return customTheme;
+}
 
 export default function createInput(
     paramName, inputData, value, handleChange, disabled = false,
@@ -157,15 +201,6 @@ export default function createInput(
             
     }
 
-    const inputTheme = createMuiTheme({
-        palette: {
-            type: 'dark',
-            primary: {
-                main: inputColor
-            }
-        }
-    });
-
     let returnValue;
 
     if (inputData.afterSeparator) {
@@ -196,7 +231,7 @@ export default function createInput(
 
     if (inputData.tooltip) {
         return (
-            <ThemeProvider theme={inputTheme}>
+            <ThemeProvider theme={makeCustomTheme(inputColor)}>
                 <Tooltip title={inputData.tooltip} arrow>
                     {returnValue}
                 </Tooltip>
@@ -204,7 +239,7 @@ export default function createInput(
         );
     } else {
         return (
-            <ThemeProvider theme={inputTheme}>
+            <ThemeProvider theme={makeCustomTheme(inputColor)}>
                 {returnValue}
             </ThemeProvider>
         );

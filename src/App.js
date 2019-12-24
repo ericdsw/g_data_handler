@@ -1,26 +1,15 @@
 import React, { useState } from 'react';
 import { Provider } from 'react-redux';
-import { MuiThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
-import { indigo, teal } from '@material-ui/core/colors';
+import { MuiThemeProvider, makeStyles } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import { NavigationDrawer, ApplicationBar } from './components/elements';
 import { drawerWidth } from './globals';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
 
+import baseTheme from './themes/baseTheme';
 import routes, { fallbackRoute } from './router';
 import store from './store';
-
-const applicationTheme = createMuiTheme({
-    palette: {
-        type: 'dark',
-        primary: indigo,
-        secondary: teal
-    },
-    typography: {
-        useNextVariants: true
-    },
-});
 
 const styles = theme => ({
     root: {
@@ -45,7 +34,7 @@ const App = () => {
     return (
         <Provider store={store}>
             <div className={classes.root}>
-                <MuiThemeProvider theme={applicationTheme}>
+                <MuiThemeProvider theme={baseTheme}>
                     <SnackbarProvider maxSnack={3}>
                         <CssBaseline />
                         <Router>

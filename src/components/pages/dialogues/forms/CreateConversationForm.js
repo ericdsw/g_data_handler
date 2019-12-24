@@ -68,18 +68,18 @@ class CreateConversationForm extends React.Component {
                             onChange={this.handleChange('conversationName')}
                             autoFocus
                             fullWidth variant='outlined' margin='normal' />
-                        </Grid>
                     </Grid>
-                    <Grid justify='flex-end' container>
-                        <Button
-                            type='submit'
-                            variant='contained'
-                            style={{marginTop:16}}
-                            color='primary'
-                        >
-                            {buttonText}
-                        </Button>
-                    </Grid>
+                </Grid>
+                <Grid justify='flex-end' container>
+                    <Button
+                        type='submit'
+                        variant='contained'
+                        style={{marginTop:16}}
+                        color='primary'
+                    >
+                        {buttonText}
+                    </Button>
+                </Grid>
             </form>
         );
     }
