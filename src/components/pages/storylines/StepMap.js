@@ -89,7 +89,7 @@ const StepMap = props => {
             </CardContent>
 
             <GenericDialogue
-                title='Add Entity'
+                title={curEntityType !== '' ? storylineEntityInputSchema[curEntityType].name : 'Add Entity'}
                 open={curEntityType !== ''}
                 onClose={() => setCurEntityType('')}
                 maxWidth='sm'

@@ -337,7 +337,7 @@ const StorylineStep = props => {
 
             {/* Add Entity Form */}
             <GenericDialogue
-                title='Add Entity'
+                title={curEntityType !== '' ? storylineEntityInputSchema[curEntityType].name : 'Add Entity'}
                 open={curEntityType !== ''}
                 onClose={() => setCurEntityType('')}
                 maxWidth='sm'

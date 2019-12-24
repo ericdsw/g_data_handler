@@ -125,7 +125,6 @@ const StepMapEntity = props => {
                 <React.Fragment>
                     <ButtonBase 
                         className={classes.descriptionWrapper}
-                        disabled={true}
                         onClick={() => toggleParamsExpanded(!paramsExpanded)}
                     >
                         <Paper 
