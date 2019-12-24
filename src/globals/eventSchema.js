@@ -10,7 +10,8 @@ const eventSchema = {
                 label: 'Max allowed level',
                 type: 'number',
                 required: true,
-                tooltip: 'Max level allowed by this overlay'
+                tooltip: 'Max level allowed by this overlay',
+                placeholder: '0-5'
             }
         },
     },
@@ -23,15 +24,17 @@ const eventSchema = {
         parameters: {
             object: {
                 label: 'Object',
-                type: 'text', 
+                type: 'node_target', 
                 required: true,
-                tooltip: 'The Object that will be animated. Must have an AnimationPlayer'
+                tooltip: 'The Object that will be animated. Must have an AnimationPlayer',
+                placeholder: 'BASE:node_name'
             },
             animation: {
                 label: 'Animation',
                 type: 'text', 
                 default: 'idle',
-                tooltip: 'The animation that will play'
+                tooltip: 'The animation that will play',
+                placeholder: 'animation_name'
             },
             loop: {
                 label: 'Animation Must Loop',
@@ -43,7 +46,8 @@ const eventSchema = {
                 label: 'Finish Animation Name',
                 type: 'text', 
                 default: '',
-                tooltip: 'Will play when the specified animation ends (only if loops is set to false)'
+                tooltip: 'Will play when the specified animation ends (only if loops is set to false)',
+                placeholder: 'animation_name'
             }
         }
     },
@@ -58,13 +62,15 @@ const eventSchema = {
                 label: 'Map Scene',
                 type: 'text',
                 required: true,
-                tooltip: 'The map scene in which the battle will take place (full path)'
+                tooltip: 'The map scene in which the battle will take place (full path)',
+                placeholder: 'res://Path/to/battle_map.tscn'
             },
             enemy_scene: {
                 label: 'Enemy Scene',
                 type: 'text', 
                 required: true,
-                tooltip: 'The enemy'
+                tooltip: 'The enemy',
+                placeholder: 'res://Path/to/enemy.tscn'
             },
             max_hp: {
                 label: 'Enemy Max HP',
@@ -76,13 +82,15 @@ const eventSchema = {
                 label: 'End Cutscene File',
                 type: 'text', 
                 default: '',
-                tooltip: 'If specified, will play this cutscene when the battle finishes'
+                tooltip: 'If specified, will play this cutscene when the battle finishes',
+                placeholder: 'path_to/cutscene.json (from Cutscenes resource folder)'
             },
             win_state_changes: {
                 label: 'Win State Changes',
                 type: 'json',
                 default: '',
-                tooltip: 'If specified, a dictionary that maps map aliases with their new state'
+                tooltip: 'If specified, a dictionary that maps map aliases with their new state',
+                placeholder: '{"v/h": "new_state"}'
             }
         }
     },
@@ -98,7 +106,7 @@ const eventSchema = {
                 type: 'text', 
                 default: '',
                 placeholder: 'Leave blank to mute the current BGM',
-                tooltip: 'The BGM to play (format: name.ogg). If left blank, the current bgm will stop playing'
+                tooltip: 'The BGM to play (format: name.ogg). If left blank, the current bgm will stop playing',
             },
             offset: {
                 label: 'Start Offset',
@@ -124,13 +132,15 @@ const eventSchema = {
                 label: 'New Enemy Scene Name',
                 type: 'text', 
                 required: true,
-                tooltip: 'The new enemy scene (format: Enemy.tscn)'
+                tooltip: 'The new enemy scene from the Enemies folder',
+                placeholder: 'path/to/Enemy.tscn'
             },
             new_enemy_animation: {
                 label: 'Starting Animation',
                 type: 'text', 
                 default: 'idle',
-                tooltip: 'The animation that the new enemy will use upon entering the battle (will loop)'
+                tooltip: 'The animation that the new enemy will use upon entering the battle (will loop)',
+                placeholder: 'animation_name'
             }
         }
     },
@@ -145,7 +155,8 @@ const eventSchema = {
                 label: 'Map Scene Path',
                 type: 'text', 
                 required: true,
-                tooltip: 'The full path to the map scene'
+                tooltip: 'The full path to the map scene',
+                placeholder: 'res://path/to/map_scene.tscn'
             },
             position: {
                 label: 'Position In Map',
@@ -155,9 +166,10 @@ const eventSchema = {
             },
             new_target: {
                 label: 'New Target',
-                type: 'text',
+                type: 'node_target',
                 default: '',
-                tooltip: 'Node that will be the new focus of the camera in the new map'
+                tooltip: 'Node that will be the new focus of the camera in the new map',
+                placeholder: 'BASE:node_name'
             },
             peeks: {
                 label: 'Peeks',
@@ -190,13 +202,15 @@ const eventSchema = {
                 label: 'Map Alias',
                 type: 'text',
                 required: true,
-                tooltip: 'The map alias (found in MapNameResolver)'
+                tooltip: 'The map alias (found in MapNameResolver)',
+                placeholder: 'M/al'
             },
             state: {
                 label: 'New State',
                 type: 'text',
                 required: true,
-                tooltip: 'The new state'
+                tooltip: 'The new state',
+                placeholder: 'new_state_name'
             }
         }
     },
@@ -211,7 +225,8 @@ const eventSchema = {
                 label: 'New State',
                 type: 'text',
                 required: true,
-                tooltip: 'The state the player will be at the end of the cutscene'
+                tooltip: 'The state the player will be at the end of the cutscene',
+                placeholder: 'OverworldStateName'
             }
         }
     },
@@ -294,7 +309,8 @@ const eventSchema = {
                 label: 'Jump Name',
                 type: 'text',
                 required: true,
-                tooltip: 'The jump name (note: must exist in the cutscene_jumps ref, will terminate the current cutscene event)'
+                tooltip: 'The jump name (note: must exist in the cutscene_jumps ref, will terminate the current cutscene event)',
+                placeholder: 'jump_name'
             }
         }
     },
@@ -337,9 +353,10 @@ const eventSchema = {
         parameters: {
             object: {
                 label: 'Object to Destroy',
-                type: 'text',
+                type: 'node_target',
                 required: true,
-                tooltip: 'The object to be destroyed. is a NODE_TARGET'
+                tooltip: 'The object to be destroyed. is a NODE_TARGET',
+                placeholder: 'BASE:node_name'
             }
         }
     },
@@ -354,13 +371,15 @@ const eventSchema = {
                 label: 'JSON file',
                 type: 'text',
                 required: true,
-                tooltip: 'The file that contains the target conversation',
+                tooltip: 'The file that contains the target conversation (from the Dialogues resource folder)',
+                placeholder: 'path/to/dialogue.json'
             },
             name: {
                 label: 'Conversation Name',
                 type: 'text',
                 required: true,
-                tooltip: 'The conversation name inside the file'
+                tooltip: 'The conversation name inside the file',
+                placecholder: 'conversation_name'
             },
         }
     },
@@ -381,7 +400,8 @@ const eventSchema = {
                 label: 'Custom Return Map Alias',
                 type: 'text',
                 default: null,
-                tooltip: 'If defined, the player will return to this map instead of his previous map'
+                tooltip: 'If defined, the player will return to this map instead of his previous map',
+                placeholder: 'res://path/to/map_scene.tscn'
             },
             custom_return_position: {
                 label: 'Custom Return Position',
@@ -472,9 +492,10 @@ const eventSchema = {
         parameters: {
             target: {
                 label: 'New Camera Target',
-                type: 'text',
+                type: 'node_target',
                 required: true,
-                tooltip: 'The new camera target, is a NODE_TARGET'
+                tooltip: 'The new camera target, is a NODE_TARGET',
+                placeholder: 'BASE:node_name'
             },
             transition_duration: {
                 label: 'Transition Duration',
@@ -505,9 +526,10 @@ const eventSchema = {
             },
             control: {
                 label: 'Controlled Node',
-                type: 'text',
+                type: 'node_target',
                 required: true,
-                tooltip: 'The node to move'
+                tooltip: 'The node to move',
+                placeholder: 'BASE:node_name'
             },
             destination: {
                 label: 'Destinations',
@@ -619,7 +641,8 @@ const eventSchema = {
                 label: 'Sound File Name',
                 type: 'text',
                 required: true,
-                tooltip: 'The file to be played (filename.wav)'
+                tooltip: 'The file to be played (just the name)',
+                placeholder: 'file_name.wav'
             }
         }
     },
@@ -634,7 +657,8 @@ const eventSchema = {
                 label: 'Object Scene Full Path',
                 type: 'text',
                 required: true,
-                tooltip: 'The scene to spawn'
+                tooltip: 'The scene to spawn',
+                placeholder: 'res://path/to/object.tscn'
             },
             position: {
                 label: 'Object Position',
@@ -644,7 +668,7 @@ const eventSchema = {
             },
             parent: {
                 label: 'Parent Object',
-                type: 'text',
+                type: 'node_target',
                 default: null,
                 tooltip: 'If defined, the object will spawn as a child of this object'
             }
@@ -674,9 +698,10 @@ const eventSchema = {
         parameters: {
             object: {
                 label: 'Target Object',
-                type: 'text',
+                type: 'node_target',
                 required: true,
                 tooltip: 'The object to show or hide',
+                placeholder: 'BASE:node_name',
             },
             visible: {
                 label: 'Should Be Visible',
@@ -733,7 +758,8 @@ const eventSchema = {
                 label: 'Ability Name',
                 type: 'text',
                 required: true,
-                tooltip: 'The node name of the ability to enable/disable (on either PlayerOverworld or PlayerBattle)'
+                tooltip: 'The node name of the ability to enable/disable (on either PlayerOverworld or PlayerBattle)',
+                placeholder: 'MeleeAction'
             },
             enabled: {
                 label: 'Enabled',
@@ -752,9 +778,10 @@ const eventSchema = {
         parameters: {
             target_object: {
                 label: 'Target Object',
-                type: 'text',
+                type: 'node_target',
                 required: true,
-                tooltip: 'The object that will display the emote'
+                tooltip: 'The object that will display the emote',
+                placeholder: 'BASE:node_name'
             },
             emote: {
                 label: 'Emote',
@@ -782,7 +809,8 @@ const eventSchema = {
                 label: 'Object Path',
                 type: 'text',
                 required: true,
-                tooltip: 'The path to the follower scene'
+                tooltip: 'The full path to the follower scene',
+                placeholder: 'BASE:node_path'
             },
             position: {
                 label: 'Object Position',
@@ -794,7 +822,8 @@ const eventSchema = {
                 label: 'Follower ID',
                 type: 'text',
                 required: true,
-                tooltip: 'An unique identifier for the follower, used to delete it'
+                tooltip: 'An unique identifier for the follower, used to delete it',
+                placeholder: 'unique_follower_id'
             }
         }
     },
@@ -809,7 +838,8 @@ const eventSchema = {
                 label: 'Follower ID',
                 type: 'text',
                 required: true,
-                tooltip: 'The follower id to be removed'
+                tooltip: 'The follower id to be removed',
+                placeholder: 'unique_follower_id'
             }
         }
     },
@@ -832,15 +862,17 @@ const eventSchema = {
         parameters: {
             target_object: {
                 label: 'Target Object',
-                type: 'text',
+                type: 'node_target',
                 required: true,
-                tooltip: 'The object that will be set as the follower'
+                tooltip: 'The object that will be set as the follower',
+                placeholder: 'BASE:node_name'
             },
             follower_id: {
                 label: 'Follower ID',
                 type: 'text',
                 required: true,
-                tooltip: 'An unique identifier for the follower, used to delete it'
+                tooltip: 'An unique identifier for the follower, used to delete it',
+                placeholder: 'unique_follower_id'
             }
         }
     },
@@ -903,7 +935,8 @@ const eventSchema = {
             message_name: {
                 label: 'Message Name',
                 type: 'text',
-                required: true
+                required: true,
+                placeholder: 'message_name'
             }
         }
     }

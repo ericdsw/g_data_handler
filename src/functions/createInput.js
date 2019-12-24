@@ -8,6 +8,7 @@ import {
     Divider,
     InputAdornment,
     Icon,
+    Tooltip
 } from '@material-ui/core';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { blue, green, yellow, amber } from '@material-ui/core/colors';
@@ -28,13 +29,13 @@ export default function createInput(
         value = '';
     }
 
-    let returnValue;
+    let contentValue;
     let adornment = <React.Fragment/>;
 
     switch (inputData.type) {
 
         case 'boolean':
-            returnValue = (
+            contentValue = (
                 <FormControlLabel
                     label={label}
                     control={
@@ -50,7 +51,7 @@ export default function createInput(
             break;
 
         case 'json':
-            returnValue = (
+            contentValue = (
                 <TextField
                     id={paramName}
                     label={label}
@@ -87,7 +88,7 @@ export default function createInput(
 
                 );
             }
-            returnValue = (
+            contentValue = (
                 <TextField
                     label={label}
                     id={paramName}
@@ -135,7 +136,7 @@ export default function createInput(
                 )
             }
 
-            returnValue = (
+            contentValue = (
                 <TextField 
                     id={paramName}
                     label={label}
@@ -165,9 +166,11 @@ export default function createInput(
         }
     });
 
+    let returnValue;
+
     if (inputData.afterSeparator) {
-        return (
-            <ThemeProvider theme={inputTheme}>
+        returnValue = (
+            <React.Fragment>
                 <div 
                     style={{ 
                         marginTop: 20, 
@@ -184,7 +187,19 @@ export default function createInput(
                     </Typography>
                     <Divider />
                 </div>
-                {returnValue}
+                {contentValue}
+            </React.Fragment>
+        );
+    } else {
+        returnValue = contentValue;
+    }
+
+    if (inputData.tooltip) {
+        return (
+            <ThemeProvider theme={inputTheme}>
+                <Tooltip title={inputData.tooltip} arrow>
+                    {returnValue}
+                </Tooltip>
             </ThemeProvider>
         );
     } else {
@@ -193,5 +208,6 @@ export default function createInput(
                 {returnValue}
             </ThemeProvider>
         );
+
     }
 }

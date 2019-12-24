@@ -7,7 +7,6 @@ import {
     Icon,
     Typography,
     Grid,
-    Tooltip,
     Button,
     FormControlLabel,
     Switch,
@@ -196,13 +195,9 @@ class CreateEventForm extends React.Component {
             );
             
             fields.push(
-                <Tooltip 
-                    enterDelay={500}
-                    key={paramName} 
-                    title={currentParamData.tooltip}
-                >
+                <React.Fragment key={paramName}>
                     {constructedFormField}
-                </Tooltip>
+                </React.Fragment>
             );
         }
         
