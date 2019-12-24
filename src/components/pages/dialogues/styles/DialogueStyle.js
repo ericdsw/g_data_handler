@@ -3,8 +3,8 @@ import { red, blue } from '@material-ui/core/colors';
 export const styles = theme => ({
     root: {
         ...theme.mixins.gutters(),
-        paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2,
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
         width: '100%',
         [theme.breakpoints.down('xs')]: {
             paddingLeft: 0,
@@ -21,7 +21,7 @@ export const styles = theme => ({
         position: 'fixed',
         right: 16,
         bottom: 16 + 60,
-        margin: theme.spacing.unit,
+        margin: theme.spacing(1),
         transition: 'transform 0.2s ease',
         width: 200,
     },
@@ -29,7 +29,7 @@ export const styles = theme => ({
         position: 'fixed',
         right: 16,
         bottom: 16,
-        margin: theme.spacing.unit,
+        margin: theme.spacing(1),
         transition: 'transform 0.2s ease',
         backgroundColor: red[500],
         color: theme.palette.getContrastText(red[500]),
@@ -42,7 +42,7 @@ export const styles = theme => ({
         position: 'fixed',
         right: 16,
         bottom: 16 + 120,
-        margin: theme.spacing.unit,
+        margin: theme.spacing(1),
         transition: 'transform 0.2s ease',
         width: 200
     }

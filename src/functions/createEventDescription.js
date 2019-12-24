@@ -32,7 +32,7 @@ export default function createEventDescription(type, parameters) {
                 color_hex, in_duration, 
                 stay_duration, out_duration 
             } = parameters;
-            const data = `${in_duration} | ${stay_duration} } ${out_duration}`
+            const data = `${in_duration} | ${stay_duration} | ${out_duration}`
             return `${color_hex} (${data})`;
         case 'conditional_state_change':
             const checkMapAmount = Object.keys(parameters.checked_maps).length;

@@ -4,9 +4,9 @@ import { Chip } from '@material-ui/core';
 
 const styles = theme => ({
     chip: {
-        marginRight: theme.spacing.unit,
+        marginRight: theme.spacing(1),
         [theme.breakpoints.down('xs')]: {
-            marginBottom: theme.spacing.unit
+            marginBottom: theme.spacing(1)
         }
     },
     chipContainer: {

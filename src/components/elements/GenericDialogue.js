@@ -18,6 +18,7 @@ const GenericDialogue = ({title, open = false, onClose, children, maxWidth = 'md
                 <DialogContent>
                     {children}
                 </DialogContent>
+                <br />
             </Dialog>
         );
     }

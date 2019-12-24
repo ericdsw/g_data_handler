@@ -110,7 +110,7 @@ class CreateChoiceForm extends React.Component {
                 openedMessage={`Hide Choices (${choices.length})`}
             >
                 <Grid container 
-                    spacing={8}
+                    spacing={1}
                     alignItems='stretch'
                 >
                     <Grid item xs md={6}>

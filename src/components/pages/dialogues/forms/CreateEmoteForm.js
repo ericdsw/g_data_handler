@@ -121,7 +121,7 @@ class CreateEmoteForm extends React.Component {
             <form onSubmit={this.submitData}>
                 <Grid
                     container
-                    spacing={16}
+                    spacing={2}
                 >
                     <Grid item xs={12}>
                         <TextField

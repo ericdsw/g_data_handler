@@ -42,7 +42,7 @@ const Dialogue = props => {
             <Grid
                 className={classes.root}
                 container
-                spacing={16}
+                spacing={2}
             >
                 {/* File Name Manager */}
                 <Grid item xs={12}>

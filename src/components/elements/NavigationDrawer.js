@@ -1,6 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import {
     Divider,
     Drawer,
@@ -14,10 +13,6 @@ import { Link } from 'react-router-dom';
 
 import routes from '../../router';
 import { drawerWidth } from '../../globals';
-import { 
-    toggleDrawer, 
-    collapseDrawer 
-} from '../../actions/appActions';
 
 const styles = theme => ({
     toolbar: theme.mixins.toolbar,
@@ -29,86 +24,68 @@ const styles = theme => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing.unit * 3,
+        padding: theme.spacing(3),
     },
 });
 
-class NavigationDrawer extends React.Component {
+const NavigationDrawer = props => {
 
-    handleDrawerToggle = () => {
-        this.props.toggleDrawer();
-    }
+    const classes = makeStyles(styles)();
+    
+    const { isOpen, handleCollapse } = props;
 
-    handleDrawerCollapse = () => {
-        this.props.collapseDrawer();
-    }
+    const drawerContent = (
+        <div>
+            <div className={classes.toolbar} />
+            <Divider />
+            <List>
+                {
+                    routes.map( route => (
+                        <ListItem 
+                            button
+                            component={Link}
+                            onClick={() => handleCollapse()}
+                            to={route.path}
+                            key={route.path}
+                        >
+                            <ListItemIcon>
+                                {route.icon}
+                            </ListItemIcon>
+                            <ListItemText primary={route.text} />
+                        </ListItem>
+                    ))
+                }
+            </List>
+        </div>
+    );
 
-    render() {
+    return (
+        <nav className={classes.drawer}>
 
-        const { classes, theme } = this.props;
+            <Hidden smUp implementation='css'>
+                <Drawer
+                    variant='temporary'
+                    anchor='left'
+                    open={isOpen}
+                    onClose={() => handleCollapse()}
+                    classes={{ paper: classes.drawerPaper }}
+                >
+                    {drawerContent}
+                </Drawer>
+            </Hidden>
 
-        const drawerContent = (
-            <div>
-                <div className={classes.toolbar} />
-                <Divider />
-                <List>
-                    {
-                        routes.map( route => (
-                            <ListItem 
-                                button
-                                component={Link}
-                                onClick={this.handleDrawerCollapse}
-                                to={route.path}
-                                key={route.path}
-                            >
-                                <ListItemIcon>
-                                    {route.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={route.text} />
-                            </ListItem>
-                        ))
-                    }
-                </List>
-            </div>
-        );
+            <Hidden xsDown implementation='css'>
+                <Drawer
+                    variant='permanent'
+                    open
+                    classes={{ paper: classes.drawerPaper }}
+                >
+                    {drawerContent}
+                </Drawer>
+            </Hidden>
 
-        return (
-            <nav className={classes.drawer}>
-
-                <Hidden smUp implementation='css'>
-                    <Drawer
-                        variant='temporary'
-                        anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-                        open={this.props.drawerOpen}
-                        onClose={this.handleDrawerToggle}
-                        classes={{ paper: classes.drawerPaper }}
-                    >
-                        {drawerContent}
-                    </Drawer>
-                </Hidden>
-
-                <Hidden xsDown implementation='css'>
-                    <Drawer
-                        variant='permanent'
-                        open
-                        classes={{ paper: classes.drawerPaper }}
-                    >
-                        {drawerContent}
-                    </Drawer>
-                </Hidden>
-
-            </nav>
-        );
-    }
+        </nav>
+    );
 }
 
-const mapStateToProps = state => ({
-    drawerOpen: state.app.drawerOpen
-});
-
-export default connect(mapStateToProps, {
-    toggleDrawer, 
-    collapseDrawer
-})(
-    withStyles(styles, { withTheme: true })(NavigationDrawer)
-);
+export default NavigationDrawer;

@@ -52,7 +52,7 @@ const DialogueMessage = props => {
                 </div>
             }
             <CardContent>
-                <Grid container spacing={16}>
+                <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <div style={{display: 'flex', alignItems: 'flex-start'}}>
                             <div style={{flex:1}}>

@@ -82,14 +82,14 @@ const StepMap = props => {
             <CardContent>
                 <Grid 
                     container
-                    spacing={16}
+                    spacing={2}
                 >
                     {content}
                 </Grid>
             </CardContent>
 
             <GenericDialogue
-                title='Add Entity'
+                title={curEntityType !== '' ? storylineEntityInputSchema[curEntityType].name : 'Add Entity'}
                 open={curEntityType !== ''}
                 onClose={() => setCurEntityType('')}
                 maxWidth='sm'

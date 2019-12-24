@@ -4,32 +4,37 @@ const eventSchema = {
         name: "Gain Abilities",
         icon: 'offline_bolt',
         defaultImportant: true,
+        additionalText: 'Will display the level up overlay, allowing the player to level up to the max allowed level defined',
         parameters: {
             max_level: {
                 label: 'Max allowed level',
                 type: 'number',
                 required: true,
-                tooltip: 'Max level allowed by this overlay'
+                tooltip: 'Max level allowed by this overlay',
+                placeholder: '0-5'
             }
-        }
+        },
     },
 
     "animation": {
         name: "Animation",
         icon: 'camera_roll',
         defaultImportant: true,
+        additionalText: 'Forces the target object to play an animation',
         parameters: {
             object: {
                 label: 'Object',
-                type: 'text', 
+                type: 'node_target', 
                 required: true,
-                tooltip: 'The Object that will be animated. Must have an AnimationPlayer'
+                tooltip: 'The Object that will be animated. Must have an AnimationPlayer',
+                placeholder: 'BASE:node_name'
             },
             animation: {
                 label: 'Animation',
                 type: 'text', 
                 default: 'idle',
-                tooltip: 'The animation that will play'
+                tooltip: 'The animation that will play',
+                placeholder: 'animation_name'
             },
             loop: {
                 label: 'Animation Must Loop',
@@ -41,7 +46,8 @@ const eventSchema = {
                 label: 'Finish Animation Name',
                 type: 'text', 
                 default: '',
-                tooltip: 'Will play when the specified animation ends (only if loops is set to false)'
+                tooltip: 'Will play when the specified animation ends (only if loops is set to false)',
+                placeholder: 'animation_name'
             }
         }
     },
@@ -50,18 +56,21 @@ const eventSchema = {
         name: "Battle",
         icon: 'whatshot',
         defaultImportant: true,
+        additionalText: 'Starts a battle with the provided parameters',
         parameters: {
             map_scene: {
                 label: 'Map Scene',
                 type: 'text',
                 required: true,
-                tooltip: 'The map scene in which the battle will take place (full path)'
+                tooltip: 'The map scene in which the battle will take place (full path)',
+                placeholder: 'res://Path/to/battle_map.tscn'
             },
             enemy_scene: {
                 label: 'Enemy Scene',
                 type: 'text', 
                 required: true,
-                tooltip: 'The enemy'
+                tooltip: 'The enemy',
+                placeholder: 'res://Path/to/enemy.tscn'
             },
             max_hp: {
                 label: 'Enemy Max HP',
@@ -73,13 +82,15 @@ const eventSchema = {
                 label: 'End Cutscene File',
                 type: 'text', 
                 default: '',
-                tooltip: 'If specified, will play this cutscene when the battle finishes'
+                tooltip: 'If specified, will play this cutscene when the battle finishes',
+                placeholder: 'path_to/cutscene.json (from Cutscenes resource folder)'
             },
             win_state_changes: {
                 label: 'Win State Changes',
                 type: 'json',
                 default: '',
-                tooltip: 'If specified, a dictionary that maps map aliases with their new state'
+                tooltip: 'If specified, a dictionary that maps map aliases with their new state',
+                placeholder: '{"v/h": "new_state"}'
             }
         }
     },
@@ -88,13 +99,14 @@ const eventSchema = {
         name: "Change BGM",
         icon: 'music_note',
         defaultImportant: true,
+        additionalText: 'Update the current BGM to the one provided',
         parameters: {
             BGM: {
                 label: 'BGM file name',
                 type: 'text', 
                 default: '',
                 placeholder: 'Leave blank to mute the current BGM',
-                tooltip: 'The BGM to play (format: name.ogg). If left blank, the current bgm will stop playing'
+                tooltip: 'The BGM to play (format: name.ogg). If left blank, the current bgm will stop playing',
             },
             offset: {
                 label: 'Start Offset',
@@ -114,18 +126,21 @@ const eventSchema = {
         name: 'Change Enemy',
         icon: 'swap_horizontal',
         defaultImportant: true,
+        additionalText: 'Only works inside a battle, changes the current enemy to a new enemy instance',
         parameters: {
             new_enemy: {
                 label: 'New Enemy Scene Name',
                 type: 'text', 
                 required: true,
-                tooltip: 'The new enemy scene (format: Enemy.tscn)'
+                tooltip: 'The new enemy scene from the Enemies folder',
+                placeholder: 'path/to/Enemy.tscn'
             },
             new_enemy_animation: {
                 label: 'Starting Animation',
                 type: 'text', 
                 default: 'idle',
-                tooltip: 'The animation that the new enemy will use upon entering the battle (will loop)'
+                tooltip: 'The animation that the new enemy will use upon entering the battle (will loop)',
+                placeholder: 'animation_name'
             }
         }
     },
@@ -134,12 +149,14 @@ const eventSchema = {
         name: 'Change Map',
         icon: 'collections',
         defaultImportant: true,
+        additionalText: 'Teleports to the provided map',
         parameters: {
             map: {
                 label: 'Map Scene Path',
                 type: 'text', 
                 required: true,
-                tooltip: 'The full path to the map scene'
+                tooltip: 'The full path to the map scene',
+                placeholder: 'res://path/to/map_scene.tscn'
             },
             position: {
                 label: 'Position In Map',
@@ -149,9 +166,10 @@ const eventSchema = {
             },
             new_target: {
                 label: 'New Target',
-                type: 'text',
+                type: 'node_target',
                 default: '',
-                tooltip: 'Node that will be the new focus of the camera in the new map'
+                tooltip: 'Node that will be the new focus of the camera in the new map',
+                placeholder: 'BASE:node_name'
             },
             peeks: {
                 label: 'Peeks',
@@ -178,18 +196,21 @@ const eventSchema = {
         name: 'Change Map State',
         icon: 'layers',
         defaultImportant: true,
+        additionalText: 'Updates the target map to the new provided state (if present)',
         parameters: {
             map: {
                 label: 'Map Alias',
                 type: 'text',
                 required: true,
-                tooltip: 'The map alias (found in MapNameResolver)'
+                tooltip: 'The map alias (found in MapNameResolver)',
+                placeholder: 'M/al'
             },
             state: {
                 label: 'New State',
                 type: 'text',
                 required: true,
-                tooltip: 'The new state'
+                tooltip: 'The new state',
+                placeholder: 'new_state_name'
             }
         }
     },
@@ -198,12 +219,14 @@ const eventSchema = {
         name: 'Change PlayerOverworld State',
         icon: 'face',
         defaultImportant: true,
+        additionalText: 'Updates what state will be forced to the player overworld once the cutscene finishes',
         parameters: {
             new_state: {
                 label: 'New State',
                 type: 'text',
                 required: true,
-                tooltip: 'The state the player will be at the end of the cutscene'
+                tooltip: 'The state the player will be at the end of the cutscene',
+                placeholder: 'OverworldStateName'
             }
         }
     },
@@ -212,6 +235,7 @@ const eventSchema = {
         name: 'Color Flash',
         icon: 'wb_sunny',
         defaultImportant: true,
+        additionalText: 'Flash a color overlay that covers the entire screen',
         parameters: {
             color_hex: {
                 label: 'Color (Hex Value)',
@@ -250,6 +274,7 @@ const eventSchema = {
         name: 'Conditional State Change',
         icon: 'developer_board',
         defaultImportant: true,
+        additionalText: 'Updates one or more map states depending on the states present on other maps',
         parameters: {
             checked_maps: {
                 label: 'Maps To Check',
@@ -278,12 +303,14 @@ const eventSchema = {
         name: 'Cutscene Jump',
         icon: 'flight_takeoff',
         defaultImportant: true,
+        additionalText: 'Halts the execution of the current cutscene and fires a new cutscene defined in the cutscene_jumps reference',
         parameters: {
             jump_name: {
                 label: 'Jump Name',
                 type: 'text',
                 required: true,
-                tooltip: 'The jump name (note: must exist in the cutscene_jumps ref, will terminate the current cutscene event)'
+                tooltip: 'The jump name (note: must exist in the cutscene_jumps ref, will terminate the current cutscene event)',
+                placeholder: 'jump_name'
             }
         }
     },
@@ -292,6 +319,7 @@ const eventSchema = {
         name: 'Damage Enemy',
         icon: 'mood_bad',
         defaultImportant: true,
+        additionalText: 'Applies the provided amount of damage to the enemy (will always leave at least 1 hp)',
         parameters: {
             amount: {
                 label: 'Damage Amount',
@@ -306,6 +334,7 @@ const eventSchema = {
         name: 'Damage Player',
         icon: 'mood_bad',
         defaultImportant: true,
+        additionalText: 'Applies the provided amount of damage to the player (will always leave at least 1 hp)',
         parameters: {
             amount: {
                 label: 'Damage Amount',
@@ -320,12 +349,14 @@ const eventSchema = {
         name: 'Destroy Object',
         icon: 'cancel',
         defaultImportant: true,
+        additionalText: 'Frees the provided instance',
         parameters: {
             object: {
                 label: 'Object to Destroy',
-                type: 'text',
+                type: 'node_target',
                 required: true,
-                tooltip: 'The object to be destroyed. is a NODE_TARGET'
+                tooltip: 'The object to be destroyed. is a NODE_TARGET',
+                placeholder: 'BASE:node_name'
             }
         }
     },
@@ -334,18 +365,21 @@ const eventSchema = {
         name: 'Dialogue',
         icon: 'chat_bubble',
         defaultImportant: true,
+        additionalText: 'Starts a dialogue with the provided parameters',
         parameters: {
             file: {
                 label: 'JSON file',
                 type: 'text',
                 required: true,
-                tooltip: 'The file that contains the target conversation',
+                tooltip: 'The file that contains the target conversation (from the Dialogues resource folder)',
+                placeholder: 'path/to/dialogue.json'
             },
             name: {
                 label: 'Conversation Name',
                 type: 'text',
                 required: true,
-                tooltip: 'The conversation name inside the file'
+                tooltip: 'The conversation name inside the file',
+                placecholder: 'conversation_name'
             },
         }
     },
@@ -354,6 +388,7 @@ const eventSchema = {
         name: 'Exit Battle',
         icon: 'exit_to_app',
         defaultImportant: true,
+        additionalText: 'Forces a battle to finish early and returns to the overworld',
         parameters: {
             finish_early: {
                 label: 'Should Finish Early',
@@ -365,7 +400,8 @@ const eventSchema = {
                 label: 'Custom Return Map Alias',
                 type: 'text',
                 default: null,
-                tooltip: 'If defined, the player will return to this map instead of his previous map'
+                tooltip: 'If defined, the player will return to this map instead of his previous map',
+                placeholder: 'res://path/to/map_scene.tscn'
             },
             custom_return_position: {
                 label: 'Custom Return Position',
@@ -380,6 +416,7 @@ const eventSchema = {
         name: 'Give Item',
         icon: 'add_shopping_cart',
         defaultImportant: true,
+        additionalText: 'Adds the item to the player\'s inventory',
         parameters: {
             item_type: {
                 label: 'Item Type',
@@ -406,6 +443,7 @@ const eventSchema = {
         name: 'Go to Next Run',
         icon: 'fast_forward',
         defaultImportant: true,
+        additionalText: 'Updates the current active game run and returns to the title screen',
         parameters: {
             next_run_name: {
                 label: 'Next Run',
@@ -420,6 +458,7 @@ const eventSchema = {
         name: 'Level Up',
         icon: 'star',
         defaultImportant: true,
+        additionalText: 'Forces the provided level to the player, without any UI or interaction required',
         parameters: {
             target_level: {
                 label: 'Target Level',
@@ -434,6 +473,7 @@ const eventSchema = {
         name: 'Minigame',
         icon: 'games',
         defaultImportant: true,
+        additionalText: 'Starts a minigame, which will display a custom UI and prevent the player from moving or interacting',
         parameters: {
             game: {
                 label: 'Minigame Identifier',
@@ -448,12 +488,14 @@ const eventSchema = {
         name: 'Move Camera',
         icon: 'switch_camera',
         defaultImportant: true,
+        additionalText: 'Moves the camera to the new target',
         parameters: {
             target: {
                 label: 'New Camera Target',
-                type: 'text',
+                type: 'node_target',
                 required: true,
-                tooltip: 'The new camera target, is a NODE_TARGET'
+                tooltip: 'The new camera target, is a NODE_TARGET',
+                placeholder: 'BASE:node_name'
             },
             transition_duration: {
                 label: 'Transition Duration',
@@ -468,6 +510,7 @@ const eventSchema = {
         name: 'Move',
         icon: 'directions_walk',
         defaultImportant: true,
+        additionalText: 'Moves the provided control target to a new position',
         parameters: {
             at_speed: {
                 label: 'Movement Speed',
@@ -483,9 +526,10 @@ const eventSchema = {
             },
             control: {
                 label: 'Controlled Node',
-                type: 'text',
+                type: 'node_target',
                 required: true,
-                tooltip: 'The node to move'
+                tooltip: 'The node to move',
+                placeholder: 'BASE:node_name'
             },
             destination: {
                 label: 'Destinations',
@@ -519,6 +563,7 @@ const eventSchema = {
         name: 'Remove Item',
         icon: 'remove_shopping_cart',
         defaultImportant: true,
+        additionalText: 'Removes the provided item from the player\'s inventory',
         parameters: {
             item_type: {
                 label: 'Item Type',
@@ -539,6 +584,7 @@ const eventSchema = {
         name: 'Save',
         icon: 'save',
         defaultImportant: true,
+        additionalText: 'Performs a save operation with the required parameters (full save if nothing is provided)',
         parameters: {
             map_data: {
                 label: 'Map Data',
@@ -568,6 +614,7 @@ const eventSchema = {
         name: 'Shake',
         icon: 'leak_add',
         defaultImportant: true,
+        additionalText: 'Causes the camera to shake with the provided parameters',
         parameters: {
             duration: {
                 label: 'Shake Duration',
@@ -588,12 +635,14 @@ const eventSchema = {
         name: 'Sound',
         icon: 'mic',
         defaultImportant: false,
+        additionalText: 'Plays the provided sound effect',
         parameters: {
             sound: {
                 label: 'Sound File Name',
                 type: 'text',
                 required: true,
-                tooltip: 'The file to be played (filename.wav)'
+                tooltip: 'The file to be played (just the name)',
+                placeholder: 'file_name.wav'
             }
         }
     },
@@ -602,12 +651,14 @@ const eventSchema = {
         name: 'Spawn Object',
         icon: 'library_add',
         defaultImportant: true,
+        additionalText: 'Adds the specified object to the map, inside the specified parent',
         parameters: {
             object: {
                 label: 'Object Scene Full Path',
                 type: 'text',
                 required: true,
-                tooltip: 'The scene to spawn'
+                tooltip: 'The scene to spawn',
+                placeholder: 'res://path/to/object.tscn'
             },
             position: {
                 label: 'Object Position',
@@ -617,7 +668,7 @@ const eventSchema = {
             },
             parent: {
                 label: 'Parent Object',
-                type: 'text',
+                type: 'node_target',
                 default: null,
                 tooltip: 'If defined, the object will spawn as a child of this object'
             }
@@ -628,6 +679,7 @@ const eventSchema = {
         name: 'Toggle HUD',
         icon: 'subtitles',
         defaultImportant: true,
+        additionalText: 'Will show/hide the battle HUD',
         parameters: {
             should_show: {
                 label: 'Should Show',
@@ -642,12 +694,14 @@ const eventSchema = {
         name: 'Visible',
         icon: 'flip',
         defaultImportant: true,
+        additionalText: 'Toggles the target object\'s visibility',
         parameters: {
             object: {
                 label: 'Target Object',
-                type: 'text',
+                type: 'node_target',
                 required: true,
                 tooltip: 'The object to show or hide',
+                placeholder: 'BASE:node_name',
             },
             visible: {
                 label: 'Should Be Visible',
@@ -662,6 +716,7 @@ const eventSchema = {
         name: 'Wait',
         icon: 'timer',
         defaultImportant: true,
+        additionalText: 'Pauses the cutscene execution for a set amount of time',
         parameters: {
             duration: {
                 label: 'Duration',
@@ -676,6 +731,7 @@ const eventSchema = {
         name: 'Zoom Camera',
         icon: 'zoom_out_map',
         defaultImportant: true,
+        additionalText: 'Zooms the camera to the provided scale',
         parameters: {
             target_zoom: {
                 label: 'Target Zoom',
@@ -696,12 +752,14 @@ const eventSchema = {
         name: 'Ability Toggle',
         icon: 'toggle_on',
         defaultImportant: false,
+        additionalText: 'Enables/disables a player ability (example: dash, roll, phase)',
         parameters: {
             ability_name: {
                 label: 'Ability Name',
                 type: 'text',
                 required: true,
-                tooltip: 'The node name of the ability to enable/disable (on either PlayerOverworld or PlayerBattle)'
+                tooltip: 'The node name of the ability to enable/disable (on either PlayerOverworld or PlayerBattle)',
+                placeholder: 'MeleeAction'
             },
             enabled: {
                 label: 'Enabled',
@@ -716,12 +774,14 @@ const eventSchema = {
         name: 'Show Emotion',
         icon: 'not_listed_location',
         defaultImportant: true,
+        additionalText: 'Forces the node to display one of the pre-defined emotes',
         parameters: {
             target_object: {
                 label: 'Target Object',
-                type: 'text',
+                type: 'node_target',
                 required: true,
-                tooltip: 'The object that will display the emote'
+                tooltip: 'The object that will display the emote',
+                placeholder: 'BASE:node_name'
             },
             emote: {
                 label: 'Emote',
@@ -743,12 +803,14 @@ const eventSchema = {
         name: 'Create Follower',
         icon: 'person_add',
         defaultImportant: false,
+        additionalText: 'Creates a new object and assigns it as a player follower',
         parameters: {
             object_path: {
                 label: 'Object Path',
                 type: 'text',
                 required: true,
-                tooltip: 'The path to the follower scene'
+                tooltip: 'The full path to the follower scene',
+                placeholder: 'BASE:node_path'
             },
             position: {
                 label: 'Object Position',
@@ -760,7 +822,8 @@ const eventSchema = {
                 label: 'Follower ID',
                 type: 'text',
                 required: true,
-                tooltip: 'An unique identifier for the follower, used to delete it'
+                tooltip: 'An unique identifier for the follower, used to delete it',
+                placeholder: 'unique_follower_id'
             }
         }
     },
@@ -769,12 +832,14 @@ const eventSchema = {
         name: 'Remove Follower',
         icon: 'person_add_disabled',
         defaultImportant: false,
+        additionalText: 'Removes the follower identified by the provided unique id',
         parameters: {
             follower_id: {
                 label: 'Follower ID',
                 type: 'text',
                 required: true,
-                tooltip: 'The follower id to be removed'
+                tooltip: 'The follower id to be removed',
+                placeholder: 'unique_follower_id'
             }
         }
     },
@@ -783,6 +848,7 @@ const eventSchema = {
         name: 'Remove all Followers',
         icon: 'layers_clear',
         defaultImportant: false,
+        additionalText: 'Removes all followers currently registered to the player',
         parameters: {
 
         }
@@ -792,18 +858,21 @@ const eventSchema = {
         name: 'Capture Follower',
         icon: 'supervisor_account',
         defaultImportant: false,
+        additionalText: 'Sets an already existing object as a player follower',
         parameters: {
             target_object: {
                 label: 'Target Object',
-                type: 'text',
+                type: 'node_target',
                 required: true,
-                tooltip: 'The object that will be set as the follower'
+                tooltip: 'The object that will be set as the follower',
+                placeholder: 'BASE:node_name'
             },
             follower_id: {
                 label: 'Follower ID',
                 type: 'text',
                 required: true,
-                tooltip: 'An unique identifier for the follower, used to delete it'
+                tooltip: 'An unique identifier for the follower, used to delete it',
+                placeholder: 'unique_follower_id'
             }
         }
     },
@@ -812,6 +881,7 @@ const eventSchema = {
         name: "Action Command",
         icon: "error_outline",
         defaultImportant: true,
+        additionalText: 'Pauses the cutscene execution and waits for a user input to continue',
         parameters: {
             target_zoom: {
                 label: "Target Zoom",
@@ -844,6 +914,7 @@ const eventSchema = {
         name: 'Glitch',
         icon: 'gesture',
         defaultImportant: false,
+        additionalText: 'Displays a static glitch overlay',
         parameters: {
             duration: {
                 label: 'Custom Duration',
@@ -859,11 +930,13 @@ const eventSchema = {
         name: 'Storyline Message',
         icon: 'notification_important',
         defaultImportant: false,
+        additionalText: 'Emits a message that the StorylineManager can detect to check if any storyline needs to be updated',
         parameters: {
             message_name: {
                 label: 'Message Name',
                 type: 'text',
-                required: true
+                required: true,
+                placeholder: 'message_name'
             }
         }
     }

@@ -1,12 +1,10 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import { 
     AppBar, Toolbar, Typography, IconButton
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { drawerWidth, applicationName } from '../../globals';
-import { toggleDrawer } from '../../actions/appActions';
 
 const styles = theme => ({
     appBar: {
@@ -23,36 +21,29 @@ const styles = theme => ({
     },
 });
 
-class ApplicationBar extends React.Component {
+const ApplicationBar = props => {
 
-    handleDrawerToggle = () => {
-        this.props.toggleDrawer();
-    }
+    const classes = makeStyles(styles)();
+    
+    const { handleToggle } = props;
 
-    render() {
-
-        const { classes } = this.props;
-
-        return (
-            <AppBar position="fixed" color="primary"
-                className={classes.appBar}>
-                <Toolbar>
-                    <IconButton
-                        color='inherit'
-                        aria-label='Open Drawer'
-                        onClick={this.handleDrawerToggle}
-                        className={classes.menuButton}>
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" color="inherit">
-                        {applicationName}
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-        );
-    }
+    return (
+        <AppBar position="fixed" color="primary"
+            className={classes.appBar}>
+            <Toolbar>
+                <IconButton
+                    color='inherit'
+                    aria-label='Open Drawer'
+                    onClick={() => handleToggle()}
+                    className={classes.menuButton}>
+                    <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" color="inherit">
+                    {applicationName}
+                </Typography>
+            </Toolbar>
+        </AppBar>
+    );
 }
 
-export default connect(null, {
-    toggleDrawer
-})(withStyles(styles)(ApplicationBar));
+export default ApplicationBar;

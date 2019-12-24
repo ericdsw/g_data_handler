@@ -5,13 +5,64 @@ import {
     Switch,
     MenuItem,
     Typography,
-    Divider
+    Divider,
+    InputAdornment,
+    Icon,
+    Tooltip
 } from '@material-ui/core';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { blue, green, yellow, amber } from '@material-ui/core/colors';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+
+function makeCustomTheme(color) {
+
+    const customTheme = parentTheme => createMuiTheme({
+        ...parentTheme,
+        overrides: {
+            ...parentTheme.overrides,
+            MuiOutlinedInput: {
+                ...parentTheme.overrides.MuiOutlinedInput,
+                root: {
+                    ...parentTheme.overrides.MuiOutlinedInput.root,
+                    '&:hover:not($disabled):not($focused):not($error) $notchedOutline': {
+                        borderColor: color,
+                        // Reset on touch devices, it doesn't add specificity
+                        '@media (hover: none)': {
+                            borderColor: fade(color, 0.5)
+                        },
+                    },
+                    '&$focused $notchedOutline': {
+                        borderColor: color,
+                        borderWidth: 1,
+                    },
+                },
+            },
+            MuiFormLabel: {
+                ...parentTheme.overrides.MuiFormLabel,
+                root: {
+                    ...parentTheme.overrides.MuiFormLabel.root,
+                    '&$focused': {
+                        color: color
+                    }
+                }
+            },
+            MuiInputAdornment: {
+                ...parentTheme.overrides.MuiInputAdornment,
+                root: {
+                    color: color
+                }
+            }
+        }
+    });
+    return customTheme;
+}
 
 export default function createInput(
     paramName, inputData, value, handleChange, disabled = false,
     extraParams = {}
 ) {
+
+    let inputColor = blue[600];
 
     let label = inputData.label;
     if (inputData.required) {
@@ -22,12 +73,13 @@ export default function createInput(
         value = '';
     }
 
-    var returnValue;
+    let contentValue;
+    let adornment = <React.Fragment/>;
 
     switch (inputData.type) {
 
         case 'boolean':
-            returnValue = (
+            contentValue = (
                 <FormControlLabel
                     label={label}
                     control={
@@ -43,7 +95,7 @@ export default function createInput(
             break;
 
         case 'json':
-            returnValue = (
+            contentValue = (
                 <TextField
                     id={paramName}
                     label={label}
@@ -80,7 +132,7 @@ export default function createInput(
 
                 );
             }
-            returnValue = (
+            contentValue = (
                 <TextField
                     label={label}
                     id={paramName}
@@ -102,8 +154,33 @@ export default function createInput(
         case 'position':
         case 'number':
         case 'text':
+        case 'node_target':
         default:
-            returnValue = (
+
+            if (inputData.type === 'node_target') {
+                inputColor = green[600];
+                adornment = (
+                    <InputAdornment position='end'>
+                        <Icon>person_pin</Icon>
+                    </InputAdornment>
+                )
+            } else if (inputData.type === 'position') {
+                inputColor = amber[600];
+                adornment = (
+                    <InputAdornment position='end'>
+                        <Icon>my_location</Icon>
+                    </InputAdornment>
+                );
+            } else if (inputData.type === 'positionArray') {
+                inputColor = yellow[600];
+                adornment = (
+                    <InputAdornment position='end'>
+                        <Icon>view_week</Icon>
+                    </InputAdornment>
+                )
+            }
+
+            contentValue = (
                 <TextField 
                     id={paramName}
                     label={label}
@@ -115,14 +192,19 @@ export default function createInput(
                     variant='outlined' 
                     margin='normal'
                     disabled={disabled}
+                    InputProps={{
+                        endAdornment: adornment,
+                    }}
                     {...extraParams}
                 />
             );
             
     }
 
+    let returnValue;
+
     if (inputData.afterSeparator) {
-        return (
+        returnValue = (
             <React.Fragment>
                 <div 
                     style={{ 
@@ -140,10 +222,27 @@ export default function createInput(
                     </Typography>
                     <Divider />
                 </div>
-                {returnValue}
+                {contentValue}
             </React.Fragment>
         );
     } else {
-        return returnValue;
+        returnValue = contentValue;
+    }
+
+    if (inputData.tooltip) {
+        return (
+            <ThemeProvider theme={makeCustomTheme(inputColor)}>
+                <Tooltip title={inputData.tooltip} arrow>
+                    {returnValue}
+                </Tooltip>
+            </ThemeProvider>
+        );
+    } else {
+        return (
+            <ThemeProvider theme={makeCustomTheme(inputColor)}>
+                {returnValue}
+            </ThemeProvider>
+        );
+
     }
 }

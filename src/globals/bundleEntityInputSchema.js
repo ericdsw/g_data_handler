@@ -1,6 +1,6 @@
 const bundleEntityInputSchema = {
 
-    additional_text: 'Cutscene will take precedence over fade. Affected map must be defined for either to work',
+    additionalText: 'Cutscene will take precedence over fade. Affected map must be defined for either of them to work',
     parameters: {
         next_step: {
             label: 'Next Step',

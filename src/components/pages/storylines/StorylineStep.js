@@ -193,7 +193,7 @@ const StorylineStep = props => {
             <Divider />
 
             <CardContent>
-                <Grid container spacing={16}>
+                <Grid container spacing={2}>
                     {
                         (storylineStep.configuration.length <= 0 && 
                         storylineStep.completion <= 0) &&
@@ -243,7 +243,7 @@ const StorylineStep = props => {
 
             <Divider />
 
-            <CardActions disableActionSpacing>
+            <CardActions disableSpacing>
                 <Tooltip title='Edit step name'>
                     <IconButton
                         onClick={() => toggleDialogue('editName', 'show')}
@@ -293,7 +293,7 @@ const StorylineStep = props => {
                 <CardContent>
                     <Grid
                         container
-                        spacing={16}
+                        spacing={2}
                     >
                         <Grid item xs={12} lg={8} >
                             <Typography 
@@ -314,7 +314,7 @@ const StorylineStep = props => {
                                 />
                             </Typography>
                             <br />
-                            <Grid container spacing={16}>
+                            <Grid container spacing={2}>
                                 {mapConfData}
                             </Grid>
                         </Grid>
@@ -327,7 +327,7 @@ const StorylineStep = props => {
                                 Conditions
                             </Typography>
                             <br />
-                            <Grid container spacing={16}>
+                            <Grid container spacing={2}>
                                 {completionData}
                             </Grid>
                         </Grid>
@@ -337,7 +337,7 @@ const StorylineStep = props => {
 
             {/* Add Entity Form */}
             <GenericDialogue
-                title='Add Entity'
+                title={curEntityType !== '' ? storylineEntityInputSchema[curEntityType].name : 'Add Entity'}
                 open={curEntityType !== ''}
                 onClose={() => setCurEntityType('')}
                 maxWidth='sm'

@@ -70,7 +70,7 @@ const StepMapEntityParameterList = props => {
             <form onSubmit={e => {formSubmitted(e)}}>
                 <Grid 
                     container 
-                    spacing={16}
+                    spacing={2}
                     alignItems='center'
                 >
                     <Grid item xs={12} md={5}>

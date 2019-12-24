@@ -7,7 +7,6 @@ import {
     Icon,
     Typography,
     Grid,
-    Tooltip,
     Button,
     FormControlLabel,
     Switch,
@@ -25,13 +24,19 @@ const styles = theme => ({
         backgroundColor: theme.palette.error.dark,
     },
     close: {
-        padding: theme.spacing.unit / 2,
+        padding: theme.spacing(0.5),
+    },
+    additionalText: {
+        color: 'grey',
+        marginTop: 12,
+        marginBottom: 12
     }
 });
 
 class CreateEventForm extends React.Component {
 
     formFields = eventSchema['ability_toggle'].parameters;
+    additionalText = eventSchema['ability_toggle'].additionalText;
 
     constructor(props) {
         super(props);
@@ -51,6 +56,7 @@ class CreateEventForm extends React.Component {
                 resultData: usedParameters
             };
             this.formFields = eventSchema[props.existingData.type].parameters;
+            this.additionalText = eventSchema[props.existingData.type].additionalText;
         } else {
             this.state = {
                 lockType: false,
@@ -68,6 +74,7 @@ class CreateEventForm extends React.Component {
 
         const newType = event.target.value;
         this.formFields = eventSchema[newType].parameters;
+        this.additionalText = eventSchema[newType].additionalText;
 
         let resultData = {
             'is_important': eventSchema[newType].defaultImportant
@@ -171,7 +178,7 @@ class CreateEventForm extends React.Component {
                         checked={this.state.resultData['is_important']}
                         onChange={this.handleInputChange('is_important')}
                         value={this.state.resultData['is_important']} 
-                        />
+                    />
                 }
             />
         );
@@ -188,13 +195,9 @@ class CreateEventForm extends React.Component {
             );
             
             fields.push(
-                <Tooltip 
-                    enterDelay={500}
-                    key={paramName} 
-                    title={currentParamData.tooltip}
-                >
+                <React.Fragment key={paramName}>
                     {constructedFormField}
-                </Tooltip>
+                </React.Fragment>
             );
         }
         
@@ -213,6 +216,13 @@ class CreateEventForm extends React.Component {
                 </TextField>
                 <Grid container>
                     {fields}
+                </Grid>
+                <Grid container>
+                    <Grid item xs={12}>
+                        <Typography variant='body2' className={this.props.classes.additionalText}>
+                            <i>{this.additionalText}</i>
+                        </Typography>
+                    </Grid>
                 </Grid>
                 <Grid justify='flex-end' container>
                     <Button 
