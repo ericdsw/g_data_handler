@@ -2,12 +2,12 @@ import React from 'react';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import SubscriptionsIcon from '@material-ui/icons/Subscriptions';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
-import HelpIcon from '@material-ui/icons/Help';
+import InfoIcon from '@material-ui/icons/Info';
 import { 
     CutscenePage, 
     DialoguePage,
     StorylinePage,
-    NotFound
+    NotFound,
 } from '../components/pages';
 
 export const fallbackRoute = {
@@ -40,7 +40,7 @@ export default [
         path: '/about',
         exact: true,
         component: NotFound,
-        icon: <HelpIcon />,
+        icon: <InfoIcon />,
         text: 'About',
     }
 ];

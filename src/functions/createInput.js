@@ -57,6 +57,31 @@ function makeCustomTheme(color) {
     return customTheme;
 }
 
+const nodeTargetDescription = (
+    <ul>
+        <li>
+            <code>StateName:NodeName</code>&nbsp;
+            Will search for a node named NodeName inside the state statename
+        </li>
+        <li>
+            <code>CAMERA:NodeName</code>&nbsp;
+            Will search for a node named NodeName inside the viewport
+        </li>
+        <li>
+            <code>PERMANENT:NodeName</code>&nbsp;
+            Will search for a node named NodeName inside permanentobjects
+        </li>
+        <li>
+            <code>MAP_OBJECTS:NodeName</code>&nbsp;
+            Will search for a node named NodeName inside the current active mapobject instance
+        </li>
+        <li>
+            <code>:NodeName</code>&nbsp;
+            Will search for a node named NodeName directly present as a child of the current map
+        </li>
+    </ul>
+)
+
 export default function createInput(
     paramName, inputData, value, handleChange, disabled = false,
     extraParams = {}
@@ -160,23 +185,29 @@ export default function createInput(
             if (inputData.type === 'node_target') {
                 inputColor = green[600];
                 adornment = (
-                    <InputAdornment position='end'>
-                        <Icon>person_pin</Icon>
-                    </InputAdornment>
+                    <Tooltip enterDelay={300} title={nodeTargetDescription}>
+                        <InputAdornment position='end'>
+                            <Icon>person_pin</Icon>
+                        </InputAdornment>
+                    </Tooltip>
                 )
             } else if (inputData.type === 'position') {
                 inputColor = amber[600];
                 adornment = (
-                    <InputAdornment position='end'>
-                        <Icon>my_location</Icon>
-                    </InputAdornment>
+                    <Tooltip enterDelay={300} title='Position2D node name or JSON'>
+                        <InputAdornment position='end'>
+                            <Icon>my_location</Icon>
+                        </InputAdornment>
+                    </Tooltip>
                 );
             } else if (inputData.type === 'positionArray') {
                 inputColor = yellow[600];
                 adornment = (
-                    <InputAdornment position='end'>
-                        <Icon>view_week</Icon>
-                    </InputAdornment>
+                    <Tooltip enterDelay={300} title='NodeNames, separated by comma'>
+                        <InputAdornment position='end'>
+                            <Icon>view_week</Icon>
+                        </InputAdornment>
+                    </Tooltip>
                 )
             }
 
