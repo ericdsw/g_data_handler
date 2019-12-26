@@ -9,7 +9,7 @@ import {
     ListItemIcon,
     ListItemText,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import routes from '../../router';
 import { drawerWidth } from '../../globals';
@@ -26,6 +26,9 @@ const styles = theme => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
+    selectedLink: {
+        background: theme.palette.action.hover
+    }
 });
 
 const NavigationDrawer = props => {
@@ -43,10 +46,12 @@ const NavigationDrawer = props => {
                     routes.map( route => (
                         <ListItem 
                             button
-                            component={Link}
+                            component={NavLink}
                             onClick={() => handleCollapse()}
                             to={route.path}
                             key={route.path}
+                            exact
+                            activeClassName={classes.selectedLink}
                         >
                             <ListItemIcon>
                                 {route.icon}

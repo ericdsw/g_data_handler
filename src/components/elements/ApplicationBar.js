@@ -10,6 +10,8 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { blue, green, yellow, amber, grey } from '@material-ui/core/colors';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
+import BrightnessHighIcon from '@material-ui/icons/BrightnessHigh';
 
 import { drawerWidth, applicationName } from '../../globals';
 import { useDialogueManager } from '../../hooks';
@@ -33,7 +35,10 @@ const styles = theme => ({
     greenText: { color: green[600] },
     yellowText: { color: yellow[600] },
     amberText: { color: amber[600] },
-    codeText: { color: grey[500] }
+    codeText: { color: grey[500] },
+    buttons: {
+        color: theme.palette.primary.contrastText
+    }
 });
 
 const textInputSchema = {
@@ -60,7 +65,7 @@ const ApplicationBar = props => {
 
     const classes = makeStyles(styles)();
     
-    const { handleToggle } = props;
+    const { isDarkMode, handleToggle, handleDarkModeToggle } = props;
     const [dialogues, toggleDialogue] = useDialogueManager('helpDialogue');
 
     return (
@@ -68,7 +73,7 @@ const ApplicationBar = props => {
             className={classes.appBar}>
             <Toolbar>
                 <Grid container alignItems='center'>
-                    <Grid item xs={11} >
+                    <Grid item xs={8} >
                         <Typography 
                             variant="h6" 
                             color="inherit"
@@ -83,9 +88,17 @@ const ApplicationBar = props => {
                             {applicationName}
                         </Typography>
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={4}>
                         <Grid container justify='flex-end'>
                             <IconButton
+                                className={classes.buttons}
+                                onClick={() => handleDarkModeToggle()}
+                            >
+                                {isDarkMode && <Brightness4Icon />}
+                                {!isDarkMode && <BrightnessHighIcon />}
+                            </IconButton>
+                            <IconButton
+                                className={classes.buttons}
                                 onClick={() => toggleDialogue('helpDialogue', 'show')}
                             >
                                 <Icon>help_outline</Icon>

@@ -1,24 +1,24 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { indigo, teal, blue } from '@material-ui/core/colors';
+import { indigo, blueGrey, blue } from '@material-ui/core/colors';
 
-const baseTheme = createMuiTheme({
+const baseTheme = mode => createMuiTheme({
     palette: {
-        type: 'dark',
-        primary: indigo,
-        secondary: teal
+        type: mode,
+        primary: mode === 'dark' ? indigo : blue,
+        secondary: blueGrey
     },
     overrides: {
         MuiOutlinedInput: {
             root: {
                 position: 'relative',
                 '& $notchedOutline': {
-                    borderColor: 'rgba(255, 255, 255, 0.23)',
+                    borderColor: mode === 'dark' ? 'rgba(255, 255, 255, 0.23)' : 'rgba(0,0,0,0.23)',
                 },
                 '&:hover:not($disabled):not($focused):not($error) $notchedOutline': {
                     borderColor: blue[600],
                     // Reset on touch devices, it doesn't add specificity
                     '@media (hover: none)': {
-                        borderColor: 'rgba(255, 255, 255, 0.23)',
+                        borderColor: mode === 'dark' ? 'rgba(255, 255, 255, 0.23)' : 'rgba(0,0,0,0.23)',
                     },
                 },
                 '&$focused $notchedOutline': {
