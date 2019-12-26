@@ -79,6 +79,7 @@ const CutsceneToolbar = props => {
                 title="Add Jump"
                 open={dialogues['createJump']}
                 onClose={() => toggleDialogue('createJump', 'hide')}
+                maxWidth='sm'
             >
                 <CreateJumpForm 
                     creationHandler={

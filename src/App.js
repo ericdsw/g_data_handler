@@ -28,18 +28,21 @@ const styles = theme => ({
 const App = () => {
 
     const [drawerOpen, toggleDrawerOpen] = useState(false);
+    const [darkMode, toggleDarkMode] = useState(true);
 
     const classes = makeStyles(styles)();
 
     return (
         <Provider store={store}>
             <div className={classes.root}>
-                <MuiThemeProvider theme={baseTheme}>
+                <MuiThemeProvider theme={baseTheme(darkMode ? 'dark' : 'light')}>
                     <SnackbarProvider maxSnack={3}>
                         <CssBaseline />
                         <Router>
                             <ApplicationBar 
                                 handleToggle={() => toggleDrawerOpen(!drawerOpen)}
+                                handleDarkModeToggle={() => toggleDarkMode(!darkMode)}
+                                isDarkMode={darkMode}
                             />
                             <NavigationDrawer
                                 isOpen={drawerOpen}
