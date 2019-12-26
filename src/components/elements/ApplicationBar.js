@@ -94,8 +94,8 @@ const ApplicationBar = props => {
                                 className={classes.buttons}
                                 onClick={() => handleDarkModeToggle()}
                             >
-                                {isDarkMode && <Brightness4Icon />}
-                                {!isDarkMode && <BrightnessHighIcon />}
+                                {!isDarkMode && <Brightness4Icon />}
+                                {isDarkMode && <BrightnessHighIcon />}
                             </IconButton>
                             <IconButton
                                 className={classes.buttons}
