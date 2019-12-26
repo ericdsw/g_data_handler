@@ -8,6 +8,7 @@ import {
     DialoguePage,
     StorylinePage,
     NotFound,
+    AboutPage
 } from '../components/pages';
 
 export const fallbackRoute = {
@@ -39,7 +40,7 @@ export default [
     {
         path: '/about',
         exact: true,
-        component: NotFound,
+        component: AboutPage,
         icon: <InfoIcon />,
         text: 'About',
     }
