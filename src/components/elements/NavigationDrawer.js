@@ -9,7 +9,7 @@ import {
     ListItemIcon,
     ListItemText,
 } from '@material-ui/core';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import routes from '../../router';
 import { drawerWidth } from '../../globals';

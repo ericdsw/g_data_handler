@@ -262,18 +262,11 @@ export default function createInput(
 
     if (inputData.tooltip) {
         return (
-            <ThemeProvider theme={makeCustomTheme(inputColor)}>
                 <Tooltip title={inputData.tooltip} arrow>
                     {returnValue}
                 </Tooltip>
-            </ThemeProvider>
         );
     } else {
-        return (
-            <ThemeProvider theme={makeCustomTheme(inputColor)}>
-                {returnValue}
-            </ThemeProvider>
-        );
-
+        return returnValue;
     }
 }
