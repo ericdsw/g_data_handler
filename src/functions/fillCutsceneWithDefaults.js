@@ -12,7 +12,7 @@ function fillEventWithDefaults(event) {
     // is_important is an special parameter that must always be accounted
     // for, even if the source event does not define it. If this parameter
     // is not found, force it to whatever defaultImportant is.
-    if (!event.parameters['is_important']) {
+    if (typeof(event.parameters['is_important']) === 'undefined') {
         event.parameters['is_important'] = currentSchema.defaultImportant;
     }
 }

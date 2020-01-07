@@ -24,19 +24,19 @@ export default {
 		"image" : "",
 		"name" : "Vega",
         "voice_file" : "vampire_voice.wav",
-        "target_object": "VampireNPC"
+        "target_object": "VegaNPC"
 	},
 	"ghost" : {
 		"image" : "",
 		"name" : "Cerie",
         "voice_file" : "ghost_voice.wav",
-        "target_object": "GhostNPC"
+        "target_object": "CerieNPC"
 	},
 	"scientist" : {
 		"image" : "",
 		"name" : "Scientist",
         "voice_file" : "scientist_voice.wav",
-        "target_object": "ScientistNPC"
+        "target_object": "AdaNPC"
 	},
 	"default" : {
 		"image" : null,
@@ -53,18 +53,18 @@ export default {
 		"image" : null,
 		"name" : "???",
         "voice_file" : "vampire_voice.wav",
-        "target_object": "VampireNPC"
+        "target_object": "VegaNPC"
 	},
 	"ghost_unknown" : {
 		"image" : null,
 		"name" : "???",
         "voice_file" : "ghost_voice.wav",
-        "target_object": "GhostNPC"
+        "target_object": "CerieNPC"
 	},
 	"scientist_unknown" : {
 		"image" : null,
 		"name" : "???",
         "voice_file" : "scientist_voice.wav",
-        "target_object": "ScientistNPC"
+        "target_object": "AdaNPC"
 	}
 }
