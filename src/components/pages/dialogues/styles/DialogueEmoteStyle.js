@@ -2,7 +2,8 @@ import { blue } from '@material-ui/core/colors';
 
 export const styles = theme => ({
     emoteContainer: {
-        backgroundColor: '#222'
+        backgroundColor: '#222',
+        borderBottom: '1px solid #666',
     },
     emoteImage: {
         width: 64,

@@ -21,7 +21,7 @@ const GenericForm = props => {
     // Parameters
     const { 
         initialDataSet = {}, schema = {}, classes, buttonText = 'Create',
-        disabledInputs = []
+        disabledInputs = [], buttonColor = 'primary'
     } = props;
 
     // Methods
@@ -83,7 +83,7 @@ const GenericForm = props => {
                 </Typography>
             }
             <Grid container justify='flex-end'>
-                <Button variant='contained' color='primary' type='submit'>
+                <Button variant='contained' color={buttonColor} type='submit'>
                     {buttonText}
                 </Button>
             </Grid>

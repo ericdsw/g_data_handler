@@ -95,7 +95,26 @@ export default function createInput(
     }
 
     if (value === null || typeof(value) === 'undefined') {
-        value = '';
+        switch (inputData.type) {
+            case 'boolean':
+                value = inputData.default;
+                break;
+            case 'number':
+                const numberVal = parseFloat(inputData.default);
+                if (Number.isNaN(numberVal)) {
+                    value = '';
+                } else {
+                    value = numberVal;
+                }
+                break;
+            default:
+                if (! inputData.default) {
+                    value = '';
+                } else {
+                    value = inputData.default;
+                }
+                break;
+        }
     }
 
     let contentValue;

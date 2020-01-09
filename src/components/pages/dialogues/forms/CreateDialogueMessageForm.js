@@ -33,6 +33,9 @@ const DEFAULT_STATE = {
     createAndContinue: false,
     freshStart: false,
 
+    // Type
+    type: 'message',
+
     // Message variables
     imagePreview: '',
     speaker: '',
@@ -102,7 +105,8 @@ class CreateDialogueMessageForm extends React.Component {
 
         let messageData = {
             message: this.state.message,
-            interrupts: this.state.interrupts
+            interrupts: this.state.interrupts,
+            type: 'message'
         }
 
         // Filters

@@ -9,6 +9,7 @@ import {
 import { Draggable } from 'react-beautiful-dnd';
 import DialogueMessage from '../pages/dialogues/DialogueMessage';
 import DialogueEmote from '../pages/dialogues/DialogueEmote';
+import MessageSwarm from '../pages/dialogues/MessageSwarm';
 
 class DialogueMessageContainer extends React.Component {
 
@@ -55,28 +56,40 @@ class DialogueMessageContainer extends React.Component {
         const message = messages[messageId];
 
         let content;
-
-        if (message.is_emote) {
-            content = (
-                <DialogueEmote
-                    message={message}
-                    handleDelete={this.deleteMessage}
-                    handleAddAbove={this.addAbove}
-                    handleAddBelow={this.addBelow}
-                    handleSplitBelow={this.splitBelow}
-                />
-            );
-        } else {
-            content = (
-                <DialogueMessage 
-                    message={message}
-                    handleEdit={this.editMessage}
-                    handleDelete={this.deleteMessage}
-                    handleAddAbove={this.addAbove}
-                    handleAddBelow={this.addBelow}
-                    handleSplitBelow={this.splitBelow}
-                />
-            );
+        switch (message.type) {
+            case 'message':
+                content = (
+                    <DialogueMessage 
+                        message={message}
+                        handleEdit={this.editMessage}
+                        handleDelete={this.deleteMessage}
+                        handleAddAbove={this.addAbove}
+                        handleAddBelow={this.addBelow}
+                        handleSplitBelow={this.splitBelow}
+                    />
+                );
+                break;
+            case 'emote':
+                content = (
+                    <DialogueEmote
+                        message={message}
+                        handleDelete={this.deleteMessage}
+                        handleAddAbove={this.addAbove}
+                        handleAddBelow={this.addBelow}
+                        handleSplitBelow={this.splitBelow}
+                    />
+                );
+                break;
+            case 'swarm':
+                content = (
+                    <MessageSwarm
+                        swarmData={message}
+                    />
+                )
+                break;
+            default:
+                content = <React.Fragment />
+                break;
         }
 
         return (
