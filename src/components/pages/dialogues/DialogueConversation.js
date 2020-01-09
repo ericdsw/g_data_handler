@@ -225,6 +225,7 @@ const DialogueConversation = props => {
                 onClose={() => toggleDialogue('addSwarm', 'hide')}
             >
                 <CreateSwarmForm 
+                    isEdit={false}
                     handleSubmit={data => {
                         toggleDialogue('addSwarm', 'hide');
                         handleAddToConversation(data);

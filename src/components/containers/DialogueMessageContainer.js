@@ -84,6 +84,7 @@ class DialogueMessageContainer extends React.Component {
                 content = (
                     <MessageSwarm
                         swarmData={message}
+                        handleEdit={this.editMessage}
                         handleDelete={this.deleteMessage}
                         handleSplitBelow={this.splitBelow}
                     />

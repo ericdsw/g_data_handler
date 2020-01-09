@@ -11,7 +11,12 @@ import {
 } from '@material-ui/core';
 import { useDialogueManager } from '../../../../hooks';
 import { GenericDialogue, ConfirmationDialogue } from '../../../elements';
-import { CreateDialogueMessageForm, CreateConversationForm } from '../forms';
+
+import { 
+    CreateDialogueMessageForm,
+    CreateConversationForm,
+    CreateSwarmForm
+} from '../forms';
 
 
 const styles = theme => ({
@@ -25,19 +30,6 @@ const DialogueMessageToolbar = props => {
     // Parameters
     const { message, omitEdit } = props;
 
-    let typeString = '';
-    switch(message.type) {
-        case 'message':
-            typeString = 'Message';
-            break;
-        case 'emote':
-            typeString = 'Emote';
-            break;
-        case 'swarm':
-            typeString = 'Swarm';
-            break;
-    }
-
     // Methods
     const { 
         handleAddAbove, handleAddBelow, handleEdit, handleDelete,
@@ -45,12 +37,11 @@ const DialogueMessageToolbar = props => {
     } = props; 
 
     const [dialogues, toggleDialogue] = useDialogueManager(
-        'confirmDelete', 'addMessage', 'addEmote', 'splitConversation'
+        'confirmDelete', 'editMessage', 'addEmote', 'splitConversation'
     );
 
     const [selectedOption, setSelectedOption] = useState('');
     const [anchorEl, setAnchorEl] = useState(null);
-    const [typeAnchorEl, setTypeAnchorEl] = useState(null);
 
     // Anchor Management
 
@@ -58,29 +49,16 @@ const DialogueMessageToolbar = props => {
         setAnchorEl(event.currentTarget);
     }
 
-    function handleTypeMenuOpen(event) {
-        setTypeAnchorEl(event.currentTarget);
-    }
-
     function handleClose() {
         setAnchorEl(null);
-    }
-
-    function handleTypeClose() {
-        setTypeAnchorEl(null);
     }
 
     function handleMenuSelect(event, menuItemName) {
         
         switch(menuItemName) {
-            case 'addAbove':
-            case 'addBelow':
-                setSelectedOption(menuItemName);
-                handleTypeMenuOpen(event);
-                break;
             case 'edit':
                 setSelectedOption('edit');
-                toggleDialogue('addMessage', 'show')
+                toggleDialogue('editMessage', 'show')
                 handleEdit();
                 break;
             case 'delete':
@@ -94,17 +72,6 @@ const DialogueMessageToolbar = props => {
         }
         setAnchorEl(null);
     }
-
-    function handleTypeMenuSelect(itemName) {
-        if (itemName === 'emote') {
-            toggleDialogue('addEmote', 'show');
-        } else {
-            toggleDialogue('addMessage', 'show');
-        }
-        setTypeAnchorEl(null);
-    }
-
-    // Form Submit Management
 
     function handleDialogueFormSubmit(data) {
         switch (selectedOption) {
@@ -122,9 +89,60 @@ const DialogueMessageToolbar = props => {
         }
     }
 
+    let typeString;
+    let editDialogue;
+
+    switch(message.type) {
+        case 'message':
+            typeString = 'Message';
+            editDialogue = (
+                <GenericDialogue
+                    title='Edit Conversation'
+                    open={dialogues['editMessage']}
+                    onClose={() => toggleDialogue('editMessage', 'hide')}
+                >
+                    <CreateDialogueMessageForm
+                        isEdit={selectedOption === 'edit'}
+                        messageData={(selectedOption === 'edit') ? message : {}}
+                        creationHandler={(data, createAndContinue) => {
+                            if (! createAndContinue) {
+                                toggleDialogue('editMessage', 'hide');
+                            }
+                            handleDialogueFormSubmit(data);
+                        }}
+                    />
+                </GenericDialogue>
+            );
+            break;
+        case 'swarm':
+            typeString = 'Swarm';
+            editDialogue = (
+                <GenericDialogue
+                    title='Edit Swarm'
+                    open={dialogues['editMessage']}
+                    onClose={() => toggleDialogue('editMessage', 'hide')}
+                >
+                    <CreateSwarmForm
+                        initialSwarmData={message.swarmData}
+                        isEdit={true}
+                        handleSubmit={data => {
+                            toggleDialogue('editMessage', 'hide');
+                            handleDialogueFormSubmit(data);
+                        }}
+                    />
+                </GenericDialogue>
+            );
+            break;
+        case 'emote':
+            typeString = 'Emote';
+            editDialogue = <React.Fragment />
+            break;
+        default:
+            typeString = '';
+    }
+
     return (
         <div>
-
             {/* Button that shows the menu */}
             <IconButton
                 aria-controls='simple-menu'
@@ -167,22 +185,7 @@ const DialogueMessageToolbar = props => {
                     <ListItemText primary="Split From This" />
                 </MenuItem>
             </Menu>
-
-            {/* Creation Type menu elements */}
-            <Menu
-                id='simple-type-menu'
-                anchorEl={typeAnchorEl}
-                open={Boolean(typeAnchorEl)}
-                onClose={handleTypeClose}
-            >
-                <MenuItem onClick={() => handleTypeMenuSelect('message')}>
-                    Message
-                </MenuItem>
-                <MenuItem onClick={() => handleTypeMenuSelect('emote')}>
-                    Emote
-                </MenuItem>
-           </Menu>
-
+            
             {/* Delete Dialogue */}
             <ConfirmationDialogue
                 message={`Delete the ${typeString}?`}
@@ -194,23 +197,8 @@ const DialogueMessageToolbar = props => {
                 }}
             />
 
-            {/* Create Message Form */}
-            <GenericDialogue
-                title='Create Conversation'
-                open={dialogues['addMessage']}
-                onClose={() => toggleDialogue('addMessage', 'hide')}
-            >
-                <CreateDialogueMessageForm
-                    isEdit={selectedOption === 'edit'}
-                    messageData={(selectedOption === 'edit') ? message : {}}
-                    creationHandler={(data, createAndContinue) => {
-                        if (! createAndContinue) {
-                            toggleDialogue('addMessage', 'hide');
-                        }
-                        handleDialogueFormSubmit(data);
-                    }}
-                />
-            </GenericDialogue>
+            {/* Edit Message Form */}
+            {editDialogue}
 
             {/* Split Conversation Form */}
             <GenericDialogue

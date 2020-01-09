@@ -5,7 +5,6 @@ import {
     CardHeader,
     CardContent,
     Typography,
-    Grid
 } from '@material-ui/core';
 
 import { DialogueMessageToolbar } from './elements';
@@ -27,7 +26,7 @@ const styles = theme => ({
 const MessageSwarm = props => {
 
     const { swarmData } = props;
-    const { handleDelete, handleSplitBelow } = props;
+    const { handleEdit, handleDelete, handleSplitBelow } = props;
     const classes = makeStyles(styles)();
 
     return (
@@ -40,9 +39,10 @@ const MessageSwarm = props => {
                 action={
                     <DialogueMessageToolbar
                         message={swarmData}
+                        handleEdit={data => handleEdit(data)}
                         handleDelete={() => handleDelete()}
                         handleSplitBelow={conversationName => handleSplitBelow(conversationName)}
-                        omitEdit={true}
+                        omitEdit={false}
                     />
                 }
             />
@@ -59,7 +59,7 @@ const MessageSwarm = props => {
                             {swarmMessage.message}
                         </Typography>
                         <Typography variant='body2'>
-                            Target: {swarmMessage.target_object}. Appears after {swarmMessage.appearante_tiemout} second(s).
+                            Target: {swarmMessage.target_object}. Appears after {swarmMessage.appearance_timeout} second(s).
                         </Typography>
                     </Card>
                 ))}
