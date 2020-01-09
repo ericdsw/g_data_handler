@@ -51,6 +51,19 @@ class DialogueContainer extends React.Component {
         parseFile(targetFile, 'application/json')
             .then(json => {
                 const { result, entities } = transformIn(json);
+
+                // Inject type if not found
+                Object.keys(entities.messages).forEach(mId => {
+                    if (! entities.messages[mId].type) {
+                        if (! entities.messages[mId].is_emote) {
+                            entities.messages[mId].type = 'message';
+                        } else {
+                            entities.messages[mId].type = 'emote';
+                        }
+                    }
+                });
+
+                // Update the dialogue
                 updateDialogue(targetFile.name, result, entities);
             })
             .catch(error => this.showError(error.message));

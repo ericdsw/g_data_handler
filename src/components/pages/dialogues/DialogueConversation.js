@@ -21,7 +21,8 @@ import DialogueMessageContainer from '../../containers/DialogueMessageContainer'
 import { CreateConversationForm } from './forms';
 import {
     CreateDialogueMessageForm,
-    CreateEmoteForm
+    CreateEmoteForm,
+    CreateSwarmForm
 } from './forms';
 
 import { styles } from './styles/DialogueConversationStyle';
@@ -35,7 +36,8 @@ const DialogueConversation = props => {
     } = props;
 
     const [dialogues, toggleDialogue] = useDialogueManager(
-        'confirmDelete', 'updateConversation', 'addMessage', 'addEmote'
+        'confirmDelete', 'updateConversation', 'addMessage', 'addEmote',
+        'addSwarm'
     );
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -162,7 +164,7 @@ const DialogueConversation = props => {
                             Add message
                         </Button>
                         <Button
-                            style={{marginTop: 8}}
+                            style={{marginTop: 8, marginRight: 16}}
                             color='secondary'
                             variant='contained'
                             onClick={() => {
@@ -170,6 +172,14 @@ const DialogueConversation = props => {
                             }}
                         >
                             Add emote
+                        </Button>
+                        <Button
+                            style={{marginTop: 8}}
+                            color='secondary'
+                            variant='contained'
+                            onClick={() => toggleDialogue('addSwarm', 'show')}
+                        >
+                            Add Dialogue Swarn
                         </Button>
                     </div>
                 </div>
@@ -206,6 +216,21 @@ const DialogueConversation = props => {
                         handleAddToConversation(data);
                     }}
                 /> 
+            </GenericDialogue>
+
+            {/* Create Swarm form */}
+            <GenericDialogue
+                title='Create Swarm'
+                open={dialogues['addSwarm']}
+                onClose={() => toggleDialogue('addSwarm', 'hide')}
+            >
+                <CreateSwarmForm 
+                    isEdit={false}
+                    handleSubmit={data => {
+                        toggleDialogue('addSwarm', 'hide');
+                        handleAddToConversation(data);
+                    }}
+                />
             </GenericDialogue>
 
             {/* Edit Conversation Name */}

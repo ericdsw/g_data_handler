@@ -1,7 +1,7 @@
 
 export const parseIn = (inputObject, inputSchema) => {
 
-    for (const key in inputObject) {
+    for (const key in inputSchema) {
 
         // Skip invalid entries
         if (!(key in inputSchema)) {
@@ -15,7 +15,24 @@ export const parseIn = (inputObject, inputSchema) => {
             case 'json':
                 inputObject[key] = JSON.stringify(inputObject[key]);
                 break;
+            case 'number':
+                const value = parseFloat(inputObject[key]);
+                const defaultNumberVal = parseFloat(inputSchema[key].default);
+                if (Number.isNaN(value)) {
+                    if (Number.isNaN(defaultNumberVal)) {
+                        inputObject[key] = ''
+                    } else {
+                        inputObject[key] = defaultNumberVal;
+                    }
+                } else {
+                    inputObject[key] = value
+                }
+                break;
             default:
+                const defaultVal = inputSchema[key].default;
+                if (!inputObject[key] && typeof(defaultValue) !== 'undefined') {
+                    inputObject[key] = defaultVal;
+                }
                 break;
         }
     }
@@ -59,11 +76,26 @@ export const getMissingRequired = (object, inputSchema) => {
     const returnArray = [];
     for (const key in inputSchema) {
         const curValue = object[key];
-        if (inputSchema[key].required && !curValue) {
-            if (inputSchema[key].type !== 'boolean') {
-                returnArray.push(key);
+
+        if (inputSchema[key].required) {
+            switch(inputSchema[key].type) {
+                case 'boolean':
+                    break;
+                case 'number':
+                    // Prevent 0 from being treated as "nothing there"
+                    const numberValue = parseFloat(curValue);
+                    if (typeof(numberValue) !== "number" || Number.isNaN(numberValue)) {
+                        returnArray.push(key);
+                    }
+                    break;
+                default:
+                    if (!curValue) {
+                        returnArray.push(key);
+                    }
+                   break; 
             }
         }
+        
     }
     return returnArray;
 }

@@ -32,6 +32,7 @@ const VALID_EMOTES = {
 class CreateEmoteForm extends React.Component {
 
     state = {
+        type: 'emote',
         target_object : '',
         message : '',
         is_emote: true,
