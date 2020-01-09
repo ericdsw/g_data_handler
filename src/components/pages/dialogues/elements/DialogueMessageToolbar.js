@@ -25,6 +25,19 @@ const DialogueMessageToolbar = props => {
     // Parameters
     const { message, omitEdit } = props;
 
+    let typeString = '';
+    switch(message.type) {
+        case 'message':
+            typeString = 'Message';
+            break;
+        case 'emote':
+            typeString = 'Emote';
+            break;
+        case 'swarm':
+            typeString = 'Swarm';
+            break;
+    }
+
     // Methods
     const { 
         handleAddAbove, handleAddBelow, handleEdit, handleDelete,
@@ -172,7 +185,7 @@ const DialogueMessageToolbar = props => {
 
             {/* Delete Dialogue */}
             <ConfirmationDialogue
-                message={`Delete the ${message.is_emote ? 'emote' : 'message'}?`}
+                message={`Delete the ${typeString}?`}
                 isOpen={dialogues['confirmDelete']}
                 handleClose={() => toggleDialogue('confirmDelete', 'hide')}
                 handleConfirm={() => {

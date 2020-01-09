@@ -4,12 +4,11 @@ import {
     Card,
     CardHeader,
     CardContent,
-    Avatar,
     Typography,
-    IconButton,
-    Icon,
     Grid
 } from '@material-ui/core';
+
+import { DialogueMessageToolbar } from './elements';
 
 const styles = theme => ({
     swarmContainer: {
@@ -27,7 +26,8 @@ const styles = theme => ({
 
 const MessageSwarm = props => {
 
-    const { swarmData }  = props;
+    const { swarmData } = props;
+    const { handleDelete, handleSplitBelow } = props;
     const classes = makeStyles(styles)();
 
     return (
@@ -36,11 +36,14 @@ const MessageSwarm = props => {
             square={true}
         >
             <CardHeader
-                subheader='Will display the following swarm:'
+                subheader='Will display a swarm with the following messages:'
                 action={
-                    <IconButton>
-                        <Icon>more_vert</Icon>
-                    </IconButton>
+                    <DialogueMessageToolbar
+                        message={swarmData}
+                        handleDelete={() => handleDelete()}
+                        handleSplitBelow={conversationName => handleSplitBelow(conversationName)}
+                        omitEdit={true}
+                    />
                 }
             />
             <CardContent>
