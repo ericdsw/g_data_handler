@@ -4,7 +4,7 @@ export const parseIn = (inputObject, inputSchema) => {
     for (const key in inputSchema) {
 
         // Skip invalid entries
-        if (!(key in inputSchema)) {
+        if (!(key in inputSchema) || !(key in inputObject)) {
             continue;
         }
 
