@@ -135,6 +135,26 @@ const storylineEntityInputSchema = {
         }
     },
 
+    'configure_group': {
+        name: 'Configure Group',
+        parameters: {
+            name: {
+                label: 'GroupInteractionHandler name',
+                type: 'text',
+                required: true,
+                tooltip: 'The Group interaction handler node name',
+                placeholder: 'GroupInteractionHandler name'
+            },
+            map_name: {
+                label: 'Will appear in map',
+                type: 'text',
+                required: true,
+                tooltip: 'Map where the Handler will be looked in (just the name)',
+                placeholder: 'MapName'
+            },
+        }
+    },
+
     'create_door': {
         name: 'Create Door',
         additionalText: 'If target_map is defined, target_position is required (and vice-versa)',

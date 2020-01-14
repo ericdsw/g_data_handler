@@ -89,6 +89,8 @@ const StepMapEntity = props => {
                 return 'Create NPC';
             case 'configure_npc':
                 return 'Configure NPC';
+            case 'configure_group':
+                return 'Configure Group';
             case 'create_area':
                 return 'Create Notification Area';
             case 'create_dialogue_area':
