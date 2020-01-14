@@ -192,6 +192,7 @@ const interactionInputSchema = {
     'select_item_interaction': {
         name: 'Select Item Interaction',
         icon: 'shopping_basket',
+        additionalText: 'Note: Trigger Interaction overwrites both trigger conversation and dialogue file',
         parameters: {
             custom_name: {
                 label: 'Custom Name',
@@ -213,6 +214,11 @@ const interactionInputSchema = {
                 label: 'Trigger Conversation',
                 type: 'text',
                 placeholder: 'Conversation that will trigger the item picker'
+            },
+            trigger_interaction: {
+                label: 'Trigger Interaction',
+                type: 'text',
+                placeholder: 'Interaction that will trigger before showing the select item UI'
             },
             fallback_interaction: {
                 label: 'Fallback Interaction',
