@@ -83,6 +83,8 @@ const StorylineStep = props => {
                 return <Typography>Configure NPC {entityName}</Typography>;
             case 'create_area':
                 return <Typography>Create area {entityName}</Typography>;
+            case 'configure_group':
+                return <Typography>Configure GroupInteractionHandler {entityName}</Typography>
             default:
                 return entityName;
         }
