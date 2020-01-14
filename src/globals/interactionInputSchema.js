@@ -109,10 +109,22 @@ const interactionInputSchema = {
                 type: 'array',
                 placeholder: 'Items needed to trigger, separate each one with a comma'
             },
+            loose_required_items: {
+                label: 'Required Items OR overwrite',
+                type: 'boolean',
+                default: false,
+                tooltip: 'If true, required items are treated as an OR comparison (by default, all must be present)'
+            },
             excluding_items: { 
                 label: 'Excluding Items',
                 type: 'array',
                 placeholder: 'Items that will prevent trigger, separate each one with a comma'
+            },
+            loose_excluding_items: {
+                label: 'Excluding Items OR overwrite',
+                type: 'boolean',
+                default: false,
+                tooltip: 'If true, excluding items are treated as an OR comparison (by default, all must be absent)'
             }
         }
     },
@@ -145,10 +157,22 @@ const interactionInputSchema = {
                 type: 'array',
                 placeholder: 'Items required to trigger, separate each one with a comma'
             },
+            loose_required_items: {
+                label: 'Required Items OR overwrite',
+                type: 'boolean',
+                default: false,
+                tooltip: 'If true, required items are treated as an OR comparison (by default, all must be present)'
+            },
             excluding_items: {
                 label: 'Excluding Items',
                 type: 'array',
                 placeholder: 'Items that will prevent trigger, separate each one with a comma'
+            },
+            loose_excluding_items: {
+                label: 'Excluding Items OR overwrite',
+                type: 'boolean',
+                default: false,
+                tooltip: 'If true, excluding items are treated as an OR comparison (by default, all must be absent)'
             }
         }
     },
