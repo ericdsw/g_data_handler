@@ -8,6 +8,8 @@ import {
     Chip,
     Tooltip,
     Typography,
+    Checkbox,
+    FormControlLabel
 } from '@material-ui/core';
 import { SimpleCollapse } from '../../../elements';
 
@@ -32,6 +34,7 @@ class CreateChoiceForm extends React.Component {
         newChoiceKey: '',
         newChoiceValue: '',
         newChoiceMessage: '',
+        newChoiceIsDefaultCancel: false
     }
 
     handleAddChoice = event => {
@@ -40,7 +43,9 @@ class CreateChoiceForm extends React.Component {
         event.stopPropagation();
 
         const { creationHandler, enqueueSnackbar } = this.props;
-        const { newChoiceKey, newChoiceValue, newChoiceMessage } = this.state;
+        const { 
+            newChoiceKey, newChoiceValue, newChoiceMessage, newChoiceIsDefaultCancel
+        } = this.state;
 
         if (newChoiceKey === '') {
             enqueueSnackbar('Choice key is required', {variant: 'error'});
@@ -49,7 +54,8 @@ class CreateChoiceForm extends React.Component {
         } else {
             const data = {
                 key: newChoiceKey,
-                value: newChoiceValue
+                value: newChoiceValue,
+                isDefaultCancel: newChoiceIsDefaultCancel
             };
             if (newChoiceMessage) {
                 data['next_message'] = newChoiceMessage;
@@ -65,6 +71,10 @@ class CreateChoiceForm extends React.Component {
 
     handleInputChange = identifier => event => {
         this.setState({[identifier]: event.target.value});
+    }
+
+    handleCheckboxChange = identifier => event => {
+        this.setState({[identifier]: event.target.checked});
     }
 
     handleToggleVisibility = () => {
@@ -88,6 +98,9 @@ class CreateChoiceForm extends React.Component {
                             className={classes.choiceChip}
                             label={`${currentChoice.key}:${currentChoice.value}`} 
                             onDelete={this.handleDeleteChoice(currentChoice.key)}
+                            style={{
+                                border: currentChoice.isDefaultCancel ? '1px solid red' : 'none'
+                            }}
                         />
                     </Tooltip>
                 );
@@ -99,6 +112,9 @@ class CreateChoiceForm extends React.Component {
                         className={classes.choiceChip}
                         label={`${currentChoice.key}:${currentChoice.value}`} 
                         onDelete={this.handleDeleteChoice(currentChoice.key)}
+                        style={{
+                            border: currentChoice.isDefaultCancel ? '1px solid red' : 'none'
+                        }}
                     />
                 );
             }
@@ -130,14 +146,30 @@ class CreateChoiceForm extends React.Component {
                             value={this.state.newChoiceValue}
                             onChange={this.handleInputChange('newChoiceValue')}
                         />
-                        <TextField
-                            label='Next Message'
-                            variant='outlined'
-                            fullWidth
-                            margin='normal' 
-                            value={this.state.newChoiceMessage}
-                            onChange={this.handleInputChange('newChoiceMessage')}
-                        />
+                        <Grid container spacing={2} alignItems='center'>
+                            <Grid item xs={8}>
+                                <TextField
+                                    label='Next Message'
+                                    variant='outlined'
+                                    fullWidth
+                                    margin='normal' 
+                                    value={this.state.newChoiceMessage}
+                                    onChange={this.handleInputChange('newChoiceMessage')}
+                                />
+                            </Grid>
+                            <Grid item xs={4}>
+                                <FormControlLabel
+                                    label='Default Cancel'
+                                    control={
+                                        <Checkbox 
+                                            checked={this.state.newChoiceIsDefaultCancel}
+                                            value={this.state.newChoiceIsDefaultCancel}
+                                            onChange={this.handleCheckboxChange('newChoiceIsDefaultCancel')}
+                                        />
+                                    }
+                                />
+                            </Grid> 
+                        </Grid>
                         <Button
                             variant='contained'
                             color='secondary'
