@@ -34,6 +34,9 @@ const ConversationChoices = props => {
                             className={classes.chip}
                             color='primary'
                             label={label} 
+                            style={{
+                                border: currentChoice.isDefaultCancel ? '1px solid red' : 'none'
+                            }}
                         />
                         </Tooltip>
                     );
@@ -43,6 +46,9 @@ const ConversationChoices = props => {
                         key={currentChoice.key}
                         className={classes.chip}
                         label={`${currentChoice.key}: ${currentChoice.value}`} 
+                        style={{
+                            border: currentChoice.isDefaultCancel ? '1px solid red' : 'none'
+                        }}
                     />
                 );
 
