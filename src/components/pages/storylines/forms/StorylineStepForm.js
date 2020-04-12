@@ -1,31 +1,30 @@
-import React from 'react';
-import { GenericForm } from '../../../elements';
+import React from "react";
+import { GenericForm } from "../../../elements";
 
 const schema = {
-    parameters: {
-        name: {
-            label: 'Step Name',
-            type: 'text',
-            required: true,
-        }
-    }
-}
+  parameters: {
+    name: {
+      label: "Step Name",
+      type: "text",
+      required: true,
+    },
+  },
+};
 
-const StorylineStepForm = props => {
+const StorylineStepForm = (props) => {
+  const { stepName = "", buttonText = "Create" } = props;
+  const { handleSubmit } = props;
 
-    const { stepName = '', buttonText = 'Create' } = props;
-    const { handleSubmit } = props;
+  const data = { name: stepName };
 
-    const data = { name: stepName };
-
-    return (
-        <GenericForm
-            initialDataSet={data}
-            schema={schema}
-            buttonText={buttonText}
-            handleSubmit={data => handleSubmit(data.name)}
-        />
-    );
-}
+  return (
+    <GenericForm
+      initialDataSet={data}
+      schema={schema}
+      buttonText={buttonText}
+      handleSubmit={(data) => handleSubmit(data.name)}
+    />
+  );
+};
 
 export default StorylineStepForm;

@@ -1,7 +1,4 @@
-import CreateEventForm from './CreateEventForm';
-import CreateJumpForm from './CreateJumpForm';
+import CreateEventForm from "./CreateEventForm";
+import CreateJumpForm from "./CreateJumpForm";
 
-export {
-    CreateEventForm,
-    CreateJumpForm
-}
+export { CreateEventForm, CreateJumpForm };

@@ -1,5 +1,3 @@
-import StorylinePage from './StorylinePage';
+import StorylinePage from "./StorylinePage";
 
-export {
-    StorylinePage
-}
+export { StorylinePage };
