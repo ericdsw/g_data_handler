@@ -27,8 +27,8 @@ const storylineEntityInputSchema = {
         label: "Resource Path",
         type: "text",
         required: true,
-        tooltip: "Full path to the NPC scene",
-        placeholder: "res://path/to/npc.tscn",
+        tooltip: "Path to the NPC scene, starting from the NPC/Custom folder",
+        placeholder: "path/to/npc.tscn",
       },
       animation: {
         label: "Animation",

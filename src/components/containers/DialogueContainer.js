@@ -197,6 +197,7 @@ class DialogueContainer extends React.Component {
     } = this.props;
 
     let content;
+    console.log(dialogues);
 
     if (currentDialogue !== "") {
       content = (

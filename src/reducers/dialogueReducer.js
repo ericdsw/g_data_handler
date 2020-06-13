@@ -163,7 +163,7 @@ function updateDialogue(state, action) {
   const { fileName, dialogueId, entities } = action.payload;
   return {
     ...state,
-    entities,
+    ...entities,
     fileName,
     currentDialogue: dialogueId,
   };
