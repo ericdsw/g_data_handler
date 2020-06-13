@@ -1,268 +1,260 @@
-import React, { useState } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import React, { useState } from "react";
+import { withStyles } from "@material-ui/core/styles";
 import {
-    ExpansionPanel,
-    ExpansionPanelSummary,
-    ExpansionPanelDetails,
-    Typography,
-    Grid,
-    Button,
-    IconButton,
-    Icon,
-    Tooltip,
-    Checkbox
-} from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Droppable } from 'react-beautiful-dnd';
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  Typography,
+  Grid,
+  Button,
+  IconButton,
+  Icon,
+  Tooltip,
+  Checkbox,
+} from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Droppable } from "react-beautiful-dnd";
 
-import { ConfirmationDialogue, GenericDialogue } from '../../elements';
-import { useDialogueManager } from '../../../hooks';
-import DialogueMessageContainer from '../../containers/DialogueMessageContainer';
-import { CreateConversationForm } from './forms';
+import { ConfirmationDialogue, GenericDialogue } from "../../elements";
+import { useDialogueManager } from "../../../hooks";
+import DialogueMessageContainer from "../../containers/DialogueMessageContainer";
+import { CreateConversationForm } from "./forms";
 import {
-    CreateDialogueMessageForm,
-    CreateEmoteForm,
-    CreateSwarmForm
-} from './forms';
+  CreateDialogueMessageForm,
+  CreateEmoteForm,
+  CreateSwarmForm,
+} from "./forms";
 
-import { styles } from './styles/DialogueConversationStyle';
+import { styles } from "./styles/DialogueConversationStyle";
 
-const DialogueConversation = props => {
+const DialogueConversation = (props) => {
+  const { conversation, classes, conversationsToMerge } = props;
+  const {
+    handleDeleteConversation,
+    handleAddToConversation,
+    handleUpdateConversation,
+    handleToggleFromMerger,
+  } = props;
 
-    const { conversation, classes, conversationsToMerge } = props;
-    const { 
-        handleDeleteConversation, handleAddToConversation, 
-        handleUpdateConversation, handleToggleFromMerger
-    } = props;
+  const [dialogues, toggleDialogue] = useDialogueManager(
+    "confirmDelete",
+    "updateConversation",
+    "addMessage",
+    "addEmote",
+    "addSwarm"
+  );
+  const [isExpanded, setIsExpanded] = useState(false);
 
-    const [dialogues, toggleDialogue] = useDialogueManager(
-        'confirmDelete', 'updateConversation', 'addMessage', 'addEmote',
-        'addSwarm'
-    );
-    const [isExpanded, setIsExpanded] = useState(false);
+  function onEditClick(event) {
+    event.stopPropagation();
+    toggleDialogue("updateConversation", "show");
+  }
 
-    function onEditClick(event) {
-        event.stopPropagation();
-        toggleDialogue('updateConversation', 'show');
-    }
+  function onDeleteClick(event) {
+    event.stopPropagation();
+    toggleDialogue("confirmDelete", "show");
+  }
 
-    function onDeleteClick(event) {
-        event.stopPropagation();
-        toggleDialogue('confirmDelete', 'show');
-    }
+  function handlePanelChange(expanded) {
+    setIsExpanded(expanded);
+  }
 
-    function handlePanelChange(expanded) {
-        setIsExpanded(expanded);
-    }
+  function handleCheckboxChange(event) {
+    handleToggleFromMerger(event.target.checked);
+  }
 
-    function handleCheckboxChange(event) {
-        handleToggleFromMerger(event.target.checked);
-    }
-
-    return (
-        <ExpansionPanel 
-            className={classes.conversationContainer} 
-            square={true}
-            onChange={(event, expanded) => handlePanelChange(expanded)}
-        >
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Grid container alignItems='center'>
-
-                    {/* Title Data */}
-                    <Grid item xs={12} md={6}>
-                        <Grid container>
-                            <Grid item>
-                                <div 
-                                    className={classes.dragHandleElement}
-                                    {...props.dragHandleProps}
-                                >
-                                    <Icon>drag_handle</Icon>
-                                </div>
-                            </Grid>
-                            <Grid item xs>
-                                <Typography className={classes.heading}>
-                                    <b>Name: {conversation.conversationName}</b>
-                                </Typography>
-                                <Typography className={classes.subHeading}>
-                                    ({conversation.messages.length} {
-                                        (conversation.messages.length === 1) ?
-                                            'message' : 'messages'
-                                    })
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-
-                    {/* Buttons */}
-                    <Grid item xs={12} md={6}>
-                        <Grid container justify='flex-end'>
-                            <Tooltip title='Merge'>
-                                <Checkbox 
-                                    checked={conversationsToMerge.includes(conversation.id)}
-                                    value={conversation.id}
-                                    onChange={e => handleCheckboxChange(e)}
-                                    onClick={e => e.stopPropagation()}
-                                />
-                            </Tooltip>
-                            <Tooltip
-                                title='Edit Conversation Name'
-                                enterDelay={200}
-                            >
-                                <IconButton onClick={e => onEditClick(e)}>
-                                    <Icon>edit</Icon>
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title='Delete Conversation' enterDelay={200}>
-                                <IconButton onClick={e => onDeleteClick(e)}>
-                                    <Icon>delete</Icon>
-                                </IconButton>
-                            </Tooltip>
-                        </Grid>
-                    </Grid>
-
-                </Grid>
-            </ExpansionPanelSummary>
-
-            <ExpansionPanelDetails>
-                <div className={classes.detailsContainer}>
-
-                    <Droppable
-                        droppableId={conversation.id}
-                        type={`messages`}
-                        isDropDisabled={! isExpanded}
-                    >
-                        {provided => (
-                            <div 
-                                className={classes.messageContainer}
-                                ref={provided.innerRef}
-                                {...provided.droppableProps}
-                            >
-                                {conversation.messages.map((messageId, index) => (
-                                    <DialogueMessageContainer 
-                                        key={messageId}
-                                        conversationId={conversation.id}
-                                        messageId={messageId}
-                                        index={index}
-                                        isDragDisabled={! isExpanded}
-                                    />
-                                ))}
-                                {provided.placeholder}
-                                
-                            </div>
-                        )}
-                    </Droppable>
-
-                    <div className={classes.buttonContainer}>
-                        <Button 
-                            style={{marginTop: 8, marginRight: 16}}
-                            color='primary'
-                            variant='contained'
-                            onClick={() => {
-                                toggleDialogue('addMessage', 'show');
-                            }}
-                        >
-                            Add message
-                        </Button>
-                        <Button
-                            style={{marginTop: 8, marginRight: 16}}
-                            color='secondary'
-                            variant='contained'
-                            onClick={() => {
-                                toggleDialogue('addEmote', 'show');
-                            }}
-                        >
-                            Add emote
-                        </Button>
-                        <Button
-                            style={{marginTop: 8}}
-                            color='secondary'
-                            variant='contained'
-                            onClick={() => toggleDialogue('addSwarm', 'show')}
-                        >
-                            Add Dialogue Swarn
-                        </Button>
-                    </div>
+  return (
+    <ExpansionPanel
+      className={classes.conversationContainer}
+      square={true}
+      onChange={(event, expanded) => handlePanelChange(expanded)}
+    >
+      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+        <Grid container alignItems="center">
+          {/* Title Data */}
+          <Grid item xs={12} md={6}>
+            <Grid container>
+              <Grid item>
+                <div
+                  className={classes.dragHandleElement}
+                  {...props.dragHandleProps}
+                >
+                  <Icon>drag_handle</Icon>
                 </div>
+              </Grid>
+              <Grid item xs>
+                <Typography className={classes.heading}>
+                  <b>Name: {conversation.conversationName}</b>
+                </Typography>
+                <Typography className={classes.subHeading}>
+                  ({conversation.messages.length}{" "}
+                  {conversation.messages.length === 1 ? "message" : "messages"})
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
 
-            </ExpansionPanelDetails>
-
-            {/* Create Message Form */}
-            <GenericDialogue
-                title='Create Conversation'
-                open={dialogues['addMessage']}
-                onClose={() => toggleDialogue('addMessage', 'hide')}
-            >
-                <CreateDialogueMessageForm
-                    creationHandler={(data, createAndContinue) => {
-                        if (! createAndContinue) {
-                            toggleDialogue('addMessage', 'hide');
-                        }
-                        handleAddToConversation(data);
-                    }}
-                    isEdit={false}
+          {/* Buttons */}
+          <Grid item xs={12} md={6}>
+            <Grid container justify="flex-end">
+              <Tooltip title="Merge">
+                <Checkbox
+                  checked={conversationsToMerge.includes(conversation.id)}
+                  value={conversation.id}
+                  onChange={(e) => handleCheckboxChange(e)}
+                  onClick={(e) => e.stopPropagation()}
                 />
-            </GenericDialogue>
+              </Tooltip>
+              <Tooltip title="Edit Conversation Name" enterDelay={200}>
+                <IconButton onClick={(e) => onEditClick(e)}>
+                  <Icon>edit</Icon>
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete Conversation" enterDelay={200}>
+                <IconButton onClick={(e) => onDeleteClick(e)}>
+                  <Icon>delete</Icon>
+                </IconButton>
+              </Tooltip>
+            </Grid>
+          </Grid>
+        </Grid>
+      </ExpansionPanelSummary>
 
-            {/* Create Emote form */}
-            <GenericDialogue
-                title='Create Emote'
-                open={dialogues['addEmote']}
-                onClose={() => toggleDialogue('addEmote', 'hide')}
-                maxWidth='sm'
+      <ExpansionPanelDetails>
+        <div className={classes.detailsContainer}>
+          <Droppable
+            droppableId={conversation.id}
+            type={`messages`}
+            isDropDisabled={!isExpanded}
+          >
+            {(provided) => (
+              <div
+                className={classes.messageContainer}
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {conversation.messages.map((messageId, index) => (
+                  <DialogueMessageContainer
+                    key={messageId}
+                    conversationId={conversation.id}
+                    messageId={messageId}
+                    index={index}
+                    isDragDisabled={!isExpanded}
+                  />
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+
+          <div className={classes.buttonContainer}>
+            <Button
+              style={{ marginTop: 8, marginRight: 16 }}
+              color="primary"
+              variant="contained"
+              onClick={() => {
+                toggleDialogue("addMessage", "show");
+              }}
             >
-                <CreateEmoteForm
-                    creationHandler={data => {
-                        toggleDialogue('addEmote', 'hide');
-                        handleAddToConversation(data);
-                    }}
-                /> 
-            </GenericDialogue>
-
-            {/* Create Swarm form */}
-            <GenericDialogue
-                title='Create Swarm'
-                open={dialogues['addSwarm']}
-                onClose={() => toggleDialogue('addSwarm', 'hide')}
+              Add message
+            </Button>
+            <Button
+              style={{ marginTop: 8, marginRight: 16 }}
+              color="secondary"
+              variant="contained"
+              onClick={() => {
+                toggleDialogue("addEmote", "show");
+              }}
             >
-                <CreateSwarmForm 
-                    isEdit={false}
-                    handleSubmit={data => {
-                        toggleDialogue('addSwarm', 'hide');
-                        handleAddToConversation(data);
-                    }}
-                />
-            </GenericDialogue>
-
-            {/* Edit Conversation Name */}
-            <GenericDialogue
-                title='Edit Conversation'
-                open={dialogues['updateConversation']}
-                onClose={() => toggleDialogue('updateConversation', 'hide')}
-                maxWidth='sm'
+              Add emote
+            </Button>
+            <Button
+              style={{ marginTop: 8 }}
+              color="secondary"
+              variant="contained"
+              onClick={() => toggleDialogue("addSwarm", "show")}
             >
-                <CreateConversationForm
-                    conversationName={conversation.conversationName}
-                    creationHandler={newName => {
-                        toggleDialogue('updateConversation', 'hide');
-                        handleUpdateConversation(newName);
-                    }}
-                />
-            </GenericDialogue>
+              Add Dialogue Swarn
+            </Button>
+          </div>
+        </div>
+      </ExpansionPanelDetails>
 
-            {/* Delete Confirmation */}
-            <ConfirmationDialogue
-                message='Delete the current conversation?'
-                isOpen={dialogues['confirmDelete']}
-                handleClose={() => toggleDialogue('confirmDelete', 'hide')}
-                handleConfirm={() => {
-                    handleDeleteConversation();
-                    toggleDialogue('confirmDelete', 'hide');
-                }}
-            />
+      {/* Create Message Form */}
+      <GenericDialogue
+        title="Create Conversation"
+        open={dialogues["addMessage"]}
+        onClose={() => toggleDialogue("addMessage", "hide")}
+      >
+        <CreateDialogueMessageForm
+          creationHandler={(data, createAndContinue) => {
+            if (!createAndContinue) {
+              toggleDialogue("addMessage", "hide");
+            }
+            handleAddToConversation(data);
+          }}
+          isEdit={false}
+        />
+      </GenericDialogue>
 
-       </ExpansionPanel>
-    );
-}
+      {/* Create Emote form */}
+      <GenericDialogue
+        title="Create Emote"
+        open={dialogues["addEmote"]}
+        onClose={() => toggleDialogue("addEmote", "hide")}
+        maxWidth="sm"
+      >
+        <CreateEmoteForm
+          creationHandler={(data) => {
+            toggleDialogue("addEmote", "hide");
+            handleAddToConversation(data);
+          }}
+        />
+      </GenericDialogue>
+
+      {/* Create Swarm form */}
+      <GenericDialogue
+        title="Create Swarm"
+        open={dialogues["addSwarm"]}
+        onClose={() => toggleDialogue("addSwarm", "hide")}
+      >
+        <CreateSwarmForm
+          isEdit={false}
+          handleSubmit={(data) => {
+            toggleDialogue("addSwarm", "hide");
+            handleAddToConversation(data);
+          }}
+        />
+      </GenericDialogue>
+
+      {/* Edit Conversation Name */}
+      <GenericDialogue
+        title="Edit Conversation"
+        open={dialogues["updateConversation"]}
+        onClose={() => toggleDialogue("updateConversation", "hide")}
+        maxWidth="sm"
+      >
+        <CreateConversationForm
+          conversationName={conversation.conversationName}
+          creationHandler={(newName) => {
+            toggleDialogue("updateConversation", "hide");
+            handleUpdateConversation(newName);
+          }}
+        />
+      </GenericDialogue>
+
+      {/* Delete Confirmation */}
+      <ConfirmationDialogue
+        message="Delete the current conversation?"
+        isOpen={dialogues["confirmDelete"]}
+        handleClose={() => toggleDialogue("confirmDelete", "hide")}
+        handleConfirm={() => {
+          handleDeleteConversation();
+          toggleDialogue("confirmDelete", "hide");
+        }}
+      />
+    </ExpansionPanel>
+  );
+};
 
 export default withStyles(styles)(DialogueConversation);
-

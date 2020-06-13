@@ -1,22 +1,22 @@
-import { blue } from '@material-ui/core/colors';
+import { blue } from "@material-ui/core/colors";
 
-export const styles = theme => ({
-    emoteContainer: {
-        backgroundColor: '#222',
-        borderBottom: '1px solid #666',
-    },
-    emoteImage: {
-        width: 64,
-        height: 64,
-        padding: 8,
-        backgroundColor: '#fff',
-        margin: 0
-    },
-    emoteTarget: {
-        color: blue[200],
-        fontWeight: 'bold'
-    },
-    toolbarButton: {
-        color: '#fff'
-    }
+export const styles = (theme) => ({
+  emoteContainer: {
+    backgroundColor: "#222",
+    borderBottom: "1px solid #666",
+  },
+  emoteImage: {
+    width: 64,
+    height: 64,
+    padding: 8,
+    backgroundColor: "#fff",
+    margin: 0,
+  },
+  emoteTarget: {
+    color: blue[200],
+    fontWeight: "bold",
+  },
+  toolbarButton: {
+    color: "#fff",
+  },
 });

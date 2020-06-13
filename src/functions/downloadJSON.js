@@ -1,11 +1,9 @@
-
 export default function downloadJSON(fileName, jsonData) {
+  const data = encodeURIComponent(JSON.stringify(jsonData));
+  const uri = `data:application/json;charset=utf-8,${data}`;
 
-    const data = encodeURIComponent(JSON.stringify(jsonData));
-    const uri = `data:application/json;charset=utf-8,${data}`;
-
-    const linkElement = document.createElement('a');
-    linkElement.setAttribute('href', uri);
-    linkElement.setAttribute('download', fileName);
-    linkElement.click();
+  const linkElement = document.createElement("a");
+  linkElement.setAttribute("href", uri);
+  linkElement.setAttribute("download", fileName);
+  linkElement.click();
 }

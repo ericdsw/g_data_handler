@@ -1,5 +1,3 @@
-import DialoguePage from './DialoguePage';
+import DialoguePage from "./DialoguePage";
 
-export {
-    DialoguePage
-}
+export { DialoguePage };

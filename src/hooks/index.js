@@ -1,5 +1,3 @@
-import useDialogueManager from './useDialogueManager';
+import useDialogueManager from "./useDialogueManager";
 
-export {
-    useDialogueManager
-}
+export { useDialogueManager };

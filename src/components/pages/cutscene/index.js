@@ -1,5 +1,3 @@
-import CutscenePage from './CutscenePage';
+import CutscenePage from "./CutscenePage";
 
-export {
-    CutscenePage
-}
+export { CutscenePage };

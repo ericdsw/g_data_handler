@@ -1,8 +1,3 @@
+export const transformIn = (inData) => {};
 
-export const transformIn = inData => {
-
-}
-
-export const transformOut = outData => {
-
-}
+export const transformOut = (outData) => {};

@@ -1,946 +1,979 @@
 const eventSchema = {
+  gain_abilities: {
+    name: "Gain Abilities",
+    icon: "offline_bolt",
+    defaultImportant: true,
+    additionalText:
+      "Will display the level up overlay, allowing the player to level up to the max allowed level defined",
+    parameters: {
+      max_level: {
+        label: "Max allowed level",
+        type: "number",
+        required: true,
+        tooltip: "Max level allowed by this overlay",
+        placeholder: "0-5",
+      },
+    },
+  },
 
-    "gain_abilities": {
-        name: "Gain Abilities",
-        icon: 'offline_bolt',
-        defaultImportant: true,
-        additionalText: 'Will display the level up overlay, allowing the player to level up to the max allowed level defined',
-        parameters: {
-            max_level: {
-                label: 'Max allowed level',
-                type: 'number',
-                required: true,
-                tooltip: 'Max level allowed by this overlay',
-                placeholder: '0-5'
-            }
+  animation: {
+    name: "Animation",
+    icon: "camera_roll",
+    defaultImportant: true,
+    additionalText: "Forces the target object to play an animation",
+    parameters: {
+      object: {
+        label: "Object",
+        type: "node_target",
+        required: true,
+        tooltip:
+          "The Object that will be animated. Must have an AnimationPlayer",
+        placeholder: "BASE:node_name",
+      },
+      animation: {
+        label: "Animation",
+        type: "text",
+        default: "idle",
+        tooltip: "The animation that will play",
+        placeholder: "animation_name",
+      },
+      loop: {
+        label: "Animation Must Loop",
+        type: "boolean",
+        default: false,
+        tooltip:
+          "If true, the animation will loop instead of stopping in the last frame",
+      },
+      finish_animation: {
+        label: "Finish Animation Name",
+        type: "text",
+        default: "",
+        tooltip:
+          "Will play when the specified animation ends (only if loops is set to false)",
+        placeholder: "animation_name",
+      },
+    },
+  },
+
+  battle: {
+    name: "Battle",
+    icon: "whatshot",
+    defaultImportant: true,
+    additionalText: "Starts a battle with the provided parameters",
+    parameters: {
+      map_scene: {
+        label: "Map Scene",
+        type: "text",
+        required: true,
+        tooltip:
+          "The map scene in which the battle will take place (full path)",
+        placeholder: "res://Path/to/battle_map.tscn",
+      },
+      enemy_scene: {
+        label: "Enemy Scene",
+        type: "text",
+        required: true,
+        tooltip: "The enemy",
+        placeholder: "res://Path/to/enemy.tscn",
+      },
+      max_hp: {
+        label: "Enemy Max HP",
+        type: "number",
+        required: true,
+        tooltip: "How much health the enemy will have",
+      },
+      cutscene_file: {
+        label: "End Cutscene File",
+        type: "text",
+        default: "",
+        tooltip:
+          "If specified, will play this cutscene when the battle finishes",
+        placeholder: "path_to/cutscene.json (from Cutscenes resource folder)",
+      },
+      win_state_changes: {
+        label: "Win State Changes",
+        type: "json",
+        default: "",
+        tooltip:
+          "If specified, a dictionary that maps map aliases with their new state",
+        placeholder: '{"v/h": "new_state"}',
+      },
+    },
+  },
+
+  change_bgm: {
+    name: "Change BGM",
+    icon: "music_note",
+    defaultImportant: true,
+    additionalText: "Update the current BGM to the one provided",
+    parameters: {
+      BGM: {
+        label: "BGM file name",
+        type: "text",
+        default: "",
+        placeholder: "Leave blank to mute the current BGM",
+        tooltip:
+          "The BGM to play (format: name.ogg). If left blank, the current bgm will stop playing",
+      },
+      offset: {
+        label: "Start Offset",
+        type: "number",
+        default: 0,
+        tooltip: "At which offset the bgm will start",
+      },
+      cross_transition: {
+        label: "Should Cross Transition",
+        type: "boolean",
+        default: true,
+        tooltip: "If true, the current BGM will fade into the new bgm",
+      },
+    },
+  },
+  change_enemy: {
+    name: "Change Enemy",
+    icon: "swap_horizontal",
+    defaultImportant: true,
+    additionalText:
+      "Only works inside a battle, changes the current enemy to a new enemy instance",
+    parameters: {
+      new_enemy: {
+        label: "New Enemy Scene Name",
+        type: "text",
+        required: true,
+        tooltip: "The new enemy scene from the Enemies folder",
+        placeholder: "path/to/Enemy.tscn",
+      },
+      new_enemy_animation: {
+        label: "Starting Animation",
+        type: "text",
+        default: "idle",
+        tooltip:
+          "The animation that the new enemy will use upon entering the battle (will loop)",
+        placeholder: "animation_name",
+      },
+    },
+  },
+
+  change_map: {
+    name: "Change Map",
+    icon: "collections",
+    defaultImportant: true,
+    additionalText: "Teleports to the provided map",
+    parameters: {
+      map: {
+        label: "Map Scene Path",
+        type: "text",
+        required: true,
+        tooltip: "The full path to the map scene",
+        placeholder: "res://path/to/map_scene.tscn",
+      },
+      position: {
+        label: "Position In Map",
+        type: "position",
+        required: true,
+        tooltip:
+          "The where the player will appear in the new map. Can be a vector or a nodename",
+      },
+      new_target: {
+        label: "New Target",
+        type: "node_target",
+        default: "",
+        tooltip: "Node that will be the new focus of the camera in the new map",
+        placeholder: "BASE:node_name",
+      },
+      peeks: {
+        label: "Peeks",
+        type: "boolean",
+        default: false,
+        tooltip: "If true, the player will not appear in the new map",
+      },
+      finish_early: {
+        label: "Should Finish Early",
+        type: "boolean",
+        default: false,
+        tooltip:
+          "If true, the event will finish when the screen is still black",
+      },
+      keep_sprites: {
+        label: "Keep Sprites",
+        type: "text",
+        placeholder:
+          "node_name=next_pos,another_node=next_pos,yet_another_node",
+        tooltip:
+          "Which nodes will be visible between changes, must have a Sprite child",
+      },
+    },
+  },
+
+  change_map_state: {
+    name: "Change Map State",
+    icon: "layers",
+    defaultImportant: true,
+    additionalText:
+      "Updates the target map to the new provided state (if present)",
+    parameters: {
+      map: {
+        label: "Map Alias",
+        type: "text",
+        required: true,
+        tooltip: "The map alias (found in MapNameResolver)",
+        placeholder: "M/al",
+      },
+      state: {
+        label: "New State",
+        type: "text",
+        required: true,
+        tooltip: "The new state",
+        placeholder: "new_state_name",
+      },
+    },
+  },
+
+  overworld_player_state: {
+    name: "Change PlayerOverworld State",
+    icon: "face",
+    defaultImportant: true,
+    additionalText:
+      "Updates what state will be forced to the player overworld once the cutscene finishes",
+    parameters: {
+      new_state: {
+        label: "New State",
+        type: "text",
+        required: true,
+        tooltip: "The state the player will be at the end of the cutscene",
+        placeholder: "OverworldStateName",
+      },
+    },
+  },
+
+  color_flash: {
+    name: "Color Flash",
+    icon: "wb_sunny",
+    defaultImportant: true,
+    additionalText: "Flash a color overlay that covers the entire screen",
+    parameters: {
+      color_hex: {
+        label: "Color (Hex Value)",
+        type: "text",
+        default: "#ffffff",
+        tooltip: "The color that will flash (in hex)",
+      },
+      in_duration: {
+        label: "In Duration",
+        type: "number",
+        default: 0.05,
+        tooltip: "The fade-in duration",
+      },
+      stay_duration: {
+        label: "Stay Duration",
+        type: "number",
+        default: 0,
+        tooltip: "How long the color will stay before fading out",
+      },
+      out_duration: {
+        label: "Out Duration",
+        type: "number",
+        default: 0.05,
+        tooltip: "The fade-out duration",
+      },
+      covers_ui: {
+        label: "Should Cover UI",
+        type: "boolean",
+        default: false,
+        tooltip:
+          "If true, the flash will cover UI elements (ex: the health bar)",
+      },
+    },
+  },
+
+  conditional_state_change: {
+    name: "Conditional State Change",
+    icon: "developer_board",
+    defaultImportant: true,
+    additionalText:
+      "Updates one or more map states depending on the states present on other maps",
+    parameters: {
+      checked_maps: {
+        label: "Maps To Check",
+        type: "json",
+        required: true,
+        tooltip:
+          "All of these maps must have the specified states to trigger the change",
+        placeholder: '{ UF/r01: "some_state", UF/r02: "some_other_state" }',
+      },
+      target_maps: {
+        label: "Maps To Change",
+        type: "json",
+        required: true,
+        tooltip:
+          "All of the maps that will change states, with their new state",
+        placeholder: '{ UF/r05: "new_state", UF/r06: "other_new_state" }',
+      },
+      is_force_write: {
+        label: "Is Force-Write",
+        type: "boolean",
+        default: false,
+        tooltip: "If the change is force-write",
+      },
+    },
+  },
+
+  jump: {
+    name: "Cutscene Jump",
+    icon: "flight_takeoff",
+    defaultImportant: true,
+    additionalText:
+      "Halts the execution of the current cutscene and fires a new cutscene defined in the cutscene_jumps reference",
+    parameters: {
+      jump_name: {
+        label: "Jump Name",
+        type: "text",
+        required: true,
+        tooltip:
+          "The jump name (note: must exist in the cutscene_jumps ref, will terminate the current cutscene event)",
+        placeholder: "jump_name",
+      },
+    },
+  },
+
+  damage_enemy: {
+    name: "Damage Enemy",
+    icon: "mood_bad",
+    defaultImportant: true,
+    additionalText:
+      "Applies the provided amount of damage to the enemy (will always leave at least 1 hp)",
+    parameters: {
+      amount: {
+        label: "Damage Amount",
+        type: "number",
+        default: 1,
+        tooltip: "How much damage the enemy will receive",
+      },
+    },
+  },
+
+  damage_player: {
+    name: "Damage Player",
+    icon: "mood_bad",
+    defaultImportant: true,
+    additionalText:
+      "Applies the provided amount of damage to the player (will always leave at least 1 hp)",
+    parameters: {
+      amount: {
+        label: "Damage Amount",
+        type: "number",
+        default: 1,
+        tooltip: "How much damage the player will receive",
+      },
+    },
+  },
+
+  destroy_object: {
+    name: "Destroy Object",
+    icon: "cancel",
+    defaultImportant: true,
+    additionalText: "Frees the provided instance",
+    parameters: {
+      object: {
+        label: "Object to Destroy",
+        type: "node_target",
+        required: true,
+        tooltip: "The object to be destroyed. is a NODE_TARGET",
+        placeholder: "BASE:node_name",
+      },
+    },
+  },
+
+  dialogue: {
+    name: "Dialogue",
+    icon: "chat_bubble",
+    defaultImportant: true,
+    additionalText: "Starts a dialogue with the provided parameters",
+    parameters: {
+      file: {
+        label: "JSON file",
+        type: "text",
+        required: true,
+        tooltip:
+          "The file that contains the target conversation (from the Dialogues resource folder)",
+        placeholder: "path/to/dialogue.json",
+      },
+      name: {
+        label: "Conversation Name",
+        type: "text",
+        required: true,
+        tooltip: "The conversation name inside the file",
+        placecholder: "conversation_name",
+      },
+    },
+  },
+
+  exit_battle: {
+    name: "Exit Battle",
+    icon: "exit_to_app",
+    defaultImportant: true,
+    additionalText:
+      "Forces a battle to finish early and returns to the overworld",
+    parameters: {
+      finish_early: {
+        label: "Should Finish Early",
+        type: "boolean",
+        default: false,
+        tooltip:
+          "If true, the event will finish when the screen is still black",
+      },
+      custom_return_map: {
+        label: "Custom Return Map Alias",
+        type: "text",
+        default: null,
+        tooltip:
+          "If defined, the player will return to this map instead of his previous map",
+        placeholder: "res://path/to/map_scene.tscn",
+      },
+      custom_return_position: {
+        label: "Custom Return Position",
+        type: "position",
+        default: null,
+        tooltip:
+          "If defined, the custom position that the player will return to",
+      },
+    },
+  },
+
+  give_item: {
+    name: "Give Item",
+    icon: "add_shopping_cart",
+    defaultImportant: true,
+    additionalText: "Adds the item to the player's inventory",
+    parameters: {
+      item_type: {
+        label: "Item Type",
+        type: "text",
+        default: "key_item",
+        tooltip: "The type of item",
+      },
+      item_id: {
+        label: "Item ID",
+        type: "text",
+        required: true,
+        tooltip: "The required item id",
+      },
+      aux_message: {
+        label: "Optional Message",
+        type: "text",
+        default: null,
+        tooltip: "Will be displayed after the item is given",
+      },
+    },
+  },
+
+  next_run: {
+    name: "Go to Next Run",
+    icon: "fast_forward",
+    defaultImportant: true,
+    additionalText:
+      "Updates the current active game run and returns to the title screen",
+    parameters: {
+      next_run_name: {
+        label: "Next Run",
+        type: "text",
+        required: true,
+        tooltip: "The text that identifies the next run",
+      },
+    },
+  },
+
+  level_up: {
+    name: "Level Up",
+    icon: "star",
+    defaultImportant: true,
+    additionalText:
+      "Forces the provided level to the player, without any UI or interaction required",
+    parameters: {
+      target_level: {
+        label: "Target Level",
+        type: "number",
+        default: 1,
+        tooltip: "The target level that will be applied to the player",
+      },
+    },
+  },
+
+  minigame: {
+    name: "Minigame",
+    icon: "games",
+    defaultImportant: true,
+    additionalText:
+      "Starts a minigame, which will display a custom UI and prevent the player from moving or interacting",
+    parameters: {
+      game: {
+        label: "Minigame Identifier",
+        type: "text",
+        required: true,
+        tooltip: "The target game identifier",
+      },
+    },
+  },
+
+  move_camera: {
+    name: "Move Camera",
+    icon: "switch_camera",
+    defaultImportant: true,
+    additionalText: "Moves the camera to the new target",
+    parameters: {
+      target: {
+        label: "New Camera Target",
+        type: "node_target",
+        required: true,
+        tooltip: "The new camera target, is a NODE_TARGET",
+        placeholder: "BASE:node_name",
+      },
+      transition_duration: {
+        label: "Transition Duration",
+        type: "number",
+        default: 1,
+        tooltip: "How long the camera will take to focus on the new target",
+      },
+    },
+  },
+
+  move: {
+    name: "Move",
+    icon: "directions_walk",
+    defaultImportant: true,
+    additionalText: "Moves the provided control target to a new position",
+    parameters: {
+      at_speed: {
+        label: "Movement Speed",
+        type: "number",
+        default: 90,
+        tooltip: "How fast the target will move",
+      },
+      use_time_instead: {
+        label: "Overwrite speed with time",
+        type: "boolean",
+        default: false,
+        tooltip: "If true, the speed value will be used as a duration instead",
+      },
+      control: {
+        label: "Controlled Node",
+        type: "node_target",
+        required: true,
+        tooltip: "The node to move",
+        placeholder: "BASE:node_name",
+      },
+      destination: {
+        label: "Destinations",
+        type: "positionArray",
+        required: true,
+        placeholder: "An array of positions",
+        tooltip: "Where the target will land",
+      },
+      animates: {
+        label: "Should Animate",
+        type: "boolean",
+        default: true,
+        tooltip: "If true, the node will animate when moved",
+      },
+      dest_elevation: {
+        label: "Final Elevation",
+        type: "number",
+        default: "",
+        tooltip: "The final elevation",
+      },
+      instant_move: {
+        label: "Is Instant Move",
+        type: "boolean",
+        default: false,
+        tooltip: "If true, the move will be instantaneous",
+      },
+    },
+  },
+
+  remove_item: {
+    name: "Remove Item",
+    icon: "remove_shopping_cart",
+    defaultImportant: true,
+    additionalText: "Removes the provided item from the player's inventory",
+    parameters: {
+      item_type: {
+        label: "Item Type",
+        type: "text",
+        default: "key_item",
+        tooltip: "The type of item",
+      },
+      item_id: {
+        label: "Item ID",
+        type: "text",
+        required: true,
+        tooltip: "The item id to remove",
+      },
+    },
+  },
+
+  save: {
+    name: "Save",
+    icon: "save",
+    defaultImportant: true,
+    additionalText:
+      "Performs a save operation with the required parameters (full save if nothing is provided)",
+    parameters: {
+      map_data: {
+        label: "Map Data",
+        type: "json",
+        default: null,
+        tooltip: "The map data to save",
+        placeholder: '{ "map_name": {"key":"value"} }',
+      },
+      npc_data: {
+        label: "NPC Data",
+        type: "json",
+        default: null,
+        tooltip: "The NPC data to save",
+        placeholder: '{ "npc_name": {"map_name": "data"} }',
+      },
+      player_data: {
+        label: "Player Data",
+        type: "json",
+        default: null,
+        tooltip: "The Player data to save",
+        placeholder: '{ "key": "value" }',
+      },
+    },
+  },
+
+  shake: {
+    name: "Shake",
+    icon: "leak_add",
+    defaultImportant: true,
+    additionalText: "Causes the camera to shake with the provided parameters",
+    parameters: {
+      duration: {
+        label: "Shake Duration",
+        type: "number",
+        required: true,
+        tooltip: "How long the shake will last",
+      },
+      shake_amount: {
+        label: "Shake Strength",
+        type: "number",
+        default: 1.0,
+        tooltip: "How strong will the shake be",
+      },
+    },
+  },
+
+  sound: {
+    name: "Sound",
+    icon: "mic",
+    defaultImportant: false,
+    additionalText: "Plays the provided sound effect",
+    parameters: {
+      sound: {
+        label: "Sound File Name",
+        type: "text",
+        required: true,
+        tooltip: "The file to be played (just the name)",
+        placeholder: "file_name.wav",
+      },
+    },
+  },
+
+  spawn_object: {
+    name: "Spawn Object",
+    icon: "library_add",
+    defaultImportant: true,
+    additionalText:
+      "Adds the specified object to the map, inside the specified parent",
+    parameters: {
+      object: {
+        label: "Object Scene Full Path",
+        type: "text",
+        required: true,
+        tooltip: "The scene to spawn",
+        placeholder: "res://path/to/object.tscn",
+      },
+      position: {
+        label: "Object Position",
+        type: "position",
+        required: true,
+        tooltip: "Where the object will spawn",
+      },
+      parent: {
+        label: "Parent Object",
+        type: "node_target",
+        default: null,
+        tooltip: "If defined, the object will spawn as a child of this object",
+      },
+    },
+  },
+
+  toggle_hud: {
+    name: "Toggle HUD",
+    icon: "subtitles",
+    defaultImportant: true,
+    additionalText: "Will show/hide the battle HUD",
+    parameters: {
+      should_show: {
+        label: "Should Show",
+        type: "boolean",
+        default: false,
+        tooltip: "Whether the hud will show or hide",
+      },
+    },
+  },
+
+  visible: {
+    name: "Visible",
+    icon: "flip",
+    defaultImportant: true,
+    additionalText: "Toggles the target object's visibility",
+    parameters: {
+      object: {
+        label: "Target Object",
+        type: "node_target",
+        required: true,
+        tooltip: "The object to show or hide",
+        placeholder: "BASE:node_name",
+      },
+      visible: {
+        label: "Should Be Visible",
+        type: "boolean",
+        default: false,
+        tooltip: "Whether to show or hide the object",
+      },
+    },
+  },
+
+  wait: {
+    name: "Wait",
+    icon: "timer",
+    defaultImportant: true,
+    additionalText: "Pauses the cutscene execution for a set amount of time",
+    parameters: {
+      duration: {
+        label: "Duration",
+        type: "number",
+        required: true,
+        tooltip: "How long the wait will be",
+      },
+    },
+  },
+
+  zoom: {
+    name: "Zoom Camera",
+    icon: "zoom_out_map",
+    defaultImportant: true,
+    additionalText: "Zooms the camera to the provided scale",
+    parameters: {
+      target_zoom: {
+        label: "Target Zoom",
+        type: "number",
+        required: true,
+        tooltip: "The final zoom the camera will use",
+      },
+      zoom_duration: {
+        label: "Zoom Transition Duration",
+        type: "number",
+        required: true,
+        tooltip: "How much time will it take to zoom to the target",
+      },
+    },
+  },
+
+  ability_toggle: {
+    name: "Ability Toggle",
+    icon: "toggle_on",
+    defaultImportant: false,
+    additionalText:
+      "Enables/disables a player ability (example: dash, roll, phase)",
+    parameters: {
+      ability_name: {
+        label: "Ability Name",
+        type: "text",
+        required: true,
+        tooltip:
+          "The node name of the ability to enable/disable (on either PlayerOverworld or PlayerBattle)",
+        placeholder: "MeleeAction",
+      },
+      enabled: {
+        label: "Enabled",
+        type: "boolean",
+        default: false,
+        tooltip: "Whether the ability will be enabled or disabled",
+      },
+    },
+  },
+
+  emote: {
+    name: "Show Emotion",
+    icon: "not_listed_location",
+    defaultImportant: true,
+    additionalText: "Forces the node to display one of the pre-defined emotes",
+    parameters: {
+      target_object: {
+        label: "Target Object",
+        type: "node_target",
+        required: true,
+        tooltip: "The object that will display the emote",
+        placeholder: "BASE:node_name",
+      },
+      emote: {
+        label: "Emote",
+        type: "dropdown",
+        elements: {
+          angry: "Angry",
+          exclamation: "Exclamation",
+          question: "Question",
+          three_dots: "Three Dots",
+          sweat: "Sweat",
         },
+        required: true,
+        tooltip: "The emote to display",
+      },
     },
+  },
 
-    "animation": {
-        name: "Animation",
-        icon: 'camera_roll',
-        defaultImportant: true,
-        additionalText: 'Forces the target object to play an animation',
-        parameters: {
-            object: {
-                label: 'Object',
-                type: 'node_target', 
-                required: true,
-                tooltip: 'The Object that will be animated. Must have an AnimationPlayer',
-                placeholder: 'BASE:node_name'
-            },
-            animation: {
-                label: 'Animation',
-                type: 'text', 
-                default: 'idle',
-                tooltip: 'The animation that will play',
-                placeholder: 'animation_name'
-            },
-            loop: {
-                label: 'Animation Must Loop',
-                type: 'boolean', 
-                default: false,
-                tooltip: 'If true, the animation will loop instead of stopping in the last frame'
-            },
-            finish_animation: {
-                label: 'Finish Animation Name',
-                type: 'text', 
-                default: '',
-                tooltip: 'Will play when the specified animation ends (only if loops is set to false)',
-                placeholder: 'animation_name'
-            }
-        }
+  create_follower: {
+    name: "Create Follower",
+    icon: "person_add",
+    defaultImportant: false,
+    additionalText: "Creates a new object and assigns it as a player follower",
+    parameters: {
+      object_path: {
+        label: "Object Path",
+        type: "text",
+        required: true,
+        tooltip: "The full path to the follower scene",
+        placeholder: "BASE:node_path",
+      },
+      position: {
+        label: "Object Position",
+        type: "position",
+        required: true,
+        tooltip: "Where the follower will spawn",
+      },
+      follower_id: {
+        label: "Follower ID",
+        type: "text",
+        required: true,
+        tooltip: "An unique identifier for the follower, used to delete it",
+        placeholder: "unique_follower_id",
+      },
     },
+  },
 
-    "battle": {
-        name: "Battle",
-        icon: 'whatshot',
-        defaultImportant: true,
-        additionalText: 'Starts a battle with the provided parameters',
-        parameters: {
-            map_scene: {
-                label: 'Map Scene',
-                type: 'text',
-                required: true,
-                tooltip: 'The map scene in which the battle will take place (full path)',
-                placeholder: 'res://Path/to/battle_map.tscn'
-            },
-            enemy_scene: {
-                label: 'Enemy Scene',
-                type: 'text', 
-                required: true,
-                tooltip: 'The enemy',
-                placeholder: 'res://Path/to/enemy.tscn'
-            },
-            max_hp: {
-                label: 'Enemy Max HP',
-                type: 'number', 
-                required: true,
-                tooltip: 'How much health the enemy will have'
-            },
-            cutscene_file: {
-                label: 'End Cutscene File',
-                type: 'text', 
-                default: '',
-                tooltip: 'If specified, will play this cutscene when the battle finishes',
-                placeholder: 'path_to/cutscene.json (from Cutscenes resource folder)'
-            },
-            win_state_changes: {
-                label: 'Win State Changes',
-                type: 'json',
-                default: '',
-                tooltip: 'If specified, a dictionary that maps map aliases with their new state',
-                placeholder: '{"v/h": "new_state"}'
-            }
-        }
+  remove_follower: {
+    name: "Remove Follower",
+    icon: "person_add_disabled",
+    defaultImportant: false,
+    additionalText: "Removes the follower identified by the provided unique id",
+    parameters: {
+      follower_id: {
+        label: "Follower ID",
+        type: "text",
+        required: true,
+        tooltip: "The follower id to be removed",
+        placeholder: "unique_follower_id",
+      },
     },
+  },
 
-    "change_bgm": {
-        name: "Change BGM",
-        icon: 'music_note',
-        defaultImportant: true,
-        additionalText: 'Update the current BGM to the one provided',
-        parameters: {
-            BGM: {
-                label: 'BGM file name',
-                type: 'text', 
-                default: '',
-                placeholder: 'Leave blank to mute the current BGM',
-                tooltip: 'The BGM to play (format: name.ogg). If left blank, the current bgm will stop playing',
-            },
-            offset: {
-                label: 'Start Offset',
-                type: 'number', 
-                default: 0,
-                tooltip: 'At which offset the bgm will start'
-            },
-            cross_transition: {
-                label: 'Should Cross Transition',
-                type: 'boolean', 
-                default: true,
-                tooltip: 'If true, the current BGM will fade into the new bgm'
-            }
-        }
+  remove_all_followers: {
+    name: "Remove all Followers",
+    icon: "layers_clear",
+    defaultImportant: false,
+    additionalText: "Removes all followers currently registered to the player",
+    parameters: {},
+  },
+
+  capture_follower: {
+    name: "Capture Follower",
+    icon: "supervisor_account",
+    defaultImportant: false,
+    additionalText: "Sets an already existing object as a player follower",
+    parameters: {
+      target_object: {
+        label: "Target Object",
+        type: "node_target",
+        required: true,
+        tooltip: "The object that will be set as the follower",
+        placeholder: "BASE:node_name",
+      },
+      follower_id: {
+        label: "Follower ID",
+        type: "text",
+        required: true,
+        tooltip: "An unique identifier for the follower, used to delete it",
+        placeholder: "unique_follower_id",
+      },
     },
-    "change_enemy": {
-        name: 'Change Enemy',
-        icon: 'swap_horizontal',
-        defaultImportant: true,
-        additionalText: 'Only works inside a battle, changes the current enemy to a new enemy instance',
-        parameters: {
-            new_enemy: {
-                label: 'New Enemy Scene Name',
-                type: 'text', 
-                required: true,
-                tooltip: 'The new enemy scene from the Enemies folder',
-                placeholder: 'path/to/Enemy.tscn'
-            },
-            new_enemy_animation: {
-                label: 'Starting Animation',
-                type: 'text', 
-                default: 'idle',
-                tooltip: 'The animation that the new enemy will use upon entering the battle (will loop)',
-                placeholder: 'animation_name'
-            }
-        }
+  },
+
+  action_command: {
+    name: "Action Command",
+    icon: "error_outline",
+    defaultImportant: true,
+    additionalText:
+      "Pauses the cutscene execution and waits for a user input to continue",
+    parameters: {
+      target_zoom: {
+        label: "Target Zoom",
+        type: "number",
+        required: true,
+        tooltip: "How much will the camera zoom",
+      },
+      target_zoom_duration: {
+        label: "Zoom Duration",
+        type: "number",
+        required: true,
+        tooltip: "How long will the zoom last",
+      },
+      action: {
+        label: "Required Action",
+        type: "text",
+        required: true,
+        tooltip: "Action to listen to",
+      },
+      message: {
+        label: "Prompt Message",
+        type: "text",
+        required: true,
+        tooltip: "Prompt text",
+      },
     },
+  },
 
-    "change_map": {
-        name: 'Change Map',
-        icon: 'collections',
-        defaultImportant: true,
-        additionalText: 'Teleports to the provided map',
-        parameters: {
-            map: {
-                label: 'Map Scene Path',
-                type: 'text', 
-                required: true,
-                tooltip: 'The full path to the map scene',
-                placeholder: 'res://path/to/map_scene.tscn'
-            },
-            position: {
-                label: 'Position In Map',
-                type: 'position', 
-                required: true,
-                tooltip: 'The where the player will appear in the new map. Can be a vector or a nodename'
-            },
-            new_target: {
-                label: 'New Target',
-                type: 'node_target',
-                default: '',
-                tooltip: 'Node that will be the new focus of the camera in the new map',
-                placeholder: 'BASE:node_name'
-            },
-            peeks: {
-                label: 'Peeks',
-                type: 'boolean', 
-                default: false,
-                tooltip: 'If true, the player will not appear in the new map'
-            },
-            finish_early: {
-                label: 'Should Finish Early',
-                type: 'boolean',
-                default: false,
-                tooltip: 'If true, the event will finish when the screen is still black'
-            },
-            keep_sprites: {
-                label: 'Keep Sprites',
-                type: 'text',
-                placeholder: 'node_name=next_pos,another_node=next_pos,yet_another_node',
-                tooltip: 'Which nodes will be visible between changes, must have a Sprite child'
-            }
-        }
+  glitch: {
+    name: "Glitch",
+    icon: "gesture",
+    defaultImportant: false,
+    additionalText: "Displays a static glitch overlay",
+    parameters: {
+      duration: {
+        label: "Custom Duration",
+        type: "number",
+        default: 0,
+        tooltip: "Leave at 0 to play for the default duration",
+      },
     },
+  },
 
-    "change_map_state": {
-        name: 'Change Map State',
-        icon: 'layers',
-        defaultImportant: true,
-        additionalText: 'Updates the target map to the new provided state (if present)',
-        parameters: {
-            map: {
-                label: 'Map Alias',
-                type: 'text',
-                required: true,
-                tooltip: 'The map alias (found in MapNameResolver)',
-                placeholder: 'M/al'
-            },
-            state: {
-                label: 'New State',
-                type: 'text',
-                required: true,
-                tooltip: 'The new state',
-                placeholder: 'new_state_name'
-            }
-        }
+  storyline_message: {
+    name: "Storyline Message",
+    icon: "notification_important",
+    defaultImportant: false,
+    additionalText:
+      "Emits a message that the StorylineManager can detect to check if any storyline needs to be updated",
+    parameters: {
+      message_name: {
+        label: "Message Name",
+        type: "text",
+        required: true,
+        placeholder: "message_name",
+      },
     },
-
-    "overworld_player_state": {
-        name: 'Change PlayerOverworld State',
-        icon: 'face',
-        defaultImportant: true,
-        additionalText: 'Updates what state will be forced to the player overworld once the cutscene finishes',
-        parameters: {
-            new_state: {
-                label: 'New State',
-                type: 'text',
-                required: true,
-                tooltip: 'The state the player will be at the end of the cutscene',
-                placeholder: 'OverworldStateName'
-            }
-        }
-    },
-
-    "color_flash": {
-        name: 'Color Flash',
-        icon: 'wb_sunny',
-        defaultImportant: true,
-        additionalText: 'Flash a color overlay that covers the entire screen',
-        parameters: {
-            color_hex: {
-                label: 'Color (Hex Value)',
-                type: 'text',
-                default: '#ffffff',
-                tooltip: 'The color that will flash (in hex)'
-            },
-            in_duration: {
-                label: 'In Duration',
-                type: 'number',
-                default: 0.05,
-                tooltip: 'The fade-in duration'
-            },
-            stay_duration: {
-                label: 'Stay Duration',
-                type: 'number',
-                default: 0,
-                tooltip: 'How long the color will stay before fading out'
-            },
-            out_duration: {
-                label: 'Out Duration',
-                type: 'number',
-                default: 0.05,
-                tooltip: 'The fade-out duration'
-            },
-            covers_ui: {
-                label: 'Should Cover UI',
-                type: 'boolean',
-                default: false,
-                tooltip: 'If true, the flash will cover UI elements (ex: the health bar)'
-            }
-        }
-    },
-
-    "conditional_state_change": {
-        name: 'Conditional State Change',
-        icon: 'developer_board',
-        defaultImportant: true,
-        additionalText: 'Updates one or more map states depending on the states present on other maps',
-        parameters: {
-            checked_maps: {
-                label: 'Maps To Check',
-                type: 'json',
-                required: true,
-                tooltip: 'All of these maps must have the specified states to trigger the change',
-                placeholder: '{ UF/r01: "some_state", UF/r02: "some_other_state" }'
-            },
-            target_maps: {
-                label: 'Maps To Change',
-                type: 'json',
-                required: true,
-                tooltip: 'All of the maps that will change states, with their new state',
-                placeholder: '{ UF/r05: "new_state", UF/r06: "other_new_state" }'
-            },
-            is_force_write: {
-                label: 'Is Force-Write',
-                type: 'boolean',
-                default: false,
-                tooltip: 'If the change is force-write',
-            }
-        }
-    },
-
-    "jump": {
-        name: 'Cutscene Jump',
-        icon: 'flight_takeoff',
-        defaultImportant: true,
-        additionalText: 'Halts the execution of the current cutscene and fires a new cutscene defined in the cutscene_jumps reference',
-        parameters: {
-            jump_name: {
-                label: 'Jump Name',
-                type: 'text',
-                required: true,
-                tooltip: 'The jump name (note: must exist in the cutscene_jumps ref, will terminate the current cutscene event)',
-                placeholder: 'jump_name'
-            }
-        }
-    },
-
-    "damage_enemy": {
-        name: 'Damage Enemy',
-        icon: 'mood_bad',
-        defaultImportant: true,
-        additionalText: 'Applies the provided amount of damage to the enemy (will always leave at least 1 hp)',
-        parameters: {
-            amount: {
-                label: 'Damage Amount',
-                type: 'number',
-                default: 1,
-                tooltip: 'How much damage the enemy will receive'
-            }
-        }
-    },
-
-    "damage_player": {
-        name: 'Damage Player',
-        icon: 'mood_bad',
-        defaultImportant: true,
-        additionalText: 'Applies the provided amount of damage to the player (will always leave at least 1 hp)',
-        parameters: {
-            amount: {
-                label: 'Damage Amount',
-                type: 'number',
-                default: 1,
-                tooltip: 'How much damage the player will receive'
-            }
-        }
-    },
-
-    "destroy_object": {
-        name: 'Destroy Object',
-        icon: 'cancel',
-        defaultImportant: true,
-        additionalText: 'Frees the provided instance',
-        parameters: {
-            object: {
-                label: 'Object to Destroy',
-                type: 'node_target',
-                required: true,
-                tooltip: 'The object to be destroyed. is a NODE_TARGET',
-                placeholder: 'BASE:node_name'
-            }
-        }
-    },
-
-    "dialogue": {
-        name: 'Dialogue',
-        icon: 'chat_bubble',
-        defaultImportant: true,
-        additionalText: 'Starts a dialogue with the provided parameters',
-        parameters: {
-            file: {
-                label: 'JSON file',
-                type: 'text',
-                required: true,
-                tooltip: 'The file that contains the target conversation (from the Dialogues resource folder)',
-                placeholder: 'path/to/dialogue.json'
-            },
-            name: {
-                label: 'Conversation Name',
-                type: 'text',
-                required: true,
-                tooltip: 'The conversation name inside the file',
-                placecholder: 'conversation_name'
-            },
-        }
-    },
-
-    "exit_battle": {
-        name: 'Exit Battle',
-        icon: 'exit_to_app',
-        defaultImportant: true,
-        additionalText: 'Forces a battle to finish early and returns to the overworld',
-        parameters: {
-            finish_early: {
-                label: 'Should Finish Early',
-                type: 'boolean',
-                default: false,
-                tooltip: 'If true, the event will finish when the screen is still black'
-            },
-            custom_return_map: {
-                label: 'Custom Return Map Alias',
-                type: 'text',
-                default: null,
-                tooltip: 'If defined, the player will return to this map instead of his previous map',
-                placeholder: 'res://path/to/map_scene.tscn'
-            },
-            custom_return_position: {
-                label: 'Custom Return Position',
-                type: 'position',
-                default: null,
-                tooltip: 'If defined, the custom position that the player will return to'
-            }
-        }
-    },
-
-    "give_item": {
-        name: 'Give Item',
-        icon: 'add_shopping_cart',
-        defaultImportant: true,
-        additionalText: 'Adds the item to the player\'s inventory',
-        parameters: {
-            item_type: {
-                label: 'Item Type',
-                type: 'text',
-                default: 'key_item',
-                tooltip: 'The type of item'
-            },
-            item_id: {
-                label: 'Item ID',
-                type: 'text',
-                required: true,
-                tooltip: 'The required item id'
-            },
-            aux_message: {
-                label: 'Optional Message',
-                type: 'text',
-                default: null,
-                tooltip: 'Will be displayed after the item is given'
-            }
-        }
-    },
-
-    "next_run": {
-        name: 'Go to Next Run',
-        icon: 'fast_forward',
-        defaultImportant: true,
-        additionalText: 'Updates the current active game run and returns to the title screen',
-        parameters: {
-            next_run_name: {
-                label: 'Next Run',
-                type: 'text',
-                required: true,
-                tooltip: 'The text that identifies the next run'
-            }
-        }
-    },
-
-    "level_up": {
-        name: 'Level Up',
-        icon: 'star',
-        defaultImportant: true,
-        additionalText: 'Forces the provided level to the player, without any UI or interaction required',
-        parameters: {
-            target_level: {
-                label: 'Target Level',
-                type: 'number',
-                default: 1,
-                tooltip: 'The target level that will be applied to the player'
-            }
-        }
-    },
-
-    "minigame": {
-        name: 'Minigame',
-        icon: 'games',
-        defaultImportant: true,
-        additionalText: 'Starts a minigame, which will display a custom UI and prevent the player from moving or interacting',
-        parameters: {
-            game: {
-                label: 'Minigame Identifier',
-                type: 'text',
-                required: true,
-                tooltip: 'The target game identifier'
-            }
-        }
-    },
-
-    "move_camera": {
-        name: 'Move Camera',
-        icon: 'switch_camera',
-        defaultImportant: true,
-        additionalText: 'Moves the camera to the new target',
-        parameters: {
-            target: {
-                label: 'New Camera Target',
-                type: 'node_target',
-                required: true,
-                tooltip: 'The new camera target, is a NODE_TARGET',
-                placeholder: 'BASE:node_name'
-            },
-            transition_duration: {
-                label: 'Transition Duration',
-                type: 'number',
-                default: 1,
-                tooltip: 'How long the camera will take to focus on the new target'
-            }
-        }
-    },
-
-    "move": {
-        name: 'Move',
-        icon: 'directions_walk',
-        defaultImportant: true,
-        additionalText: 'Moves the provided control target to a new position',
-        parameters: {
-            at_speed: {
-                label: 'Movement Speed',
-                type: 'number',
-                default: 90,
-                tooltip: 'How fast the target will move'
-            },
-            use_time_instead: {
-                label: 'Overwrite speed with time',
-                type: 'boolean',
-                default: false,
-                tooltip: 'If true, the speed value will be used as a duration instead'
-            },
-            control: {
-                label: 'Controlled Node',
-                type: 'node_target',
-                required: true,
-                tooltip: 'The node to move',
-                placeholder: 'BASE:node_name'
-            },
-            destination: {
-                label: 'Destinations',
-                type: 'positionArray',
-                required: true,
-                placeholder:'An array of positions',
-                tooltip: 'Where the target will land'
-            },
-            animates: {
-                label: 'Should Animate',
-                type: 'boolean',
-                default: true,
-                tooltip: 'If true, the node will animate when moved'
-            },
-            dest_elevation: {
-                label: 'Final Elevation',
-                type: 'number',
-                default: '',
-                tooltip: 'The final elevation',
-            },
-            instant_move: {
-                label: 'Is Instant Move',
-                type: 'boolean',
-                default: false,
-                tooltip: 'If true, the move will be instantaneous'
-            }
-        }
-    },
-
-    "remove_item": {
-        name: 'Remove Item',
-        icon: 'remove_shopping_cart',
-        defaultImportant: true,
-        additionalText: 'Removes the provided item from the player\'s inventory',
-        parameters: {
-            item_type: {
-                label: 'Item Type',
-                type: 'text',
-                default: 'key_item',
-                tooltip: 'The type of item'
-            },
-            item_id: {
-                label: 'Item ID',
-                type: 'text',
-                required: true,
-                tooltip: 'The item id to remove'
-            }
-        }
-    },
-
-    "save": {
-        name: 'Save',
-        icon: 'save',
-        defaultImportant: true,
-        additionalText: 'Performs a save operation with the required parameters (full save if nothing is provided)',
-        parameters: {
-            map_data: {
-                label: 'Map Data',
-                type: 'json',
-                default: null,
-                tooltip: 'The map data to save',
-                placeholder: '{ "map_name": {"key":"value"} }'
-            },
-            npc_data: {
-                label: 'NPC Data',
-                type: 'json',
-                default: null,
-                tooltip: 'The NPC data to save',
-                placeholder: '{ "npc_name": {"map_name": "data"} }'
-            },
-            player_data: {
-                label: 'Player Data',
-                type: 'json',
-                default: null,
-                tooltip: 'The Player data to save',
-                placeholder: '{ "key": "value" }'
-            }
-        }
-    },
-
-    "shake": {
-        name: 'Shake',
-        icon: 'leak_add',
-        defaultImportant: true,
-        additionalText: 'Causes the camera to shake with the provided parameters',
-        parameters: {
-            duration: {
-                label: 'Shake Duration',
-                type: 'number',
-                required: true,
-                tooltip: 'How long the shake will last',
-            },
-            shake_amount: {
-                label: 'Shake Strength',
-                type: 'number',
-                default: 1.0,
-                tooltip: 'How strong will the shake be'
-            }
-        }
-    },
-
-    "sound": {
-        name: 'Sound',
-        icon: 'mic',
-        defaultImportant: false,
-        additionalText: 'Plays the provided sound effect',
-        parameters: {
-            sound: {
-                label: 'Sound File Name',
-                type: 'text',
-                required: true,
-                tooltip: 'The file to be played (just the name)',
-                placeholder: 'file_name.wav'
-            }
-        }
-    },
-
-    "spawn_object": {
-        name: 'Spawn Object',
-        icon: 'library_add',
-        defaultImportant: true,
-        additionalText: 'Adds the specified object to the map, inside the specified parent',
-        parameters: {
-            object: {
-                label: 'Object Scene Full Path',
-                type: 'text',
-                required: true,
-                tooltip: 'The scene to spawn',
-                placeholder: 'res://path/to/object.tscn'
-            },
-            position: {
-                label: 'Object Position',
-                type: 'position',
-                required: true,
-                tooltip: 'Where the object will spawn'
-            },
-            parent: {
-                label: 'Parent Object',
-                type: 'node_target',
-                default: null,
-                tooltip: 'If defined, the object will spawn as a child of this object'
-            }
-        }
-    },
-
-    "toggle_hud": {
-        name: 'Toggle HUD',
-        icon: 'subtitles',
-        defaultImportant: true,
-        additionalText: 'Will show/hide the battle HUD',
-        parameters: {
-            should_show: {
-                label: 'Should Show',
-                type: 'boolean',
-                default: false,
-                tooltip: 'Whether the hud will show or hide'
-            }
-        }
-    },
-
-    "visible": {
-        name: 'Visible',
-        icon: 'flip',
-        defaultImportant: true,
-        additionalText: 'Toggles the target object\'s visibility',
-        parameters: {
-            object: {
-                label: 'Target Object',
-                type: 'node_target',
-                required: true,
-                tooltip: 'The object to show or hide',
-                placeholder: 'BASE:node_name',
-            },
-            visible: {
-                label: 'Should Be Visible',
-                type: 'boolean',
-                default: false,
-                tooltip: 'Whether to show or hide the object'
-            }
-        }
-    },
-
-    "wait": {
-        name: 'Wait',
-        icon: 'timer',
-        defaultImportant: true,
-        additionalText: 'Pauses the cutscene execution for a set amount of time',
-        parameters: {
-            duration: {
-                label: 'Duration',
-                type: 'number',
-                required: true,
-                tooltip: 'How long the wait will be'
-            }
-        }
-    },
-
-    "zoom": {
-        name: 'Zoom Camera',
-        icon: 'zoom_out_map',
-        defaultImportant: true,
-        additionalText: 'Zooms the camera to the provided scale',
-        parameters: {
-            target_zoom: {
-                label: 'Target Zoom',
-                type: 'number',
-                required: true,
-                tooltip: 'The final zoom the camera will use',
-            },
-            zoom_duration: {
-                label: 'Zoom Transition Duration',
-                type: 'number',
-                required: true,
-                tooltip: 'How much time will it take to zoom to the target'
-            }
-        }
-    },
-
-    "ability_toggle": {
-        name: 'Ability Toggle',
-        icon: 'toggle_on',
-        defaultImportant: false,
-        additionalText: 'Enables/disables a player ability (example: dash, roll, phase)',
-        parameters: {
-            ability_name: {
-                label: 'Ability Name',
-                type: 'text',
-                required: true,
-                tooltip: 'The node name of the ability to enable/disable (on either PlayerOverworld or PlayerBattle)',
-                placeholder: 'MeleeAction'
-            },
-            enabled: {
-                label: 'Enabled',
-                type: 'boolean',
-                default: false,
-                tooltip: 'Whether the ability will be enabled or disabled'
-            }
-        }
-    },
-
-    "emote": {
-        name: 'Show Emotion',
-        icon: 'not_listed_location',
-        defaultImportant: true,
-        additionalText: 'Forces the node to display one of the pre-defined emotes',
-        parameters: {
-            target_object: {
-                label: 'Target Object',
-                type: 'node_target',
-                required: true,
-                tooltip: 'The object that will display the emote',
-                placeholder: 'BASE:node_name'
-            },
-            emote: {
-                label: 'Emote',
-                type: 'dropdown',
-                elements: {
-                    'angry' : 'Angry',
-                    'exclamation': 'Exclamation',
-                    'question': 'Question',
-                    'three_dots': 'Three Dots',
-                    'sweat': 'Sweat'
-                },
-                required: true,
-                tooltip: 'The emote to display'
-            }
-        }
-    },
-
-    "create_follower": {
-        name: 'Create Follower',
-        icon: 'person_add',
-        defaultImportant: false,
-        additionalText: 'Creates a new object and assigns it as a player follower',
-        parameters: {
-            object_path: {
-                label: 'Object Path',
-                type: 'text',
-                required: true,
-                tooltip: 'The full path to the follower scene',
-                placeholder: 'BASE:node_path'
-            },
-            position: {
-                label: 'Object Position',
-                type: 'position',
-                required: true,
-                tooltip: 'Where the follower will spawn'
-            },
-            follower_id: {
-                label: 'Follower ID',
-                type: 'text',
-                required: true,
-                tooltip: 'An unique identifier for the follower, used to delete it',
-                placeholder: 'unique_follower_id'
-            }
-        }
-    },
-
-    "remove_follower": {
-        name: 'Remove Follower',
-        icon: 'person_add_disabled',
-        defaultImportant: false,
-        additionalText: 'Removes the follower identified by the provided unique id',
-        parameters: {
-            follower_id: {
-                label: 'Follower ID',
-                type: 'text',
-                required: true,
-                tooltip: 'The follower id to be removed',
-                placeholder: 'unique_follower_id'
-            }
-        }
-    },
-
-    "remove_all_followers": {
-        name: 'Remove all Followers',
-        icon: 'layers_clear',
-        defaultImportant: false,
-        additionalText: 'Removes all followers currently registered to the player',
-        parameters: {
-
-        }
-    },
-
-    "capture_follower": {
-        name: 'Capture Follower',
-        icon: 'supervisor_account',
-        defaultImportant: false,
-        additionalText: 'Sets an already existing object as a player follower',
-        parameters: {
-            target_object: {
-                label: 'Target Object',
-                type: 'node_target',
-                required: true,
-                tooltip: 'The object that will be set as the follower',
-                placeholder: 'BASE:node_name'
-            },
-            follower_id: {
-                label: 'Follower ID',
-                type: 'text',
-                required: true,
-                tooltip: 'An unique identifier for the follower, used to delete it',
-                placeholder: 'unique_follower_id'
-            }
-        }
-    },
-
-    "action_command": {
-        name: "Action Command",
-        icon: "error_outline",
-        defaultImportant: true,
-        additionalText: 'Pauses the cutscene execution and waits for a user input to continue',
-        parameters: {
-            target_zoom: {
-                label: "Target Zoom",
-                type: "number",
-                required: true,
-                tooltip: "How much will the camera zoom"
-            },
-            target_zoom_duration: {
-                label: "Zoom Duration",
-                type: "number",
-                required: true,
-                tooltip: "How long will the zoom last"
-            },
-            action: {
-                label: "Required Action",
-                type: "text",
-                required: true,
-                tooltip: "Action to listen to"
-            },
-            message: {
-                label: "Prompt Message",
-                type: "text",
-                required: true,
-                tooltip: "Prompt text"
-            }
-        }
-    },
-
-    "glitch": {
-        name: 'Glitch',
-        icon: 'gesture',
-        defaultImportant: false,
-        additionalText: 'Displays a static glitch overlay',
-        parameters: {
-            duration: {
-                label: 'Custom Duration',
-                type: 'number',
-                default: 0,
-                tooltip: 'Leave at 0 to play for the default duration'
-
-            }
-        }
-    },
-
-    "storyline_message": {
-        name: 'Storyline Message',
-        icon: 'notification_important',
-        defaultImportant: false,
-        additionalText: 'Emits a message that the StorylineManager can detect to check if any storyline needs to be updated',
-        parameters: {
-            message_name: {
-                label: 'Message Name',
-                type: 'text',
-                required: true,
-                placeholder: 'message_name'
-            }
-        }
-    }
-
-}
+  },
+};
 
 export default eventSchema;

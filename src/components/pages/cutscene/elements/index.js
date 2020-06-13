@@ -1,5 +1,3 @@
-import CutsceneRowToolbar from './CutsceneRowToolbar';
+import CutsceneRowToolbar from "./CutsceneRowToolbar";
 
-export {
-    CutsceneRowToolbar
-}
+export { CutsceneRowToolbar };
