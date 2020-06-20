@@ -177,6 +177,7 @@ function addEntityToNewMap(state, action) {
 
   return {
     ...state,
+    stepMaps: maps,
     stepMapEntities: mapEntities,
     storylineSteps: steps,
   };
