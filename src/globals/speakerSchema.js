@@ -33,7 +33,7 @@ export default {
   },
   scientist: {
     image: "",
-    name: "Scientist",
+    name: "Ada",
     voice_file: "scientist_voice.wav",
     target_object: "AdaNPC",
   },

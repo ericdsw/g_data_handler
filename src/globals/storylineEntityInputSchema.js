@@ -324,6 +324,18 @@ const storylineEntityInputSchema = {
         required: true,
         tooltip: "Where the area will spawn inside the map",
       },
+      width: {
+        label: "Width",
+        type: "number",
+        required: false,
+        tooltip: "the area's width (defaults to 50)"
+      },
+      height: {
+        label: "Height",
+        type: "number",
+        required: false,
+        tooltip: " the area's height (defaults to 50)"
+      }
     },
   },
 
@@ -362,6 +374,18 @@ const storylineEntityInputSchema = {
         placeholder: "message_name",
         tooltip: "Message inside the dialogue file that will be used",
       },
+      width: {
+        label: "Width",
+        type: "number",
+        required: false,
+        tooltip: "the area's width (defaults to 50)"
+      },
+      height: {
+        label: "Height",
+        type: "number",
+        required: false,
+        tooltip: " the area's height (defaults to 50)"
+      }
     },
   },
 
@@ -393,6 +417,18 @@ const storylineEntityInputSchema = {
         placeholder: "path/to/cutscene.json",
         tooltip: "json file, starting from the cutscenes resource folder",
       },
+      width: {
+        label: "Width",
+        type: "number",
+        required: false,
+        tooltip: "the area's width (defaults to 50)"
+      },
+      height: {
+        label: "Height",
+        type: "number",
+        required: false,
+        tooltip: " the area's height (defaults to 50)"
+      }
     },
   },
 
