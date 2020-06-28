@@ -10,52 +10,6 @@ import {
   Icon,
   Tooltip,
 } from "@material-ui/core";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { blue, green, yellow, amber } from "@material-ui/core/colors";
-import { fade } from "@material-ui/core/styles/colorManipulator";
-
-function makeCustomTheme(color) {
-  const customTheme = (parentTheme) =>
-    createMuiTheme({
-      ...parentTheme,
-      overrides: {
-        ...parentTheme.overrides,
-        MuiOutlinedInput: {
-          ...parentTheme.overrides.MuiOutlinedInput,
-          root: {
-            ...parentTheme.overrides.MuiOutlinedInput.root,
-            "&:hover:not($disabled):not($focused):not($error) $notchedOutline": {
-              borderColor: color,
-              // Reset on touch devices, it doesn't add specificity
-              "@media (hover: none)": {
-                borderColor: fade(color, 0.5),
-              },
-            },
-            "&$focused $notchedOutline": {
-              borderColor: color,
-              borderWidth: 1,
-            },
-          },
-        },
-        MuiFormLabel: {
-          ...parentTheme.overrides.MuiFormLabel,
-          root: {
-            ...parentTheme.overrides.MuiFormLabel.root,
-            "&$focused": {
-              color: color,
-            },
-          },
-        },
-        MuiInputAdornment: {
-          ...parentTheme.overrides.MuiInputAdornment,
-          root: {
-            color: color,
-          },
-        },
-      },
-    });
-  return customTheme;
-}
 
 const nodeTargetDescription = (
   <ul>
@@ -90,7 +44,7 @@ export default function createInput(
   disabled = false,
   extraParams = {}
 ) {
-  let inputColor = blue[600];
+  // let inputColor = blue[600];
 
   let label = inputData.label;
   if (inputData.required) {
@@ -202,7 +156,7 @@ export default function createInput(
     case "node_target":
     default:
       if (inputData.type === "node_target") {
-        inputColor = green[600];
+        // inputColor = green[600];
         adornment = (
           <Tooltip enterDelay={300} title={nodeTargetDescription}>
             <InputAdornment position="end">
@@ -211,7 +165,7 @@ export default function createInput(
           </Tooltip>
         );
       } else if (inputData.type === "position") {
-        inputColor = amber[600];
+        // inputColor = amber[600];
         adornment = (
           <Tooltip enterDelay={300} title="Position2D node name or JSON">
             <InputAdornment position="end">
@@ -220,7 +174,7 @@ export default function createInput(
           </Tooltip>
         );
       } else if (inputData.type === "positionArray") {
-        inputColor = yellow[600];
+        // inputColor = yellow[600];
         adornment = (
           <Tooltip enterDelay={300} title="NodeNames, separated by comma">
             <InputAdornment position="end">
