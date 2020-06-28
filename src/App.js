@@ -25,6 +25,10 @@ const styles = (theme) => ({
   },
 });
 
+window.onbeforeunload = function() {
+  return 'u sure?';
+}
+
 const App = () => {
   const [drawerOpen, toggleDrawerOpen] = useState(false);
   const [darkMode, toggleDarkMode] = useState(true);
