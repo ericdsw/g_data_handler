@@ -73,8 +73,8 @@ const eventSchema = {
         label: "Enemy Scene",
         type: "text",
         required: true,
-        tooltip: "The enemy",
-        placeholder: "res://Path/to/enemy.tscn",
+        tooltip: "Path to enemy scene (from Enemies folder)",
+        placeholder: "path_to/enemy.tscn (from Enemies folder)",
       },
       max_hp: {
         label: "Enemy Max HP",

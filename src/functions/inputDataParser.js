@@ -1,3 +1,29 @@
+function parseInPositionArray(input) {
+  // Replace legacy
+  if (typeof input === "string") {
+    return input.replace(/\[|"|\]/g, '');
+  }
+  if (Array.isArray(input)) {
+    return input.join(",");
+  }
+  return input;
+}
+
+function parseInPosition(input) {
+  if (
+    typeof input === "object" &&
+    "x" in input &&
+    "y" in input
+  ) {
+    return JSON.stringify(input)
+  }
+  return input;
+}
+
+function cleanBeforeJsonParse(sourceString) {
+  return sourceString.replace(/'/g, '"');
+}
+
 export const parseIn = (inputObject, inputSchema) => {
   for (const key in inputSchema) {
     // Skip invalid entries
@@ -9,8 +35,11 @@ export const parseIn = (inputObject, inputSchema) => {
       case "array":
         inputObject[key] = inputObject[key].join(",");
         break;
-      case "json":
-        inputObject[key] = JSON.stringify(inputObject[key]);
+      case "positionArray":
+        inputObject[key] = parseInPositionArray(inputObject[key]);
+        break;
+      case "position":
+        inputObject[key] = parseInPosition(inputObject[key]);
         break;
       case "number":
         const value = parseFloat(inputObject[key]);
@@ -49,13 +78,34 @@ export const parseOut = (outputObject, inputSchema) => {
 
     switch (inputSchema[key].type) {
       case "array":
+      case "positionArray":
         outputObject[key] = outputObject[key].replace(/\s/g, "").split(",");
         break;
+      case "position":
+        try {
+          outputObject[key] = JSON.parse(cleanBeforeJsonParse(outputObject[key]));
+        } catch (e) {
+          // Do Nothing, as the input is a string
+        }
+        break;
       case "json":
-        outputObject[key] = JSON.parse(outputObject[key].replace(/'/g, '"'));
+        try {
+          outputObject[key] = JSON.parse(cleanBeforeJsonParse(outputObject[key]));
+        } catch (error) {
+          outputObject[key] = "";
+        }
         break;
       case "number":
-        outputObject[key] = parseFloat(outputObject[key]);
+        const result = parseFloat(outputObject[key]);
+        if (Number.isNaN(result)) {
+          outputObject[key] = null;
+        } else {
+          outputObject[key] = result;
+        }
+        break;
+      case "boolean":
+        const data = outputObject[key];
+        outputObject[key] = (typeof data === 'undefined') ? false : data;
         break;
       default:
         break;

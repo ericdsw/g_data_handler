@@ -30,34 +30,32 @@ export default function processRegularInputs(eventType, inputName, value) {
       returnValue = value;
     }
   } else if (inputData.type === "positionArray") {
-    try {
-      returnValue = JSON.parse(value);
-      if (Array.isArray(returnValue)) {
-        returnValue = returnValue.map((position) => {
-          if (typeof position === "string") {
-            return position;
-          } else {
-            if (!("x" in position) || !("y" in position)) {
-              return "";
-            } else {
-              return position;
-            }
-          }
-        });
-      } else {
-        if (!("x" in returnValue) || !("y" in returnValue)) {
-          returnValue = "";
-        } else {
-          returnValue = [returnValue];
-        }
-      }
-    } catch (error) {
-      if (value === "") {
-        return "";
-      } else {
-        returnValue = [value];
-      }
-    }
+    // try {
+    //   returnValue = JSON.parse(value);
+    //   if (Array.isArray(returnValue)) {
+    //     returnValue = returnValue.map((position) => {
+    //       if (typeof position === "string") {
+    //         return position;
+    //       } else {
+    //         if (!("x" in position) || !("y" in position)) {
+    //           return "";
+    //         } else {
+    //           return position;
+    //         }
+    //       }
+    //     });
+    //   } else {
+    //     if (!("x" in returnValue) || !("y" in returnValue)) {
+    //       returnValue = "";
+    //     } else {
+    //       returnValue = [returnValue];
+    //     }
+    //   }
+    // } catch (error) {
+    //   if (value === "") {
+    //     return "";
+    //   }
+    // }
   }
 
   return returnValue;
