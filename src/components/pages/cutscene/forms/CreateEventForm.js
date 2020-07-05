@@ -16,7 +16,8 @@ import { eventSchema } from "../../../../globals";
 import {
   createInput,
   checkForRequired,
-  processRegularInputs,
+  parseIn,
+  parseOut
 } from "../../../../functions";
 
 const styles = (theme) => ({
@@ -49,12 +50,12 @@ class CreateEventForm extends React.Component {
           usedParameters[paramName] = data;
         }
       }
+      this.formFields = eventSchema[props.existingData.type].parameters;
       this.state = {
         lockType: true,
         currentEventType: props.existingData.type,
-        resultData: usedParameters,
+        resultData: parseIn(usedParameters, this.formFields),
       };
-      this.formFields = eventSchema[props.existingData.type].parameters;
       this.additionalText = eventSchema[props.existingData.type].additionalText;
     } else {
       this.state = {
@@ -112,7 +113,7 @@ class CreateEventForm extends React.Component {
     event.preventDefault();
     event.stopPropagation();
 
-    const eventData = { ...this.state.resultData };
+    const eventData = parseOut({ ...this.state.resultData }, this.formFields);
 
     let errorInputs = [];
     const eventType = this.state.currentEventType;
@@ -120,15 +121,7 @@ class CreateEventForm extends React.Component {
       if (paramName === "is_important") {
         continue;
       }
-
-      eventData[paramName] = processRegularInputs(
-        eventType,
-        paramName,
-        eventData[paramName]
-      );
-
       const paramValue = eventData[paramName];
-
       if (!checkForRequired(eventType, paramName, paramValue)) {
         errorInputs.push(this.formFields[paramName].label);
       }

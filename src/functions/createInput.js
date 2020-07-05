@@ -44,7 +44,6 @@ export default function createInput(
   disabled = false,
   extraParams = {}
 ) {
-  // let inputColor = blue[600];
 
   let label = inputData.label;
   if (inputData.required) {

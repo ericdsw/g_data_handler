@@ -9,7 +9,7 @@ import {
   getMissingRequired,
 } from "../../functions";
 
-const style = (theme) => ({
+const style = () => ({
   additionalText: {
     color: "grey",
   },
@@ -57,7 +57,7 @@ const GenericForm = (props) => {
       handleSubmit(resultData);
     } else {
       const reqString = missingRequired
-        .map((key, i) => {
+        .map((key) => {
           return parameters[key].label;
         })
         .join(", ");
