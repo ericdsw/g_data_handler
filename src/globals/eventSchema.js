@@ -974,6 +974,27 @@ const eventSchema = {
       },
     },
   },
+
+  look_at: {
+    name: "Look At",
+    icon: "my_location",
+    defaultImportant: false,
+    additionalText: "Subjet must be a MovableBody, and Look Target must be a Node2D",
+    parameters: {
+      subject: {
+        label: "Subject",
+        type: "node_target",
+        required: true,
+        placeholder: "The node that will \"look\" at something"
+      },
+      look_target: {
+        label: "Look Target",
+        type: "node_target",
+        required: true,
+        placeholder: "Who the subject will face"
+      }
+    }
+  }
 };
 
 export default eventSchema;
