@@ -21,6 +21,7 @@ const interactionInputSchema = {
   dialogue_interaction: {
     name: "Dialogue Interaction",
     icon: "question_answer",
+    additionalText: "Note: not defining a custom name causes offsets to be shared between steps",
     parameters: {
       custom_name: {
         label: "Custom Name",
