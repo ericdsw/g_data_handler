@@ -993,8 +993,90 @@ const eventSchema = {
         required: true,
         placeholder: "Who the subject will face"
       }
+    },
+  },
+
+  inject_bgm_player: {
+    name: "Inject BGM player",
+    icon: "hearing",
+    additionalText: "Inject a intro/bgm combo to the current map.",
+    defaultImportant: true,
+    parameters: {
+      intro_res: {
+        label: "Intro BGM Resource",
+        type: "string",
+        required: false,
+        placeholder: "From the BGM folder"
+      },
+      bgm_res: {
+        label: "Main BGM Resource",
+        type: "string",
+        required: true,
+        placeholder: "From the BGM folder"
+      },
+      persist_map_changes: {
+        label: "Persist map changes",
+        type: "boolean",
+        required: false,
+        default: false,
+        tooltip: "If true, the bgm will persist between map changes"
+      },
+      out_duration: {
+        label: "Out Duration",
+        type: "number",
+        required: true,
+        default: 0.5,
+        tooltip: "How long will the fade-out take"
+      },
+      in_duration: {
+        label: "In Duration",
+        type: "number",
+        required: true,
+        default: 0.5,
+        tooltip: "How long will the fade-in take"
+      }
+    }
+  },
+
+  clear_injected_bgm: {
+    name: "Clear injected bgm",
+    icon: "hearing_disabled",
+    additionalText: "This event will remove the custom injected bgm and will play whatever is defined in the map",
+    defaultImportant: true,
+    parameters: {
+      out_duration: {
+        label: "Out Duration",
+        type: "number",
+        required: true,
+        default: 0.5,
+        tooltip: "How long will the fade-out take"
+      },
+      in_duration: {
+        label: "In Duration",
+        type: "number",
+        required: true,
+        default: 0.5,
+        tooltip: "How long will the fade-in take"
+      }
+    }
+  },
+
+  change_node_property: {
+    name: "Change node properties",
+    icon: "touch_app",
+    additionalText: "Updates all listed properties in the dictionary with the new value",
+    defaultImportant: true,
+    parameters: {
+      properties: {
+        label: "Properties",
+        type: "json",
+        required: true,
+        tooltip: "properties that will be changed",
+        placeholder: '{"prop_name": "new_value"}',
+      }
     }
   }
+
 };
 
 export default eventSchema;
