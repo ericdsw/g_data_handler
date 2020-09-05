@@ -25,6 +25,7 @@ const styles = (theme) => ({
   },
 });
 
+// Prevents tardiness
 window.onbeforeunload = function() {
   return 'u sure?';
 }
