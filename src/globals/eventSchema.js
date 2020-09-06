@@ -1067,6 +1067,12 @@ const eventSchema = {
     additionalText: "Updates all listed properties in the dictionary with the new value",
     defaultImportant: true,
     parameters: {
+      node: {
+        label: "Node",
+        type: "node_target",
+        required: true,
+        placeholder: "The node that will be modified"
+      },
       properties: {
         label: "Properties",
         type: "json",

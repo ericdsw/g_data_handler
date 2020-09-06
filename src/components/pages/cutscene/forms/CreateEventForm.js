@@ -145,7 +145,6 @@ class CreateEventForm extends React.Component {
   render() {
     let fields = [];
 
-    console.log(Object.keys(eventSchema).filter((key) => key.includes("bgm")));
     const optionTypes = Object.keys(eventSchema)
       .sort()
       .map((key) => (

@@ -122,6 +122,17 @@ export default function createEventDescription(type, parameters) {
       return "Will show graphical glitch";
     case "storyline_message":
       return `Will emit storyline message: "${parameters.message_name}"`;
+    case "look_at":
+      return `Node ${parameters.subject} will look at ${parameters.look_target}`
+    case "inject_bgm_player":
+      if (! parameters.intro_res) {
+        return `Will inject bgm ${parameters.bgm_res}`;
+      }
+      return `Will inject bgm ${parameters.bgm_res} with intro ${parameters.intro_res}`;
+    case "clear_injected_bgm":
+      return `Will clear any custom bgm playing`;
+    case "change_node_property":
+      return `Will modify props in node ${parameters.node}`;
     default:
       return "";
   }
