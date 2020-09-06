@@ -11,7 +11,7 @@ function parseInPositionArray(input) {
 
 function parseInPosition(input) {
   if (
-    typeof input === "object" &&
+    input &&
     "x" in input &&
     "y" in input
   ) {
