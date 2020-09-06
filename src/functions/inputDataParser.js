@@ -12,6 +12,7 @@ function parseInPositionArray(input) {
 function parseInPosition(input) {
   if (
     input &&
+    typeof input !== 'string' &&
     "x" in input &&
     "y" in input
   ) {
