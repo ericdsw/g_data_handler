@@ -121,15 +121,13 @@ export default function createInput(
           </MenuItem>
         );
       }
-      if (value === "") {
-        options.unshift(
-          <MenuItem key="_EMPTY_VAL_" value="">
-            <Typography variant="body1">
-              <i>---</i>
-            </Typography>
-          </MenuItem>
-        );
-      }
+      options.unshift(
+        <MenuItem key="_EMPTY_VAL_" value="">
+          <Typography variant="body1">
+            <i>---</i>
+          </Typography>
+        </MenuItem>
+      );
       contentValue = (
         <TextField
           label={label}
