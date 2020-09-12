@@ -1006,13 +1006,15 @@ const eventSchema = {
         label: "Intro BGM Resource",
         type: "string",
         required: false,
-        placeholder: "From the BGM folder"
+        placeholder: "From the BGM folder",
+        default: "",
       },
       bgm_res: {
         label: "Main BGM Resource",
         type: "string",
-        required: true,
-        placeholder: "From the BGM folder"
+        required: false,
+        placeholder: "From the BGM folder",
+        default: "",
       },
       persist_map_changes: {
         label: "Persist map changes",
@@ -1034,6 +1036,13 @@ const eventSchema = {
         required: true,
         default: 0.5,
         tooltip: "How long will the fade-in take"
+      },
+      silence_duration: {
+        label: "Silence Duration",
+        type: "number",
+        required: true,
+        default: 0.0,
+        tooltip: "Silence interval between bgms"
       }
     }
   },
@@ -1057,6 +1066,13 @@ const eventSchema = {
         required: true,
         default: 0.5,
         tooltip: "How long will the fade-in take"
+      },
+      silence_duration: {
+        label: "Silence Duration",
+        type: "number",
+        required: true,
+        default: 0.0,
+        tooltip: "Silence interval between bgms"
       }
     }
   },
