@@ -52,6 +52,11 @@ const storylineEntityInputSchema = {
           right: "Right",
         },
       },
+      interacts_through_walls: {
+        label: "Interacts through walls",
+        type: "boolean",
+        tooltip: "If true, the npc can be interacted even if there is a wall in the way",
+      },
       parent_walker: {
         label: "Spawn in NPC Walker",
         type: "text",
@@ -115,6 +120,11 @@ const storylineEntityInputSchema = {
           left: "Left",
           right: "Right",
         },
+      },
+      interacts_through_walls: {
+        label: "Interacts through walls",
+        type: "boolean",
+        tooltip: "If true, the npc can be interacted even if there is a wall in the way",
       },
       parent_walker: {
         label: "Spawn in NPC Walker",
