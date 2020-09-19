@@ -1000,7 +1000,7 @@ const eventSchema = {
     name: "Inject BGM player",
     icon: "hearing",
     additionalText: "Inject a intro/bgm combo to the current map.",
-    defaultImportant: true,
+    defaultImportant: false,
     parameters: {
       intro_res: {
         label: "Intro BGM Resource",
@@ -1051,7 +1051,7 @@ const eventSchema = {
     name: "Clear injected bgm",
     icon: "hearing_disabled",
     additionalText: "This event will remove the custom injected bgm and will play whatever is defined in the map",
-    defaultImportant: true,
+    defaultImportant: false,
     parameters: {
       out_duration: {
         label: "Out Duration",
@@ -1095,6 +1095,21 @@ const eventSchema = {
         required: true,
         tooltip: "properties that will be changed",
         placeholder: '{"prop_name": "new_value"}',
+      }
+    }
+  },
+
+  full_minigame: {
+    name: "Launch Full Minigame",
+    icon: "toys",
+    additionalText: "Launches a minigame (will wait for the cutscene to finish)",
+    defaultImportant: false,
+    parameters: {
+      minigame_path: {
+        label: "Minigame Node Path",
+        type: "string",
+        required: true,
+        placeholder: "The minigame node, inside res://Minigames"
       }
     }
   }
