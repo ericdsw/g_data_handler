@@ -1101,7 +1101,7 @@ const eventSchema = {
 
   full_minigame: {
     name: "Launch Full Minigame",
-    icon: "toys",
+    icon: "videogame_asset",
     additionalText: "Launches a minigame (will wait for the cutscene to finish)",
     defaultImportant: false,
     parameters: {
