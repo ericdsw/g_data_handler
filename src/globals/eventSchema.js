@@ -1043,6 +1043,12 @@ const eventSchema = {
         required: true,
         default: 0.0,
         tooltip: "Silence interval between bgms"
+      },
+      play_from_beginning: {
+        label: "Play From Beginning",
+        type: "boolean",
+        default: false,
+        tooltip: "If true, the bgm will ignore saved offsets"
       }
     }
   },
@@ -1073,6 +1079,12 @@ const eventSchema = {
         required: true,
         default: 0.0,
         tooltip: "Silence interval between bgms"
+      },
+      play_from_beginning: {
+        label: "Play From Beginning",
+        type: "boolean",
+        default: false,
+        tooltip: "If true, the bgm will ignore saved offsets"
       }
     }
   },
