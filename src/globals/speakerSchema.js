@@ -4,6 +4,10 @@ export const speakerImages = [
   "Phoenix_Despair.png",
   "Phoenix_Serious.png",
   "Phoenix_Shocked.png",
+  "Vega_mask_laughing.png",
+  "Vega_mask_menacing_sans.png",
+  "Vega_mask_menacing.png",
+  "Vega_mask_neutral.png"
 ];
 
 export default {
@@ -20,7 +24,7 @@ export default {
     target_object: "PhoenixNPC",
   },
   vampire: {
-    image: "",
+    image: "Vega_mask_neutral.png",
     name: "Vega",
     voice_file: "vampire_voice.wav",
     target_object: "VegaNPC",
