@@ -8,6 +8,10 @@ import {
 } from "../../actions/storylineActions";
 import CompleteCondition from "../pages/storylines/CompleteCondition";
 
+/**
+ * Container that handles redux communication for the CompleteCondition
+ * component
+ */
 class CompleteConditionContainer extends React.Component {
   deleteCondition = () => {
     const { conditionId, deleteCondition } = this.props;

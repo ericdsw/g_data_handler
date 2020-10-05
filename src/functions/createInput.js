@@ -36,6 +36,9 @@ const nodeTargetDescription = (
   </ul>
 );
 
+/**
+ * Creates an input element instance using the provided attributes
+ */
 export default function createInput(
   paramName,
   inputData,

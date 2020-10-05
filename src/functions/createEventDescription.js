@@ -1,5 +1,7 @@
-// This method will generate the appropiate description for the defined
-// event type and parameters
+/**
+ * This method will generate the appropiate description for the defined
+ * event type and parameters
+ */
 export default function createEventDescription(type, parameters) {
   switch (type) {
     case "gain_abilities":

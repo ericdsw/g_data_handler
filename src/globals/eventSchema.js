@@ -98,6 +98,14 @@ const eventSchema = {
           "If specified, a dictionary that maps map aliases with their new state",
         placeholder: '{"v/h": "new_state"}',
       },
+      keep_sprites: {
+        label: "Keep Sprites",
+        type: "text",
+        placeholder:
+          "node_name=next_pos,another_node=next_pos,yet_another_node",
+        tooltip:
+          "Which nodes will be visible between changes, must have a Sprite child",
+      }
     },
   },
 
@@ -437,6 +445,14 @@ const eventSchema = {
         tooltip:
           "If defined, the custom position that the player will return to",
       },
+      keep_sprites: {
+        label: "Keep Sprites",
+        type: "text",
+        placeholder:
+          "node_name=next_pos,another_node=next_pos,yet_another_node",
+        tooltip:
+          "Which nodes will be visible between changes, must have a Sprite child",
+      }
     },
   },
 

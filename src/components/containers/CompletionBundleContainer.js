@@ -10,6 +10,10 @@ import {
   deleteBundle,
 } from "../../actions/storylineActions";
 
+/**
+ * Container that manages redux communication for the CompletionBundle
+ * component
+ */
 class CompletionBundleContainer extends React.Component {
   createCondition = (type, name, data) => {
     const { currentCompletionBundleId, addStepCompleteCondition } = this.props;

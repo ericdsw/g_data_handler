@@ -27,7 +27,7 @@ import { SimpleCollapse } from "../../../elements";
 import CreateChoiceForm from "./CreateChoiceForm";
 import DialogueImageSearcher from "./DialogueImageSearcher";
 
-const styles = (theme) => ({
+const styles = () => ({
   imagePreview: {
     backgroundColor: "#ccc",
     width: "100%",

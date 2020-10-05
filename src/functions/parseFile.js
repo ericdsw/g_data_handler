@@ -1,3 +1,7 @@
+/**
+ * Converts the provided file to its internal json representation,
+ * and provides it as the result of the promise
+ */
 export default function parseFile(file, acceptedType) {
   const fileReader = new FileReader();
 
@@ -14,7 +18,7 @@ export default function parseFile(file, acceptedType) {
         }
       };
 
-      fileReader.onerror = (event) => {
+      fileReader.onerror = () => {
         reject(new Error("Error reading file"));
       };
       fileReader.readAsText(file);
