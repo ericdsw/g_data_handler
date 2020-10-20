@@ -452,6 +452,11 @@ const eventSchema = {
           "node_name=next_pos,another_node=next_pos,yet_another_node",
         tooltip:
           "Which nodes will be visible between changes, must have a Sprite child",
+      },
+      overworld_animation: {
+        label: "Overworld Animation",
+        type: "text",
+        tooltip: "If defined, this animation will be forced on the player overworld"
       }
     },
   },
