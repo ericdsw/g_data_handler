@@ -660,6 +660,12 @@ const eventSchema = {
         tooltip: "The Player data to save",
         placeholder: '{ "key": "value" }',
       },
+      initial_player_state: {
+        label: "Initial Player State",
+        type: "string",
+        default: "",
+        tooltip: "If defined, the player will enter the game in this state",
+      }
     },
   },
 
