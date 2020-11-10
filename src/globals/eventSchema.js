@@ -983,6 +983,13 @@ const eventSchema = {
         default: 0,
         tooltip: "Leave at 0 to play for the default duration",
       },
+      overlay_image_source: {
+        label: "Overlay Image Source",
+        type: "text",
+        default: "",
+        placeholder: "image_name.png=1.0|used_overlay",
+        tooltip: "used to parse images that will flash while the glitch is active"
+      }
     },
   },
 
