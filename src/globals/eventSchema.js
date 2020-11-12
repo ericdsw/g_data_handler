@@ -608,6 +608,12 @@ const eventSchema = {
         default: false,
         tooltip: "If true, the move will be instantaneous",
       },
+      finish_animation: {
+        label: "Finishing animation",
+        type: "text",
+        default: "",
+        tooltip: "Animation that will play when the movement finishes"
+      }
     },
   },
 
