@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import {
   UPDATE_CUTSCENE,
   ADD_CUTSCENE_ROW,

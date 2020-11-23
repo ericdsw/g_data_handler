@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { TOGGLE_SIDEBAR, COLLAPSE_SIDEBAR } from "../actions/types";
 
 const initialState = {

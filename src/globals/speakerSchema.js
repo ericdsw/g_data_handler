@@ -10,7 +10,7 @@ export const speakerImages = [
   "Vega_mask_neutral.png"
 ];
 
-export default {
+const speakerSchema = {
   narrator: {
     image: null,
     name: null,
@@ -71,3 +71,5 @@ export default {
     target_object: "AdaNPC",
   },
 };
+
+export default speakerSchema;
