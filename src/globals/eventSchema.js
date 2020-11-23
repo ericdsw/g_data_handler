@@ -169,11 +169,11 @@ const eventSchema = {
     additionalText: "Teleports to the provided map",
     parameters: {
       map: {
-        label: "Map Scene Path",
+        label: "Map Alias",
         type: "text",
         required: true,
-        tooltip: "The full path to the map scene",
-        placeholder: "res://path/to/map_scene.tscn",
+        tooltip: "the alias that identifies the map (see MapNameResolver.gd)",
+        placeholder: "v/fe",
       },
       position: {
         label: "Position In Map",

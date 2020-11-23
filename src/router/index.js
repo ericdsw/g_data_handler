@@ -15,7 +15,7 @@ export const fallbackRoute = {
   component: NotFound,
 };
 
-export default [
+const routes = [
   {
     path: "/",
     exact: true,
@@ -45,3 +45,4 @@ export default [
     text: "About",
   },
 ];
+export default routes;
