@@ -738,6 +738,12 @@ const eventSchema = {
         default: null,
         tooltip: "If defined, the object will spawn as a child of this object",
       },
+      no_invisible_spawn: {
+        label: "No invisible spawn",
+        type: "boolean",
+        default: false,
+        tooltip: "Will not perform the 0.25s of invisibility spawned objects have, which prevents invalid animations from showing for 1 frame"
+      }
     },
   },
 
