@@ -5,15 +5,14 @@ import { DialogueMessageToolbar } from "./elements";
 
 import { styles } from "./styles/DialogueEmoteStyle";
 
-const DialogueEmote = (props) => {
-  const { message, classes } = props;
-
-  const {
-    handleDelete,
-    handleAddAbove,
-    handleAddBelow,
-    handleSplitBelow,
-  } = props;
+const DialogueEmote = ({ 
+  message, 
+  classes,
+  handleDelete,
+  handleAddAbove,
+  handleAddBelow,
+  handleSplitBelow
+}) => {
 
   const imagePath = `/images/emotes/${message.message}.png`;
 
@@ -43,9 +42,15 @@ const DialogueEmote = (props) => {
 
             <Grid container justify="center" alignItems="center">
               <Grid item>
-                <center>
-                  <Avatar className={classes.emoteImage} src={imagePath} />
-                </center>
+                <Grid container justify="center">
+                  <div className={classes.emoteImageBackground}>
+                    <img
+                      alt="asdflol"
+                      src={imagePath}
+                      className={classes.emoteImage}
+                    />
+                  </div>
+                </Grid>
                 <br />
                 <Typography
                   align="center"

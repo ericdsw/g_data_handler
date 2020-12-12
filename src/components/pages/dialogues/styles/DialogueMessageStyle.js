@@ -32,7 +32,7 @@ export const styles = (theme) => ({
     fontSize: 8 * 2,
     backgroundColor: "#C9C3B8",
     color: "black",
-    borderRadius: 8,
+    borderRadius: 8 * 2,
     fontFamily: 'DogicaPixel',
     border: '2px solid #272523'
   },

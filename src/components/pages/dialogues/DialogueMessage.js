@@ -16,11 +16,7 @@ import { DialogueMessageToolbar } from "./elements";
 import { speakerSchema } from "../../../globals";
 
 import { styles } from "./styles/DialogueMessageStyle";
-
-const cleanupRegex = /({.=.+?})|({\/.})|(\[.+?\])/g;
-function cleanMessage(message) {
-  return message.replace(cleanupRegex, '');
-}
+import { cleanMessage } from './functions';
 
 const DialogueMessage = (props) => {
 

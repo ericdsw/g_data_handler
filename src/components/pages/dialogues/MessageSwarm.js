@@ -1,8 +1,16 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Card, CardHeader, CardContent, Typography } from "@material-ui/core";
+import { 
+  Card,
+  CardHeader,
+  CardContent,
+  Typography,
+  Tooltip,
+  Zoom
+} from "@material-ui/core";
 
 import { DialogueMessageToolbar } from "./elements";
+import { cleanMessage } from './functions';
 
 const styles = (theme) => ({
   swarmContainer: {
@@ -11,6 +19,20 @@ const styles = (theme) => ({
     borderBottom: "1px solid #666",
     padding: theme.spacing(3),
   },
+  swarmMessageTextWrapper: {
+    width: 188 * 2,
+    height: 28 * 2,
+    borderRadius: 8 * 2,
+    fontSize: 8 * 2,
+    color: '#000',
+    backgroundColor: "#C9C3B8",
+    fontFamily: 'DogicaPixel',
+    border: '2px solid #272523'
+  },
+  swarmMessageTextContent: {
+    marginLeft: 8 * 2,
+    lineHeight: `${28 * 2}px`,
+  },
   swarmMessage: {
     padding: theme.spacing(1),
     marginBottom: theme.spacing(0.5),
@@ -18,9 +40,8 @@ const styles = (theme) => ({
   },
 });
 
-const MessageSwarm = (props) => {
-  const { swarmData } = props;
-  const { handleEdit, handleDelete, handleSplitBelow } = props;
+const MessageSwarm = ({ swarmData, handleEdit, handleDelete, handleSplitBelow }) => {
+
   const classes = makeStyles(styles)();
 
   return (
@@ -48,7 +69,13 @@ const MessageSwarm = (props) => {
             square={true}
             variant="outlined"
           >
-            <Typography variant="subtitle1">{swarmMessage.message}</Typography>
+            <Tooltip TransitionComponent={Zoom} title={swarmMessage.message}>
+              <div className={classes.swarmMessageTextWrapper}>
+                <div className={classes.swarmMessageTextContent}>
+                  {cleanMessage(swarmMessage.message)}
+                </div>
+              </div>
+            </Tooltip>
             <Typography variant="body2">
               Target: {swarmMessage.target_object}. Appears after{" "}
               {swarmMessage.appearance_timeout} second(s).
