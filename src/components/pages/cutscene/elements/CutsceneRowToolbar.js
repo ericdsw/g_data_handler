@@ -6,8 +6,12 @@ import AddIcon from "@material-ui/icons/Add";
 import VerticalAlignBottomIcon from "@material-ui/icons/VerticalAlignBottom";
 import VerticalAlignTopIcon from "@material-ui/icons/VerticalAlignTop";
 
-const CutsceneRowToolbar = (props) => {
-  const { addAboveClick, addBelowClick, addEventClick, deleteRowClick } = props;
+const CutsceneRowToolbar = ({
+  addAboveClick,
+  addBelowClick,
+  addEventClick,
+  deleteRowClick
+}) => {
 
   return (
     <Typography variant="h6" gutterBottom align="right">

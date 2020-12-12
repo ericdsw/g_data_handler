@@ -8,7 +8,8 @@ const styles = (theme) => ({
   },
 });
 
-const AboutPage = (props) => {
+const AboutPage = () => {
+
   const classes = makeStyles(styles)();
 
   return (

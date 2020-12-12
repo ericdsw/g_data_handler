@@ -1,8 +1,8 @@
-import { blue, red } from "@material-ui/core/colors";
+import { red } from "@material-ui/core/colors";
 
 export const styles = (theme) => ({
   defaultButton: {
-    color: blue[500],
+    color: theme.palette.primary.main
   },
   deleteButton: {
     color: red[500],

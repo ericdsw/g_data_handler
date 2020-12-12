@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Card, CardContent, Avatar, Typography, Grid } from "@material-ui/core";
+import { Card, CardContent, Typography, Grid } from "@material-ui/core";
 import { DialogueMessageToolbar } from "./elements";
 
 import { styles } from "./styles/DialogueEmoteStyle";

@@ -1,4 +1,4 @@
-import { blue, grey } from "@material-ui/core/colors";
+import { grey } from "@material-ui/core/colors";
 
 export const styles = (theme) => ({
   eventCard: {
@@ -18,10 +18,10 @@ export const styles = (theme) => ({
     transform: "rotate(180deg)",
   },
   avatar: {
-    backgroundColor: blue[500],
+    backgroundColor: theme.palette.primary.main,
   },
   avatarNonImportant: {
-    backgroundColor: grey[300],
+    backgroundColor: theme.palette.mode === 'dark' ? grey[300] : grey[500],
     opacity: 0.7,
   },
 });

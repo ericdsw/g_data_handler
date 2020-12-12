@@ -1,12 +1,25 @@
 import { createMuiTheme } from "@material-ui/core/styles";
-import { indigo, blueGrey, blue } from "@material-ui/core/colors";
 
 const baseTheme = (mode) =>
   createMuiTheme({
     palette: {
       type: mode,
-      primary: mode === "dark" ? indigo : blue,
-      secondary: blueGrey,
+      background: {
+        default: mode === "dark" ? "#20171F" : "#fff",
+        paper: mode === "dark" ? "#2b202a" : "#fefefe",
+      },
+      primary: {
+        main: "#d50744",
+        light: "#ff546f",
+        dark: "#9c001e",
+        contrastText: "#fff"
+      },
+      secondary: {
+        main: "#bf9148",
+        light: "#f4c176",
+        dark: "#8c641b",
+        contrastText: "#000"
+      }
     },
     overrides: {
       MuiOutlinedInput: {
@@ -19,7 +32,7 @@ const baseTheme = (mode) =>
                 : "rgba(0,0,0,0.23)",
           },
           "&:hover:not($disabled):not($focused):not($error) $notchedOutline": {
-            borderColor: blue[600],
+            borderColor: "#bf9148",
             // Reset on touch devices, it doesn't add specificity
             "@media (hover: none)": {
               borderColor:
@@ -29,7 +42,7 @@ const baseTheme = (mode) =>
             },
           },
           "&$focused $notchedOutline": {
-            borderColor: blue[600],
+            borderColor: "#d50744",
             borderWidth: 1,
           },
         },
@@ -37,7 +50,7 @@ const baseTheme = (mode) =>
       MuiFormLabel: {
         root: {
           "&$focused": {
-            color: blue[600],
+            color: "#d50744",
           },
         },
       },

@@ -72,7 +72,6 @@ const Cutscene = (props) => {
         <Grid container justify="center">
           <Button
             color="primary"
-            className={classes.defaultButton}
             onClick={() => handleAddRow()}
           >
             Add Row

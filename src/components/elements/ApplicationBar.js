@@ -61,10 +61,14 @@ const nodeTargetInputSchema = {
   type: "node_target",
 };
 
-const ApplicationBar = (props) => {
+const ApplicationBar = ({
+  isDarkMode,
+  handleToggle,
+  handleDarkModeToggle
+}) => {
+
   const classes = makeStyles(styles)();
 
-  const { isDarkMode, handleToggle, handleDarkModeToggle } = props;
   const [dialogues, toggleDialogue] = useDialogueManager("helpDialogue");
 
   return (

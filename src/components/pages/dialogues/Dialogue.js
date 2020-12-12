@@ -74,7 +74,6 @@ const Dialogue = (props) => {
           <Grid container justify="center">
             <Button
               color="primary"
-              className={classes.defaultButton}
               onClick={() => {
                 toggleDialogue("addConversation", "show");
               }}

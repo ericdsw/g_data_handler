@@ -7,7 +7,6 @@ import { drawerWidth } from "./globals";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
 
-
 import baseTheme from "./themes/baseTheme";
 import routes, { fallbackRoute } from "./router";
 import store from "./store";
