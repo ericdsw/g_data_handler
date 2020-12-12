@@ -25,11 +25,47 @@ export const styles = (theme) => ({
     color: blue[200],
   },
   content: {
-    flex: 4,
-    color: "white",
+    display: 'inline-block',
+    position: 'relative',
+    width: 310 * 2,
+    height: 55 * 2,
+    fontSize: 8 * 2,
+    backgroundColor: "#C9C3B8",
+    color: "black",
+    borderRadius: 8,
+    fontFamily: 'DogicaPixel',
+    border: '2px solid #272523'
+  },
+  contentText: {
+    marginLeft: 8 * 2,
+    marginTop: 6 * 2,
+    width: 242 * 2,
+    height: 47 * 2,
+    lineHeight: '30px',
+  },
+  contentTextNoImage: {
+    width: 292 * 2,
+  },
+  contentSpeakerName: {
+    width: 85 * 2,
+    height: 16 * 2,
+    left: 18 * 2,
+    position: 'absolute',
+    top: 0,
+    marginTop: - (16 * 2) / 2,
+    color: '#fff',
+    borderRadius: 6 * 2,
+    backgroundColor: '#4C4945',
+    border: '1px solid #282624',
+    lineHeight: `${16 * 2}px`,
+    paddingLeft: 2 * 2
   },
   contentImage: {
-    marginRight: 10,
+    width: 55 * 2,
+    height: 64 * 2,
+    position: 'absolute',
+    bottom: 0,
+    right: 5 * 2
   },
   button: {
     color: "white",

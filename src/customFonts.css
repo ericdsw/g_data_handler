@@ -1,0 +1,4 @@
+@font-face {
+  font-family: 'DogicaPixel';
+  src: local('dogicapixel'), url('./fonts/dogicapixel.ttf') format('truetype')
+}

@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import {
   Card,
   CardContent,
-  Avatar,
   Typography,
   Icon,
   Grid,
+  Tooltip,
+  Zoom
 } from "@material-ui/core";
+import clsx from 'clsx';
 
 import { ConversationChoices, ConversationExtraParams } from "./elements";
 import { DialogueMessageToolbar } from "./elements";
@@ -15,8 +17,12 @@ import { speakerSchema } from "../../../globals";
 
 import { styles } from "./styles/DialogueMessageStyle";
 
+const cleanupRegex = /({.=.+?})|({\/.})|(\[.+?\])/g;
+function cleanMessage(message) {
+  return message.replace(cleanupRegex, '');
+}
+
 const DialogueMessage = (props) => {
-  const { message, classes } = props;
 
   const {
     handleEdit,
@@ -27,6 +33,9 @@ const DialogueMessage = (props) => {
   } = props;
 
   let usedImagePath, speakerName;
+  
+
+  const { message, classes } = props;
 
   // Extract data from speaker
   if (message.speaker) {
@@ -40,6 +49,14 @@ const DialogueMessage = (props) => {
   if (message.name) {
     speakerName = message.name;
   }
+
+  const hasImage = useMemo(
+    () => usedImagePath && usedImagePath !== 'NONE', [usedImagePath]
+  );
+  const messageTextOnly = useMemo(
+    () => cleanMessage(message.message),
+    [message.message]
+  );
 
   return (
     <Card square={true} className={classes.messageContainer}>
@@ -64,15 +81,6 @@ const DialogueMessage = (props) => {
                     Speaker: {message.speaker}
                   </Typography>
                 )}
-
-                <Typography
-                  variant="h6"
-                  className={classes.title}
-                  align="left"
-                  gutterBottom
-                >
-                  {speakerName}
-                </Typography>
               </div>
               <DialogueMessageToolbar
                 message={message}
@@ -87,15 +95,30 @@ const DialogueMessage = (props) => {
               />
             </div>
             <div className={classes.details}>
-              {usedImagePath && (
-                <div className={classes.contentImage}>
-                  <Avatar
-                    className={classes.avatar}
-                    src={`/images/${usedImagePath}`}
-                  />
+              <Grid container justify="center">
+                <div className={classes.content}>
+                  {speakerName && (
+                    <div className={classes.contentSpeakerName}>
+                      {speakerName}
+                    </div>
+                  )}
+                  <Tooltip TransitionComponent={Zoom} title={message.message}>
+                    <div className={clsx(
+                      classes.contentText,
+                      hasImage ? '' : classes.contentTextNoImage
+                    )}>
+                      {messageTextOnly}
+                    </div>
+                  </Tooltip>
+                  {hasImage && (
+                    <img 
+                      alt="asdf"
+                      className={classes.contentImage}
+                      src={`/images/${usedImagePath}`}
+                    />
+                  )}
                 </div>
-              )}
-              <div className={classes.content}>{message.message}</div>
+              </Grid>
             </div>
 
             <ConversationExtraParams message={message} />
