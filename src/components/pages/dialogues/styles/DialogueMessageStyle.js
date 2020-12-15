@@ -61,7 +61,7 @@ export const styles = (theme) => ({
     paddingLeft: 2 * 2
   },
   contentImage: {
-    width: 55 * 2,
+    width: 'auto',
     height: 64 * 2,
     position: 'absolute',
     bottom: 0,
