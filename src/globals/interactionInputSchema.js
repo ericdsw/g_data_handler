@@ -130,6 +130,18 @@ const interactionInputSchema = {
         tooltip:
           "If true, excluding items are treated as an OR comparison (by default, all must be absent)",
       },
+      missing_items: {
+        label: "Missing Items",
+        type: "array",
+        placeholder: "Will only trigger if these items are missing",
+      },
+      loose_missing_items: {
+        label: "Missing Items OR overwrite",
+        type: "boolean",
+        default: false,
+        tooltip:
+          "If true, missing items are treated as an OR comparison (by default, all must be absent)",
+      }
     },
   },
 
@@ -182,6 +194,18 @@ const interactionInputSchema = {
         tooltip:
           "If true, excluding items are treated as an OR comparison (by default, all must be absent)",
       },
+      missing_items: {
+        label: "Missing Items",
+        type: "array",
+        placeholder: "Will only trigger if these items are missing",
+      },
+      loose_missing_items: {
+        label: "Missing Items OR overwrite",
+        type: "boolean",
+        default: false,
+        tooltip:
+          "If true, missing items are treated as an OR comparison (by default, all must be absent)",
+      }
     },
   },
 

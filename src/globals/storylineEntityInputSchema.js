@@ -395,6 +395,44 @@ const storylineEntityInputSchema = {
         type: "number",
         required: false,
         tooltip: " the area's height (defaults to 50)"
+      },
+      required_items: {
+        label: "Required Items",
+        type: "array",
+        placeholder:
+          "Items required to trigger, separate each one with a comma",
+      },
+      loose_required_items: {
+        label: "Required Items OR overwrite",
+        type: "boolean",
+        default: false,
+        tooltip:
+          "If true, required items are treated as an OR comparison (by default, all must be present)",
+      },
+      excluding_items: {
+        label: "Excluding Items",
+        type: "array",
+        placeholder:
+          "Items that will prevent trigger, separate each one with a comma",
+      },
+      loose_excluding_items: {
+        label: "Excluding Items OR overwrite",
+        type: "boolean",
+        default: false,
+        tooltip:
+          "If true, excluding items are treated as an OR comparison (by default, all must be absent)",
+      },
+      missing_items: {
+        label: "Misisng Items",
+        type: "array",
+        placeholder: "Will only trigger if these items are missing",
+      },
+      loose_missing_items: {
+        label: "Missing Items OR overwrite",
+        type: "boolean",
+        default: false,
+        tooltip:
+          "If true, missing items are treated as an OR comparison (by default, all must be absent)",
       }
     },
   },
@@ -438,6 +476,44 @@ const storylineEntityInputSchema = {
         type: "number",
         required: false,
         tooltip: " the area's height (defaults to 50)"
+      },
+      required_items: {
+        label: "Required Items",
+        type: "array",
+        placeholder:
+          "Items required to trigger, separate each one with a comma",
+      },
+      loose_required_items: {
+        label: "Required Items OR overwrite",
+        type: "boolean",
+        default: false,
+        tooltip:
+          "If true, required items are treated as an OR comparison (by default, all must be present)",
+      },
+      excluding_items: {
+        label: "Excluding Items",
+        type: "array",
+        placeholder:
+          "Items that will prevent trigger, separate each one with a comma",
+      },
+      loose_excluding_items: {
+        label: "Excluding Items OR overwrite",
+        type: "boolean",
+        default: false,
+        tooltip:
+          "If true, excluding items are treated as an OR comparison (by default, all must be absent)",
+      },
+      missing_items: {
+        label: "Missing Items",
+        type: "array",
+        placeholder: "Will only trigger if these items are missing",
+      },
+      loose_missing_items: {
+        label: "Missing Items OR overwrite",
+        type: "boolean",
+        default: false,
+        tooltip:
+          "If true, missing items are treated as an OR comparison (by default, all must be absent)",
       }
     },
   },
