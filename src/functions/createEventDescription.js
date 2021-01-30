@@ -135,6 +135,8 @@ export default function createEventDescription(type, parameters) {
       return `Will clear any custom bgm playing`;
     case "change_node_property":
       return `Will modify props in node ${parameters.node}`;
+    case "call_node_method":
+      return `Will call ${parameters.method_name} in node ${parameters.node_name}`;
     default:
       return "";
   }

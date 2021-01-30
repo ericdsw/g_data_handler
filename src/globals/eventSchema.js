@@ -1170,6 +1170,27 @@ const eventSchema = {
         placeholder: "The minigame node, inside res://Minigames"
       }
     }
+  },
+
+  call_node_method: {
+    name: "Call Node Method",
+    icon: "phone_callback",
+    additionalText: "Calls the provided method in the node inside the tree",
+    defaultImportant: false,
+    parameters: {
+      node_name: {
+        label: "Node Name",
+        required: true,
+        type: "string",
+        placeholder: "FooNode"
+      },
+      method_name: {
+        label: "Method Name",
+        required: true,
+        type: "string",
+        placeholder: "method_name"
+      }
+    }
   }
 
 };
