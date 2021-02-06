@@ -65,7 +65,7 @@ export const styles = (theme) => ({
     height: 64 * 2,
     position: 'absolute',
     bottom: 0,
-    right: 5 * 2
+    right: 1
   },
   button: {
     color: "white",

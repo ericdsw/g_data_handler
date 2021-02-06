@@ -7,7 +7,8 @@ export const speakerImages = [
   "Vega_mask_laughing.png",
   "Vega_mask_menacing_sans.png",
   "Vega_mask_menacing.png",
-  "Vega_mask_neutral.png"
+  "Vega_mask_neutral.png",
+  "Speaker.png"
 ];
 
 const speakerSchema = {
