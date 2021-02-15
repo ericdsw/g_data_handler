@@ -57,6 +57,7 @@ export default function createInput(
     switch (inputData.type) {
       case "boolean":
         value = inputData.default;
+        console.log(inputData.default);
         break;
       case "number":
         const numberVal = parseFloat(inputData.default);

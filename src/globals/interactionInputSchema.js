@@ -244,6 +244,12 @@ const interactionInputSchema = {
         placeholder:
           "Relative nodepath to the trigger dialogue interaction node",
       },
+      only_deliver: {
+        label: "Only deliver",
+        type: "boolean",
+        default: true,
+        tooltip: "If true, the item will only be marked as delivered"
+      }
     },
   },
 
@@ -298,6 +304,12 @@ const interactionInputSchema = {
         placeholder:
           "Format: item_id:interaction:consumes (separated by comma)",
       },
+      only_deliver: {
+        label: "Only deliver",
+        type: "boolean",
+        default: true,
+        tooltip: "If true, the item will only be marked as delivered"
+      }
     },
   },
 };

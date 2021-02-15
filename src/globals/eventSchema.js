@@ -635,6 +635,12 @@ const eventSchema = {
         required: true,
         tooltip: "The item id to remove",
       },
+      only_deliver: {
+        label: "Only deliver",
+        type: "boolean",
+        tooltip: "If true, the item will be marked as delivered rather than being removed",
+        default: true
+      }
     },
   },
 
