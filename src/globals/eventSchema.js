@@ -1197,6 +1197,79 @@ const eventSchema = {
         placeholder: "method_name"
       }
     }
+  },
+
+  give_memory: {
+    name: "Give Memory",
+    icon: "cloud_download",
+    additionalText: "Unlocks a new memory for the player",
+    defaultImportant: true,
+    parameters: {
+      memory_name: {
+        label: "Memory Name",
+        required: true,
+        type: "string",
+        placeholder: "FooMemoryNode"
+      },
+      no_fanfare: {
+        label: "No Fanfare",
+        type: "boolean",
+        default: false,
+        tooltip: "If true, the prompt will be skipped"
+      },
+      fade_full_message: {
+        label: "Fade Full Message",
+        type: "boolean",
+        default: true,
+        tooltip: "If true, the message will fade in instead of it being typed"
+      },
+      message_type_speed: {
+        label: "Message type speed",
+        type: "number",
+        default: 0.10,
+        tooltip: "How fast will the prompt message be typed"
+      }
+    }
+  },
+
+  toggle_memory_lock: {
+    name: "Toggle memory lock",
+    icon: "lock",
+    additionalText: "Locks/unlocks an existing memory",
+    defaultImportant: true,
+    parameters: {
+      memory_name: {
+        label: "Memory Name",
+        required: true,
+        type: "string",
+        placeholder: "FooMemoryNode"
+      },
+      locked: {
+        label: "Locked",
+        type: "boolean",
+        default: false,
+      }
+    }
+  },
+
+  toggle_memory: {
+    name: "Toggle Memory",
+    icon: "cloud_done",
+    additionalText: "activates/deactivates an existing memory",
+    defaultImportant: true,
+    parameters: {
+      memory_name: {
+        label: "Memory Name",
+        required: true,
+        type: "string",
+        placeholder: "FooMemoryNode"
+      },
+      active: {
+        label: "Active",
+        type: "boolean",
+        default: false,
+      }
+    }
   }
 
 };

@@ -137,6 +137,12 @@ export default function createEventDescription(type, parameters) {
       return `Will modify props in node ${parameters.node}`;
     case "call_node_method":
       return `Will call ${parameters.method_name} in node ${parameters.node_name}`;
+    case "give_memory":
+      return `Will give the memory ${parameters.memory_name}`;
+    case "toggle_memory_lock":
+      return `Will ${parameters.locked ? 'lock' : 'unlock'} the memory ${parameters.memory_name}`;
+    case "toggle_memory":
+      return `Will turn the memory ${parameters.memory_name} ${parameters.active ? 'on': 'off'}`;
     default:
       return "";
   }
