@@ -15,6 +15,18 @@ const interactionInputSchema = {
         required: true,
         placeholder: "json file, starting from the cutscenes resource folder",
       },
+      required_memory: {
+        label: "Required Memory",
+        type: "text",
+        default: "",
+        tooltip: "If defined, this memory must have already been unlocked"
+      },
+      excluded_memory: {
+        label: "Excluded Memory",
+        type: "text",
+        default: "",
+        tooltip: "If defined, this memory must not have been unlocked"
+      }
     },
   },
 
@@ -41,6 +53,18 @@ const interactionInputSchema = {
         required: true,
         placeholder: "Separate each one with a comma",
       },
+      required_memory: {
+        label: "Required Memory",
+        type: "text",
+        default: "",
+        tooltip: "If defined, this memory must have already been unlocked"
+      },
+      excluded_memory: {
+        label: "Excluded Memory",
+        type: "text",
+        default: "",
+        tooltip: "If defined, this memory must not have been unlocked"
+      }
     },
   },
 
@@ -141,6 +165,18 @@ const interactionInputSchema = {
         default: false,
         tooltip:
           "If true, missing items are treated as an OR comparison (by default, all must be absent)",
+      },
+      required_memory: {
+        label: "Required Memory",
+        type: "text",
+        default: "",
+        tooltip: "If defined, this memory must have already been unlocked"
+      },
+      excluded_memory: {
+        label: "Excluded Memory",
+        type: "text",
+        default: "",
+        tooltip: "If defined, this memory must not have been unlocked"
       }
     },
   },
@@ -205,6 +241,18 @@ const interactionInputSchema = {
         default: false,
         tooltip:
           "If true, missing items are treated as an OR comparison (by default, all must be absent)",
+      },
+      required_memory: {
+        label: "Required Memory",
+        type: "text",
+        default: "",
+        tooltip: "If defined, this memory must have already been unlocked"
+      },
+      excluded_memory: {
+        label: "Excluded Memory",
+        type: "text",
+        default: "",
+        tooltip: "If defined, this memory must not have been unlocked"
       }
     },
   },
@@ -309,6 +357,18 @@ const interactionInputSchema = {
         type: "boolean",
         default: true,
         tooltip: "If true, the item will only be marked as delivered"
+      },
+      required_memory: {
+        label: "Required Memory",
+        type: "text",
+        default: "",
+        tooltip: "If defined, this memory must have already been unlocked"
+      },
+      excluded_memory: {
+        label: "Excluded Memory",
+        type: "text",
+        default: "",
+        tooltip: "If defined, this memory must not have been unlocked"
       }
     },
   },
