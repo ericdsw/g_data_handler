@@ -1270,6 +1270,20 @@ const eventSchema = {
         default: false,
       }
     }
+  },
+
+  give_currency: {
+    name: "Give Currency",
+    icon: "monetization_on",
+    additionalText: "Adds the provided funds to the player's wallet",
+    defaultImportant: false,
+    parameters: {
+      given_amount: {
+        label: "Given Amount",
+        required: true,
+        type: "number"
+      }
+    }
   }
 
 };

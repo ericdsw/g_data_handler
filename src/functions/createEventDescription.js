@@ -143,6 +143,8 @@ export default function createEventDescription(type, parameters) {
       return `Will ${parameters.locked ? 'lock' : 'unlock'} the memory ${parameters.memory_name}`;
     case "toggle_memory":
       return `Will turn the memory ${parameters.memory_name} ${parameters.active ? 'on': 'off'}`;
+    case "give_currency":
+      return `Will add ${parameters.given_amount} to the wallet`;
     default:
       return "";
   }
