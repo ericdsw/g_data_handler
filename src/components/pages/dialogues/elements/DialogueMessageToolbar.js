@@ -16,9 +16,11 @@ import {
   CreateDialogueMessageForm,
   CreateConversationForm,
   CreateSwarmForm,
+  GiveItemFromDialogueForm,
+  GiveMoneyFromDialogueForm
 } from "../forms";
 
-const styles = (theme) => ({
+const styles = () => ({
   button: {
     color: "white",
   },
@@ -57,7 +59,7 @@ const DialogueMessageToolbar = (props) => {
     setAnchorEl(null);
   }
 
-  function handleMenuSelect(event, menuItemName) {
+  function handleMenuSelect(_, menuItemName) {
     switch (menuItemName) {
       case "edit":
         setSelectedOption("edit");
@@ -96,6 +98,7 @@ const DialogueMessageToolbar = (props) => {
   let editDialogue;
 
   switch (message.type) {
+
     case "message":
       typeString = "Message";
       editDialogue = (
@@ -117,6 +120,7 @@ const DialogueMessageToolbar = (props) => {
         </GenericDialogue>
       );
       break;
+
     case "swarm":
       typeString = "Swarm";
       editDialogue = (
@@ -136,10 +140,52 @@ const DialogueMessageToolbar = (props) => {
         </GenericDialogue>
       );
       break;
+
+    case "give_item":
+      typeString = "Give Item Message";
+      editDialogue = (
+        <GenericDialogue
+          title="Edit Give Item Message"
+          open={dialogues["editMessage"]}
+          onClose={() => toggleDialogue("editMessage", "hide")}
+        >
+          <GiveItemFromDialogueForm
+            data={message}
+            isEdit={true}
+            onSubmit={data => {
+              toggleDialogue("editMessage", "hide");
+              handleDialogueFormSubmit(data);
+            }}
+          />
+        </GenericDialogue>
+      );
+      break;
+
+    case "give_money":
+      typeString = "Give Money Message";
+      editDialogue = (
+        <GenericDialogue
+          title="Edit Give Money Message"
+          open={dialogues["editMessage"]}
+          onClose={() => toggleDialogue("editMessage", "hide")}
+        >
+          <GiveMoneyFromDialogueForm
+            data={message}
+            isEdit={true}
+            onSubmit={data => {
+              toggleDialogue("editMessage", "hide");
+              handleDialogueFormSubmit(data);
+            }}
+          />
+        </GenericDialogue>
+      );
+      break;
+
     case "emote":
       typeString = "Emote";
       editDialogue = <React.Fragment />;
       break;
+
     default:
       typeString = "";
   }

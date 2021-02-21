@@ -19,6 +19,7 @@ const useStyles = makeStyles({
 
 const GiveItemFromDialogue = ({ 
   message, 
+  handleEdit,
   handleDelete,
   handleAddAbove,
   handleAddBelow,
@@ -41,14 +42,11 @@ const GiveItemFromDialogue = ({
             message={message}
             handleAddAbove={(data) => handleAddAbove(data)}
             handleAddBelow={(data) => handleAddBelow(data)}
-            handleEdit={() => {
-              /* No edit logic */
-            }}
+            handleEdit={handleEdit}
             handleDelete={() => handleDelete()}
             handleSplitBelow={(conversationName) => {
               handleSplitBelow(conversationName);
             }}
-            omitEdit={true}
           />
         </Grid>
 
@@ -71,6 +69,18 @@ const GiveItemFromDialogue = ({
             <Typography variant="body2">
               {usedMessage}
             </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            {message.flavor_message && (
+              <Typography variant="caption">
+                Flavor: {message.flavor_message}
+              </Typography>
+            )}
+            {!message.flavor_message && (
+              <Typography variant="caption" style={{ color: "lightGray" }}>
+                No flavor defined
+              </Typography>
+            )}
           </Grid>
         </Grid>
 

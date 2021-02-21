@@ -12,7 +12,7 @@ import {
 
 import { speakerSchema } from "../../../../globals";
 
-const styles = (theme) => ({
+const styles = () => ({
   emoteAvatar: {
     width: 16,
     height: 16,
@@ -30,6 +30,7 @@ const VALID_EMOTES = {
 };
 
 class CreateEmoteForm extends React.Component {
+
   state = {
     type: "emote",
     target_object: "",

@@ -35,7 +35,7 @@ export const styles = (theme) => ({
   buttonContainer: {
     marginTop: 16,
     display: "flex",
-    alignItems: "center",
+    alignItems: "stretch",
     justifyContent: "center",
   },
 });

@@ -16,6 +16,12 @@ const schema = {
       required: false,
       placeholder: "Got X Amount",
       tooltip: "If defined, this message will be used instead of the default one"
+    },
+    flavor_message: {
+      label: "Custom Message",
+      type: "text",
+      required: false,
+      tooltip: "If defined, will be shown after either the default or the custom message"
     }
   }
 }

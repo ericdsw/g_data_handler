@@ -19,6 +19,7 @@ const useStyles = makeStyles({
 
 const GiveMoneyFromDialogue = ({ 
   message, 
+  handleEdit,
   handleDelete,
   handleAddAbove,
   handleAddBelow,
@@ -41,14 +42,11 @@ const GiveMoneyFromDialogue = ({
             message={message}
             handleAddAbove={(data) => handleAddAbove(data)}
             handleAddBelow={(data) => handleAddBelow(data)}
-            handleEdit={() => {
-              /* No edit logic */
-            }}
+            handleEdit={handleEdit}
             handleDelete={() => handleDelete()}
             handleSplitBelow={(conversationName) => {
               handleSplitBelow(conversationName);
             }}
-            omitEdit={true}
           />
         </Grid>
 

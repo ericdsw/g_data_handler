@@ -99,6 +99,7 @@ class DialogueMessageContainer extends React.Component {
         content = (
           <GiveMoneyFromDialogue
             message={message}
+            handleEdit={this.editMessage}
             handleDelete={this.deleteMessage}
             handleAddAbove={this.addAbove}
             handleAddBelow={this.addBelow}
@@ -110,10 +111,12 @@ class DialogueMessageContainer extends React.Component {
         content = (
           <GiveItemFromDialogue
             message={message}
+            handleEdit={this.editMessage}
             handleDelete={this.deleteMessage}
             handleAddAbove={this.addAbove}
             handleAddBelow={this.addBelow}
             handleSplitBelow={this.splitBelow}
+            buttonText="Edit"
           />
         );
         break;
