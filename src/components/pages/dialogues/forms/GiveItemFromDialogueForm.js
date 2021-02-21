@@ -18,9 +18,10 @@ const schema = {
       tooltip: "If defined, this message will be used instead of the default one"
     },
     flavor_message: {
-      label: "Custom Message",
+      label: "Flavor Message",
       type: "text",
       required: false,
+      placeholder: "This is the inner monologue",
       tooltip: "If defined, will be shown after either the default or the custom message"
     }
   }
