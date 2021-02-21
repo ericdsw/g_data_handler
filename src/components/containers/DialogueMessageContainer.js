@@ -7,9 +7,12 @@ import {
   splitConversation,
 } from "../../actions/dialogueActions";
 import { Draggable } from "react-beautiful-dnd";
+
 import DialogueMessage from "../pages/dialogues/DialogueMessage";
 import DialogueEmote from "../pages/dialogues/DialogueEmote";
 import MessageSwarm from "../pages/dialogues/MessageSwarm";
+import GiveMoneyFromDialogue from '../pages/dialogues/GiveMoneyFromDialogue';
+import GiveItemFromDialogue from '../pages/dialogues/GiveItemFromDialogue';
 
 class DialogueMessageContainer extends React.Component {
   editMessage = (data) => {
@@ -92,6 +95,28 @@ class DialogueMessageContainer extends React.Component {
           />
         );
         break;
+      case "give_money":
+        content = (
+          <GiveMoneyFromDialogue
+            message={message}
+            handleDelete={this.deleteMessage}
+            handleAddAbove={this.addAbove}
+            handleAddBelow={this.addBelow}
+            handleSplitBelow={this.splitBelow}
+          />
+        );
+        break;
+      case "give_item":
+        content = (
+          <GiveItemFromDialogue
+            message={message}
+            handleDelete={this.deleteMessage}
+            handleAddAbove={this.addAbove}
+            handleAddBelow={this.addBelow}
+            handleSplitBelow={this.splitBelow}
+          />
+        );
+        break;
       default:
         content = <React.Fragment />;
         break;
@@ -128,3 +153,4 @@ export default connect(mapStateToProps, {
   addMessageAtPosition,
   splitConversation,
 })(DialogueMessageContainer);
+

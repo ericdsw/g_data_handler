@@ -23,6 +23,8 @@ import {
   CreateDialogueMessageForm,
   CreateEmoteForm,
   CreateSwarmForm,
+  GiveMoneyFromDialogueForm,
+  GiveItemFromDialogueForm
 } from "./forms";
 
 import { styles } from "./styles/DialogueConversationStyle";
@@ -41,7 +43,9 @@ const DialogueConversation = (props) => {
     "updateConversation",
     "addMessage",
     "addEmote",
-    "addSwarm"
+    "addSwarm",
+    "addGiveItem",
+    "addGiveMoney"
   );
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -67,7 +71,7 @@ const DialogueConversation = (props) => {
     <ExpansionPanel
       className={classes.conversationContainer}
       square={true}
-      onChange={(event, expanded) => handlePanelChange(expanded)}
+      onChange={(_, expanded) => handlePanelChange(expanded)}
     >
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <Grid container alignItems="center">
@@ -166,15 +170,31 @@ const DialogueConversation = (props) => {
                 toggleDialogue("addEmote", "show");
               }}
             >
-              Add emote
+              Emote
+            </Button>
+            <Button
+              style={{ marginTop: 8, marginRight: 16 }}
+              color="secondary"
+              variant="contained"
+              onClick={() => toggleDialogue("addSwarm", "show")}
+            >
+              Dialogue Swarn
+            </Button>
+            <Button
+              style={{ marginTop: 8, marginRight: 16 }}
+              color="secondary"
+              variant="contained"
+              onClick={() => toggleDialogue("addGiveMoney", "show")}
+            >
+              Give Money
             </Button>
             <Button
               style={{ marginTop: 8 }}
               color="secondary"
               variant="contained"
-              onClick={() => toggleDialogue("addSwarm", "show")}
+              onClick={() => toggleDialogue("addGiveItem", "show")}
             >
-              Add Dialogue Swarn
+              Give Item
             </Button>
           </div>
         </div>
@@ -222,6 +242,34 @@ const DialogueConversation = (props) => {
           isEdit={false}
           handleSubmit={(data) => {
             toggleDialogue("addSwarm", "hide");
+            handleAddToConversation(data);
+          }}
+        />
+      </GenericDialogue>
+
+      <GenericDialogue
+        title="Give Money"
+        open={dialogues["addGiveMoney"]}
+        onClose={() => toggleDialogue("addGiveMoney", "hide")}
+        maxWidth="sm"
+      >
+        <GiveMoneyFromDialogueForm
+          onSubmit={data => {
+            toggleDialogue("addGiveMoney", "hide")
+            handleAddToConversation(data);
+          }}
+        />
+      </GenericDialogue>
+
+      <GenericDialogue
+        title="Give Item"
+        open={dialogues["addGiveItem"]}
+        onClose={() => toggleDialogue("addGiveItem", "hide")}
+        maxWidth="sm"
+      >
+        <GiveItemFromDialogueForm
+          onSubmit={data => {
+            toggleDialogue("addGiveItem", "hide");
             handleAddToConversation(data);
           }}
         />

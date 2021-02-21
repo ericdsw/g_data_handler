@@ -135,7 +135,7 @@ const CreateSwarmForm = (props) => {
         <Grid item xs={6}>
           <form onSubmit={(e) => messageFormSubmit(e)}>
             {Object.keys(shortMessageSchema.parameters).map(
-              (paramName, index) => (
+              (paramName) => (
                 <React.Fragment key={paramName}>
                   {createInput(
                     paramName,

@@ -29,7 +29,7 @@ const DialogueEmote = ({
                 message={message}
                 handleAddAbove={(data) => handleAddAbove(data)}
                 handleAddBelow={(data) => handleAddBelow(data)}
-                handleEdit={(data) => {
+                handleEdit={() => {
                   /* No edit logic */
                 }}
                 handleDelete={() => handleDelete()}
