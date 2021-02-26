@@ -1,3 +1,20 @@
+
+/**
+ * These parameters are defined in the base CutsceneEvent file.
+ */
+const defaultParameters = {
+  start_delay: {
+    label: "Start Delay",
+    type: "number",
+    required: false,
+    default: 0,
+    tooltip: "The event will wait this amount of seconds before actually starting"
+  }
+}
+
+/**
+ * Parameters for each separate cutscene event
+ */
 const eventSchema = {
   gain_abilities: {
     name: "Gain Abilities",
@@ -6,6 +23,7 @@ const eventSchema = {
     additionalText:
       "Will display the level up overlay, allowing the player to level up to the max allowed level defined",
     parameters: {
+      ...defaultParameters,
       max_level: {
         label: "Max allowed level",
         type: "number",
@@ -22,6 +40,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Forces the target object to play an animation",
     parameters: {
+      ...defaultParameters,
       object: {
         label: "Object",
         type: "node_target",
@@ -61,6 +80,8 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Starts a battle with the provided parameters",
     parameters: {
+
+      ...defaultParameters,
       map_scene: {
         label: "Map Scene",
         type: "text",
@@ -115,6 +136,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Update the current BGM to the one provided",
     parameters: {
+      ...defaultParameters,
       BGM: {
         label: "BGM file name",
         type: "text",
@@ -144,6 +166,7 @@ const eventSchema = {
     additionalText:
       "Only works inside a battle, changes the current enemy to a new enemy instance",
     parameters: {
+      ...defaultParameters,
       new_enemy: {
         label: "New Enemy Scene Name",
         type: "text",
@@ -168,6 +191,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Teleports to the provided map",
     parameters: {
+      ...defaultParameters,
       map: {
         label: "Map Alias",
         type: "text",
@@ -220,6 +244,7 @@ const eventSchema = {
     additionalText:
       "Updates the target map to the new provided state (if present)",
     parameters: {
+      ...defaultParameters,
       map: {
         label: "Map Alias",
         type: "text",
@@ -244,6 +269,7 @@ const eventSchema = {
     additionalText:
       "Updates what state will be forced to the player overworld once the cutscene finishes",
     parameters: {
+      ...defaultParameters,
       new_state: {
         label: "New State",
         type: "text",
@@ -260,6 +286,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Flash a color overlay that covers the entire screen",
     parameters: {
+      ...defaultParameters,
       color_hex: {
         label: "Color (Hex Value)",
         type: "text",
@@ -301,6 +328,7 @@ const eventSchema = {
     additionalText:
       "Updates one or more map states depending on the states present on other maps",
     parameters: {
+      ...defaultParameters,
       checked_maps: {
         label: "Maps To Check",
         type: "json",
@@ -333,6 +361,7 @@ const eventSchema = {
     additionalText:
       "Halts the execution of the current cutscene and fires a new cutscene defined in the cutscene_jumps reference",
     parameters: {
+      ...defaultParameters,
       jump_name: {
         label: "Jump Name",
         type: "text",
@@ -351,6 +380,7 @@ const eventSchema = {
     additionalText:
       "Applies the provided amount of damage to the enemy (will always leave at least 1 hp)",
     parameters: {
+      ...defaultParameters,
       amount: {
         label: "Damage Amount",
         type: "number",
@@ -367,6 +397,7 @@ const eventSchema = {
     additionalText:
       "Applies the provided amount of damage to the player (will always leave at least 1 hp)",
     parameters: {
+      ...defaultParameters,
       amount: {
         label: "Damage Amount",
         type: "number",
@@ -382,6 +413,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Frees the provided instance",
     parameters: {
+      ...defaultParameters,
       object: {
         label: "Object to Destroy",
         type: "node_target",
@@ -398,6 +430,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Starts a dialogue with the provided parameters",
     parameters: {
+      ...defaultParameters,
       file: {
         label: "JSON file",
         type: "text",
@@ -423,6 +456,7 @@ const eventSchema = {
     additionalText:
       "Forces a battle to finish early and returns to the overworld",
     parameters: {
+      ...defaultParameters,
       finish_early: {
         label: "Should Finish Early",
         type: "boolean",
@@ -467,6 +501,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Adds the item to the player's inventory",
     parameters: {
+      ...defaultParameters,
       item_type: {
         label: "Item Type",
         type: "text",
@@ -495,6 +530,7 @@ const eventSchema = {
     additionalText:
       "Updates the current active game run and returns to the title screen",
     parameters: {
+      ...defaultParameters,
       next_run_name: {
         label: "Next Run",
         type: "text",
@@ -511,6 +547,7 @@ const eventSchema = {
     additionalText:
       "Forces the provided level to the player, without any UI or interaction required",
     parameters: {
+      ...defaultParameters,
       target_level: {
         label: "Target Level",
         type: "number",
@@ -527,6 +564,7 @@ const eventSchema = {
     additionalText:
       "Starts a minigame, which will display a custom UI and prevent the player from moving or interacting",
     parameters: {
+      ...defaultParameters,
       game: {
         label: "Minigame Identifier",
         type: "text",
@@ -542,6 +580,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Moves the camera to the new target",
     parameters: {
+      ...defaultParameters,
       target: {
         label: "New Camera Target",
         type: "node_target",
@@ -564,6 +603,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Moves the provided control target to a new position",
     parameters: {
+      ...defaultParameters,
       at_speed: {
         label: "Movement Speed",
         type: "number",
@@ -623,6 +663,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Removes the provided item from the player's inventory",
     parameters: {
+      ...defaultParameters,
       item_type: {
         label: "Item Type",
         type: "text",
@@ -651,6 +692,7 @@ const eventSchema = {
     additionalText:
       "Performs a save operation with the required parameters (full save if nothing is provided)",
     parameters: {
+      ...defaultParameters,
       map_data: {
         label: "Map Data",
         type: "json",
@@ -687,6 +729,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Causes the camera to shake with the provided parameters",
     parameters: {
+      ...defaultParameters,
       duration: {
         label: "Shake Duration",
         type: "number",
@@ -708,6 +751,7 @@ const eventSchema = {
     defaultImportant: false,
     additionalText: "Plays the provided sound effect",
     parameters: {
+      ...defaultParameters,
       sound: {
         label: "Sound File Name",
         type: "text",
@@ -725,6 +769,7 @@ const eventSchema = {
     additionalText:
       "Adds the specified object to the map, inside the specified parent",
     parameters: {
+      ...defaultParameters,
       object: {
         label: "Object Scene Full Path",
         type: "text",
@@ -759,6 +804,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Will show/hide the battle HUD",
     parameters: {
+      ...defaultParameters,
       should_show: {
         label: "Should Show",
         type: "boolean",
@@ -774,6 +820,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Toggles the target object's visibility",
     parameters: {
+      ...defaultParameters,
       object: {
         label: "Target Object",
         type: "node_target",
@@ -796,6 +843,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Pauses the cutscene execution for a set amount of time",
     parameters: {
+      ...defaultParameters,
       duration: {
         label: "Duration",
         type: "number",
@@ -811,6 +859,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Zooms the camera to the provided scale",
     parameters: {
+      ...defaultParameters,
       target_zoom: {
         label: "Target Zoom",
         type: "number",
@@ -833,6 +882,7 @@ const eventSchema = {
     additionalText:
       "Enables/disables a player ability (example: dash, roll, phase)",
     parameters: {
+      ...defaultParameters,
       ability_name: {
         label: "Ability Name",
         type: "text",
@@ -856,6 +906,7 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Forces the node to display one of the pre-defined emotes",
     parameters: {
+      ...defaultParameters,
       target_object: {
         label: "Target Object",
         type: "node_target",
@@ -885,6 +936,7 @@ const eventSchema = {
     defaultImportant: false,
     additionalText: "Creates a new object and assigns it as a player follower",
     parameters: {
+      ...defaultParameters,
       object_path: {
         label: "Object Path",
         type: "text",
@@ -914,6 +966,7 @@ const eventSchema = {
     defaultImportant: false,
     additionalText: "Removes the follower identified by the provided unique id",
     parameters: {
+      ...defaultParameters,
       follower_id: {
         label: "Follower ID",
         type: "text",
@@ -929,7 +982,9 @@ const eventSchema = {
     icon: "layers_clear",
     defaultImportant: false,
     additionalText: "Removes all followers currently registered to the player",
-    parameters: {},
+    parameters: {
+      ...defaultParameters,
+    },
   },
 
   capture_follower: {
@@ -938,6 +993,7 @@ const eventSchema = {
     defaultImportant: false,
     additionalText: "Sets an already existing object as a player follower",
     parameters: {
+      ...defaultParameters,
       target_object: {
         label: "Target Object",
         type: "node_target",
@@ -962,6 +1018,7 @@ const eventSchema = {
     additionalText:
       "Pauses the cutscene execution and waits for a user input to continue",
     parameters: {
+      ...defaultParameters,
       target_zoom: {
         label: "Target Zoom",
         type: "number",
@@ -995,6 +1052,7 @@ const eventSchema = {
     defaultImportant: false,
     additionalText: "Displays a static glitch overlay",
     parameters: {
+      ...defaultParameters,
       duration: {
         label: "Custom Duration",
         type: "number",
@@ -1018,6 +1076,7 @@ const eventSchema = {
     additionalText:
       "Emits a message that the StorylineManager can detect to check if any storyline needs to be updated",
     parameters: {
+      ...defaultParameters,
       message_name: {
         label: "Message Name",
         type: "text",
@@ -1033,6 +1092,7 @@ const eventSchema = {
     defaultImportant: false,
     additionalText: "Subjet must be a MovableBody, and Look Target must be a Node2D",
     parameters: {
+      ...defaultParameters,
       subject: {
         label: "Subject",
         type: "node_target",
@@ -1054,6 +1114,7 @@ const eventSchema = {
     additionalText: "Inject a intro/bgm combo to the current map.",
     defaultImportant: false,
     parameters: {
+      ...defaultParameters,
       intro_res: {
         label: "Intro BGM Resource",
         type: "string",
@@ -1111,6 +1172,7 @@ const eventSchema = {
     additionalText: "This event will remove the custom injected bgm and will play whatever is defined in the map",
     defaultImportant: false,
     parameters: {
+      ...defaultParameters,
       out_duration: {
         label: "Out Duration",
         type: "number",
@@ -1147,6 +1209,7 @@ const eventSchema = {
     additionalText: "Updates all listed properties in the dictionary with the new value",
     defaultImportant: true,
     parameters: {
+      ...defaultParameters,
       node: {
         label: "Node",
         type: "node_target",
@@ -1169,6 +1232,7 @@ const eventSchema = {
     additionalText: "Launches a minigame (will wait for the cutscene to finish)",
     defaultImportant: false,
     parameters: {
+      ...defaultParameters,
       minigame_path: {
         label: "Minigame Node Path",
         type: "string",
@@ -1184,6 +1248,7 @@ const eventSchema = {
     additionalText: "Calls the provided method in the node inside the tree",
     defaultImportant: false,
     parameters: {
+      ...defaultParameters,
       node_name: {
         label: "Node Name",
         required: true,
@@ -1205,6 +1270,7 @@ const eventSchema = {
     additionalText: "Unlocks a new memory for the player",
     defaultImportant: true,
     parameters: {
+      ...defaultParameters,
       memory_name: {
         label: "Memory Name",
         required: true,
@@ -1238,6 +1304,7 @@ const eventSchema = {
     additionalText: "Locks/unlocks an existing memory",
     defaultImportant: true,
     parameters: {
+      ...defaultParameters,
       memory_name: {
         label: "Memory Name",
         required: true,
@@ -1258,6 +1325,7 @@ const eventSchema = {
     additionalText: "activates/deactivates an existing memory",
     defaultImportant: true,
     parameters: {
+      ...defaultParameters,
       memory_name: {
         label: "Memory Name",
         required: true,
@@ -1278,6 +1346,7 @@ const eventSchema = {
     additionalText: "Adds the provided funds to the player's wallet",
     defaultImportant: false,
     parameters: {
+      ...defaultParameters,
       given_amount: {
         label: "Given Amount",
         required: true,
