@@ -30,6 +30,12 @@ const storylineEntityInputSchema = {
         tooltip: "Path to the NPC scene, starting from the NPC/Custom folder",
         placeholder: "path/to/npc.tscn",
       },
+      parent_node_name: {
+        label: "Parent Node Name (optional)",
+        type: "text",
+        tooltip: "If defined, will spawn here instead of in the root of the map",
+        placeholder: "MyNodeName"
+      },
       animation: {
         label: "Animation",
         type: "text",
