@@ -1,4 +1,3 @@
-
 /**
  * These parameters are defined in the base CutsceneEvent file.
  */
@@ -318,6 +317,12 @@ const eventSchema = {
         tooltip:
           "If true, the flash will cover UI elements (ex: the health bar)",
       },
+      ignore_out: {
+        label: "Ignore Out",
+        type: "boolean",
+        default: false,
+        tooltip: "If true, the out duration will be ignored, and the event will finish after the stay duration with the screen covered"
+      }
     },
   },
 
@@ -1351,6 +1356,23 @@ const eventSchema = {
         label: "Given Amount",
         required: true,
         type: "number"
+      }
+    }
+  },
+
+  seed_next_run: {
+    name: "Seed Next Run",
+    icon: "grass",
+    additionalText: "Modifies the initial state for the next time the player presses new game",
+    defaultImportant: false,
+    parameters: {
+      ...defaultParameters,
+      seed_name: {
+        label: "Seed Name",
+        required: true,
+        type: "string",
+        placeholder: "seed_name",
+        tooltip: "Note that this seed must be registered in SaveSeeder.gd as an option, otherwise nothing will happen"
       }
     }
   }
