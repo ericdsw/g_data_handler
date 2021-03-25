@@ -1299,6 +1299,12 @@ const eventSchema = {
         type: "number",
         default: 0.10,
         tooltip: "How fast will the prompt message be typed"
+      },
+      skip_instructions: {
+        label: "Skip Instructions",
+        type: "boolean",
+        default: false,
+        tooltip: "If true, the prompt will never trigger the instructions, even if this memory is the first one obtained"
       }
     }
   },
