@@ -928,6 +928,7 @@ const eventSchema = {
           question: "Question",
           three_dots: "Three Dots",
           sweat: "Sweat",
+          heart: "Heart"
         },
         required: true,
         tooltip: "The emote to display",

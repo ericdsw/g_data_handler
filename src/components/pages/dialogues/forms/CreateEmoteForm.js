@@ -27,6 +27,7 @@ const VALID_EMOTES = {
   question: "Question",
   three_dots: "Three Dots",
   sweat: "Sweat",
+  heart: "Heart"
 };
 
 class CreateEmoteForm extends React.Component {
