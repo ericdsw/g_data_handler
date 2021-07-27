@@ -214,25 +214,20 @@ class CreateDialogueMessageForm extends React.Component {
     });
   };
 
+  /**
+   * Adds a new choice to the array.
+   * If a choice already exists with that key, modify it with the new parameters
+   */
   addNewChoice = (choiceData) => {
-    let currentChoices = [...this.state.choices];
-    let choiceFound = false;
-    currentChoices.forEach((curChoice) => {
-      if (curChoice.key === choiceData.key) {
-        choiceFound = true;
-      }
-    });
-    if (choiceFound) {
-      this.props.enqueueSnackbar(
-        `The choice ${choiceData.key} is already present`,
-        { variant: "error" }
-      );
-    } else {
-      currentChoices.push(choiceData);
-      this.setState({ choices: currentChoices });
-    }
+    const currentChoices = this.state.choices.filter(choice => choice.key !== choiceData.key);
+    console.log(currentChoices);
+    currentChoices.push(choiceData);
+    this.setState({ choices: currentChoices });
   };
 
+  /**
+   * Removes the provided choice from the array
+   */
   removeChoice = (choiceKey) => {
     let deleteIndex = -1;
     let currentChoices = [...this.state.choices];

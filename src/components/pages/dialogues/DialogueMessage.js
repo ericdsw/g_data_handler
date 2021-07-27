@@ -117,9 +117,13 @@ const DialogueMessage = (props) => {
               </Grid>
             </div>
 
+            {/* Extra Parameters */}
             <ConversationExtraParams message={message} />
 
+            {/* Choices */}
             <ConversationChoices message={message} />
+
+            {/* Target Object */}
             {message.target_object && (
               <Typography
                 variant="body1"

@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import { SimpleCollapse } from "../../../elements";
 
-const styles = (theme) => ({
+const styles = () => ({
   container: {
     marginTop: 8,
   },
@@ -29,6 +29,7 @@ const styles = (theme) => ({
 });
 
 class CreateChoiceForm extends React.Component {
+
   state = {
     newChoiceKey: "",
     newChoiceValue: "",
@@ -36,6 +37,19 @@ class CreateChoiceForm extends React.Component {
     newChoiceIsDefaultCancel: false,
   };
 
+  /**
+   * Returns true if the data for a new choice matches an already existing choice
+   * (more specifically, that the keys match)
+   */
+  isOnEditMode = () => {
+    const choiceKeyArray = this.props.choices.map(currentChoice => currentChoice.key);
+    return choiceKeyArray.includes(this.state.newChoiceKey);
+  }
+
+  /**
+   * Attempts to create a new choice with the provided data.
+   * Will report any validation error that it encounters
+   */
   handleAddChoice = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -65,21 +79,41 @@ class CreateChoiceForm extends React.Component {
     }
   };
 
-  handleDeleteChoice = (choiceKey) => (event) => {
+  /**
+   * Removes the choice from the array
+   */
+  handleDeleteChoice = (choiceKey) => () => {
     const { deletionHandler } = this.props;
     deletionHandler(choiceKey);
   };
 
+  /**
+   * Generic input handler
+   */
   handleInputChange = (identifier) => (event) => {
     this.setState({ [identifier]: event.target.value });
   };
 
+  /**
+   * Input handler for actions that update checkboxes
+   */
   handleCheckboxChange = (identifier) => (event) => {
     this.setState({ [identifier]: event.target.checked });
   };
 
+  /**
+   * Opens/closes the choice section
+   */
   handleToggleVisibility = () => {
     this.setState({ shown: !this.state.shown });
+  };
+
+  /**
+   * Depending on whether the choice already exists or not, the button will
+   * display "Edit" or "Add"
+   */
+  getButtonName = () => {
+    return (this.isOnEditMode()) ? 'Edit' : 'Add';
   };
 
   render() {
@@ -94,12 +128,25 @@ class CreateChoiceForm extends React.Component {
             title={`To: ${currentChoice.next_message}`}
           >
             <Chip
-              color="primary"
+              color="secondary"
               className={classes.choiceChip}
               label={`${currentChoice.key}:${currentChoice.value}`}
               onDelete={this.handleDeleteChoice(currentChoice.key)}
+              onClick={() => {
+                this.setState({
+                  ...this.state,
+                  newChoiceKey: currentChoice.key,
+                  newChoiceValue: currentChoice.value,
+                  newChoiceMessage: currentChoice.next_message,
+                  newChoiceIsDefaultCancel: currentChoice.isDefaultCancel,
+                });
+                this.props.enqueueSnackbar(
+                  "Editing the selected choice", 
+                  { variant: "info" }
+                );
+              }}
               style={{
-                border: currentChoice.isDefaultCancel
+                order: currentChoice.isDefaultCancel
                   ? "1px solid red"
                   : "none",
               }}
@@ -179,7 +226,7 @@ class CreateChoiceForm extends React.Component {
               onClick={this.handleAddChoice}
               className={classes.submitButton}
             >
-              Add
+              {this.getButtonName()}
             </Button>
           </Grid>
           <Grid item xs md={6}>

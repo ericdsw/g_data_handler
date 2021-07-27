@@ -17,6 +17,7 @@ const styles = (theme) => ({
 });
 
 const ConversationChoices = (props) => {
+
   const { classes, message } = props;
 
   let choicesChips = [];
