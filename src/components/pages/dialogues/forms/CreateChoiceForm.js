@@ -121,6 +121,19 @@ class CreateChoiceForm extends React.Component {
 
     // Create choice elements
     const choiceElements = choices.map((currentChoice) => {
+      const onClick = () => {
+        this.setState({
+          ...this.state,
+          newChoiceKey: currentChoice.key,
+          newChoiceValue: currentChoice.value,
+          newChoiceMessage: currentChoice.next_message,
+          newChoiceIsDefaultCancel: currentChoice.isDefaultCancel,
+        });
+        this.props.enqueueSnackbar(
+          "Editing the selected choice", 
+          { variant: "info" }
+        );
+      }
       if (currentChoice.next_message) {
         return (
           <Tooltip
@@ -132,19 +145,7 @@ class CreateChoiceForm extends React.Component {
               className={classes.choiceChip}
               label={`${currentChoice.key}:${currentChoice.value}`}
               onDelete={this.handleDeleteChoice(currentChoice.key)}
-              onClick={() => {
-                this.setState({
-                  ...this.state,
-                  newChoiceKey: currentChoice.key,
-                  newChoiceValue: currentChoice.value,
-                  newChoiceMessage: currentChoice.next_message,
-                  newChoiceIsDefaultCancel: currentChoice.isDefaultCancel,
-                });
-                this.props.enqueueSnackbar(
-                  "Editing the selected choice", 
-                  { variant: "info" }
-                );
-              }}
+              onClick={onClick}
               style={{
                 order: currentChoice.isDefaultCancel
                   ? "1px solid red"
@@ -161,6 +162,7 @@ class CreateChoiceForm extends React.Component {
             className={classes.choiceChip}
             label={`${currentChoice.key}:${currentChoice.value}`}
             onDelete={this.handleDeleteChoice(currentChoice.key)}
+            onClick={onClick}
             style={{
               border: currentChoice.isDefaultCancel ? "1px solid red" : "none",
             }}
