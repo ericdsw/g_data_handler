@@ -1382,6 +1382,22 @@ const eventSchema = {
         tooltip: "Note that this seed must be registered in SaveSeeder.gd as an option, otherwise nothing will happen"
       }
     }
+  },
+
+  toggle_player_control: {
+    name: "Toggle Player Control",
+    icon: "warning",
+    additionalText: "WARNING: THIS EVENT IS DANGEROUS (enables/disables movement inside cutscene). DO NOT USE ALONGSIDE MAP CHANGES OR PLAYER MOVEMENTS",
+    defaultImportant: false,
+    parameters: {
+      ...defaultParameters,
+      control_status: {
+        label: "Control Status",
+        required: true,
+        type: "boolean",
+        tooltip: ""
+      }
+    }
   }
 
 };
