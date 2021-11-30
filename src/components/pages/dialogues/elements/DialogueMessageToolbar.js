@@ -17,7 +17,8 @@ import {
   CreateConversationForm,
   CreateSwarmForm,
   GiveItemFromDialogueForm,
-  GiveMoneyFromDialogueForm
+  GiveMoneyFromDialogueForm,
+  PickItemFromDialogueForm
 } from "../forms";
 
 const styles = () => ({
@@ -151,7 +152,7 @@ const DialogueMessageToolbar = (props) => {
         >
           <GiveItemFromDialogueForm
             data={message}
-            isEdit={true}
+            buttonText="Edit"
             onSubmit={data => {
               toggleDialogue("editMessage", "hide");
               handleDialogueFormSubmit(data);
@@ -171,7 +172,7 @@ const DialogueMessageToolbar = (props) => {
         >
           <GiveMoneyFromDialogueForm
             data={message}
-            isEdit={true}
+            buttonText="Edit"
             onSubmit={data => {
               toggleDialogue("editMessage", "hide");
               handleDialogueFormSubmit(data);
@@ -184,6 +185,26 @@ const DialogueMessageToolbar = (props) => {
     case "emote":
       typeString = "Emote";
       editDialogue = <React.Fragment />;
+      break;
+    
+    case "pick_item":
+      typeString = "Pick Item message";
+      editDialogue = (
+        <GenericDialogue
+          title="Edit pick item"
+          open={dialogues["editMessage"]}
+          onClose={() => toggleDialogue("editMessage", "hide")}
+        >
+          <PickItemFromDialogueForm
+            buttonText="Edit"
+            data={message}
+            onSubmit={data => {
+              toggleDialogue('editMessage', 'hide');
+              handleDialogueFormSubmit(data);
+            }}
+          />
+        </GenericDialogue>
+      );
       break;
 
     default:

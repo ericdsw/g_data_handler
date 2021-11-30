@@ -15,7 +15,7 @@ const AboutPage = () => {
   return (
     <React.Fragment>
       <Typography variant="body1">
-        Copyright 2019,{" "}
+        Copyright 2019-2021,{" "}
         <a href="https://github.com/ericdsw" className={classes.link}>
           Eric De Sedas
         </a>

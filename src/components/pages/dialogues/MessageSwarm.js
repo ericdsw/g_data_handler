@@ -9,15 +9,18 @@ import {
   Zoom
 } from "@material-ui/core";
 
-import { DialogueMessageToolbar } from "./elements";
+import { 
+  DialogueMessageToolbar,
+  ConversationCardTitle
+} from "./elements";
 import { cleanMessage } from './functions';
 
 const styles = (theme) => ({
   swarmContainer: {
     width: "100%",
-    backgroundColor: "#222",
+    backgroundColor: theme.palette.messageBackground,
     borderBottom: "1px solid #666",
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
   },
   swarmMessageTextWrapper: {
     width: 188 * 2,
@@ -47,6 +50,13 @@ const MessageSwarm = ({ swarmData, handleEdit, handleDelete, handleSplitBelow })
   return (
     <Card className={classes.swarmContainer} square={true}>
       <CardHeader
+        title={
+          <ConversationCardTitle
+            text="Dialogue Swarm"
+            icon="forum"
+            color="#43a047"
+          />
+        }
         subheader="Will display a swarm with the following messages:"
         action={
           <DialogueMessageToolbar
@@ -68,6 +78,7 @@ const MessageSwarm = ({ swarmData, handleEdit, handleDelete, handleSplitBelow })
             raised={false}
             square={true}
             variant="outlined"
+            style={{ padding: 16 }}
           >
             <Tooltip TransitionComponent={Zoom} title={swarmMessage.message}>
               <div className={classes.swarmMessageTextWrapper}>

@@ -9,7 +9,11 @@ import {
   InputAdornment,
   Icon,
   Tooltip,
+  IconButton
 } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+
+import AddNewMultiInputRow from '../components/elements/AddNewMultiInputRow';
 
 const nodeTargetDescription = (
   <ul>
@@ -37,7 +41,20 @@ const nodeTargetDescription = (
 );
 
 /**
- * Creates an input element instance using the provided attributes
+ * Creates an input element instance using the provided attributes.
+ * 
+ * Possible input types:
+ * - boolean
+ * - number
+ * - json
+ * - dropdown
+ * - positionArray
+ * - position
+ * - text
+ * - note_target
+ * 
+ * These last types are used to create compound inputs:
+ * - multi_input_object
  */
 export default function createInput(
   paramName,
@@ -81,6 +98,111 @@ export default function createInput(
   let adornment = <React.Fragment />;
 
   switch (inputData.type) {
+
+    case 'multi_input_object':
+
+      const keyField = inputData.key_field;
+
+      /** Render one input row for each value */
+      const renderedInputs = Object.keys(value).map(valueKey => {
+        return (
+          <div 
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center' 
+            }}
+          >
+            {Object.keys(inputData.inputs).map(inputIdentifier => {
+              const isKey = inputIdentifier === keyField;
+              return (
+                <div 
+                  style={{ 
+                    flex: inputData.inputs[inputIdentifier].type === 'boolean' ? 
+                      undefined : 1,
+                    marginRight: 16 
+                  }}
+                >
+                  {createInput(
+                    inputIdentifier,
+                    inputData.inputs[inputIdentifier],
+                    isKey ? valueKey : value[valueKey][inputIdentifier],
+                    () => (event) => {
+                      handleChange(paramName)({
+                        target: {
+                          value: {
+                            ...value,
+                            [valueKey]: {
+                              ...value[valueKey],
+                              [inputIdentifier]: inputData.inputs[inputIdentifier].type === 'boolean' ? 
+                                event.target.checked : event.target.value
+                            }
+                          }
+                        } 
+                      })
+                    },
+                    isKey ? true : disabled,
+                    extraParams
+                  )}
+                </div>
+              )
+            })}
+            <IconButton
+              color="inherith"
+              aria-label="Delete"
+              onClick={() => {
+                const cleanedValues = {...value}
+                delete cleanedValues[valueKey];
+                handleChange(paramName)({
+                  target: {
+                    value: cleanedValues
+                  }
+                })
+              }}
+              style={{ width: 48, height: 48 }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </div>
+        );
+      })
+
+      contentValue = (
+        <div 
+          style={{
+            paddingBottom: 24,
+            marginBottom: 16,
+            fontSize: 16,
+            borderBottom: '1px dashed #888'
+          }}
+        >
+          <span style={{ fontWeight: 'bold' }}>{inputData.title}</span>
+          {renderedInputs}
+          <AddNewMultiInputRow
+            keyLabel={inputData.inputs[keyField].label}
+            onNewRowDefined={newRowValue => {
+
+              const emptyRowData = {}
+              Object.keys(inputData.inputs)
+                .filter(inputIdentifier => inputIdentifier !== keyField)
+                .forEach(inputIdentifier => {
+                  emptyRowData[inputIdentifier] = inputData.inputs[inputIdentifier].default
+                })
+
+              handleChange(paramName)({
+                target: {
+                  value: {
+                    ...value,
+                    [newRowValue]: emptyRowData
+                  }
+                }
+              })
+            }}
+          />
+        </div>
+      );
+      break;
+
     case "boolean":
       contentValue = (
         <FormControlLabel

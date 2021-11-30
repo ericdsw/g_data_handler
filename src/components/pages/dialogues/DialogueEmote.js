@@ -1,7 +1,17 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Card, CardContent, Typography, Grid } from "@material-ui/core";
-import { DialogueMessageToolbar } from "./elements";
+import { 
+  Card,
+  CardContent,
+  Typography,
+  Grid,
+  CardHeader
+} from "@material-ui/core";
+
+import {
+  DialogueMessageToolbar,
+  ConversationCardTitle
+} from "./elements";
 
 import { styles } from "./styles/DialogueEmoteStyle";
 
@@ -18,13 +28,18 @@ const DialogueEmote = ({
 
   return (
     <Grid container>
-      <Grid item xs={1} md={4}>
-        {/* Empty grid item */}
-      </Grid>
-      <Grid item xs={10} md={4}>
+      <Grid item xs={12}>
         <Card className={classes.emoteContainer}>
-          <CardContent>
-            <Grid container justify="flex-end">
+          <CardHeader
+            title={
+              <ConversationCardTitle
+                text="Show Emote"
+                icon="mood"
+                color="#ab47bc"
+              />
+            }
+            subheader="Will show the following emote:"
+            action={
               <DialogueMessageToolbar
                 message={message}
                 handleAddAbove={(data) => handleAddAbove(data)}
@@ -38,6 +53,11 @@ const DialogueEmote = ({
                 }}
                 omitEdit={true}
               />
+            }
+          />
+          <CardContent>
+            <Grid container justify="flex-end">
+              
             </Grid>
 
             <Grid container justify="center" alignItems="center">

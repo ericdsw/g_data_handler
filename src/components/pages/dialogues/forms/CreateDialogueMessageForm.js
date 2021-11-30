@@ -220,7 +220,6 @@ class CreateDialogueMessageForm extends React.Component {
    */
   addNewChoice = (choiceData) => {
     const currentChoices = this.state.choices.filter(choice => choice.key !== choiceData.key);
-    console.log(currentChoices);
     currentChoices.push(choiceData);
     this.setState({ choices: currentChoices });
   };

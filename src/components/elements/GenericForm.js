@@ -38,7 +38,6 @@ const GenericForm = (props) => {
   const handleInputChange = (inputName) => (event) => {
     const newData = { ...formData };
     newData[inputName] = event.target.value;
-
     if (parameters[inputName].type === "boolean") {
       newData[inputName] = event.target.checked;
     } else {

@@ -13,6 +13,7 @@ import DialogueEmote from "../pages/dialogues/DialogueEmote";
 import MessageSwarm from "../pages/dialogues/MessageSwarm";
 import GiveMoneyFromDialogue from '../pages/dialogues/GiveMoneyFromDialogue';
 import GiveItemFromDialogue from '../pages/dialogues/GiveItemFromDialogue';
+import PickItem from '../pages/dialogues/PickItem';
 
 class DialogueMessageContainer extends React.Component {
   editMessage = (data) => {
@@ -117,6 +118,18 @@ class DialogueMessageContainer extends React.Component {
             handleAddBelow={this.addBelow}
             handleSplitBelow={this.splitBelow}
             buttonText="Edit"
+          />
+        );
+        break;
+      case "pick_item":
+        content = (
+          <PickItem
+            pickItemData={message}
+            handleEdit={this.editMessage}
+            handleDelete={this.deleteMessage}
+            handleAddAbove={this.addAbove}
+            handleAddBelow={this.addBelow}
+            handleSplitBelow={this.splitBelow}
           />
         );
         break;

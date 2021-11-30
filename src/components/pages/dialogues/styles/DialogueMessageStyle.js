@@ -3,9 +3,10 @@ import { red, blue } from "@material-ui/core/colors";
 export const styles = (theme) => ({
   messageContainer: {
     width: "100%",
-    backgroundColor: "#222",
+    backgroundColor: theme.palette.messageBackground,
     position: "relative",
     borderBottom: "1px solid #666",
+    padding: theme.spacing(2)
   },
   details: {
     display: "flex",
@@ -19,7 +20,7 @@ export const styles = (theme) => ({
     marginRight: 30,
   },
   subTitle: {
-    color: "#ccc",
+    color: theme.palette.getContrastText(theme.palette.messageBackground),
   },
   targetObject: {
     color: blue[200],

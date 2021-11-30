@@ -45,7 +45,12 @@ const App = () => {
             <Router>
               <ApplicationBar
                 handleToggle={() => toggleDrawerOpen(!drawerOpen)}
-                handleDarkModeToggle={() => toggleDarkMode(!darkMode)}
+                handleDarkModeToggle={() => {
+                  if (darkMode) {
+                    console.log("Psychopath mode engaged");
+                  }
+                  toggleDarkMode(!darkMode);
+                }}
                 isDarkMode={darkMode}
               />
               <NavigationDrawer

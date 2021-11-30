@@ -19,7 +19,8 @@ const baseTheme = (mode) =>
         light: "#f4c176",
         dark: "#8c641b",
         contrastText: "#000"
-      }
+      },
+      messageBackground: mode === "dark" ? "#222" :"#eee"
     },
     overrides: {
       MuiOutlinedInput: {

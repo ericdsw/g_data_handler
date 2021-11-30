@@ -24,7 +24,8 @@ import {
   CreateEmoteForm,
   CreateSwarmForm,
   GiveMoneyFromDialogueForm,
-  GiveItemFromDialogueForm
+  GiveItemFromDialogueForm,
+  PickItemFromDialogueForm
 } from "./forms";
 
 import { styles } from "./styles/DialogueConversationStyle";
@@ -45,7 +46,8 @@ const DialogueConversation = (props) => {
     "addEmote",
     "addSwarm",
     "addGiveItem",
-    "addGiveMoney"
+    "addGiveMoney",
+    "addPickItem"
   );
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -75,6 +77,7 @@ const DialogueConversation = (props) => {
     >
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <Grid container alignItems="center">
+
           {/* Title Data */}
           <Grid item xs={12} md={6}>
             <Grid container>
@@ -121,6 +124,7 @@ const DialogueConversation = (props) => {
               </Tooltip>
             </Grid>
           </Grid>
+
         </Grid>
       </ExpansionPanelSummary>
 
@@ -189,12 +193,20 @@ const DialogueConversation = (props) => {
               Give Money
             </Button>
             <Button
-              style={{ marginTop: 8 }}
+              style={{ marginTop: 8, marginRight: 16 }}
               color="secondary"
               variant="contained"
               onClick={() => toggleDialogue("addGiveItem", "show")}
             >
               Give Item
+            </Button>
+            <Button
+              style={{ marginTop: 8 }}
+              color="secondary"
+              variant="contained"
+              onClick={() => toggleDialogue("addPickItem", "show")}
+            >
+              Select Item
             </Button>
           </div>
         </div>
@@ -247,6 +259,7 @@ const DialogueConversation = (props) => {
         />
       </GenericDialogue>
 
+      {/* Give money dialogue */}
       <GenericDialogue
         title="Give Money"
         open={dialogues["addGiveMoney"]}
@@ -261,6 +274,7 @@ const DialogueConversation = (props) => {
         />
       </GenericDialogue>
 
+      {/* Give Item Dialogue */}
       <GenericDialogue
         title="Give Item"
         open={dialogues["addGiveItem"]}
@@ -270,6 +284,22 @@ const DialogueConversation = (props) => {
         <GiveItemFromDialogueForm
           onSubmit={data => {
             toggleDialogue("addGiveItem", "hide");
+            handleAddToConversation(data);
+          }}
+        />
+      </GenericDialogue>
+
+      {/* Pick Item Dialogue */}
+      <GenericDialogue
+        title="Pick Item"
+        open={dialogues["addPickItem"]}
+        onClose={() => toggleDialogue("addPickItem", "hide")}
+        maxWidth="md"
+      >
+        <PickItemFromDialogueForm
+          isEdit={false}
+          onSubmit={data => {
+            toggleDialogue("addPickItem", "hide");
             handleAddToConversation(data);
           }}
         />

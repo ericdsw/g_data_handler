@@ -23,7 +23,7 @@ export const styles = (theme) => ({
   dragHandleElement: {
     width: 50,
     height: 40,
-    color: "white",
+    color: theme.palette.getContrastText(theme.palette.messageBackground),
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

@@ -1,13 +1,23 @@
 import React, { useMemo } from 'react';
 import { 
-  Icon, Card, CardContent, Typography, Grid, makeStyles 
+  Card,
+  CardHeader,
+  CardContent,
+  Typography,
+  Grid,
+  makeStyles 
 } from '@material-ui/core';
-import { DialogueMessageToolbar } from "./elements";
 
-const useStyles = makeStyles({
+import { 
+  DialogueMessageToolbar,
+  ConversationCardTitle
+} from "./elements";
+
+const useStyles = makeStyles(theme => ({
   container: {
-    backgroundColor: "#222",
+    backgroundColor: theme.palette.messageBackground,
     borderBottom: "1px solid #666",
+    padding: theme.spacing(2)
   },
   itemIconContainer: {
     color: '#2d81b5',
@@ -15,7 +25,7 @@ const useStyles = makeStyles({
   itemIcon: {
     fontSize: 30,
   }
-});
+}));
 
 const GiveItemFromDialogue = ({ 
   message, 
@@ -36,8 +46,16 @@ const GiveItemFromDialogue = ({
 
   return (
     <Card className={classes.container}>
-      <CardContent>
-        <Grid container justify="flex-end">
+      <CardHeader
+        title={
+          <ConversationCardTitle
+            text="Give Item"
+            icon="card_giftcard"
+            color="#2d81b5"
+          />
+        }
+        subheader={`Will give the item with the id ${message.item_id} to the player`}
+        action={
           <DialogueMessageToolbar
             message={message}
             handleAddAbove={(data) => handleAddAbove(data)}
@@ -48,23 +66,10 @@ const GiveItemFromDialogue = ({
               handleSplitBelow(conversationName);
             }}
           />
-        </Grid>
-
+        }
+      />
+      <CardContent>
         <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <Grid container alignItems="flex-end" className={classes.itemIconContainer}>
-              <Icon className={classes.itemIcon}>
-                card_giftcard
-              </Icon>
-              &nbsp;
-              <Typography variant="body1">
-                Give Item
-              </Typography>
-            </Grid>
-            <Typography variant="h6" style={{ fontWeight: "bold" }}>
-              Will the item with the id {message.item_id} to the player
-            </Typography>
-          </Grid>
           <Grid item xs={12}>
             <Typography variant="body2">
               {usedMessage}
@@ -77,7 +82,9 @@ const GiveItemFromDialogue = ({
               </Typography>
             )}
             {!message.flavor_message && (
-              <Typography variant="caption" style={{ color: "lightGray" }}>
+              <Typography 
+                variant="caption"
+              >
                 No flavor defined
               </Typography>
             )}

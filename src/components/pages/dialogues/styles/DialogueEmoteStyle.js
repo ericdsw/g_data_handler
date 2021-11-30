@@ -3,8 +3,9 @@ import EmoteBackground from '../../../../images/emote_background.png';
 
 export const styles = (theme) => ({
   emoteContainer: {
-    backgroundColor: "#222",
+    backgroundColor: theme.palette.messageBackground,
     borderBottom: "1px solid #666",
+    padding: theme.spacing(2)
   },
   emoteImageBackground: {
     display: 'inline-block',

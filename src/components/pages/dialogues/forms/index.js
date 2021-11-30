@@ -5,4 +5,4 @@ export { default as CreateEmoteForm } from "./CreateEmoteForm";
 export { default as CreateSwarmForm } from "./CreateSwarmForm";
 export { default as GiveMoneyFromDialogueForm } from './GiveMoneyFromDialogueForm';
 export { default as GiveItemFromDialogueForm } from './GiveItemFromDialogueForm';
-
+export { default as PickItemFromDialogueForm } from './PickItemFromDialogueForm';
