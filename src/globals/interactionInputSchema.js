@@ -1,3 +1,5 @@
+const itemSemaphoreAdditionalText = "At least one required or excluding item must be defined. Note that excluding and missing items do THE SAME THING, they are defined as separate fields due to a misunderstanding, but they ultimately do the same thing.";
+
 const interactionInputSchema = {
   cutscene_interaction: {
     name: "Cutscene Interaction",
@@ -25,7 +27,7 @@ const interactionInputSchema = {
         label: "Excluded Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must not have been unlocked"
+        tooltip: "If defined, this memory must not have been unlocked yet"
       }
     },
   },
@@ -63,7 +65,7 @@ const interactionInputSchema = {
         label: "Excluded Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must not have been unlocked"
+        tooltip: "If defined, this memory must not have been unlocked yet"
       }
     },
   },
@@ -115,7 +117,7 @@ const interactionInputSchema = {
   item_cutscene_interaction: {
     name: "Item Cutscene Interaction",
     icon: "shopping_basket",
-    additionalText: "At least one required or excluding item must be defined",
+    additionalText: itemSemaphoreAdditionalText,
     parameters: {
       custom_name: {
         label: "Custom Name",
@@ -133,38 +135,44 @@ const interactionInputSchema = {
         label: "Required Items",
         type: "array",
         placeholder: "Items needed to trigger, separate each one with a comma",
+        weight: 9,
       },
       loose_required_items: {
-        label: "Required Items OR overwrite",
+        label: "Use OR",
         type: "boolean",
         default: false,
         tooltip:
           "If true, required items are treated as an OR comparison (by default, all must be present)",
+        weight: 3
       },
       excluding_items: {
-        label: "Excluding Items",
+        label: "Excluding Items (SAME AS MISSING)",
         type: "array",
         placeholder:
           "Items that will prevent trigger, separate each one with a comma",
+        weight: 9,
       },
       loose_excluding_items: {
-        label: "Excluding Items OR overwrite",
+        label: "Use OR",
         type: "boolean",
         default: false,
         tooltip:
           "If true, excluding items are treated as an OR comparison (by default, all must be absent)",
+        weight: 3,
       },
       missing_items: {
-        label: "Missing Items",
+        label: "Missing Items (SAME AS EXCLUDING)",
         type: "array",
         placeholder: "Will only trigger if these items are missing",
+        weight: 9,
       },
       loose_missing_items: {
-        label: "Missing Items OR overwrite",
+        label: "Use OR",
         type: "boolean",
         default: false,
         tooltip:
           "If true, missing items are treated as an OR comparison (by default, all must be absent)",
+        weight: 3,
       },
       required_memory: {
         label: "Required Memory",
@@ -176,7 +184,7 @@ const interactionInputSchema = {
         label: "Excluded Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must not have been unlocked"
+        tooltip: "If defined, this memory must not have been unlocked yet"
       }
     },
   },
@@ -184,7 +192,7 @@ const interactionInputSchema = {
   item_dialogue_interaction: {
     name: "Item Dialogue Interaction",
     icon: "add_comment",
-    additionalText: "At least one required or excluding item must be defined",
+    additionalText: itemSemaphoreAdditionalText,
     parameters: {
       custom_name: {
         label: "Custom Name",
@@ -209,50 +217,56 @@ const interactionInputSchema = {
         type: "array",
         placeholder:
           "Items required to trigger, separate each one with a comma",
+        weight: 9,
       },
       loose_required_items: {
-        label: "Required Items OR overwrite",
+        label: "Use OR",
         type: "boolean",
         default: false,
         tooltip:
           "If true, required items are treated as an OR comparison (by default, all must be present)",
+        weight: 3
       },
       excluding_items: {
-        label: "Excluding Items",
+        label: "Excluding Items (SAME AS MISSING)",
         type: "array",
         placeholder:
           "Items that will prevent trigger, separate each one with a comma",
+        weight: 9,
       },
       loose_excluding_items: {
-        label: "Excluding Items OR overwrite",
+        label: "Use OR",
         type: "boolean",
         default: false,
         tooltip:
           "If true, excluding items are treated as an OR comparison (by default, all must be absent)",
+        weight: 3,
       },
       missing_items: {
-        label: "Missing Items",
+        label: "Missing Items (SAME AS EXCLUDING)",
         type: "array",
         placeholder: "Will only trigger if these items are missing",
+        weight: 9
       },
       loose_missing_items: {
-        label: "Missing Items OR overwrite",
+        label: "Use OR",
         type: "boolean",
         default: false,
         tooltip:
           "If true, missing items are treated as an OR comparison (by default, all must be absent)",
+        weight: 3
       },
       required_memory: {
         label: "Required Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must have already been unlocked"
+        tooltip: "If defined, this memory must have already been unlocked yet"
       },
       excluded_memory: {
         label: "Excluded Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must not have been unlocked"
+        tooltip: "If defined, this memory must not have been unlocked yet"
       }
     },
   },

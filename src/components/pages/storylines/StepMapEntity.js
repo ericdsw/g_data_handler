@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import {
   Card,
@@ -28,6 +28,7 @@ import {
 } from "../../elements";
 import { useDialogueManager } from "../../../hooks";
 import CreateMapEntityForm from "./forms/CreateMapEntityForm";
+import ItemDependentInteractionInstructions from "./elements/ItemDependentInteractionInstructions";
 
 import { styles } from "./styles/StepMapEntityStyle";
 
@@ -109,6 +110,13 @@ const StepMapEntity = (props) => {
     }
   }
 
+  const usedHelpContent = useMemo(() => {
+    if (["item_dialogue_interaction", "item_cutscene_interaction"].includes(curInteractionType)) {
+      return <ItemDependentInteractionInstructions />
+    }
+    return undefined;
+  }, [curInteractionType]);
+
   return (
     <Card>
       <CardHeader
@@ -189,7 +197,7 @@ const StepMapEntity = (props) => {
           })}
           curType={stepMapEntity.type}
           disabledInputs={["map_name"]}
-          handleSubmit={(name, mapName, parameters) => {
+          handleSubmit={(name, _mapName, parameters) => {
             toggleDialogue("editEntity", "hide");
             handleUpdateEntity(name, parameters);
           }}
@@ -262,6 +270,7 @@ const StepMapEntity = (props) => {
         open={curInteractionType !== ""}
         onClose={() => setCurInteractionType("")}
         maxWidth="sm"
+        helpComponent={usedHelpContent}
       >
         <CreateNPCInteractionForm
           interactionType={curInteractionType}

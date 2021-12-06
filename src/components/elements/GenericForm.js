@@ -29,7 +29,11 @@ const GenericForm = (props) => {
   // Methods
   const { handleSubmit, enqueueSnackbar } = props;
 
-  const { parameters, additionalText } = schema;
+  // Extract data from schemas
+  const {
+    parameters,
+    additionalText
+  } = schema;
 
   const [formData, updateFormData] = useState(
     parseIn({ ...initialDataSet }, parameters)
@@ -43,7 +47,6 @@ const GenericForm = (props) => {
     } else {
       newData[inputName] = event.target.value;
     }
-
     updateFormData(newData);
   };
 
@@ -66,19 +69,34 @@ const GenericForm = (props) => {
   };
 
   return (
-    <form onSubmit={(e) => onSubmit(e)}>
-      {Object.keys(parameters).map((inputName, index) => (
-        <React.Fragment key={inputName}>
-          {createInput(
-            inputName,
-            parameters[inputName],
-            formData[inputName],
-            handleInputChange,
-            disabledInputs.includes(inputName),
-            index === 0 ? { autoFocus: true } : {}
-          )}
-        </React.Fragment>
-      ))}
+    <form
+      onSubmit={(e) => onSubmit(e)}
+    >
+      <Grid
+        container
+        spacing={2}
+        alignItems="center"
+      >
+        {Object.keys(parameters).map((inputName, index) => {
+          const usedWeight = parameters[inputName].weight || 12;
+          return (
+            <Grid
+              key={inputName}
+              item 
+              xs={usedWeight}
+            >
+              {createInput(
+                inputName,
+                parameters[inputName],
+                formData[inputName],
+                handleInputChange,
+                disabledInputs.includes(inputName),
+                index === 0 ? { autoFocus: true } : {}
+              )}
+            </Grid>
+          );
+        })}
+      </Grid>
       <br />
       <br />
       {additionalText && (
