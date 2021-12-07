@@ -22,12 +22,17 @@ const schema = {
           tooltip: 'The next interaction',
           placeholder: 'dialogue:dialogue_name OR cutscene:cutscene_file'
         },
-        uses_item: {
-          label: 'Uses Item',
-          type: 'boolean',
-          default: false,
-          tooltip: 'If true, the item will be marked as used after selecting it'
-        }
+        action: {
+          label: 'What to do',
+          type: 'dropdown',
+          elements: {
+            nothing: 'Do Nothing',
+            mark_delivered: 'Mark as Delivered',
+            delete: 'Destroy'
+          },
+          required: true,
+          default: 'mark_delivered'
+        },
       }
     },
     cancel_condition: {

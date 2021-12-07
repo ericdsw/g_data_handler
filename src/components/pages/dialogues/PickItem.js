@@ -15,7 +15,7 @@ import {
   ConversationCardTitle
 } from './elements';
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     width: '100%',
     backgroundColor: theme.palette.messageBackground,
@@ -28,7 +28,7 @@ const styles = (theme) => ({
   actionContainer: {
     padding: theme.spacing(2),
   }
-})
+}));
 
 const PickItem = ({
   pickItemData,
@@ -37,7 +37,7 @@ const PickItem = ({
   handleSplitBelow
 }) => {
 
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
 
   return (
     <Card className={classes.container} square>
@@ -68,7 +68,16 @@ const PickItem = ({
           variant="outlined"
         >
           {Object.keys(pickItemData.item_conditions).map(conditionItemId => {
-            const usesItem = pickItemData.item_conditions[conditionItemId].uses_item
+            const action = pickItemData.item_conditions[conditionItemId].action
+            var actionString = "";
+            if (action === "nothing") {
+              actionString = "Nothing";
+            } else if (action === "mark_delivered") {
+              actionString = "Mark Delivered";
+            } else if (action === "delete") {
+              actionString = "Destroy";
+            }
+
             return (
               <Grid container alignItems="center">
                 <Chip
@@ -86,9 +95,7 @@ const PickItem = ({
                 />
                 &nbsp;
                 &nbsp;
-                {usesItem && (
-                  <Chip label="Uses Item" />
-                )}
+                <Chip label={`What to do: ${actionString}`} />
               </Grid>
             );
           })}

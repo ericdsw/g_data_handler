@@ -55,7 +55,7 @@ const DialogueMessage = (props) => {
   );
 
   return (
-    <Card square={true} className={classes.messageContainer}>
+    <Card square className={classes.messageContainer}>
       {message.interrupts && (
         <div className={classes.interruptDiv}>
           <Typography align="center" variant="body2">

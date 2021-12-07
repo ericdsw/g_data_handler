@@ -22,6 +22,10 @@ const styles = (theme) => ({
     borderBottom: "1px solid #666",
     padding: theme.spacing(2),
   },
+
+  /**
+   * Dimensions, colors and fonts mimics how the dialogues are being displayed in-game
+   */
   swarmMessageTextWrapper: {
     width: 188 * 2,
     height: 28 * 2,

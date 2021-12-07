@@ -2,15 +2,15 @@ import React from "react";
 import { Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   link: {
     color: theme.palette.secondary.main,
   },
-});
+}));
 
 const AboutPage = () => {
 
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
 
   return (
     <React.Fragment>

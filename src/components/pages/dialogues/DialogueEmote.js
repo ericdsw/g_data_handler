@@ -56,10 +56,6 @@ const DialogueEmote = ({
             }
           />
           <CardContent>
-            <Grid container justify="flex-end">
-              
-            </Grid>
-
             <Grid container justify="center" alignItems="center">
               <Grid item>
                 <Grid container justify="center">
