@@ -314,7 +314,7 @@ export default function createInput(
           placeholder={inputData.placeholder}
           onChange={handleChange(paramName)}
           value={value}
-          type="text"
+          type={inputData.type === "number" ? "number" : "text" }
           fullWidth
           variant="outlined"
           margin="normal"
@@ -322,8 +322,10 @@ export default function createInput(
           InputProps={{
             endAdornment: adornment,
           }}
+          inputProps={{
+            step: 'any'
+          }}
           {...extraParams}
-          step="any"
         />
       );
   }

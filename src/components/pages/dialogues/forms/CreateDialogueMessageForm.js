@@ -424,6 +424,9 @@ class CreateDialogueMessageForm extends React.Component {
             variant="outlined"
             fullWidth
             margin="normal"
+            inputProps={{
+              step: 'any'
+            }}
             onChange={this.handleInputChange("autopilot_offset")}
             value={this.state.autopilot_offset}
           />
