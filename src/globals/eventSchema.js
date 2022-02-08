@@ -698,6 +698,12 @@ const eventSchema = {
       "Performs a save operation with the required parameters (full save if nothing is provided)",
     parameters: {
       ...defaultParameters,
+      write_to_file: {
+        label: "Write to file",
+        type: "boolean",
+        default: true,
+        tooltip: "Whether the data will be saved on the file, or just on the virtual save schema"
+      },
       map_data: {
         label: "Map Data",
         type: "json",
