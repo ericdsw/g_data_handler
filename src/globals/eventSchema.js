@@ -125,6 +125,18 @@ const eventSchema = {
           "node_name=next_pos,another_node=next_pos,yet_another_node",
         tooltip:
           "Which nodes will be visible between changes, must have a Sprite child",
+      },
+      regular_duration: {
+        label: "Regular Duration",
+        type: "number",
+        default: 0,
+        tooltip: "How long the battle will last (normal circumstances). 0 means no limit"
+      },
+      time_rush_duration: {
+        label: "Time Rush Duration",
+        type: "number",
+        default: 0,
+        tooltip: "How long the battle will last (time rush memory circumstances). 0 means no limit"
       }
     },
   },
