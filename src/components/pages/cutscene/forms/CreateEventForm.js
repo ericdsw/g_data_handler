@@ -150,15 +150,17 @@ class CreateEventForm extends React.Component {
      * a "chainable" method.
      */
     const sortedKeys = Object.keys(eventSchema).sort();
-    const optionTypes = sortedKeys.map((key) => (
-      <MenuItem key={key} value={key}>
-        <Grid container alignItems="center">
-          <Icon>{eventSchema[key].icon}</Icon>
-          &nbsp;
-          <Typography>{eventSchema[key].name}</Typography>
-        </Grid>
-      </MenuItem>
-    ));
+    const optionTypes = sortedKeys
+      .filter(key => !eventSchema[key].hidden)
+      .map((key) => (
+        <MenuItem key={key} value={key}>
+          <Grid container alignItems="center">
+            <Icon>{eventSchema[key].icon}</Icon>
+            &nbsp;
+            <Typography>{eventSchema[key].name}</Typography>
+          </Grid>
+        </MenuItem>
+      ));
 
     fields.push(
       <FormControlLabel

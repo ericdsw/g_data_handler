@@ -578,6 +578,7 @@ const eventSchema = {
     name: "Minigame",
     icon: "games",
     defaultImportant: true,
+    hidden: true,
     additionalText:
       "Starts a minigame, which will display a custom UI and prevent the player from moving or interacting",
     parameters: {
