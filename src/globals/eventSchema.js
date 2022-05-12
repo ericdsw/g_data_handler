@@ -625,7 +625,7 @@ const eventSchema = {
       at_speed: {
         label: "Movement Speed",
         type: "number",
-        default: 90,
+        default: 70,
         tooltip: "How fast the target will move",
       },
       use_time_instead: {
