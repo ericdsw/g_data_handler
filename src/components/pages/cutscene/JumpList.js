@@ -1,5 +1,4 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -7,40 +6,31 @@ import {
   TableHead,
   TableRow,
   Typography,
-  IconButton,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 
-import { styles } from "./styles/JumpListStyle";
+import { JumpTableRow } from "./elements";
 
-const JumpList = (props) => {
-  const classes = makeStyles(styles)();
+const JumpList = ({ 
+  jumpList,
+  handleDeleteJump,
+  handleEditJump
+}) => {
 
-  const { jumpList } = props;
-  const { handleDeleteJump } = props;
 
-  let jumpTableRows = [];
-  for (const jumpName in jumpList) {
-    const jumpPath = jumpList[jumpName];
-    jumpTableRows.push(
-      <TableRow key={jumpName}>
-        <TableCell>{jumpName}</TableCell>
-        <TableCell>{jumpPath}</TableCell>
-        <TableCell style={{ width: 50 }} padding="dense">
-          <IconButton
-            onClick={() => handleDeleteJump(jumpName)}
-            className={classes.button}
-            aria-label="Delete"
-          >
-            <DeleteIcon />
-          </IconButton>
-        </TableCell>
-      </TableRow>
-    );
-  }
+  const rows = useMemo(() => {
+    return Object.keys(jumpList).map(jumpName => (
+      <JumpTableRow
+        key={jumpName}
+        jumpName={jumpName}
+        jumpPath={jumpList[jumpName]}
+        handleDeleteJump={handleDeleteJump}
+        handleEditJump={handleEditJump}
+      />
+    ))
+  }, [jumpList, handleDeleteJump, handleEditJump]);
 
   return (
-    <div>
+    <>
       {Object.keys(jumpList).length <= 0 && (
         <Typography align="center">No Jumps Specified</Typography>
       )}
@@ -51,13 +41,15 @@ const JumpList = (props) => {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Path</TableCell>
-              <TableCell padding="dense"></TableCell>
+              <TableCell padding="dense" colSpan={2} align="center">
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{jumpTableRows}</TableBody>
+          <TableBody>{rows}</TableBody>
         </Table>
       )}
-    </div>
+    </>
   );
 };
 

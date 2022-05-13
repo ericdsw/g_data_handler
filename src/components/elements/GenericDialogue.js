@@ -60,7 +60,9 @@ const GenericDialogue = ({
               </div>
             )}
           </DialogTitle>
-          <DialogContent>{children}</DialogContent>
+          <DialogContent style={{ paddingBottom: 24 }}>
+            {children}
+          </DialogContent>
           <br />
         </Dialog>
         <Dialog

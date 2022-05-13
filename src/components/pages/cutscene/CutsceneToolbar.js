@@ -2,13 +2,14 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Button } from "@material-ui/core";
 import { GenericDialogue, ConfirmationDialogue } from "../../elements";
-import { CreateJumpForm } from "./forms";
+import { JumpForm } from "./forms";
 import { useDialogueManager } from "../../../hooks";
 import JumpList from "./JumpList";
 
 import { styles } from "./styles/CutsceneToolbarStyle";
 
 const CutsceneToolbar = (props) => {
+
   const classes = makeStyles(styles)();
 
   // Extract value properties
@@ -77,9 +78,9 @@ const CutsceneToolbar = (props) => {
         onClose={() => toggleDialogue("createJump", "hide")}
         maxWidth="sm"
       >
-        <CreateJumpForm
-          creationHandler={(jumpName, fileName) => {
-            handleAddJump(jumpName, fileName);
+        <JumpForm
+          handleSubmit={({ jump_name, jump_file }) => {
+            handleAddJump(jump_name, jump_file);
             toggleDialogue("createJump", "hide");
           }}
         />
@@ -93,6 +94,15 @@ const CutsceneToolbar = (props) => {
         <JumpList
           jumpList={jumps}
           handleDeleteJump={(jumpName) => handleDeleteJump(jumpName)}
+          handleEditJump={({ jump_name, jump_file }) => {
+            /**
+             * Note how we are using the "add" method here, even tho it is a
+             * delete transaction. This is because jumps are stored as key-value
+             * pairs, so trying to add a new one with the same name as an existing
+             * one will just overwrite it.
+             */
+            handleAddJump(jump_name, jump_file);
+          }}
         />
       </GenericDialogue>
 

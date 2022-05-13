@@ -6,19 +6,23 @@ import { TextField, Grid, Button } from "@material-ui/core";
 const styles = (theme) => ({});
 
 class CreateJumpForm extends React.Component {
+
   state = {
     jump_name: "",
     jump_file: "",
   };
 
   submitData = (event) => {
+
     event.preventDefault();
     event.stopPropagation();
 
     let errorInputs = [];
+
     if (this.state.jump_name === "") {
       errorInputs.push("Jump Name");
     }
+
     if (this.state.jump_file === "") {
       errorInputs.push("Target Cutscene File");
     }
