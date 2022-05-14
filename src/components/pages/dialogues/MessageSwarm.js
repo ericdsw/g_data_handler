@@ -29,16 +29,16 @@ const styles = (theme) => ({
   swarmMessageTextWrapper: {
     width: 188 * 2,
     height: 28 * 2,
-    borderRadius: 8 * 2,
-    fontSize: 8 * 2,
+    borderRadius: 6 * 2,
+    fontSize: 10 * 2,
     color: '#000',
     backgroundColor: "#C9C3B8",
-    fontFamily: 'DogicaPixel',
+    fontFamily: 'Cascadia Code',
     border: '2px solid #272523'
   },
   swarmMessageTextContent: {
     marginLeft: 8 * 2,
-    lineHeight: `${28 * 2}px`,
+    lineHeight: `${27 * 2}px`,
   },
   swarmMessage: {
     padding: theme.spacing(1),
