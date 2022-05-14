@@ -47,7 +47,7 @@ const CutsceneRow = (props) => {
             />
           </Grid>
         </Grid>
-        <Grid container direction="row" justify="center" spacing={2}>
+        <Grid container direction="row" justifyContent="center" spacing={2}>
           {rowData.map((cutsceneData, index) => (
             <CutsceneEventContainer
               key={index}

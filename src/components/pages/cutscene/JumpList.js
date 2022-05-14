@@ -16,18 +16,15 @@ const JumpList = ({
   handleEditJump
 }) => {
 
-
-  const rows = useMemo(() => {
-    return Object.keys(jumpList).map(jumpName => (
-      <JumpTableRow
-        key={jumpName}
-        jumpName={jumpName}
-        jumpPath={jumpList[jumpName]}
-        handleDeleteJump={handleDeleteJump}
-        handleEditJump={handleEditJump}
-      />
-    ))
-  }, [jumpList, handleDeleteJump, handleEditJump]);
+  const rows = useMemo(() => Object.keys(jumpList).map(jumpName => (
+    <JumpTableRow
+      key={jumpName}
+      jumpName={jumpName}
+      jumpPath={jumpList[jumpName]}
+      handleDeleteJump={handleDeleteJump}
+      handleEditJump={handleEditJump}
+    />
+  )), [jumpList, handleDeleteJump, handleEditJump]);
 
   return (
     <>

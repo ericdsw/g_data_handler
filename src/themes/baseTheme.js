@@ -1,7 +1,7 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 
 const baseTheme = (mode) =>
-  createMuiTheme({
+  createTheme({
     palette: {
       type: mode,
       background: {

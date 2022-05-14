@@ -152,7 +152,7 @@ class CreateEmoteForm extends React.Component {
           </Grid>
 
           <Grid item xs={12}>
-            <Grid container justify="flex-end">
+            <Grid container justifyContent="flex-end">
               <Button
                 type="submit"
                 variant="contained"

@@ -233,7 +233,7 @@ class CreateChoiceForm extends React.Component {
           </Grid>
           <Grid item xs md={6}>
             {choices.length <= 0 && (
-              <Grid container justify="center" alignItems="center">
+              <Grid container justifyContent="center" alignItems="center">
                 <Typography align="center" color="textSecondary">
                   <em>No Choices Found</em>
                 </Typography>

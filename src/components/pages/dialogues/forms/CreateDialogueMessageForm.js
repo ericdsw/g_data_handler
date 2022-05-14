@@ -365,7 +365,7 @@ class CreateDialogueMessageForm extends React.Component {
             />
             <br />
             <br />
-            <Grid container justify="center">
+            <Grid container justifyContent="center">
               <IconButton onClick={this.handleInstructionsDialogueToggle}>
                 <Icon>help</Icon>
               </IconButton>
@@ -439,7 +439,7 @@ class CreateDialogueMessageForm extends React.Component {
         <Grid container alignItems="flex-end">
           <Grid item xs md={6}>
             {!this.props.isEdit && (
-              <Grid container justify="flex-start">
+              <Grid container justifyContent="flex-start">
                 <FormControlLabel
                   label="Create and Continue"
                   control={
@@ -467,7 +467,7 @@ class CreateDialogueMessageForm extends React.Component {
             )}
           </Grid>
           <Grid item xs md={6}>
-            <Grid container justify="flex-end">
+            <Grid container justifyContent="flex-end">
               <Button
                 type="submit"
                 variant="contained"
@@ -483,7 +483,7 @@ class CreateDialogueMessageForm extends React.Component {
         {/* Tag instructions */}
         <Dialog
           open={this.state.instructionsDialogueOpen}
-          onBackdropClick={this.handleInstructionsDialogueToggle}
+          onClose={() => this.handleInstructionsDialogueToggle()}
           fullWidth
           maxWidth="xl"
         >

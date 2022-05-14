@@ -1,4 +1,16 @@
 @font-face {
   font-family: 'DogicaPixel';
-  src: local('dogicapixel'), url('./fonts/dogicapixel.ttf') format('truetype')
+  src: local('dogicapixel'), url('./fonts/dogicapixel.ttf') format('truetype');
+};
+
+@font-face {
+  font-family: 'JF Dot Ayu Gothic 18';
+  src: url('./fonts/JF-Dot-Ayu-18.woff2') format('woff2'),
+      url('./fonts/JF-Dot-Ayu-18.woff') format('woff');
 }
+
+
+@font-face {
+  font-family: 'Cascadia Code';
+  src: local('Cascadia Code'), url('./fonts/CascadiaCode.ttf') format('truetype');
+};

@@ -91,7 +91,7 @@ const DialogueMessage = (props) => {
               />
             </div>
             <div className={classes.details}>
-              <Grid container justify="center">
+              <Grid container justifyContent="center">
                 <div className={classes.content}>
                   {speakerName && (
                     <div className={classes.contentSpeakerName}>

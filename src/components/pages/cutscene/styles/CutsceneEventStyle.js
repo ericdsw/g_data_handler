@@ -3,6 +3,7 @@ import { grey } from "@material-ui/core/colors";
 export const styles = (theme) => ({
   eventCard: {
     width: 300,
+    border: `1px solid ${theme.palette.background.default}`
   },
   actions: {
     display: "flex",

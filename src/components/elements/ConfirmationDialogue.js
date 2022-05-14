@@ -10,7 +10,7 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import { red, green } from "@material-ui/core/colors";
 
-const styles = (theme) => ({
+const styles = () => ({
   cancelButton: {
     color: red[500],
   },

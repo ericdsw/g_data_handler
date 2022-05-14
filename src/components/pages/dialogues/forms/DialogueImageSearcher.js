@@ -92,7 +92,7 @@ class DialogueImageSearcher extends React.Component {
       <React.Fragment>
         <Grid
           container
-          justify="center"
+          justifyContent="center"
           alignItems="center"
           className={classes.imagePreview}
         >

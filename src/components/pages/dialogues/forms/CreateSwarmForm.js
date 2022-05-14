@@ -146,7 +146,7 @@ const CreateSwarmForm = (props) => {
                 </React.Fragment>
               )
             )}
-            <Grid container justify="flex-end">
+            <Grid container justifyContent="flex-end">
               <Button
                 variant="contained"
                 color="secondary"
@@ -209,7 +209,7 @@ const CreateSwarmForm = (props) => {
           ))}
         </Grid>
         <Grid item xs={12}>
-          <Grid container justify="flex-end">
+          <Grid container justifyContent="flex-end">
             <Button
               variant="contained"
               color="primary"

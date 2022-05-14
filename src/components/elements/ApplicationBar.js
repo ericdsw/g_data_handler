@@ -89,7 +89,7 @@ const ApplicationBar = ({
             </Typography>
           </Grid>
           <Grid item xs={4}>
-            <Grid container justify="flex-end">
+            <Grid container justifyContent="flex-end">
               <IconButton
                 className={classes.buttons}
                 onClick={() => handleDarkModeToggle()}

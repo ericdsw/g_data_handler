@@ -71,7 +71,7 @@ const Dialogue = (props) => {
 
         {/* Additional Add Conversation Button */}
         <Grid item xs={12}>
-          <Grid container justify="center">
+          <Grid container justifyContent="center">
             <Button
               color="primary"
               onClick={() => {

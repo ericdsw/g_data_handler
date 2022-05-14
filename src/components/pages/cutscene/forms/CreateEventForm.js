@@ -217,7 +217,7 @@ class CreateEventForm extends React.Component {
             </Typography>
           </Grid>
         </Grid>
-        <Grid justify="flex-end" container>
+        <Grid justifyContent="flex-end" container>
           <Button
             type="submit"
             variant="contained"

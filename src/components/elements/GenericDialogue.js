@@ -34,8 +34,6 @@ const GenericDialogue = ({
     }
   }, [open]);
 
-  console.log(helpOpen);
-
   if (!open) {
     return <React.Fragment />;
   } else {

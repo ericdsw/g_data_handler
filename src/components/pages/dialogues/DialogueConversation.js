@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import {
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Typography,
   Grid,
   Button,
@@ -70,12 +70,12 @@ const DialogueConversation = (props) => {
   }
 
   return (
-    <ExpansionPanel
+    <Accordion
       className={classes.conversationContainer}
       square={true}
       onChange={(_, expanded) => handlePanelChange(expanded)}
     >
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Grid container alignItems="center">
 
           {/* Title Data */}
@@ -103,7 +103,7 @@ const DialogueConversation = (props) => {
 
           {/* Buttons */}
           <Grid item xs={12} md={6}>
-            <Grid container justify="flex-end">
+            <Grid container justifyContent="flex-end">
               <Tooltip title="Merge">
                 <Checkbox
                   checked={conversationsToMerge.includes(conversation.id)}
@@ -126,9 +126,9 @@ const DialogueConversation = (props) => {
           </Grid>
 
         </Grid>
-      </ExpansionPanelSummary>
+      </AccordionSummary>
 
-      <ExpansionPanelDetails>
+      <AccordionDetails>
         <div className={classes.detailsContainer}>
           <Droppable
             droppableId={conversation.id}
@@ -210,7 +210,7 @@ const DialogueConversation = (props) => {
             </Button>
           </div>
         </div>
-      </ExpansionPanelDetails>
+      </AccordionDetails>
 
       {/* Create Message Form */}
       <GenericDialogue
@@ -331,7 +331,7 @@ const DialogueConversation = (props) => {
           toggleDialogue("confirmDelete", "hide");
         }}
       />
-    </ExpansionPanel>
+    </Accordion>
   );
 };
 

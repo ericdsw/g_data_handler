@@ -28,17 +28,14 @@ const JumpForm = ({
   buttonText = "Add Jump",
   isEdit = false,
   handleSubmit,
-}) => {
-
-  return (
-    <GenericForm
-      initialDataSet={data}
-      schema={schema}
-      handleSubmit={handleSubmit}
-      buttonText={buttonText}
-      disabledInputs={isEdit ? ["jump_name"] : []}
-    />
-  );
-}
+}) => (
+  <GenericForm
+    initialDataSet={data}
+    schema={schema}
+    handleSubmit={handleSubmit}
+    buttonText={buttonText}
+    disabledInputs={isEdit ? ["jump_name"] : []}
+  />
+);
 
 export default JumpForm;

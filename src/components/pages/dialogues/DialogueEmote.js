@@ -56,9 +56,9 @@ const DialogueEmote = ({
             }
           />
           <CardContent>
-            <Grid container justify="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center">
               <Grid item>
-                <Grid container justify="center">
+                <Grid container justifyContent="center">
                   <div className={classes.emoteImageBackground}>
                     <img
                       alt="asdflol"

@@ -69,7 +69,7 @@ const Cutscene = (props) => {
         />
       ))}
       <Grid item xs={12}>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Button
             color="primary"
             onClick={() => handleAddRow()}

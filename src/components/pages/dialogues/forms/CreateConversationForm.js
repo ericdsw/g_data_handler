@@ -63,7 +63,7 @@ class CreateConversationForm extends React.Component {
             />
           </Grid>
         </Grid>
-        <Grid justify="flex-end" container>
+        <Grid justifyContent="flex-end" container>
           <Button
             type="submit"
             variant="contained"

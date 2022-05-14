@@ -104,7 +104,7 @@ const GenericForm = (props) => {
           <i>{additionalText}</i>
         </Typography>
       )}
-      <Grid container justify="flex-end">
+      <Grid container justifyContent="flex-end">
         <Button variant="contained" color={buttonColor} type="submit">
           {buttonText}
         </Button>
