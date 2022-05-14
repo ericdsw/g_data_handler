@@ -30,11 +30,11 @@ export const styles = (theme) => ({
     position: 'relative',
     width: 310 * 2,
     height: 55 * 2,
-    fontSize: 12 * 2,
+    fontSize: 10 * 2,
     backgroundColor: "#C9C3B8",
     color: "black",
     borderRadius: 6 * 2,
-    fontFamily: "'JF Dot Ayu Gothic 18'",
+    fontFamily: 'Cascadia Code',
     border: '2px solid #272523'
   },
   contentText: {
@@ -45,7 +45,7 @@ export const styles = (theme) => ({
     lineHeight: '30px',
   },
   contentTextNoImage: {
-    width: 292 * 2,
+    width: 282 * 2,
   },
   contentSpeakerName: {
     width: 100 * 2,

@@ -4,11 +4,6 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import './fonts/dogicapixel.ttf';
-import './fonts/JF-Dot-Ayu-18.woff';
-import './fonts/JF-Dot-Ayu-18.woff2';
-import './fonts/CascadiaCode.ttf';
-
 import './customFonts.css';
 
 ReactDOM.render(<App />, document.getElementById("root"));

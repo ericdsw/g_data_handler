@@ -4,9 +4,12 @@
 };
 
 @font-face {
-  font-family: 'JF Dot Ayu Gothic 18';
-  src: url('./fonts/JF-Dot-Ayu-18.woff2') format('woff2'),
-      url('./fonts/JF-Dot-Ayu-18.woff') format('woff');
+    font-family: 'jf_dot_ayu_gothic_18regular';
+    src: url('./fonts/jfdot-webfont.woff2') format('woff2'),
+         url('./fonts/jfdot-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
 }
 
 
