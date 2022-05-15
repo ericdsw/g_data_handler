@@ -204,10 +204,15 @@ function updateDialogueConversation(state, action) {
 }
 
 function editConversationMessage(state, action) {
+
   const { messageId, data } = action.payload;
   const messages = { ...state.messages };
+  
+  messages[messageId] = {
+    id: messages[messageId].id,
+    ...data
+  }
 
-  messages[messageId] = Object.assign(messages[messageId], data);
 
   return { ...state, messages };
 }

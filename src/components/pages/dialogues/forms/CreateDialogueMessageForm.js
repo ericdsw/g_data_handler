@@ -68,6 +68,7 @@ const DEFAULT_STATE = {
 };
 
 class CreateDialogueMessageForm extends React.Component {
+
   constructor(props) {
     super(props);
     let stateData = Object.assign({}, DEFAULT_STATE);

@@ -4,16 +4,6 @@
 };
 
 @font-face {
-    font-family: 'jf_dot_ayu_gothic_18regular';
-    src: url('./fonts/jfdot-webfont.woff2') format('woff2'),
-         url('./fonts/jfdot-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-@font-face {
   font-family: 'Cascadia Code';
   src: local('Cascadia Code'), url('./fonts/CascadiaCode.ttf') format('truetype');
 };

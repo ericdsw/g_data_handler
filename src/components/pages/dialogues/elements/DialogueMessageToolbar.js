@@ -65,7 +65,6 @@ const DialogueMessageToolbar = (props) => {
       case "edit":
         setSelectedOption("edit");
         toggleDialogue("editMessage", "show");
-        handleEdit();
         break;
       case "delete":
         toggleDialogue("confirmDelete", "show");

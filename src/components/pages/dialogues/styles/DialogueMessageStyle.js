@@ -25,16 +25,19 @@ export const styles = (theme) => ({
   targetObject: {
     color: blue[200],
   },
+  /**
+   * Dimensions, colors and fonts mimics how the dialogues are being displayed in-game
+   */
   content: {
     display: 'inline-block',
     position: 'relative',
     width: 310 * 2,
     height: 55 * 2,
-    fontSize: 10 * 2,
+    fontSize: 12 * 2,
     backgroundColor: "#C9C3B8",
     color: "black",
     borderRadius: 6 * 2,
-    fontFamily: 'Cascadia Code',
+    fontFamily: "'JF Dot Ayu Gothic 18'",
     border: '2px solid #272523'
   },
   contentText: {
@@ -47,6 +50,7 @@ export const styles = (theme) => ({
   contentTextNoImage: {
     width: 282 * 2,
   },
+
   contentSpeakerName: {
     width: 100 * 2,
     height: 20 * 2,

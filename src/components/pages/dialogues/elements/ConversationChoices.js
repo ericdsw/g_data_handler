@@ -1,8 +1,8 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, { useMemo } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import { Chip, Tooltip } from "@material-ui/core";
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   chip: {
     marginRight: theme.spacing(1),
     [theme.breakpoints.down("xs")]: {
@@ -14,15 +14,19 @@ const styles = (theme) => ({
     marginTop: 12,
     paddingTop: 12,
   },
-});
+}));
 
-const ConversationChoices = (props) => {
+const ConversationChoices = ({ message }) => {
 
-  const { classes, message } = props;
+  const classes = useStyles();
 
-  let choicesChips = [];
-  if (message.choices) {
-    choicesChips = message.choices.map((currentChoice) => {
+  const choicesChips = useMemo(() => {
+
+    if (!message.choices) {
+      return [];
+    }
+
+    return message.choices.map((currentChoice) => {
       if (currentChoice.next_message) {
         const label = `${currentChoice.key}: ${currentChoice.value}`;
         return (
@@ -55,7 +59,7 @@ const ConversationChoices = (props) => {
         );
       }
     });
-  }
+  }, [message, classes.chip]);
 
   return (
     <React.Fragment>
@@ -66,4 +70,4 @@ const ConversationChoices = (props) => {
   );
 };
 
-export default withStyles(styles)(ConversationChoices);
+export default ConversationChoices;

@@ -18,37 +18,44 @@ import { speakerSchema } from "../../../globals";
 import { styles } from "./styles/DialogueMessageStyle";
 import { cleanMessage } from './functions';
 
-const DialogueMessage = (props) => {
+const DialogueMessage = ({
+  handleEdit,
+  handleDelete,
+  handleAddAbove,
+  handleAddBelow,
+  handleSplitBelow,
+  message,
+  classes
+}) => {
 
-  const {
-    handleEdit,
-    handleDelete,
-    handleAddAbove,
-    handleAddBelow,
-    handleSplitBelow,
-  } = props;
-
-  let usedImagePath, speakerName;
+  const { usedImagePath, speakerName } = useMemo(() => {
+    
+    let imageResult, nameResult;
   
+    // Extract data from speaker
+    if (message.speaker) {
+      imageResult = speakerSchema[message.speaker].image;
+      nameResult = speakerSchema[message.speaker].name;
+    }
 
-  const { message, classes } = props;
+    if (message.image) {
+      imageResult = message.image;
+    }
+    if (message.name) {
+      nameResult = message.name;
+    }
 
-  // Extract data from speaker
-  if (message.speaker) {
-    usedImagePath = speakerSchema[message.speaker].image;
-    speakerName = speakerSchema[message.speaker].name;
-  }
+    return {
+      usedImagePath: imageResult,
+      speakerName: nameResult
+    }
 
-  if (message.image) {
-    usedImagePath = message.image;
-  }
-  if (message.name) {
-    speakerName = message.name;
-  }
+  }, [message]);
 
   const hasImage = useMemo(
     () => usedImagePath && usedImagePath !== 'NONE', [usedImagePath]
   );
+
   const messageTextOnly = useMemo(
     () => cleanMessage(message.message),
     [message.message]

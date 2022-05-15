@@ -1,8 +1,8 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 import { blue } from "@material-ui/core/colors";
 
 const inputTheme = (parentTheme) =>
-  createMuiTheme({
+  createTheme({
     ...parentTheme,
     palette: {
       ...parentTheme.palette,

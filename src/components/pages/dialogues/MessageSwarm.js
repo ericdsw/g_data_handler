@@ -30,15 +30,15 @@ const styles = (theme) => ({
     width: 188 * 2,
     height: 28 * 2,
     borderRadius: 6 * 2,
-    fontSize: 10 * 2,
+    fontSize: 12 * 2,
     color: '#000',
     backgroundColor: "#C9C3B8",
-    fontFamily: 'Cascadia Code',
+    fontFamily: "'JF Dot Ayu Gothic 18'",
     border: '2px solid #272523'
   },
   swarmMessageTextContent: {
     marginLeft: 8 * 2,
-    lineHeight: `${27 * 2}px`,
+    lineHeight: `${25 * 2}px`,
   },
   swarmMessage: {
     padding: theme.spacing(1),
@@ -47,7 +47,12 @@ const styles = (theme) => ({
   },
 });
 
-const MessageSwarm = ({ swarmData, handleEdit, handleDelete, handleSplitBelow }) => {
+const MessageSwarm = ({ 
+  swarmData,
+  handleEdit,
+  handleDelete,
+  handleSplitBelow
+}) => {
 
   const classes = makeStyles(styles)();
 
@@ -91,7 +96,7 @@ const MessageSwarm = ({ swarmData, handleEdit, handleDelete, handleSplitBelow })
                 </div>
               </div>
             </Tooltip>
-            <Typography variant="body2">
+            <Typography variant="body2" style={{ marginTop: 8 }}>
               Target: {swarmMessage.target_object}. Appears after{" "}
               {swarmMessage.appearance_timeout} second(s).
             </Typography>
