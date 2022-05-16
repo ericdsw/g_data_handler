@@ -1,1 +1,1 @@
-export { deafult as DialoguePage } from "./DialoguePage";
+export { default as DialoguePage } from "./DialoguePage";

@@ -1,16 +1,18 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 
-const styles = (theme) => ({
+const useStyles = makeStyles(() => ({
   emptyText: {
     padding: 32,
     width: "100%",
   },
-});
+}));
 
-const NoConversationsNotifier = (props) => {
-  const { conversations, classes } = props;
+const NoConversationsNotifier = ({ conversations }) => {
+
+  const classes = useStyles();
+
   if (conversations.length <= 0) {
     return (
       <Typography
@@ -27,4 +29,4 @@ const NoConversationsNotifier = (props) => {
   }
 };
 
-export default withStyles(styles)(NoConversationsNotifier);
+export default NoConversationsNotifier;

@@ -47,6 +47,8 @@ const styles = (theme) => ({
   },
 });
 
+const useStyles = makeStyles(styles);
+
 const MessageSwarm = ({ 
   swarmData,
   handleEdit,
@@ -54,7 +56,7 @@ const MessageSwarm = ({
   handleSplitBelow
 }) => {
 
-  const classes = makeStyles(styles)();
+  const classes = useStyles();
 
   return (
     <Card className={classes.swarmContainer} square={true}>

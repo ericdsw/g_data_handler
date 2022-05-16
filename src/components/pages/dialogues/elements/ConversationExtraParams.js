@@ -1,8 +1,8 @@
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, { useMemo } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import { Chip } from "@material-ui/core";
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   chip: {
     marginRight: theme.spacing(1),
     [theme.breakpoints.down("xs")]: {
@@ -14,30 +14,29 @@ const styles = (theme) => ({
     marginTop: 12,
     paddingTop: 12,
   },
-});
+}));
 
-const ConversationExtraParams = (props) => {
-  const { classes, message } = props;
+const extras = [
+  "location",
+  "voice_file",
+  "control_level",
+  "autopilot_offset",
+];
 
-  let extraChips = [];
-  const extras = [
-    "location",
-    "voice_file",
-    "control_level",
-    "autopilot_offset",
-  ];
+const ConversationExtraParams = ({ message }) => {
 
-  extras.forEach((extraProperty) => {
-    if (message.hasOwnProperty(extraProperty)) {
-      extraChips.push(
+  const classes = useStyles();
+  const extraChips = useMemo(() => {
+    return extras
+      .filter(extraProperty => message.hasOwnProperty(extraProperty))
+      .map(extraProperty => (
         <Chip
           key={extraProperty}
           className={classes.chip}
           label={`${extraProperty}: ${message[extraProperty]}`}
         />
-      );
-    }
-  });
+      ))
+  }, [classes, message]);
 
   return (
     <React.Fragment>
@@ -48,4 +47,4 @@ const ConversationExtraParams = (props) => {
   );
 };
 
-export default withStyles(styles)(ConversationExtraParams);
+export default ConversationExtraParams;

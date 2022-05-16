@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+
 import { GenericForm } from '../../../elements';
 
 const schema = {
@@ -33,13 +34,13 @@ const GiveItemFromDialogueForm = ({
   onSubmit,
 }) => {
 
-  const handleSubmit = (data) => {
+  const handleSubmit = useCallback((data) => {
     const returnData = {
       ...data,
       type: "give_item",
     }
     onSubmit(returnData);
-  }
+  }, [onSubmit]);
 
   return (
     <GenericForm

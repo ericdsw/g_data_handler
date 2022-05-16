@@ -37,7 +37,7 @@ const shortMessageSchema = {
   },
 };
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   swarmMessageCard: {
     backgroundColor: "#222",
     margin: theme.spacing(0.5),
@@ -45,16 +45,15 @@ const styles = (theme) => ({
   targetObject: {
     color: blue[200],
   },
-});
+}));
 
-const CreateSwarmForm = (props) => {
-  const classes = makeStyles(styles)();
+const CreateSwarmForm = ({
+  initialSwarmData = [],
+  isEdit = false,
+  handleSubmit
+}) => {
 
-  // Extract properties
-  const { initialSwarmData = [], isEdit = false } = props;
-
-  // Extract methods
-  const { handleSubmit } = props;
+  const classes = useStyles();
 
   const [swarmMessages, updateSwarmMessages] = useState(initialSwarmData);
   const [curMessage, updateCurMessage] = useState({

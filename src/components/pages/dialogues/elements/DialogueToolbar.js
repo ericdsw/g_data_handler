@@ -1,24 +1,29 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+
+import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Button } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
+
 import { useDialogueManager } from "../../../../hooks";
 import { GenericDialogue, ConfirmationDialogue } from "../../../elements";
 import { CreateConversationForm } from "../forms";
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   deleteButton: {
     color: red[500],
   },
   defaultButton: {
     color: theme.palette.primary.main,
   },
-});
+}));
 
-const DialogueToolbar = (props) => {
-  const { classes } = props;
+const DialogueToolbar = ({
+  handleExport,
+  handleClear,
+  handleAddConversation
+}) => {
 
-  const { handleExport, handleClear, handleAddConversation } = props;
+  const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(
     "addConversation",
@@ -84,4 +89,4 @@ const DialogueToolbar = (props) => {
   );
 };
 
-export default withStyles(styles)(DialogueToolbar);
+export default DialogueToolbar;

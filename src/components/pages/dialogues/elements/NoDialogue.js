@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, { useState, useCallback } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import { Button, Divider, Paper, Grid, Typography } from "@material-ui/core";
 import { DragAndDrop } from "../../../elements";
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
     marginBottom: 24,
@@ -15,18 +15,18 @@ const styles = (theme) => ({
   gridContainer: {
     minHeight: 300,
   },
-});
+}));
 
-const NoDialogue = (props) => {
-  const { classes } = props;
-  const { handleEmptyDialogue, handleUpdateFromFile } = props;
+const NoDialogue = ({ handleEmptyDialogue, handleUpdateFromFile }) => {
+
+  const classes = useStyles();
 
   const [loading, toggleLoading] = useState(false);
 
-  function handleDrop(files) {
+  const handleDrop = useCallback((files) => {
     toggleLoading(true);
     handleUpdateFromFile(files[0]);
-  }
+  }, [toggleLoading, handleUpdateFromFile]);
 
   return (
     <div>
@@ -66,4 +66,4 @@ const NoDialogue = (props) => {
   );
 };
 
-export default withStyles(styles)(NoDialogue);
+export default NoDialogue;

@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { Grid, TextField, Button, Fab, Icon } from "@material-ui/core";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
@@ -12,18 +12,22 @@ import { CreateConversationForm } from "./forms";
 
 import { styles } from "./styles/DialogueStyle";
 
-const Dialogue = (props) => {
-  const { fileName, dialogueData, classes, conversationsToMerge } = props;
+const useStyles = makeStyles(styles);
 
-  const {
-    handleFileNameChange,
-    handleAddConversation,
-    handleDragEnd,
-    handleConfirmMerge,
-    handleConfirmBulkDelete,
-    handleSelectAll,
-    handleUnselectAll,
-  } = props;
+const Dialogue = ({
+  fileName,
+  dialogueData,
+  conversationsToMerge,
+  handleFileNameChange,
+  handleAddConversation,
+  handleDragEnd,
+  handleConfirmMerge,
+  handleConfirmBulkDelete,
+  handleSelectAll,
+  handleUnselectAll,
+}) => {
+  
+  const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(
     "addConversation",
@@ -187,4 +191,4 @@ const Dialogue = (props) => {
   );
 };
 
-export default withStyles(styles)(Dialogue);
+export default Dialogue;

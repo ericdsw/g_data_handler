@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, { useState, useCallback, useMemo } from "react";
 import {
   IconButton,
   Icon,
@@ -9,6 +8,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
+
 import { useDialogueManager } from "../../../../hooks";
 import { GenericDialogue, ConfirmationDialogue } from "../../../elements";
 
@@ -21,24 +21,15 @@ import {
   PickItemFromDialogueForm
 } from "../forms";
 
-const styles = () => ({
-  button: {
-    color: "white",
-  },
-});
-
-const DialogueMessageToolbar = (props) => {
-  // Parameters
-  const { message, omitEdit } = props;
-
-  // Methods
-  const {
-    handleAddAbove,
-    handleAddBelow,
-    handleEdit,
-    handleDelete,
-    handleSplitBelow,
-  } = props;
+const DialogueMessageToolbar = ({
+  message,
+  omitEdit,
+  handleAddAbove,
+  handleAddBelow,
+  handleEdit,
+  handleDelete,
+  handleSplitBelow
+}) => {
 
   const [dialogues, toggleDialogue] = useDialogueManager(
     "confirmDelete",
@@ -52,15 +43,15 @@ const DialogueMessageToolbar = (props) => {
 
   // Anchor Management
 
-  function handleMenuOpen(event) {
+  const handleMenuOpen = useCallback((event) => {
     setAnchorEl(event.currentTarget);
-  }
+  }, [setAnchorEl]);
 
-  function handleClose() {
+  const handleClose = useCallback(() => {
     setAnchorEl(null);
-  }
+  }, [setAnchorEl]);
 
-  function handleMenuSelect(_, menuItemName) {
+  const handleMenuSelect = useCallback((_, menuItemName) => {
     switch (menuItemName) {
       case "edit":
         setSelectedOption("edit");
@@ -76,9 +67,9 @@ const DialogueMessageToolbar = (props) => {
         break;
     }
     setAnchorEl(null);
-  }
+  }, [setSelectedOption, toggleDialogue, setAnchorEl]);
 
-  function handleDialogueFormSubmit(data) {
+  const handleDialogueFormSubmit = useCallback((data) => {
     switch (selectedOption) {
       case "addAbove":
         handleAddAbove(data);
@@ -92,123 +83,133 @@ const DialogueMessageToolbar = (props) => {
       default:
         break;
     }
-  }
+  }, [
+    handleAddAbove,
+    handleAddBelow, 
+    handleEdit,
+    selectedOption
+  ]);
 
-  let typeString;
-  let editDialogue;
+  const { typeString, editDialogue } = useMemo(() => {
 
-  switch (message.type) {
+    let typeString;
+    let editDialogue;
 
-    case "message":
-      typeString = "Message";
-      editDialogue = (
-        <GenericDialogue
-          title="Edit Conversation"
-          open={dialogues["editMessage"]}
-          onClose={() => toggleDialogue("editMessage", "hide")}
-        >
-          <CreateDialogueMessageForm
-            isEdit={selectedOption === "edit"}
-            messageData={selectedOption === "edit" ? message : {}}
-            creationHandler={(data, createAndContinue) => {
-              if (!createAndContinue) {
+    switch (message.type) {
+
+      case "message":
+        typeString = "Message";
+        editDialogue = (
+          <GenericDialogue
+            title="Edit Conversation"
+            open={dialogues["editMessage"]}
+            onClose={() => toggleDialogue("editMessage", "hide")}
+          >
+            <CreateDialogueMessageForm
+              isEdit={selectedOption === "edit"}
+              messageData={selectedOption === "edit" ? message : {}}
+              creationHandler={(data, createAndContinue) => {
+                if (!createAndContinue) {
+                  toggleDialogue("editMessage", "hide");
+                }
+                handleDialogueFormSubmit(data);
+              }}
+            />
+          </GenericDialogue>
+        );
+        break;
+
+      case "swarm":
+        typeString = "Swarm";
+        editDialogue = (
+          <GenericDialogue
+            title="Edit Swarm"
+            open={dialogues["editMessage"]}
+            onClose={() => toggleDialogue("editMessage", "hide")}
+          >
+            <CreateSwarmForm
+              initialSwarmData={message.swarmData}
+              isEdit={true}
+              handleSubmit={(data) => {
                 toggleDialogue("editMessage", "hide");
-              }
-              handleDialogueFormSubmit(data);
-            }}
-          />
-        </GenericDialogue>
-      );
-      break;
+                handleDialogueFormSubmit(data);
+              }}
+            />
+          </GenericDialogue>
+        );
+        break;
 
-    case "swarm":
-      typeString = "Swarm";
-      editDialogue = (
-        <GenericDialogue
-          title="Edit Swarm"
-          open={dialogues["editMessage"]}
-          onClose={() => toggleDialogue("editMessage", "hide")}
-        >
-          <CreateSwarmForm
-            initialSwarmData={message.swarmData}
-            isEdit={true}
-            handleSubmit={(data) => {
-              toggleDialogue("editMessage", "hide");
-              handleDialogueFormSubmit(data);
-            }}
-          />
-        </GenericDialogue>
-      );
-      break;
+      case "give_item":
+        typeString = "Give Item Message";
+        editDialogue = (
+          <GenericDialogue
+            title="Edit Give Item Message"
+            open={dialogues["editMessage"]}
+            onClose={() => toggleDialogue("editMessage", "hide")}
+          >
+            <GiveItemFromDialogueForm
+              data={message}
+              buttonText="Edit"
+              onSubmit={data => {
+                toggleDialogue("editMessage", "hide");
+                handleDialogueFormSubmit(data);
+              }}
+            />
+          </GenericDialogue>
+        );
+        break;
 
-    case "give_item":
-      typeString = "Give Item Message";
-      editDialogue = (
-        <GenericDialogue
-          title="Edit Give Item Message"
-          open={dialogues["editMessage"]}
-          onClose={() => toggleDialogue("editMessage", "hide")}
-        >
-          <GiveItemFromDialogueForm
-            data={message}
-            buttonText="Edit"
-            onSubmit={data => {
-              toggleDialogue("editMessage", "hide");
-              handleDialogueFormSubmit(data);
-            }}
-          />
-        </GenericDialogue>
-      );
-      break;
+      case "give_money":
+        typeString = "Give Money Message";
+        editDialogue = (
+          <GenericDialogue
+            title="Edit Give Money Message"
+            open={dialogues["editMessage"]}
+            onClose={() => toggleDialogue("editMessage", "hide")}
+          >
+            <GiveMoneyFromDialogueForm
+              data={message}
+              buttonText="Edit"
+              onSubmit={data => {
+                toggleDialogue("editMessage", "hide");
+                handleDialogueFormSubmit(data);
+              }}
+            />
+          </GenericDialogue>
+        );
+        break;
 
-    case "give_money":
-      typeString = "Give Money Message";
-      editDialogue = (
-        <GenericDialogue
-          title="Edit Give Money Message"
-          open={dialogues["editMessage"]}
-          onClose={() => toggleDialogue("editMessage", "hide")}
-        >
-          <GiveMoneyFromDialogueForm
-            data={message}
-            buttonText="Edit"
-            onSubmit={data => {
-              toggleDialogue("editMessage", "hide");
-              handleDialogueFormSubmit(data);
-            }}
-          />
-        </GenericDialogue>
-      );
-      break;
+      case "emote":
+        typeString = "Emote";
+        editDialogue = <React.Fragment />;
+        break;
+      
+      case "pick_item":
+        typeString = "Pick Item message";
+        editDialogue = (
+          <GenericDialogue
+            title="Edit pick item"
+            open={dialogues["editMessage"]}
+            onClose={() => toggleDialogue("editMessage", "hide")}
+          >
+            <PickItemFromDialogueForm
+              buttonText="Edit"
+              data={message}
+              onSubmit={data => {
+                toggleDialogue('editMessage', 'hide');
+                handleDialogueFormSubmit(data);
+              }}
+            />
+          </GenericDialogue>
+        );
+        break;
 
-    case "emote":
-      typeString = "Emote";
-      editDialogue = <React.Fragment />;
-      break;
-    
-    case "pick_item":
-      typeString = "Pick Item message";
-      editDialogue = (
-        <GenericDialogue
-          title="Edit pick item"
-          open={dialogues["editMessage"]}
-          onClose={() => toggleDialogue("editMessage", "hide")}
-        >
-          <PickItemFromDialogueForm
-            buttonText="Edit"
-            data={message}
-            onSubmit={data => {
-              toggleDialogue('editMessage', 'hide');
-              handleDialogueFormSubmit(data);
-            }}
-          />
-        </GenericDialogue>
-      );
-      break;
+      default:
+        typeString = "";
+    }
+    return { typeString, editDialogue };
 
-    default:
-      typeString = "";
-  }
+  }, [dialogues, handleDialogueFormSubmit, message, selectedOption, toggleDialogue]); 
 
   return (
     <div>
@@ -287,4 +288,4 @@ const DialogueMessageToolbar = (props) => {
   );
 };
 
-export default withStyles(styles)(DialogueMessageToolbar);
+export default DialogueMessageToolbar;

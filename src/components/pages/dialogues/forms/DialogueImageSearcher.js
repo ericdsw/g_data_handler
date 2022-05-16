@@ -21,7 +21,7 @@ const PAPER_PROPS = {
   },
 };
 
-const styles = (theme) => ({
+const styles = () => ({
   imagePreview: {
     backgroundColor: "#ccc",
     marginTop: 16,

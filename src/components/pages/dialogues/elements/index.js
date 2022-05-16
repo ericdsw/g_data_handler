@@ -1,15 +1,6 @@
-import DialogueToolbar from "./DialogueToolbar";
-import ConversationChoices from "./ConversationChoices";
-import ConversationExtraParams from "./ConversationExtraParams";
-import DialogueMessageToolbar from "./DialogueMessageToolbar";
-import NoConversationsNotifier from "./NoConversationsNotifier";
-import ConversationCardTitle from "./ConversationCardTitle";
-
-export {
-  DialogueToolbar,
-  ConversationChoices,
-  ConversationExtraParams,
-  DialogueMessageToolbar,
-  NoConversationsNotifier,
-  ConversationCardTitle
-};
+export { default as DialogueToolbar } from "./DialogueToolbar";
+export { default as ConversationChoices } from "./ConversationChoices";
+export { default as ConversationExtraParams } from "./ConversationExtraParams";
+export { default as DialogueMessageToolbar } from "./DialogueMessageToolbar";
+export { default as NoConversationsNotifier } from "./NoConversationsNotifier";
+export { default as ConversationCardTitle } from "./ConversationCardTitle";
