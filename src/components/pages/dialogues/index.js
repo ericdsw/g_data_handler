@@ -1,3 +1,1 @@
-import DialoguePage from "./DialoguePage";
-
-export { DialoguePage };
+export { deafult as DialoguePage } from "./DialoguePage";

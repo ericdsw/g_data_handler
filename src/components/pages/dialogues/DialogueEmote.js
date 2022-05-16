@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { 
   Card,
@@ -24,7 +24,10 @@ const DialogueEmote = ({
   handleSplitBelow
 }) => {
 
-  const imagePath = `/images/emotes/${message.message}.png`;
+  const imagePath = useMemo(
+    () => `/images/emotes/${message.message}.png`,
+    [message.message]
+  );
 
   return (
     <Grid container>

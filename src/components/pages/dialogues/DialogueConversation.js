@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, { useState, useCallback } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Accordion,
   AccordionSummary,
@@ -30,14 +30,19 @@ import {
 
 import { styles } from "./styles/DialogueConversationStyle";
 
-const DialogueConversation = (props) => {
-  const { conversation, classes, conversationsToMerge } = props;
-  const {
-    handleDeleteConversation,
-    handleAddToConversation,
-    handleUpdateConversation,
-    handleToggleFromMerger,
-  } = props;
+const useStyles = makeStyles(styles);
+
+const DialogueConversation = ({
+  conversation,
+  conversationsToMerge,
+  handleDeleteConversation,
+  handleAddToConversation,
+  handleUpdateConversation,
+  handleToggleFromMerger,
+  ...props
+}) => {
+  
+  const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(
     "confirmDelete",
@@ -51,15 +56,17 @@ const DialogueConversation = (props) => {
   );
   const [isExpanded, setIsExpanded] = useState(false);
 
-  function onEditClick(event) {
+  
+  const onEditClick = useCallback(event => {
     event.stopPropagation();
     toggleDialogue("updateConversation", "show");
-  }
+  }, [toggleDialogue]);
+  
 
-  function onDeleteClick(event) {
+  const onDeleteClick = useCallback((event) => {
     event.stopPropagation();
     toggleDialogue("confirmDelete", "show");
-  }
+  } ,[toggleDialogue]);
 
   function handlePanelChange(expanded) {
     setIsExpanded(expanded);
@@ -335,4 +342,4 @@ const DialogueConversation = (props) => {
   );
 };
 
-export default withStyles(styles)(DialogueConversation);
+export default DialogueConversation;
