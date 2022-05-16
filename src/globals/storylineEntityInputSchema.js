@@ -33,8 +33,9 @@ const storylineEntityInputSchema = {
       parent_node_name: {
         label: "Parent Node Name (optional)",
         type: "text",
-        tooltip: "If defined, will spawn here instead of in the root of the map",
-        placeholder: "MyNodeName"
+        tooltip:
+          "If defined, will spawn here instead of in the root of the map",
+        placeholder: "MyNodeName",
       },
       animation: {
         label: "Animation",
@@ -61,7 +62,8 @@ const storylineEntityInputSchema = {
       interacts_through_walls: {
         label: "Interacts through walls",
         type: "boolean",
-        tooltip: "If true, the npc can be interacted even if there is a wall in the way",
+        tooltip:
+          "If true, the npc can be interacted even if there is a wall in the way",
       },
       parent_walker: {
         label: "Spawn in NPC Walker",
@@ -130,7 +132,8 @@ const storylineEntityInputSchema = {
       interacts_through_walls: {
         label: "Interacts through walls",
         type: "boolean",
-        tooltip: "If true, the npc can be interacted even if there is a wall in the way",
+        tooltip:
+          "If true, the npc can be interacted even if there is a wall in the way",
       },
       parent_walker: {
         label: "Spawn in NPC Walker",
@@ -344,14 +347,14 @@ const storylineEntityInputSchema = {
         label: "Width",
         type: "number",
         required: false,
-        tooltip: "the area's width (defaults to 50)"
+        tooltip: "the area's width (defaults to 50)",
       },
       height: {
         label: "Height",
         type: "number",
         required: false,
-        tooltip: " the area's height (defaults to 50)"
-      }
+        tooltip: " the area's height (defaults to 50)",
+      },
     },
   },
 
@@ -394,13 +397,13 @@ const storylineEntityInputSchema = {
         label: "Width",
         type: "number",
         required: false,
-        tooltip: "the area's width (defaults to 50)"
+        tooltip: "the area's width (defaults to 50)",
       },
       height: {
         label: "Height",
         type: "number",
         required: false,
-        tooltip: " the area's height (defaults to 50)"
+        tooltip: " the area's height (defaults to 50)",
       },
       required_items: {
         label: "Required Items",
@@ -439,7 +442,7 @@ const storylineEntityInputSchema = {
         default: false,
         tooltip:
           "If true, missing items are treated as an OR comparison (by default, all must be absent)",
-      }
+      },
     },
   },
 
@@ -475,13 +478,13 @@ const storylineEntityInputSchema = {
         label: "Width",
         type: "number",
         required: false,
-        tooltip: "the area's width (defaults to 50)"
+        tooltip: "the area's width (defaults to 50)",
       },
       height: {
         label: "Height",
         type: "number",
         required: false,
-        tooltip: " the area's height (defaults to 50)"
+        tooltip: " the area's height (defaults to 50)",
       },
       required_items: {
         label: "Required Items",
@@ -520,7 +523,7 @@ const storylineEntityInputSchema = {
         default: false,
         tooltip:
           "If true, missing items are treated as an OR comparison (by default, all must be absent)",
-      }
+      },
     },
   },
 

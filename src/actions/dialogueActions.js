@@ -23,65 +23,60 @@ import {
 
 // Create
 
-export const addDialogueConversation = (dialogueId, conversationName) => (
-  dispatch
-) => {
-  dispatch({
-    type: ADD_CONVERSATION,
-    payload: {
-      dialogueId,
-      conversationName,
-    },
-  });
-};
+export const addDialogueConversation =
+  (dialogueId, conversationName) => (dispatch) => {
+    dispatch({
+      type: ADD_CONVERSATION,
+      payload: {
+        dialogueId,
+        conversationName,
+      },
+    });
+  };
 
-export const addMessageToConversation = (conversationId, data) => (
-  dispatch
-) => {
-  dispatch({
-    type: ADD_CONVERSATION_MESSAGE,
-    payload: {
-      conversationId,
-      data,
-    },
-  });
-};
+export const addMessageToConversation =
+  (conversationId, data) => (dispatch) => {
+    dispatch({
+      type: ADD_CONVERSATION_MESSAGE,
+      payload: {
+        conversationId,
+        data,
+      },
+    });
+  };
 
-export const addMessageAtPosition = (conversationId, offset, data) => (
-  dispatch
-) => {
-  dispatch({
-    type: ADD_CONVERSATION_MESSAGE_AT_POS,
-    payload: {
-      conversationId,
-      offset,
-      data,
-    },
-  });
-};
+export const addMessageAtPosition =
+  (conversationId, offset, data) => (dispatch) => {
+    dispatch({
+      type: ADD_CONVERSATION_MESSAGE_AT_POS,
+      payload: {
+        conversationId,
+        offset,
+        data,
+      },
+    });
+  };
 
-export const addToConversationMerger = (conversationId, shouldAdd) => (
-  dispatch
-) => {
-  dispatch({
-    type: ADD_TO_CONVERSATION_MERGER,
-    payload: {
-      conversationId,
-      shouldAdd,
-    },
-  });
-};
+export const addToConversationMerger =
+  (conversationId, shouldAdd) => (dispatch) => {
+    dispatch({
+      type: ADD_TO_CONVERSATION_MERGER,
+      payload: {
+        conversationId,
+        shouldAdd,
+      },
+    });
+  };
 
 // Edit / Update
 
-export const updateDialogue = (fileName, dialogueId, entities) => (
-  dispatch
-) => {
-  dispatch({
-    type: UPDATE_DIALOGUE,
-    payload: { fileName, dialogueId, entities },
-  });
-};
+export const updateDialogue =
+  (fileName, dialogueId, entities) => (dispatch) => {
+    dispatch({
+      type: UPDATE_DIALOGUE,
+      payload: { fileName, dialogueId, entities },
+    });
+  };
 
 export const updateWithEmptyDialogue = (fileName) => (dispatch) => {
   dispatch({
@@ -90,17 +85,16 @@ export const updateWithEmptyDialogue = (fileName) => (dispatch) => {
   });
 };
 
-export const editDialogueConversation = (conversationId, data) => (
-  dispatch
-) => {
-  dispatch({
-    type: EDIT_CONVERSATION,
-    payload: {
-      conversationId,
-      data,
-    },
-  });
-};
+export const editDialogueConversation =
+  (conversationId, data) => (dispatch) => {
+    dispatch({
+      type: EDIT_CONVERSATION,
+      payload: {
+        conversationId,
+        data,
+      },
+    });
+  };
 
 export const editConversationMessage = (messageId, data) => (dispatch) => {
   dispatch({
@@ -150,71 +144,66 @@ export const deleteConversationMessage = (messageId) => (dispatch) => {
 
 // Extra
 
-export const reorderConversations = (
-  sourcePosition,
-  destinationPosition,
-  dialogueId,
-  conversationId
-) => (dispatch) => {
-  dispatch({
-    type: REORDER_CONVERSATION,
-    payload: {
-      sourcePosition,
-      destinationPosition,
-      dialogueId,
-      conversationId,
-    },
-  });
-};
+export const reorderConversations =
+  (sourcePosition, destinationPosition, dialogueId, conversationId) =>
+  (dispatch) => {
+    dispatch({
+      type: REORDER_CONVERSATION,
+      payload: {
+        sourcePosition,
+        destinationPosition,
+        dialogueId,
+        conversationId,
+      },
+    });
+  };
 
-export const reorderMessage = (
-  sourcePosition,
-  destinationPosition,
-  conversationId,
-  messageId
-) => (dispatch) => {
-  dispatch({
-    type: REORDER_MESSAGE,
-    payload: {
-      sourcePosition,
-      destinationPosition,
-      conversationId,
-      messageId,
-    },
-  });
-};
+export const reorderMessage =
+  (sourcePosition, destinationPosition, conversationId, messageId) =>
+  (dispatch) => {
+    dispatch({
+      type: REORDER_MESSAGE,
+      payload: {
+        sourcePosition,
+        destinationPosition,
+        conversationId,
+        messageId,
+      },
+    });
+  };
 
-export const moveMessage = (
-  sourcePosition,
-  destinationPosition,
-  sourceConversationId,
-  destinationConversationId,
-  messageId
-) => (dispatch) => {
-  dispatch({
-    type: MOVE_MESSAGE,
-    payload: {
-      sourcePosition,
-      destinationPosition,
-      sourceConversationId,
-      destinationConversationId,
-      messageId,
-    },
-  });
-};
+export const moveMessage =
+  (
+    sourcePosition,
+    destinationPosition,
+    sourceConversationId,
+    destinationConversationId,
+    messageId
+  ) =>
+  (dispatch) => {
+    dispatch({
+      type: MOVE_MESSAGE,
+      payload: {
+        sourcePosition,
+        destinationPosition,
+        sourceConversationId,
+        destinationConversationId,
+        messageId,
+      },
+    });
+  };
 
-export const splitConversation = (conversationId, messageId, newName) => (
-  dispatch
-) => {
-  dispatch({
-    type: SPLIT_CONVERSATION,
-    payload: {
-      conversationId,
-      messageId,
-      newName,
-    },
-  });
-};
+export const splitConversation =
+  (conversationId, messageId, newName) => (dispatch) => {
+    dispatch({
+      type: SPLIT_CONVERSATION,
+      payload: {
+        conversationId,
+        messageId,
+        newName,
+      },
+    });
+  };
 
 export const confirmConversationMerge = () => (dispatch) => {
   dispatch({

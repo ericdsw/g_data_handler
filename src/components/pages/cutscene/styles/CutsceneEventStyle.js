@@ -3,7 +3,7 @@ import { grey } from "@material-ui/core/colors";
 export const styles = (theme) => ({
   eventCard: {
     width: 300,
-    border: `1px solid ${theme.palette.background.default}`
+    border: `1px solid ${theme.palette.background.default}`,
   },
   actions: {
     display: "flex",
@@ -22,7 +22,7 @@ export const styles = (theme) => ({
     backgroundColor: theme.palette.primary.main,
   },
   avatarNonImportant: {
-    backgroundColor: theme.palette.mode === 'dark' ? grey[300] : grey[500],
+    backgroundColor: theme.palette.mode === "dark" ? grey[300] : grey[500],
     opacity: 0.7,
   },
 });

@@ -16,26 +16,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const extras = [
-  "location",
-  "voice_file",
-  "control_level",
-  "autopilot_offset",
-];
+const extras = ["location", "voice_file", "control_level", "autopilot_offset"];
 
 const ConversationExtraParams = ({ message }) => {
-
   const classes = useStyles();
   const extraChips = useMemo(() => {
     return extras
-      .filter(extraProperty => message.hasOwnProperty(extraProperty))
-      .map(extraProperty => (
+      .filter((extraProperty) => message.hasOwnProperty(extraProperty))
+      .map((extraProperty) => (
         <Chip
           key={extraProperty}
           className={classes.chip}
           label={`${extraProperty}: ${message[extraProperty]}`}
         />
-      ))
+      ));
   }, [classes, message]);
 
   return (

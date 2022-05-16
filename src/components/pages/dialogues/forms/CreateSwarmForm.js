@@ -50,9 +50,8 @@ const useStyles = makeStyles((theme) => ({
 const CreateSwarmForm = ({
   initialSwarmData = [],
   isEdit = false,
-  handleSubmit
+  handleSubmit,
 }) => {
-
   const classes = useStyles();
 
   const [swarmMessages, updateSwarmMessages] = useState(initialSwarmData);
@@ -133,18 +132,16 @@ const CreateSwarmForm = ({
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <form onSubmit={(e) => messageFormSubmit(e)}>
-            {Object.keys(shortMessageSchema.parameters).map(
-              (paramName) => (
-                <React.Fragment key={paramName}>
-                  {createInput(
-                    paramName,
-                    shortMessageSchema.parameters[paramName],
-                    curMessage[paramName],
-                    handleInputChange
-                  )}
-                </React.Fragment>
-              )
-            )}
+            {Object.keys(shortMessageSchema.parameters).map((paramName) => (
+              <React.Fragment key={paramName}>
+                {createInput(
+                  paramName,
+                  shortMessageSchema.parameters[paramName],
+                  curMessage[paramName],
+                  handleInputChange
+                )}
+              </React.Fragment>
+            ))}
             <Grid container justifyContent="flex-end">
               <Button
                 variant="contained"

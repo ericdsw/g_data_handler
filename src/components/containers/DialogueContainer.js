@@ -189,12 +189,8 @@ class DialogueContainer extends React.Component {
    * Render Method
    */
   render() {
-    const {
-      currentDialogue,
-      dialogues,
-      fileName,
-      conversationsToMerge,
-    } = this.props;
+    const { currentDialogue, dialogues, fileName, conversationsToMerge } =
+      this.props;
 
     let content;
 

@@ -19,7 +19,7 @@ import GenericDialogue from "./GenericDialogue";
 
 import { createInput } from "../../functions";
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   appBar: {
     marginLeft: drawerWidth,
     [theme.breakpoints.up("sm")]: {
@@ -39,7 +39,7 @@ const styles = (theme) => ({
   buttons: {
     color: theme.palette.primary.contrastText,
   },
-});
+}));
 
 const textInputSchema = {
   label: "Generic Text Input",
@@ -61,13 +61,8 @@ const nodeTargetInputSchema = {
   type: "node_target",
 };
 
-const ApplicationBar = ({
-  isDarkMode,
-  handleToggle,
-  handleDarkModeToggle
-}) => {
-
-  const classes = makeStyles(styles)();
+const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
+  const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager("helpDialogue");
 

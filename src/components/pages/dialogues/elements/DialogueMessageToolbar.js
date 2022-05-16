@@ -18,7 +18,7 @@ import {
   CreateSwarmForm,
   GiveItemFromDialogueForm,
   GiveMoneyFromDialogueForm,
-  PickItemFromDialogueForm
+  PickItemFromDialogueForm,
 } from "../forms";
 
 const DialogueMessageToolbar = ({
@@ -28,9 +28,8 @@ const DialogueMessageToolbar = ({
   handleAddBelow,
   handleEdit,
   handleDelete,
-  handleSplitBelow
+  handleSplitBelow,
 }) => {
-
   const [dialogues, toggleDialogue] = useDialogueManager(
     "confirmDelete",
     "editMessage",
@@ -43,60 +42,62 @@ const DialogueMessageToolbar = ({
 
   // Anchor Management
 
-  const handleMenuOpen = useCallback((event) => {
-    setAnchorEl(event.currentTarget);
-  }, [setAnchorEl]);
+  const handleMenuOpen = useCallback(
+    (event) => {
+      setAnchorEl(event.currentTarget);
+    },
+    [setAnchorEl]
+  );
 
   const handleClose = useCallback(() => {
     setAnchorEl(null);
   }, [setAnchorEl]);
 
-  const handleMenuSelect = useCallback((_, menuItemName) => {
-    switch (menuItemName) {
-      case "edit":
-        setSelectedOption("edit");
-        toggleDialogue("editMessage", "show");
-        break;
-      case "delete":
-        toggleDialogue("confirmDelete", "show");
-        break;
-      case "splitBelow":
-        toggleDialogue("splitConversation", "show");
-        break;
-      default:
-        break;
-    }
-    setAnchorEl(null);
-  }, [setSelectedOption, toggleDialogue, setAnchorEl]);
+  const handleMenuSelect = useCallback(
+    (_, menuItemName) => {
+      switch (menuItemName) {
+        case "edit":
+          setSelectedOption("edit");
+          toggleDialogue("editMessage", "show");
+          break;
+        case "delete":
+          toggleDialogue("confirmDelete", "show");
+          break;
+        case "splitBelow":
+          toggleDialogue("splitConversation", "show");
+          break;
+        default:
+          break;
+      }
+      setAnchorEl(null);
+    },
+    [setSelectedOption, toggleDialogue, setAnchorEl]
+  );
 
-  const handleDialogueFormSubmit = useCallback((data) => {
-    switch (selectedOption) {
-      case "addAbove":
-        handleAddAbove(data);
-        break;
-      case "addBelow":
-        handleAddBelow(data);
-        break;
-      case "edit":
-        handleEdit(data);
-        break;
-      default:
-        break;
-    }
-  }, [
-    handleAddAbove,
-    handleAddBelow, 
-    handleEdit,
-    selectedOption
-  ]);
+  const handleDialogueFormSubmit = useCallback(
+    (data) => {
+      switch (selectedOption) {
+        case "addAbove":
+          handleAddAbove(data);
+          break;
+        case "addBelow":
+          handleAddBelow(data);
+          break;
+        case "edit":
+          handleEdit(data);
+          break;
+        default:
+          break;
+      }
+    },
+    [handleAddAbove, handleAddBelow, handleEdit, selectedOption]
+  );
 
   const { typeString, editDialogue } = useMemo(() => {
-
     let typeString;
     let editDialogue;
 
     switch (message.type) {
-
       case "message":
         typeString = "Message";
         editDialogue = (
@@ -150,7 +151,7 @@ const DialogueMessageToolbar = ({
             <GiveItemFromDialogueForm
               data={message}
               buttonText="Edit"
-              onSubmit={data => {
+              onSubmit={(data) => {
                 toggleDialogue("editMessage", "hide");
                 handleDialogueFormSubmit(data);
               }}
@@ -170,7 +171,7 @@ const DialogueMessageToolbar = ({
             <GiveMoneyFromDialogueForm
               data={message}
               buttonText="Edit"
-              onSubmit={data => {
+              onSubmit={(data) => {
                 toggleDialogue("editMessage", "hide");
                 handleDialogueFormSubmit(data);
               }}
@@ -183,7 +184,7 @@ const DialogueMessageToolbar = ({
         typeString = "Emote";
         editDialogue = <React.Fragment />;
         break;
-      
+
       case "pick_item":
         typeString = "Pick Item message";
         editDialogue = (
@@ -195,8 +196,8 @@ const DialogueMessageToolbar = ({
             <PickItemFromDialogueForm
               buttonText="Edit"
               data={message}
-              onSubmit={data => {
-                toggleDialogue('editMessage', 'hide');
+              onSubmit={(data) => {
+                toggleDialogue("editMessage", "hide");
                 handleDialogueFormSubmit(data);
               }}
             />
@@ -208,8 +209,13 @@ const DialogueMessageToolbar = ({
         typeString = "";
     }
     return { typeString, editDialogue };
-
-  }, [dialogues, handleDialogueFormSubmit, message, selectedOption, toggleDialogue]); 
+  }, [
+    dialogues,
+    handleDialogueFormSubmit,
+    message,
+    selectedOption,
+    toggleDialogue,
+  ]);
 
   return (
     <div>

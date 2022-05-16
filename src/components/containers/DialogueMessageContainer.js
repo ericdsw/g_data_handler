@@ -11,12 +11,11 @@ import { Draggable } from "react-beautiful-dnd";
 import DialogueMessage from "../pages/dialogues/DialogueMessage";
 import DialogueEmote from "../pages/dialogues/DialogueEmote";
 import MessageSwarm from "../pages/dialogues/MessageSwarm";
-import GiveMoneyFromDialogue from '../pages/dialogues/GiveMoneyFromDialogue';
-import GiveItemFromDialogue from '../pages/dialogues/GiveItemFromDialogue';
-import PickItem from '../pages/dialogues/PickItem';
+import GiveMoneyFromDialogue from "../pages/dialogues/GiveMoneyFromDialogue";
+import GiveItemFromDialogue from "../pages/dialogues/GiveItemFromDialogue";
+import PickItem from "../pages/dialogues/PickItem";
 
 class DialogueMessageContainer extends React.Component {
-
   editMessage = (data) => {
     const { messageId, editConversationMessage } = this.props;
     console.log(data);
@@ -24,12 +23,8 @@ class DialogueMessageContainer extends React.Component {
   };
 
   addAbove = (data) => {
-    const {
-      conversationId,
-      messageId,
-      conversations,
-      addMessageAtPosition,
-    } = this.props;
+    const { conversationId, messageId, conversations, addMessageAtPosition } =
+      this.props;
     const currentConversation = conversations[conversationId];
     const offset = currentConversation.messages.indexOf(messageId);
 
@@ -37,12 +32,8 @@ class DialogueMessageContainer extends React.Component {
   };
 
   addBelow = (data) => {
-    const {
-      conversationId,
-      messageId,
-      conversations,
-      addMessageAtPosition,
-    } = this.props;
+    const { conversationId, messageId, conversations, addMessageAtPosition } =
+      this.props;
     const currentConversation = conversations[conversationId];
     const offset = currentConversation.messages.indexOf(messageId);
 
@@ -60,7 +51,6 @@ class DialogueMessageContainer extends React.Component {
   };
 
   render() {
-
     const { messageId, messages, index, isDragDisabled } = this.props;
     const message = messages[messageId];
 
@@ -172,4 +162,3 @@ export default connect(mapStateToProps, {
   addMessageAtPosition,
   splitConversation,
 })(DialogueMessageContainer);
-

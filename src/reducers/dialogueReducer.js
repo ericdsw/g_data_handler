@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { deleteReference } from "./reducerActions";
 import {
   UPDATE_DIALOGUE,
@@ -204,15 +204,13 @@ function updateDialogueConversation(state, action) {
 }
 
 function editConversationMessage(state, action) {
-
   const { messageId, data } = action.payload;
   const messages = { ...state.messages };
-  
+
   messages[messageId] = {
     id: messages[messageId].id,
-    ...data
-  }
-
+    ...data,
+  };
 
   return { ...state, messages };
 }
@@ -262,12 +260,8 @@ function deleteConversationMessage(state, action) {
 // Extra
 
 function reorderConversations(state, action) {
-  const {
-    sourcePosition,
-    destinationPosition,
-    dialogueId,
-    conversationId,
-  } = action.payload;
+  const { sourcePosition, destinationPosition, dialogueId, conversationId } =
+    action.payload;
 
   const dialogues = { ...state.dialogues };
   const newConversationArray = dialogues[dialogueId].conversations;
@@ -281,12 +275,8 @@ function reorderConversations(state, action) {
 }
 
 function reorderMessage(state, action) {
-  const {
-    sourcePosition,
-    destinationPosition,
-    conversationId,
-    messageId,
-  } = action.payload;
+  const { sourcePosition, destinationPosition, conversationId, messageId } =
+    action.payload;
 
   const conversations = { ...state.conversations };
   const messagesArray = conversations[conversationId].messages;
@@ -340,9 +330,8 @@ function splitConversation(state, action) {
   conversations[newConversationId] = newConversation;
 
   const dialogues = { ...state.dialogues };
-  const conversationPos = dialogues[
-    state.currentDialogue
-  ].conversations.indexOf(conversationId);
+  const conversationPos =
+    dialogues[state.currentDialogue].conversations.indexOf(conversationId);
 
   dialogues[state.currentDialogue].conversations.splice(
     conversationPos + 1,

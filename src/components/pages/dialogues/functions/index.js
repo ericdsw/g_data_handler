@@ -1,1 +1,1 @@
-export { default as cleanMessage } from './cleanMessage';
+export { default as cleanMessage } from "./cleanMessage";

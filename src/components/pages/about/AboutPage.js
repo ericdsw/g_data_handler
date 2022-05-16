@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AboutPage = () => {
-
   const classes = useStyles();
 
   return (

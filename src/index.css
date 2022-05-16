@@ -1,20 +1,20 @@
 @font-face {
-    font-family: "JF Dot Ayu Gothic 18";
-    src: url('./fonts/jfdot-webfont.woff2') format('woff2'),
-         url('./fonts/jfdot-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
+  font-family: "JF Dot Ayu Gothic 18";
+  src: url("./fonts/jfdot-webfont.woff2") format("woff2"),
+    url("./fonts/jfdot-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-  font-family: 'DogicaPixel';
-  src: local('dogicapixel'), url('./fonts/dogicapixel.ttf') format('truetype');
+  font-family: "DogicaPixel";
+  src: local("dogicapixel"), url("./fonts/dogicapixel.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'Cascadia Code';
-  src: local('Cascadia Code'), url('./fonts/CascadiaCode.ttf') format('truetype');
+  font-family: "Cascadia Code";
+  src: local("Cascadia Code"),
+    url("./fonts/CascadiaCode.ttf") format("truetype");
 }
 
 body {
@@ -33,7 +33,7 @@ code {
 }
 
 .cutscene_row {
-    border: 1px solid #ccc;
-    padding: 10px;
-    width: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: auto;
 }

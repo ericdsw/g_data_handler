@@ -1,19 +1,16 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { 
+import {
   Card,
   CardHeader,
   CardContent,
   Typography,
   Tooltip,
-  Zoom
+  Zoom,
 } from "@material-ui/core";
 
-import { 
-  DialogueMessageToolbar,
-  ConversationCardTitle
-} from "./elements";
-import { cleanMessage } from './functions';
+import { DialogueMessageToolbar, ConversationCardTitle } from "./elements";
+import { cleanMessage } from "./functions";
 
 const styles = (theme) => ({
   swarmContainer: {
@@ -31,10 +28,10 @@ const styles = (theme) => ({
     height: 28 * 2,
     borderRadius: 6 * 2,
     fontSize: 12 * 2,
-    color: '#000',
+    color: "#000",
     backgroundColor: "#C9C3B8",
     fontFamily: "'JF Dot Ayu Gothic 18'",
-    border: '2px solid #272523'
+    border: "2px solid #272523",
   },
   swarmMessageTextContent: {
     marginLeft: 8 * 2,
@@ -49,13 +46,12 @@ const styles = (theme) => ({
 
 const useStyles = makeStyles(styles);
 
-const MessageSwarm = ({ 
+const MessageSwarm = ({
   swarmData,
   handleEdit,
   handleDelete,
-  handleSplitBelow
+  handleSplitBelow,
 }) => {
-
   const classes = useStyles();
 
   return (

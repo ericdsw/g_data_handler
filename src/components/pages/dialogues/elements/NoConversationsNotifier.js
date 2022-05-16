@@ -10,7 +10,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const NoConversationsNotifier = ({ conversations }) => {
-
   const classes = useStyles();
 
   if (conversations.length <= 0) {

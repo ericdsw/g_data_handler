@@ -1,29 +1,25 @@
 import React, { useMemo } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { 
+import {
   Card,
   CardContent,
   Typography,
   Grid,
-  CardHeader
+  CardHeader,
 } from "@material-ui/core";
 
-import {
-  DialogueMessageToolbar,
-  ConversationCardTitle
-} from "./elements";
+import { DialogueMessageToolbar, ConversationCardTitle } from "./elements";
 
 import { styles } from "./styles/DialogueEmoteStyle";
 
-const DialogueEmote = ({ 
-  message, 
+const DialogueEmote = ({
+  message,
   classes,
   handleDelete,
   handleAddAbove,
   handleAddBelow,
-  handleSplitBelow
+  handleSplitBelow,
 }) => {
-
   const imagePath = useMemo(
     () => `/images/emotes/${message.message}.png`,
     [message.message]

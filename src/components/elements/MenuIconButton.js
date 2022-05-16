@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { IconButton, Icon, Menu, MenuItem, Tooltip } from "@material-ui/core";
 
-const MenuIconButton = (props) => {
-  // Parameters
-  const { elementId, contentDictionary, tooltip = "", icon } = props;
-
-  // Methods
-  const { handleClick } = props;
-
+const MenuIconButton = ({
+  elementId,
+  contentDictionary,
+  tooltip = "",
+  icon,
+  handleClick,
+}) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   return (
@@ -27,7 +27,7 @@ const MenuIconButton = (props) => {
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
       >
-        {Object.keys(contentDictionary).map((key, index) => (
+        {Object.keys(contentDictionary).map((key) => (
           <MenuItem
             key={key}
             onClick={() => {

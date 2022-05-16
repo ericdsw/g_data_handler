@@ -20,9 +20,8 @@ const useStyles = makeStyles((theme) => ({
 const DialogueToolbar = ({
   handleExport,
   handleClear,
-  handleAddConversation
+  handleAddConversation,
 }) => {
-
   const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(

@@ -1,9 +1,9 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { DialogActions, DialogTitle, Button } from "@material-ui/core";
 import { red, green } from "@material-ui/core/colors";
 
-const styles = (theme) => ({
+const useStyles = makeStyles({
   cancelButton: {
     color: red[500],
   },
@@ -11,9 +11,14 @@ const styles = (theme) => ({
     color: green[500],
   },
 });
-const confirmationDialogueContent = (props) => {
-  const { message, classes } = props;
-  const { handleClose, handleConfirm } = props;
+
+const ConfirmationDialogueContent = ({
+  message,
+  handleClose,
+  handleConfirm,
+}) => {
+  const classes = useStyles();
+
   return (
     <React.Component>
       <DialogTitle>{message}</DialogTitle>
@@ -29,4 +34,4 @@ const confirmationDialogueContent = (props) => {
   );
 };
 
-export default withStyles(styles)(confirmationDialogueContent);
+export default ConfirmationDialogueContent;

@@ -9,7 +9,6 @@ import JumpList from "./JumpList";
 import { styles } from "./styles/CutsceneToolbarStyle";
 
 const CutsceneToolbar = (props) => {
-
   const classes = makeStyles(styles)();
 
   // Extract value properties

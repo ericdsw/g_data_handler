@@ -59,18 +59,17 @@ export const addStorylineStep = (storylineId, stepName) => (dispatch) => {
   });
 };
 
-export const addEntityToNewMap = (stepId, mapName, entityData) => (
-  dispatch
-) => {
-  dispatch({
-    type: ADD_ENTITY_TO_NEW_MAP,
-    payload: {
-      stepId,
-      mapName,
-      entityData,
-    },
-  });
-};
+export const addEntityToNewMap =
+  (stepId, mapName, entityData) => (dispatch) => {
+    dispatch({
+      type: ADD_ENTITY_TO_NEW_MAP,
+      payload: {
+        stepId,
+        mapName,
+        entityData,
+      },
+    });
+  };
 
 export const addEntityToExistingMap = (mapId, entityData) => (dispatch) => {
   dispatch({
@@ -121,14 +120,13 @@ export const deleteMapEntity = (entityId) => (dispatch) => {
   });
 };
 
-export const updateOrAddMapEntityParam = (entityId, name, value) => (
-  dispatch
-) => {
-  dispatch({
-    type: UPDATE_OR_ADD_MAP_ENTITY_PARAM,
-    payload: { entityId, name, value },
-  });
-};
+export const updateOrAddMapEntityParam =
+  (entityId, name, value) => (dispatch) => {
+    dispatch({
+      type: UPDATE_OR_ADD_MAP_ENTITY_PARAM,
+      payload: { entityId, name, value },
+    });
+  };
 
 export const deleteMapEntityParam = (entityId, name) => (dispatch) => {
   dispatch({
@@ -158,14 +156,13 @@ export const updateNPCInteraction = (entityId, parameters) => (dispatch) => {
   });
 };
 
-export const addStepCompleteCondition = (bundleId, type, name, parameters) => (
-  dispatch
-) => {
-  dispatch({
-    type: ADD_STEP_COMPLETE_CONDITION,
-    payload: { bundleId, type, name, parameters },
-  });
-};
+export const addStepCompleteCondition =
+  (bundleId, type, name, parameters) => (dispatch) => {
+    dispatch({
+      type: ADD_STEP_COMPLETE_CONDITION,
+      payload: { bundleId, type, name, parameters },
+    });
+  };
 
 export const deleteCondition = (conditionId) => (dispatch) => {
   dispatch({
@@ -174,14 +171,13 @@ export const deleteCondition = (conditionId) => (dispatch) => {
   });
 };
 
-export const updateCondition = (conditionId, name, parameters) => (
-  dispatch
-) => {
-  dispatch({
-    type: UPDATE_CONDITION,
-    payload: { conditionId, name, parameters },
-  });
-};
+export const updateCondition =
+  (conditionId, name, parameters) => (dispatch) => {
+    dispatch({
+      type: UPDATE_CONDITION,
+      payload: { conditionId, name, parameters },
+    });
+  };
 
 export const updateBundle = (bundleId, data) => (dispatch) => {
   dispatch({
@@ -204,11 +200,10 @@ export const clearStoryline = () => (dispatch) => {
   });
 };
 
-export const duplicateConfigurations = (sourceStepId, targetStepId) => (
-  dispatch
-) => {
-  dispatch({
-    type: DUPLICATE_CONFIGURATIONS,
-    payload: { sourceStepId, targetStepId },
-  });
-};
+export const duplicateConfigurations =
+  (sourceStepId, targetStepId) => (dispatch) => {
+    dispatch({
+      type: DUPLICATE_CONFIGURATIONS,
+      payload: { sourceStepId, targetStepId },
+    });
+  };

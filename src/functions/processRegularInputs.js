@@ -29,7 +29,7 @@ export default function processRegularInputs(eventType, inputName, value) {
     } catch (error) {
       returnValue = value;
     }
-  } 
+  }
 
   return returnValue;
 }

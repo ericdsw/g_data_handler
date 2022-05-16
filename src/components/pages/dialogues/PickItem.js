@@ -1,5 +1,5 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
   CardHeader,
@@ -7,36 +7,32 @@ import {
   Grid,
   Icon,
   Chip,
-  Typography
-} from '@material-ui/core';
+  Typography,
+} from "@material-ui/core";
 
-import {
-  DialogueMessageToolbar,
-  ConversationCardTitle
-} from './elements';
+import { DialogueMessageToolbar, ConversationCardTitle } from "./elements";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: '100%',
+    width: "100%",
     backgroundColor: theme.palette.messageBackground,
-    borderBottom: '1px solid #666',
-    padding: theme.spacing(2), 
+    borderBottom: "1px solid #666",
+    padding: theme.spacing(2),
   },
   iconContainer: {
-    color: '#2d81b5',
+    color: "#2d81b5",
   },
   actionContainer: {
     padding: theme.spacing(2),
-  }
+  },
 }));
 
 const PickItem = ({
   pickItemData,
   handleEdit,
   handleDelete,
-  handleSplitBelow
+  handleSplitBelow,
 }) => {
-
   const classes = useStyles();
 
   return (
@@ -53,9 +49,11 @@ const PickItem = ({
         action={
           <DialogueMessageToolbar
             message={pickItemData}
-            handleEdit={data => handleEdit(data)}
+            handleEdit={(data) => handleEdit(data)}
             handleDelete={() => handleDelete}
-            handleSplitBelow={conversationName => handleSplitBelow(conversationName)}
+            handleSplitBelow={(conversationName) =>
+              handleSplitBelow(conversationName)
+            }
             omitEdit={false}
           />
         }
@@ -67,8 +65,8 @@ const PickItem = ({
           square={true}
           variant="outlined"
         >
-          {Object.keys(pickItemData.item_conditions).map(conditionItemId => {
-            const action = pickItemData.item_conditions[conditionItemId].action
+          {Object.keys(pickItemData.item_conditions).map((conditionItemId) => {
+            const action = pickItemData.item_conditions[conditionItemId].action;
             var actionString = "";
             if (action === "nothing") {
               actionString = "Nothing";
@@ -85,16 +83,15 @@ const PickItem = ({
                   style={{ minWidth: 200 }}
                   color="secondary"
                 />
-                <div style={{padding: 16 }}>
+                <div style={{ padding: 16 }}>
                   <Icon>arrow_forward</Icon>
                 </div>
-                <Chip 
-                  label={`Next Action: ${pickItemData.item_conditions[conditionItemId].next_action}`} 
+                <Chip
+                  label={`Next Action: ${pickItemData.item_conditions[conditionItemId].next_action}`}
                   style={{ minWidth: 200 }}
                   color="secondary"
                 />
-                &nbsp;
-                &nbsp;
+                &nbsp; &nbsp;
                 <Chip label={`What to do: ${actionString}`} />
               </Grid>
             );
@@ -112,10 +109,9 @@ const PickItem = ({
             Incorrect action: {pickItemData.incorrect_condition}
           </Typography>
         )}
-
       </CardContent>
     </Card>
   );
-}
+};
 
 export default PickItem;

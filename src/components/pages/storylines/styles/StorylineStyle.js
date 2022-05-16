@@ -2,7 +2,7 @@ import { red } from "@material-ui/core/colors";
 
 export const styles = (theme) => ({
   defaultButton: {
-    color: theme.palette.primary.main
+    color: theme.palette.primary.main,
   },
   deleteButton: {
     color: red[500],

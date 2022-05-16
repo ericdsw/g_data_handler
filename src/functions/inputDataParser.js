@@ -1,7 +1,7 @@
 function parseInPositionArray(input) {
   // Replace legacy
   if (typeof input === "string") {
-    return input.replace(/\[|"|\]/g, '');
+    return input.replace(/\[|"|\]/g, "");
   }
   if (Array.isArray(input)) {
     return input.join(",");
@@ -10,13 +10,8 @@ function parseInPositionArray(input) {
 }
 
 function parseInPosition(input) {
-  if (
-    input &&
-    typeof input !== 'string' &&
-    "x" in input &&
-    "y" in input
-  ) {
-    return JSON.stringify(input)
+  if (input && typeof input !== "string" && "x" in input && "y" in input) {
+    return JSON.stringify(input);
   }
   return input;
 }
@@ -84,14 +79,18 @@ export const parseOut = (outputObject, inputSchema) => {
         break;
       case "position":
         try {
-          outputObject[key] = JSON.parse(cleanBeforeJsonParse(outputObject[key]));
+          outputObject[key] = JSON.parse(
+            cleanBeforeJsonParse(outputObject[key])
+          );
         } catch (e) {
           // Do Nothing, as the input is a string
         }
         break;
       case "json":
         try {
-          outputObject[key] = JSON.parse(cleanBeforeJsonParse(outputObject[key]));
+          outputObject[key] = JSON.parse(
+            cleanBeforeJsonParse(outputObject[key])
+          );
         } catch (error) {
           outputObject[key] = "";
         }
@@ -106,7 +105,7 @@ export const parseOut = (outputObject, inputSchema) => {
         break;
       case "boolean":
         const data = outputObject[key];
-        outputObject[key] = (typeof data === 'undefined') ? false : data;
+        outputObject[key] = typeof data === "undefined" ? false : data;
         break;
       default:
         break;

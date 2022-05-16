@@ -1,4 +1,5 @@
-const itemSemaphoreAdditionalText = "At least one required or excluding item must be defined. Note that excluding and missing items do THE SAME THING, they are defined as separate fields due to a misunderstanding, but they ultimately do the same thing.";
+const itemSemaphoreAdditionalText =
+  "At least one required or excluding item must be defined. Note that excluding and missing items do THE SAME THING, they are defined as separate fields due to a misunderstanding, but they ultimately do the same thing.";
 
 const interactionInputSchema = {
   cutscene_interaction: {
@@ -21,21 +22,22 @@ const interactionInputSchema = {
         label: "Required Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must have already been unlocked"
+        tooltip: "If defined, this memory must have already been unlocked",
       },
       excluded_memory: {
         label: "Excluded Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must not have been unlocked yet"
-      }
+        tooltip: "If defined, this memory must not have been unlocked yet",
+      },
     },
   },
 
   dialogue_interaction: {
     name: "Dialogue Interaction",
     icon: "question_answer",
-    additionalText: "Note: not defining a custom name causes offsets to be shared between steps",
+    additionalText:
+      "Note: not defining a custom name causes offsets to be shared between steps",
     parameters: {
       custom_name: {
         label: "Custom Name",
@@ -59,14 +61,14 @@ const interactionInputSchema = {
         label: "Required Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must have already been unlocked"
+        tooltip: "If defined, this memory must have already been unlocked",
       },
       excluded_memory: {
         label: "Excluded Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must not have been unlocked yet"
-      }
+        tooltip: "If defined, this memory must not have been unlocked yet",
+      },
     },
   },
 
@@ -143,7 +145,7 @@ const interactionInputSchema = {
         default: false,
         tooltip:
           "If true, required items are treated as an OR comparison (by default, all must be present)",
-        weight: 3
+        weight: 3,
       },
       excluding_items: {
         label: "Excluding Items (SAME AS MISSING)",
@@ -178,14 +180,14 @@ const interactionInputSchema = {
         label: "Required Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must have already been unlocked"
+        tooltip: "If defined, this memory must have already been unlocked",
       },
       excluded_memory: {
         label: "Excluded Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must not have been unlocked yet"
-      }
+        tooltip: "If defined, this memory must not have been unlocked yet",
+      },
     },
   },
 
@@ -225,7 +227,7 @@ const interactionInputSchema = {
         default: false,
         tooltip:
           "If true, required items are treated as an OR comparison (by default, all must be present)",
-        weight: 3
+        weight: 3,
       },
       excluding_items: {
         label: "Excluding Items (SAME AS MISSING)",
@@ -246,7 +248,7 @@ const interactionInputSchema = {
         label: "Missing Items (SAME AS EXCLUDING)",
         type: "array",
         placeholder: "Will only trigger if these items are missing",
-        weight: 9
+        weight: 9,
       },
       loose_missing_items: {
         label: "Use OR",
@@ -254,20 +256,20 @@ const interactionInputSchema = {
         default: false,
         tooltip:
           "If true, missing items are treated as an OR comparison (by default, all must be absent)",
-        weight: 3
+        weight: 3,
       },
       required_memory: {
         label: "Required Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must have already been unlocked yet"
+        tooltip: "If defined, this memory must have already been unlocked yet",
       },
       excluded_memory: {
         label: "Excluded Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must not have been unlocked yet"
-      }
+        tooltip: "If defined, this memory must not have been unlocked yet",
+      },
     },
   },
 
@@ -310,8 +312,8 @@ const interactionInputSchema = {
         label: "Only deliver",
         type: "boolean",
         default: true,
-        tooltip: "If true, the item will only be marked as delivered"
-      }
+        tooltip: "If true, the item will only be marked as delivered",
+      },
     },
   },
 
@@ -370,20 +372,20 @@ const interactionInputSchema = {
         label: "Only deliver",
         type: "boolean",
         default: true,
-        tooltip: "If true, the item will only be marked as delivered"
+        tooltip: "If true, the item will only be marked as delivered",
       },
       required_memory: {
         label: "Required Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must have already been unlocked"
+        tooltip: "If defined, this memory must have already been unlocked",
       },
       excluded_memory: {
         label: "Excluded Memory",
         type: "text",
         default: "",
-        tooltip: "If defined, this memory must not have been unlocked"
-      }
+        tooltip: "If defined, this memory must not have been unlocked",
+      },
     },
   },
 };

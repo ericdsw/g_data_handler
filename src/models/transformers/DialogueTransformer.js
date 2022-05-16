@@ -1,6 +1,6 @@
 import DialogueSchema from "../schemas/DialogueSchema";
 import { normalize, denormalize } from "normalizr";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 // Converts the data from the game's format to the tool's format.
 // This includes packing the conversations inside an array and adding

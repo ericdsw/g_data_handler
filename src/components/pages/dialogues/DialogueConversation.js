@@ -25,7 +25,7 @@ import {
   CreateSwarmForm,
   GiveMoneyFromDialogueForm,
   GiveItemFromDialogueForm,
-  PickItemFromDialogueForm
+  PickItemFromDialogueForm,
 } from "./forms";
 
 import { styles } from "./styles/DialogueConversationStyle";
@@ -41,7 +41,6 @@ const DialogueConversation = ({
   handleToggleFromMerger,
   ...props
 }) => {
-  
   const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(
@@ -56,17 +55,21 @@ const DialogueConversation = ({
   );
   const [isExpanded, setIsExpanded] = useState(false);
 
-  
-  const onEditClick = useCallback(event => {
-    event.stopPropagation();
-    toggleDialogue("updateConversation", "show");
-  }, [toggleDialogue]);
-  
+  const onEditClick = useCallback(
+    (event) => {
+      event.stopPropagation();
+      toggleDialogue("updateConversation", "show");
+    },
+    [toggleDialogue]
+  );
 
-  const onDeleteClick = useCallback((event) => {
-    event.stopPropagation();
-    toggleDialogue("confirmDelete", "show");
-  } ,[toggleDialogue]);
+  const onDeleteClick = useCallback(
+    (event) => {
+      event.stopPropagation();
+      toggleDialogue("confirmDelete", "show");
+    },
+    [toggleDialogue]
+  );
 
   function handlePanelChange(expanded) {
     setIsExpanded(expanded);
@@ -84,7 +87,6 @@ const DialogueConversation = ({
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Grid container alignItems="center">
-
           {/* Title Data */}
           <Grid item xs={12} md={6}>
             <Grid container>
@@ -131,7 +133,6 @@ const DialogueConversation = ({
               </Tooltip>
             </Grid>
           </Grid>
-
         </Grid>
       </AccordionSummary>
 
@@ -274,8 +275,8 @@ const DialogueConversation = ({
         maxWidth="sm"
       >
         <GiveMoneyFromDialogueForm
-          onSubmit={data => {
-            toggleDialogue("addGiveMoney", "hide")
+          onSubmit={(data) => {
+            toggleDialogue("addGiveMoney", "hide");
             handleAddToConversation(data);
           }}
         />
@@ -289,7 +290,7 @@ const DialogueConversation = ({
         maxWidth="sm"
       >
         <GiveItemFromDialogueForm
-          onSubmit={data => {
+          onSubmit={(data) => {
             toggleDialogue("addGiveItem", "hide");
             handleAddToConversation(data);
           }}
@@ -305,7 +306,7 @@ const DialogueConversation = ({
       >
         <PickItemFromDialogueForm
           isEdit={false}
-          onSubmit={data => {
+          onSubmit={(data) => {
             toggleDialogue("addPickItem", "hide");
             handleAddToConversation(data);
           }}

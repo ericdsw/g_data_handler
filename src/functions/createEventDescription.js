@@ -29,12 +29,8 @@ export default function createEventDescription(type, parameters) {
     case "overworld_player_state":
       return `New state: ${parameters.new_state}`;
     case "color_flash":
-      const {
-        color_hex,
-        in_duration,
-        stay_duration,
-        out_duration,
-      } = parameters;
+      const { color_hex, in_duration, stay_duration, out_duration } =
+        parameters;
       const data = `${in_duration} | ${stay_duration} | ${out_duration}`;
       return `${color_hex} (${data})`;
     case "conditional_state_change":
@@ -125,9 +121,9 @@ export default function createEventDescription(type, parameters) {
     case "storyline_message":
       return `Will emit storyline message: "${parameters.message_name}"`;
     case "look_at":
-      return `Node ${parameters.subject} will look at ${parameters.look_target}`
+      return `Node ${parameters.subject} will look at ${parameters.look_target}`;
     case "inject_bgm_player":
-      if (! parameters.intro_res) {
+      if (!parameters.intro_res) {
         return `Will inject bgm ${parameters.bgm_res}`;
       }
       return `Will inject bgm ${parameters.bgm_res} with intro ${parameters.intro_res}`;
@@ -140,9 +136,13 @@ export default function createEventDescription(type, parameters) {
     case "give_memory":
       return `Will give the memory ${parameters.memory_name}`;
     case "toggle_memory_lock":
-      return `Will ${parameters.locked ? 'lock' : 'unlock'} the memory ${parameters.memory_name}`;
+      return `Will ${parameters.locked ? "lock" : "unlock"} the memory ${
+        parameters.memory_name
+      }`;
     case "toggle_memory":
-      return `Will turn the memory ${parameters.memory_name} ${parameters.active ? 'on': 'off'}`;
+      return `Will turn the memory ${parameters.memory_name} ${
+        parameters.active ? "on" : "off"
+      }`;
     case "give_currency":
       return `Will add ${parameters.given_amount} to the wallet`;
     default:

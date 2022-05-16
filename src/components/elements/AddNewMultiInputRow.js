@@ -1,35 +1,29 @@
-import React, { useState } from 'react';
-import { Button, TextField } from '@material-ui/core';
+import React, { useState } from "react";
+import { Button, TextField } from "@material-ui/core";
 
-const AddNewMultiInputRow = ({
-  keyLabel,
-  onNewRowDefined
-}) => {
-
-  const [newRowValue, updateNewRowValue] = useState('');
+const AddNewMultiInputRow = ({ keyLabel, onNewRowDefined }) => {
+  const [newRowValue, updateNewRowValue] = useState("");
 
   return (
     <div
-      style={{ 
-        alignItems: 'center',
-        display: 'flex',
+      style={{
+        alignItems: "center",
+        display: "flex",
       }}
     >
-      <span style={{ marginRight: 16 }}>
-        Add new row: 
-      </span>
+      <span style={{ marginRight: 16 }}>Add new row:</span>
       <TextField
         label={keyLabel}
         value={newRowValue}
-        onChange={e => updateNewRowValue(e.target.value)}
+        onChange={(e) => updateNewRowValue(e.target.value)}
         variant="outlined"
         margin="normal"
       />
-      <Button 
+      <Button
         onClick={() => {
           if (newRowValue) {
             onNewRowDefined(newRowValue);
-            updateNewRowValue('');
+            updateNewRowValue("");
           }
         }}
         variant="contained"
@@ -41,7 +35,6 @@ const AddNewMultiInputRow = ({
       </Button>
     </div>
   );
-
-}
+};
 
 export default AddNewMultiInputRow;

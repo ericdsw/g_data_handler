@@ -111,8 +111,12 @@ const StepMapEntity = (props) => {
   }
 
   const usedHelpContent = useMemo(() => {
-    if (["item_dialogue_interaction", "item_cutscene_interaction"].includes(curInteractionType)) {
-      return <ItemDependentInteractionInstructions />
+    if (
+      ["item_dialogue_interaction", "item_cutscene_interaction"].includes(
+        curInteractionType
+      )
+    ) {
+      return <ItemDependentInteractionInstructions />;
     }
     return undefined;
   }, [curInteractionType]);

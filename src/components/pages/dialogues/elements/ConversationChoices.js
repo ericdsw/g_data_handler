@@ -17,11 +17,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ConversationChoices = ({ message }) => {
-
   const classes = useStyles();
 
   const choicesChips = useMemo(() => {
-
     if (!message.choices) {
       return [];
     }

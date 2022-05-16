@@ -12,15 +12,15 @@ const baseTheme = (mode) =>
         main: "#d50744",
         light: "#ff546f",
         dark: "#9c001e",
-        contrastText: "#fff"
+        contrastText: "#fff",
       },
       secondary: {
         main: "#bf9148",
         light: "#f4c176",
         dark: "#8c641b",
-        contrastText: "#000"
+        contrastText: "#000",
       },
-      messageBackground: mode === "dark" ? "#222" :"#eee"
+      messageBackground: mode === "dark" ? "#222" : "#eee",
     },
     overrides: {
       MuiOutlinedInput: {

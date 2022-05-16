@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, { useState, useCallback } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import { withSnackbar } from "notistack";
 import { Grid, Button, Typography } from "@material-ui/core";
 import {
@@ -9,82 +9,72 @@ import {
   getMissingRequired,
 } from "../../functions";
 
-const style = () => ({
+const useStyles = makeStyles(() => ({
   additionalText: {
     color: "grey",
   },
-});
+}));
 
-const GenericForm = (props) => {
-  // Parameters
-  const {
-    initialDataSet = {},
-    schema = {},
-    classes,
-    buttonText = "Create",
-    disabledInputs = [],
-    buttonColor = "primary",
-  } = props;
-
-  // Methods
-  const { handleSubmit, enqueueSnackbar } = props;
+const GenericForm = ({
+  initialDataSet = {},
+  schema = {},
+  buttonText = "Create",
+  disabledInputs = [],
+  buttonColor = "primary",
+  handleSubmit,
+  enqueueSnackbar,
+}) => {
+  const classes = useStyles();
 
   // Extract data from schemas
-  const {
-    parameters,
-    additionalText
-  } = schema;
+  const { parameters, additionalText } = schema;
 
   const [formData, updateFormData] = useState(
     parseIn({ ...initialDataSet }, parameters)
   );
 
-  const handleInputChange = (inputName) => (event) => {
-    const newData = { ...formData };
-    newData[inputName] = event.target.value;
-    if (parameters[inputName].type === "boolean") {
-      newData[inputName] = event.target.checked;
-    } else {
+  const handleInputChange = useCallback(
+    (inputName) => (event) => {
+      const newData = { ...formData };
       newData[inputName] = event.target.value;
-    }
-    updateFormData(newData);
-  };
+      if (parameters[inputName].type === "boolean") {
+        newData[inputName] = event.target.checked;
+      } else {
+        newData[inputName] = event.target.value;
+      }
+      updateFormData(newData);
+    },
+    [formData, parameters]
+  );
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    const resultData = parseOut(formData, parameters);
-    const missingRequired = getMissingRequired(resultData, parameters);
+  const onSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+      const resultData = parseOut(formData, parameters);
+      const missingRequired = getMissingRequired(resultData, parameters);
 
-    if (missingRequired.length <= 0) {
-      handleSubmit(resultData);
-    } else {
-      const reqString = missingRequired
-        .map((key) => {
-          return parameters[key].label;
-        })
-        .join(", ");
-      const eMessage = `The following fields are required: ${reqString}`;
-      enqueueSnackbar(eMessage, { variant: "error" });
-    }
-  };
+      if (missingRequired.length <= 0) {
+        handleSubmit(resultData);
+      } else {
+        const reqString = missingRequired
+          .map((key) => {
+            return parameters[key].label;
+          })
+          .join(", ");
+        const eMessage = `The following fields are required: ${reqString}`;
+        enqueueSnackbar(eMessage, { variant: "error" });
+      }
+    },
+    [enqueueSnackbar, formData, handleSubmit, parameters]
+  );
 
   return (
-    <form
-      onSubmit={(e) => onSubmit(e)}
-    >
-      <Grid
-        container
-        spacing={2}
-        alignItems="center"
-      >
+    <form onSubmit={onSubmit}>
+      <Grid container spacing={2} alignItems="center">
         {Object.keys(parameters).map((inputName, index) => {
           const usedWeight = parameters[inputName].weight || 12;
           return (
-            <Grid
-              key={inputName}
-              item 
-              xs={usedWeight}
-            >
+            <Grid key={inputName} item xs={usedWeight}>
               {createInput(
                 inputName,
                 parameters[inputName],
@@ -113,4 +103,4 @@ const GenericForm = (props) => {
   );
 };
 
-export default withStyles(style)(withSnackbar(GenericForm));
+export default withSnackbar(GenericForm);

@@ -8,11 +8,10 @@ export const speakerImages = [
   "Vega_mask_menacing_sans.png",
   "Vega_mask_menacing.png",
   "Vega_mask_neutral.png",
-  "Speaker.png"
+  "Speaker.png",
 ];
 
 const speakerSchema = {
-
   narrator: {
     image: null,
     name: null,
@@ -26,7 +25,7 @@ const speakerSchema = {
     voice_file: "phoenix_voice.wav",
     target_object: "PhoenixNPC",
   },
-  
+
   vampire: {
     image: "Vega_mask_neutral.png",
     name: "Vega",
@@ -86,9 +85,8 @@ const speakerSchema = {
     image: null,
     name: "",
     voice_file: "default_voice.wav",
-    target_object: "CONTROL_PLAYER"
-  }
-
+    target_object: "CONTROL_PLAYER",
+  },
 };
 
 export default speakerSchema;

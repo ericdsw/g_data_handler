@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Divider,
@@ -14,7 +14,7 @@ import { NavLink } from "react-router-dom";
 import routes from "../../router";
 import { drawerWidth } from "../../globals";
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   root: {
     display: "flex",
@@ -29,34 +29,35 @@ const styles = (theme) => ({
   selectedLink: {
     background: theme.palette.action.hover,
   },
-});
+}));
 
-const NavigationDrawer = (props) => {
-  const classes = makeStyles(styles)();
+const NavigationDrawer = ({ isOpen, handleCollapse }) => {
+  const classes = useStyles();
 
-  const { isOpen, handleCollapse } = props;
-
-  const drawerContent = (
-    <div>
-      <div className={classes.toolbar} />
-      <Divider />
-      <List>
-        {routes.map((route) => (
-          <ListItem
-            button
-            component={NavLink}
-            onClick={() => handleCollapse()}
-            to={route.path}
-            key={route.path}
-            exact
-            activeClassName={classes.selectedLink}
-          >
-            <ListItemIcon>{route.icon}</ListItemIcon>
-            <ListItemText primary={route.text} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
+  const drawerContent = useMemo(
+    () => (
+      <div>
+        <div className={classes.toolbar} />
+        <Divider />
+        <List>
+          {routes.map((route) => (
+            <ListItem
+              button
+              component={NavLink}
+              onClick={() => handleCollapse()}
+              to={route.path}
+              key={route.path}
+              exact
+              activeClassName={classes.selectedLink}
+            >
+              <ListItemIcon>{route.icon}</ListItemIcon>
+              <ListItemText primary={route.text} />
+            </ListItem>
+          ))}
+        </List>
+      </div>
+    ),
+    [classes.selectedLink, classes.toolbar, handleCollapse]
   );
 
   return (

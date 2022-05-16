@@ -82,12 +82,8 @@ class CutsceneContainer extends React.Component {
   };
 
   export = () => {
-    const {
-      fileName,
-      currentCutscene,
-      currentCutsceneJumps,
-      hideBars,
-    } = this.props;
+    const { fileName, currentCutscene, currentCutsceneJumps, hideBars } =
+      this.props;
 
     // Check that the cutscene is not empty
     if (currentCutscene.length <= 0) {
@@ -124,12 +120,8 @@ class CutsceneContainer extends React.Component {
 
   // Render logic
   render() {
-    const {
-      currentCutscene,
-      currentCutsceneJumps,
-      fileName,
-      hideBars,
-    } = this.props;
+    const { currentCutscene, currentCutsceneJumps, fileName, hideBars } =
+      this.props;
 
     let content;
     if (this.props.currentCutscene !== null) {

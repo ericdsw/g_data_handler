@@ -7,16 +7,16 @@ import {
   Icon,
   Grid,
   Tooltip,
-  Zoom
+  Zoom,
 } from "@material-ui/core";
-import clsx from 'clsx';
+import clsx from "clsx";
 
 import { ConversationChoices, ConversationExtraParams } from "./elements";
 import { DialogueMessageToolbar } from "./elements";
 import { speakerSchema } from "../../../globals";
 
 import { styles } from "./styles/DialogueMessageStyle";
-import { cleanMessage } from './functions';
+import { cleanMessage } from "./functions";
 
 const DialogueMessage = ({
   handleEdit,
@@ -25,13 +25,11 @@ const DialogueMessage = ({
   handleAddBelow,
   handleSplitBelow,
   message,
-  classes
+  classes,
 }) => {
-
   const { usedImagePath, speakerName } = useMemo(() => {
-    
     let imageResult, nameResult;
-  
+
     // Extract data from speaker
     if (message.speaker) {
       imageResult = speakerSchema[message.speaker].image;
@@ -47,13 +45,13 @@ const DialogueMessage = ({
 
     return {
       usedImagePath: imageResult,
-      speakerName: nameResult
-    }
-
+      speakerName: nameResult,
+    };
   }, [message]);
 
   const hasImage = useMemo(
-    () => usedImagePath && usedImagePath !== 'NONE', [usedImagePath]
+    () => usedImagePath && usedImagePath !== "NONE",
+    [usedImagePath]
   );
 
   const messageTextOnly = useMemo(
@@ -106,15 +104,17 @@ const DialogueMessage = ({
                     </div>
                   )}
                   <Tooltip TransitionComponent={Zoom} title={message.message}>
-                    <div className={clsx(
-                      classes.contentText,
-                      hasImage ? '' : classes.contentTextNoImage
-                    )}>
+                    <div
+                      className={clsx(
+                        classes.contentText,
+                        hasImage ? "" : classes.contentTextNoImage
+                      )}
+                    >
                       {messageTextOnly}
                     </div>
                   </Tooltip>
                   {hasImage && (
-                    <img 
+                    <img
                       alt="asdf"
                       className={classes.contentImage}
                       src={`/images/${usedImagePath}`}

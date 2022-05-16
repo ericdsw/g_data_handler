@@ -5,15 +5,15 @@ import {
   DialogContent,
   IconButton,
   Icon,
-  makeStyles
+  makeStyles,
 } from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   titleButtonContainer: {
-    position: 'absolute',
+    position: "absolute",
     right: theme.spacing(1),
-    top: theme.spacing(1)
-  }
+    top: theme.spacing(1),
+  },
 }));
 
 const GenericDialogue = ({
@@ -22,9 +22,8 @@ const GenericDialogue = ({
   onClose,
   children,
   maxWidth = "md",
-  helpComponent
+  helpComponent,
 }) => {
-
   const classes = useStyles();
 
   const [helpOpen, toggleHelpOpen] = useState(false);
@@ -49,10 +48,11 @@ const GenericDialogue = ({
             {title}
             {helpComponent && (
               <div className={classes.titleButtonContainer}>
-                <IconButton 
+                <IconButton
                   onClick={() => {
                     toggleHelpOpen(true);
-                  }}>
+                  }}
+                >
                   <Icon>help</Icon>
                 </IconButton>
               </div>

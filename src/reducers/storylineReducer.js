@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 import {
   ADD_STORYLINE_STEP,

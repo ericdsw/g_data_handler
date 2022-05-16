@@ -1,47 +1,43 @@
-import React, { useMemo } from 'react';
-import { 
+import React, { useMemo } from "react";
+import {
   Card,
   CardHeader,
   CardContent,
   Typography,
   Grid,
-  makeStyles 
-} from '@material-ui/core';
+  makeStyles,
+} from "@material-ui/core";
 
-import { 
-  DialogueMessageToolbar,
-  ConversationCardTitle
-} from "./elements";
+import { DialogueMessageToolbar, ConversationCardTitle } from "./elements";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.palette.messageBackground,
     borderBottom: "1px solid #666",
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
   },
   itemIconContainer: {
-    color: '#2d81b5',
+    color: "#2d81b5",
   },
   itemIcon: {
     fontSize: 30,
-  }
+  },
 }));
 
-const GiveItemFromDialogue = ({ 
-  message, 
+const GiveItemFromDialogue = ({
+  message,
   handleEdit,
   handleDelete,
   handleAddAbove,
   handleAddBelow,
-  handleSplitBelow
+  handleSplitBelow,
 }) => {
-
   const classes = useStyles();
 
   const usedMessage = useMemo(() => {
-    return !message.custom_message ?
-      'Will use the default message' :
-      `Custom message: ${message.custom_message}` 
+    return !message.custom_message
+      ? "Will use the default message"
+      : `Custom message: ${message.custom_message}`;
   }, [message.custom_message]);
 
   return (
@@ -71,9 +67,7 @@ const GiveItemFromDialogue = ({
       <CardContent>
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            <Typography variant="body2">
-              {usedMessage}
-            </Typography>
+            <Typography variant="body2">{usedMessage}</Typography>
           </Grid>
           <Grid item xs={12}>
             {message.flavor_message && (
@@ -82,18 +76,13 @@ const GiveItemFromDialogue = ({
               </Typography>
             )}
             {!message.flavor_message && (
-              <Typography 
-                variant="caption"
-              >
-                No flavor defined
-              </Typography>
+              <Typography variant="caption">No flavor defined</Typography>
             )}
           </Grid>
         </Grid>
-
       </CardContent>
     </Card>
   );
-}
+};
 
 export default GiveItemFromDialogue;

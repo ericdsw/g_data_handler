@@ -1,19 +1,14 @@
 import React, { useState } from "react";
 import { Button, Menu, MenuItem, Tooltip } from "@material-ui/core";
 
-const MenuButton = (props) => {
-  // Parameters
-  const {
-    elementId,
-    contentDictionary,
-    tooltip = "",
-    color = "secondary",
-    buttonText,
-  } = props;
-
-  // Methods
-  const { handleClick } = props;
-
+const MenuButton = ({
+  elementId,
+  contentDictionary,
+  tooltip = "",
+  color = "secondary",
+  buttonText,
+  handleClick,
+}) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   return (

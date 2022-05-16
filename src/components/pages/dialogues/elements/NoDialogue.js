@@ -18,15 +18,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NoDialogue = ({ handleEmptyDialogue, handleUpdateFromFile }) => {
-
   const classes = useStyles();
 
   const [loading, toggleLoading] = useState(false);
 
-  const handleDrop = useCallback((files) => {
-    toggleLoading(true);
-    handleUpdateFromFile(files[0]);
-  }, [toggleLoading, handleUpdateFromFile]);
+  const handleDrop = useCallback(
+    (files) => {
+      toggleLoading(true);
+      handleUpdateFromFile(files[0]);
+    },
+    [toggleLoading, handleUpdateFromFile]
+  );
 
   return (
     <div>

@@ -17,7 +17,7 @@ import {
   createInput,
   checkForRequired,
   parseIn,
-  parseOut
+  parseOut,
 } from "../../../../functions";
 
 const styles = (theme) => ({
@@ -151,7 +151,7 @@ class CreateEventForm extends React.Component {
      */
     const sortedKeys = Object.keys(eventSchema).sort();
     const optionTypes = sortedKeys
-      .filter(key => !eventSchema[key].hidden)
+      .filter((key) => !eventSchema[key].hidden)
       .map((key) => (
         <MenuItem key={key} value={key}>
           <Grid container alignItems="center">

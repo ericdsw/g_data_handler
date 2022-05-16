@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { GenericForm } from "../../../elements";
 
 const schema = {
@@ -7,21 +7,21 @@ const schema = {
       label: "Jump Name",
       type: "string",
       required: true,
-      tooltip: "The jump's unique identifier (in this file)"
+      tooltip: "The jump's unique identifier (in this file)",
     },
     jump_file: {
       label: "Target Cutscene File",
       type: "string",
       required: true,
-      tooltip: "The cutscene that will be fired with this jump"
-    }
-  }
-}
+      tooltip: "The cutscene that will be fired with this jump",
+    },
+  },
+};
 
 const defaultData = {
   jump_name: "",
   jump_file: "",
-}
+};
 
 const JumpForm = ({
   data = defaultData,

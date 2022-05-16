@@ -26,7 +26,6 @@ const Dialogue = ({
   handleSelectAll,
   handleUnselectAll,
 }) => {
-  
   const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(

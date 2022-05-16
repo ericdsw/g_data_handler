@@ -10,9 +10,8 @@ const CutsceneRowToolbar = ({
   addAboveClick,
   addBelowClick,
   addEventClick,
-  deleteRowClick
+  deleteRowClick,
 }) => {
-
   return (
     <Typography variant="h6" gutterBottom align="right">
       <Tooltip title="Add row above" enterDelay={200}>

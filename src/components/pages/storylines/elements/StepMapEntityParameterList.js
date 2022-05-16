@@ -34,11 +34,8 @@ const StepMapEntityParameterList = (props) => {
   const { classes, entityParams } = props;
 
   // Methods
-  const {
-    handleAddParameter,
-    handleEditParameter,
-    handleDeleteParameter,
-  } = props;
+  const { handleAddParameter, handleEditParameter, handleDeleteParameter } =
+    props;
 
   const [dialogues, toggleDialogue] = useDialogueManager("confirmParamDelete");
 

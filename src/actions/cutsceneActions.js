@@ -39,17 +39,16 @@ export const deleteCutsceneRow = (rowOffset) => (dispatch) => {
   });
 };
 
-export const addCutsceneEvent = (rowOffset, cutsceneEventData) => (
-  dispatch
-) => {
-  dispatch({
-    type: ADD_CUTSCENE_EVENT,
-    payload: {
-      rowOffset,
-      cutsceneEventData,
-    },
-  });
-};
+export const addCutsceneEvent =
+  (rowOffset, cutsceneEventData) => (dispatch) => {
+    dispatch({
+      type: ADD_CUTSCENE_EVENT,
+      payload: {
+        rowOffset,
+        cutsceneEventData,
+      },
+    });
+  };
 
 export const deleteCutsceneEvent = (rowOffset, eventOffset) => (dispatch) => {
   dispatch({
@@ -61,18 +60,17 @@ export const deleteCutsceneEvent = (rowOffset, eventOffset) => (dispatch) => {
   });
 };
 
-export const editCutsceneEvent = (rowOffset, eventOffset, data) => (
-  dispatch
-) => {
-  dispatch({
-    type: EDIT_CUTSCENE_EVENT,
-    payload: {
-      rowOffset,
-      eventOffset,
-      data,
-    },
-  });
-};
+export const editCutsceneEvent =
+  (rowOffset, eventOffset, data) => (dispatch) => {
+    dispatch({
+      type: EDIT_CUTSCENE_EVENT,
+      payload: {
+        rowOffset,
+        eventOffset,
+        data,
+      },
+    });
+  };
 
 export const updateCutsceneFileName = (newFileName) => (dispatch) => {
   dispatch({

@@ -7,9 +7,10 @@ const defaultParameters = {
     type: "number",
     required: false,
     default: 0,
-    tooltip: "The event will wait this amount of seconds before actually starting"
-  }
-}
+    tooltip:
+      "The event will wait this amount of seconds before actually starting",
+  },
+};
 
 /**
  * Parameters for each separate cutscene event
@@ -79,7 +80,6 @@ const eventSchema = {
     defaultImportant: true,
     additionalText: "Starts a battle with the provided parameters",
     parameters: {
-
       ...defaultParameters,
       map_scene: {
         label: "Map Scene",
@@ -130,14 +130,16 @@ const eventSchema = {
         label: "Regular Duration",
         type: "number",
         default: 0,
-        tooltip: "How long the battle will last (normal circumstances). 0 means no limit"
+        tooltip:
+          "How long the battle will last (normal circumstances). 0 means no limit",
       },
       time_rush_duration: {
         label: "Time Rush Duration",
         type: "number",
         default: 0,
-        tooltip: "How long the battle will last (time rush memory circumstances). 0 means no limit"
-      }
+        tooltip:
+          "How long the battle will last (time rush memory circumstances). 0 means no limit",
+      },
     },
   },
 
@@ -333,8 +335,9 @@ const eventSchema = {
         label: "Ignore Out",
         type: "boolean",
         default: false,
-        tooltip: "If true, the out duration will be ignored, and the event will finish after the stay duration with the screen covered"
-      }
+        tooltip:
+          "If true, the out duration will be ignored, and the event will finish after the stay duration with the screen covered",
+      },
     },
   },
 
@@ -507,8 +510,9 @@ const eventSchema = {
       overworld_animation: {
         label: "Overworld Animation",
         type: "text",
-        tooltip: "If defined, this animation will be forced on the player overworld"
-      }
+        tooltip:
+          "If defined, this animation will be forced on the player overworld",
+      },
     },
   },
 
@@ -670,8 +674,8 @@ const eventSchema = {
         label: "Finishing animation",
         type: "text",
         default: "",
-        tooltip: "Animation that will play when the movement finishes"
-      }
+        tooltip: "Animation that will play when the movement finishes",
+      },
     },
   },
 
@@ -697,9 +701,10 @@ const eventSchema = {
       only_deliver: {
         label: "Only deliver",
         type: "boolean",
-        tooltip: "If true, the item will be marked as delivered rather than being removed",
-        default: true
-      }
+        tooltip:
+          "If true, the item will be marked as delivered rather than being removed",
+        default: true,
+      },
     },
   },
 
@@ -715,7 +720,8 @@ const eventSchema = {
         label: "Write to file",
         type: "boolean",
         default: true,
-        tooltip: "Whether the data will be saved on the file, or just on the virtual save schema"
+        tooltip:
+          "Whether the data will be saved on the file, or just on the virtual save schema",
       },
       map_data: {
         label: "Map Data",
@@ -743,7 +749,7 @@ const eventSchema = {
         type: "string",
         default: "",
         tooltip: "If defined, the player will enter the game in this state",
-      }
+      },
     },
   },
 
@@ -817,8 +823,9 @@ const eventSchema = {
         label: "No invisible spawn",
         type: "boolean",
         default: false,
-        tooltip: "Will not perform the 0.25s of invisibility spawned objects have, which prevents invalid animations from showing for 1 frame"
-      }
+        tooltip:
+          "Will not perform the 0.25s of invisibility spawned objects have, which prevents invalid animations from showing for 1 frame",
+      },
     },
   },
 
@@ -947,7 +954,7 @@ const eventSchema = {
           question: "Question",
           three_dots: "Three Dots",
           sweat: "Sweat",
-          heart: "Heart"
+          heart: "Heart",
         },
         required: true,
         tooltip: "The emote to display",
@@ -1089,8 +1096,9 @@ const eventSchema = {
         type: "text",
         default: "",
         placeholder: "image_name.png=1.0|used_overlay",
-        tooltip: "used to parse images that will flash while the glitch is active"
-      }
+        tooltip:
+          "used to parse images that will flash while the glitch is active",
+      },
     },
   },
 
@@ -1115,21 +1123,22 @@ const eventSchema = {
     name: "Look At",
     icon: "my_location",
     defaultImportant: false,
-    additionalText: "Subjet must be a MovableBody, and Look Target must be a Node2D",
+    additionalText:
+      "Subjet must be a MovableBody, and Look Target must be a Node2D",
     parameters: {
       ...defaultParameters,
       subject: {
         label: "Subject",
         type: "node_target",
         required: true,
-        placeholder: "The node that will \"look\" at something"
+        placeholder: 'The node that will "look" at something',
       },
       look_target: {
         label: "Look Target",
         type: "node_target",
         required: true,
-        placeholder: "Who the subject will face"
-      }
+        placeholder: "Who the subject will face",
+      },
     },
   },
 
@@ -1159,42 +1168,43 @@ const eventSchema = {
         type: "boolean",
         required: false,
         default: false,
-        tooltip: "If true, the bgm will persist between map changes"
+        tooltip: "If true, the bgm will persist between map changes",
       },
       out_duration: {
         label: "Out Duration",
         type: "number",
         required: true,
         default: 0.5,
-        tooltip: "How long will the fade-out take"
+        tooltip: "How long will the fade-out take",
       },
       in_duration: {
         label: "In Duration",
         type: "number",
         required: true,
         default: 0.5,
-        tooltip: "How long will the fade-in take"
+        tooltip: "How long will the fade-in take",
       },
       silence_duration: {
         label: "Silence Duration",
         type: "number",
         required: true,
         default: 0.0,
-        tooltip: "Silence interval between bgms"
+        tooltip: "Silence interval between bgms",
       },
       play_from_beginning: {
         label: "Play From Beginning",
         type: "boolean",
         default: false,
-        tooltip: "If true, the bgm will ignore saved offsets"
-      }
-    }
+        tooltip: "If true, the bgm will ignore saved offsets",
+      },
+    },
   },
 
   clear_injected_bgm: {
     name: "Clear injected bgm",
     icon: "hearing_disabled",
-    additionalText: "This event will remove the custom injected bgm and will play whatever is defined in the map",
+    additionalText:
+      "This event will remove the custom injected bgm and will play whatever is defined in the map",
     defaultImportant: false,
     parameters: {
       ...defaultParameters,
@@ -1203,35 +1213,36 @@ const eventSchema = {
         type: "number",
         required: true,
         default: 0.5,
-        tooltip: "How long will the fade-out take"
+        tooltip: "How long will the fade-out take",
       },
       in_duration: {
         label: "In Duration",
         type: "number",
         required: true,
         default: 0.5,
-        tooltip: "How long will the fade-in take"
+        tooltip: "How long will the fade-in take",
       },
       silence_duration: {
         label: "Silence Duration",
         type: "number",
         required: true,
         default: 0.0,
-        tooltip: "Silence interval between bgms"
+        tooltip: "Silence interval between bgms",
       },
       play_from_beginning: {
         label: "Play From Beginning",
         type: "boolean",
         default: false,
-        tooltip: "If true, the bgm will ignore saved offsets"
-      }
-    }
+        tooltip: "If true, the bgm will ignore saved offsets",
+      },
+    },
   },
 
   change_node_property: {
     name: "Change node properties",
     icon: "touch_app",
-    additionalText: "Updates all listed properties in the dictionary with the new value",
+    additionalText:
+      "Updates all listed properties in the dictionary with the new value",
     defaultImportant: true,
     parameters: {
       ...defaultParameters,
@@ -1239,7 +1250,7 @@ const eventSchema = {
         label: "Node",
         type: "node_target",
         required: true,
-        placeholder: "The node that will be modified"
+        placeholder: "The node that will be modified",
       },
       properties: {
         label: "Properties",
@@ -1247,14 +1258,15 @@ const eventSchema = {
         required: true,
         tooltip: "properties that will be changed",
         placeholder: '{"prop_name": "new_value"}',
-      }
-    }
+      },
+    },
   },
 
   full_minigame: {
     name: "Launch Full Minigame",
     icon: "videogame_asset",
-    additionalText: "Launches a minigame (will wait for the cutscene to finish)",
+    additionalText:
+      "Launches a minigame (will wait for the cutscene to finish)",
     defaultImportant: false,
     parameters: {
       ...defaultParameters,
@@ -1262,9 +1274,9 @@ const eventSchema = {
         label: "Minigame Node Path",
         type: "string",
         required: true,
-        placeholder: "The minigame node, inside res://Minigames"
-      }
-    }
+        placeholder: "The minigame node, inside res://Minigames",
+      },
+    },
   },
 
   call_node_method: {
@@ -1278,15 +1290,15 @@ const eventSchema = {
         label: "Node Name",
         required: true,
         type: "string",
-        placeholder: "FooNode"
+        placeholder: "FooNode",
       },
       method_name: {
         label: "Method Name",
         required: true,
         type: "string",
-        placeholder: "method_name"
-      }
-    }
+        placeholder: "method_name",
+      },
+    },
   },
 
   give_memory: {
@@ -1300,33 +1312,34 @@ const eventSchema = {
         label: "Memory Name",
         required: true,
         type: "string",
-        placeholder: "FooMemoryNode"
+        placeholder: "FooMemoryNode",
       },
       no_fanfare: {
         label: "No Fanfare",
         type: "boolean",
         default: false,
-        tooltip: "If true, the prompt will be skipped"
+        tooltip: "If true, the prompt will be skipped",
       },
       fade_full_message: {
         label: "Fade Full Message",
         type: "boolean",
         default: true,
-        tooltip: "If true, the message will fade in instead of it being typed"
+        tooltip: "If true, the message will fade in instead of it being typed",
       },
       message_type_speed: {
         label: "Message type speed",
         type: "number",
-        default: 0.10,
-        tooltip: "How fast will the prompt message be typed"
+        default: 0.1,
+        tooltip: "How fast will the prompt message be typed",
       },
       skip_instructions: {
         label: "Skip Instructions",
         type: "boolean",
         default: false,
-        tooltip: "If true, the prompt will never trigger the instructions, even if this memory is the first one obtained"
-      }
-    }
+        tooltip:
+          "If true, the prompt will never trigger the instructions, even if this memory is the first one obtained",
+      },
+    },
   },
 
   toggle_memory_lock: {
@@ -1340,14 +1353,14 @@ const eventSchema = {
         label: "Memory Name",
         required: true,
         type: "string",
-        placeholder: "FooMemoryNode"
+        placeholder: "FooMemoryNode",
       },
       locked: {
         label: "Locked",
         type: "boolean",
         default: false,
-      }
-    }
+      },
+    },
   },
 
   toggle_memory: {
@@ -1361,14 +1374,14 @@ const eventSchema = {
         label: "Memory Name",
         required: true,
         type: "string",
-        placeholder: "FooMemoryNode"
+        placeholder: "FooMemoryNode",
       },
       active: {
         label: "Active",
         type: "boolean",
         default: false,
-      }
-    }
+      },
+    },
   },
 
   give_currency: {
@@ -1381,15 +1394,16 @@ const eventSchema = {
       given_amount: {
         label: "Given Amount",
         required: true,
-        type: "number"
-      }
-    }
+        type: "number",
+      },
+    },
   },
 
   seed_next_run: {
     name: "Seed Next Run",
     icon: "grass",
-    additionalText: "Modifies the initial state for the next time the player presses new game",
+    additionalText:
+      "Modifies the initial state for the next time the player presses new game",
     defaultImportant: false,
     parameters: {
       ...defaultParameters,
@@ -1398,15 +1412,17 @@ const eventSchema = {
         required: true,
         type: "string",
         placeholder: "seed_name",
-        tooltip: "Note that this seed must be registered in SaveSeeder.gd as an option, otherwise nothing will happen"
-      }
-    }
+        tooltip:
+          "Note that this seed must be registered in SaveSeeder.gd as an option, otherwise nothing will happen",
+      },
+    },
   },
 
   toggle_player_control: {
     name: "Toggle Player Control",
     icon: "warning",
-    additionalText: "WARNING: THIS EVENT IS DANGEROUS (enables/disables movement inside cutscene). DO NOT USE ALONGSIDE MAP CHANGES OR PLAYER MOVEMENTS",
+    additionalText:
+      "WARNING: THIS EVENT IS DANGEROUS (enables/disables movement inside cutscene). DO NOT USE ALONGSIDE MAP CHANGES OR PLAYER MOVEMENTS",
     defaultImportant: false,
     parameters: {
       ...defaultParameters,
@@ -1414,11 +1430,10 @@ const eventSchema = {
         label: "Control Status",
         required: true,
         type: "boolean",
-        tooltip: ""
-      }
-    }
-  }
-
+        tooltip: "",
+      },
+    },
+  },
 };
 
 export default eventSchema;

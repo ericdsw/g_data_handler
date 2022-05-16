@@ -9,11 +9,11 @@ import {
   InputAdornment,
   Icon,
   Tooltip,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import AddNewMultiInputRow from '../components/elements/AddNewMultiInputRow';
+import AddNewMultiInputRow from "../components/elements/AddNewMultiInputRow";
 
 const nodeTargetDescription = (
   <ul>
@@ -42,7 +42,7 @@ const nodeTargetDescription = (
 
 /**
  * Creates an input element instance using the provided attributes.
- * 
+ *
  * Possible input types:
  * - boolean
  * - number
@@ -52,7 +52,7 @@ const nodeTargetDescription = (
  * - position
  * - text
  * - note_target
- * 
+ *
  * These last types are used to create compound inputs:
  * - multi_input_object
  */
@@ -64,7 +64,6 @@ export default function createInput(
   disabled = false,
   extraParams = {}
 ) {
-
   let label = inputData.label;
   if (inputData.required) {
     label += "*";
@@ -98,29 +97,29 @@ export default function createInput(
   let adornment = <React.Fragment />;
 
   switch (inputData.type) {
-
-    case 'multi_input_object':
-
+    case "multi_input_object":
       const keyField = inputData.key_field;
 
       /** Render one input row for each value */
-      const renderedInputs = Object.keys(value).map(valueKey => {
+      const renderedInputs = Object.keys(value).map((valueKey) => {
         return (
-          <div 
+          <div
             style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center' 
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
             }}
           >
-            {Object.keys(inputData.inputs).map(inputIdentifier => {
+            {Object.keys(inputData.inputs).map((inputIdentifier) => {
               const isKey = inputIdentifier === keyField;
               return (
-                <div 
-                  style={{ 
-                    flex: inputData.inputs[inputIdentifier].type === 'boolean' ? 
-                      undefined : 1,
-                    marginRight: 16 
+                <div
+                  style={{
+                    flex:
+                      inputData.inputs[inputIdentifier].type === "boolean"
+                        ? undefined
+                        : 1,
+                    marginRight: 16,
                   }}
                 >
                   {createInput(
@@ -134,30 +133,33 @@ export default function createInput(
                             ...value,
                             [valueKey]: {
                               ...value[valueKey],
-                              [inputIdentifier]: inputData.inputs[inputIdentifier].type === 'boolean' ? 
-                                event.target.checked : event.target.value
-                            }
-                          }
-                        } 
-                      })
+                              [inputIdentifier]:
+                                inputData.inputs[inputIdentifier].type ===
+                                "boolean"
+                                  ? event.target.checked
+                                  : event.target.value,
+                            },
+                          },
+                        },
+                      });
                     },
                     isKey ? true : disabled,
                     extraParams
                   )}
                 </div>
-              )
+              );
             })}
             <IconButton
               color="inherith"
               aria-label="Delete"
               onClick={() => {
-                const cleanedValues = {...value}
+                const cleanedValues = { ...value };
                 delete cleanedValues[valueKey];
                 handleChange(paramName)({
                   target: {
-                    value: cleanedValues
-                  }
-                })
+                    value: cleanedValues,
+                  },
+                });
               }}
               style={{ width: 48, height: 48 }}
             >
@@ -165,38 +167,38 @@ export default function createInput(
             </IconButton>
           </div>
         );
-      })
+      });
 
       contentValue = (
-        <div 
+        <div
           style={{
             paddingBottom: 24,
             marginBottom: 16,
             fontSize: 16,
-            borderBottom: '1px dashed #888'
+            borderBottom: "1px dashed #888",
           }}
         >
-          <span style={{ fontWeight: 'bold' }}>{inputData.title}</span>
+          <span style={{ fontWeight: "bold" }}>{inputData.title}</span>
           {renderedInputs}
           <AddNewMultiInputRow
             keyLabel={inputData.inputs[keyField].label}
-            onNewRowDefined={newRowValue => {
-
-              const emptyRowData = {}
+            onNewRowDefined={(newRowValue) => {
+              const emptyRowData = {};
               Object.keys(inputData.inputs)
-                .filter(inputIdentifier => inputIdentifier !== keyField)
-                .forEach(inputIdentifier => {
-                  emptyRowData[inputIdentifier] = inputData.inputs[inputIdentifier].default
-                })
+                .filter((inputIdentifier) => inputIdentifier !== keyField)
+                .forEach((inputIdentifier) => {
+                  emptyRowData[inputIdentifier] =
+                    inputData.inputs[inputIdentifier].default;
+                });
 
               handleChange(paramName)({
                 target: {
                   value: {
                     ...value,
-                    [newRowValue]: emptyRowData
-                  }
-                }
-              })
+                    [newRowValue]: emptyRowData,
+                  },
+                },
+              });
             }}
           />
         </div>
@@ -314,7 +316,7 @@ export default function createInput(
           placeholder={inputData.placeholder}
           onChange={handleChange(paramName)}
           value={value}
-          type={inputData.type === "number" ? "number" : "text" }
+          type={inputData.type === "number" ? "number" : "text"}
           fullWidth
           variant="outlined"
           margin="normal"
@@ -323,7 +325,7 @@ export default function createInput(
             endAdornment: adornment,
           }}
           inputProps={{
-            step: 'any'
+            step: "any",
           }}
           {...extraParams}
         />

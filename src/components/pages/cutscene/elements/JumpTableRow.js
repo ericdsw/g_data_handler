@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  TableRow,
-  TableCell,
-  IconButton
-} from "@material-ui/core"
+import { TableRow, TableCell, IconButton } from "@material-ui/core";
 
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -16,14 +12,15 @@ const JumpTableRow = ({
   jumpName,
   jumpPath,
   handleDeleteJump,
-  handleEditJump
+  handleEditJump,
 }) => {
-
-  const [dialogues, toggleDialogue] = useDialogueManager("edit", "confirmDelete");
+  const [dialogues, toggleDialogue] = useDialogueManager(
+    "edit",
+    "confirmDelete"
+  );
 
   return (
     <TableRow key={jumpName}>
-
       {/* Edit Form */}
       <GenericDialogue
         title="Edit Jump"
@@ -34,11 +31,11 @@ const JumpTableRow = ({
         <JumpForm
           data={{
             jump_name: jumpName,
-            jump_file: jumpPath
+            jump_file: jumpPath,
           }}
           isEdit
           buttonText="Edit Jump"
-          handleSubmit={data => {
+          handleSubmit={(data) => {
             toggleDialogue("edit", "hide");
             handleEditJump(data);
           }}
@@ -49,22 +46,26 @@ const JumpTableRow = ({
       <ConfirmationDialogue
         isOpen={dialogues["confirmDelete"]}
         message={`Delete the cutscene jump "${jumpName}"?`}
-        handleClose={() => { toggleDialogue("confirmDelete", "hide")}}
+        handleClose={() => {
+          toggleDialogue("confirmDelete", "hide");
+        }}
         handleConfirm={() => {
           toggleDialogue("confirmDelete", "hide");
-          handleDeleteJump(jumpName)
+          handleDeleteJump(jumpName);
         }}
       />
 
-      <TableCell><b>{jumpName}</b></TableCell>
-      <TableCell style={{ width: '100%' }}>
+      <TableCell>
+        <b>{jumpName}</b>
+      </TableCell>
+      <TableCell style={{ width: "100%" }}>
         <i>{jumpPath}</i>
       </TableCell>
 
       <TableCell style={{ width: 50 }} padding="dense">
         <IconButton
           onClick={() => {
-            toggleDialogue("confirmDelete", "show")
+            toggleDialogue("confirmDelete", "show");
           }}
           aria-label="Delete"
         >
@@ -82,6 +83,6 @@ const JumpTableRow = ({
       </TableCell>
     </TableRow>
   );
-}
+};
 
 export default JumpTableRow;

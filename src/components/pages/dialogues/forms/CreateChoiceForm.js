@@ -29,7 +29,6 @@ const styles = () => ({
 });
 
 class CreateChoiceForm extends React.Component {
-
   state = {
     newChoiceKey: "",
     newChoiceValue: "",
@@ -42,9 +41,11 @@ class CreateChoiceForm extends React.Component {
    * (more specifically, that the keys match)
    */
   isOnEditMode = () => {
-    const choiceKeyArray = this.props.choices.map(currentChoice => currentChoice.key);
+    const choiceKeyArray = this.props.choices.map(
+      (currentChoice) => currentChoice.key
+    );
     return choiceKeyArray.includes(this.state.newChoiceKey);
-  }
+  };
 
   /**
    * Attempts to create a new choice with the provided data.
@@ -113,7 +114,7 @@ class CreateChoiceForm extends React.Component {
    * display "Edit" or "Add"
    */
   getButtonName = () => {
-    return (this.isOnEditMode()) ? 'Edit' : 'Add';
+    return this.isOnEditMode() ? "Edit" : "Add";
   };
 
   render() {
@@ -129,11 +130,10 @@ class CreateChoiceForm extends React.Component {
           newChoiceMessage: currentChoice.next_message,
           newChoiceIsDefaultCancel: currentChoice.isDefaultCancel,
         });
-        this.props.enqueueSnackbar(
-          "Editing the selected choice", 
-          { variant: "info" }
-        );
-      }
+        this.props.enqueueSnackbar("Editing the selected choice", {
+          variant: "info",
+        });
+      };
       if (currentChoice.next_message) {
         return (
           <Tooltip
@@ -147,9 +147,7 @@ class CreateChoiceForm extends React.Component {
               onDelete={this.handleDeleteChoice(currentChoice.key)}
               onClick={onClick}
               style={{
-                order: currentChoice.isDefaultCancel
-                  ? "1px solid red"
-                  : "none",
+                order: currentChoice.isDefaultCancel ? "1px solid red" : "none",
               }}
             />
           </Tooltip>
