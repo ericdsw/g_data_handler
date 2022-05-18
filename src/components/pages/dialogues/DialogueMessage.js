@@ -59,6 +59,8 @@ const DialogueMessage = ({
     [message.message]
   );
 
+  console.log(messageTextOnly);
+
   return (
     <Card square className={classes.messageContainer}>
       {message.interrupts && (

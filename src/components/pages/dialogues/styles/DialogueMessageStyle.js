@@ -39,6 +39,7 @@ export const styles = (theme) => ({
     borderRadius: 6 * 2,
     fontFamily: "'JF Dot Ayu Gothic 18'",
     border: "2px solid #272523",
+    whiteSpace: "pre-line"
   },
   contentText: {
     marginLeft: 8 * 2,
