@@ -331,12 +331,19 @@ const eventSchema = {
         tooltip:
           "If true, the flash will cover UI elements (ex: the health bar)",
       },
+      ignore_in: {
+        label: "Ignore In",
+        type: "boolean",
+        default: false,
+        tooltip:
+          "If true, the event will ignore the in duration, and will start as if the color is already there.",
+      },
       ignore_out: {
         label: "Ignore Out",
         type: "boolean",
         default: false,
         tooltip:
-          "If true, the out duration will be ignored, and the event will finish after the stay duration with the screen covered",
+          "If true, the out duration will be ignored, and the event will finish after the stay duration with the screen covered.",
       },
     },
   },
