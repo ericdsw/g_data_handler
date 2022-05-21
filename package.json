@@ -14,7 +14,7 @@
     "@mui/icons-material": "^5.8.0",
     "@mui/material": "^5.8.0",
     "@mui/styles": "^5.8.0",
-    "material-ui-popup-state": "^1.5.1",
+    "material-ui-popup-state": "^3.1.1",
     "normalizr": "^3.4.1",
     "notistack": "^1.0.1",
     "prop-types": "^15.7.2",
