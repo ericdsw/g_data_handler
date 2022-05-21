@@ -47,9 +47,6 @@ const NavigationDrawer = ({ isOpen, handleCollapse }) => {
               onClick={() => handleCollapse()}
               to={route.path}
               key={route.path}
-              componentsProps={{
-                className: navData => navData.isActive ? classes.selectedLink : ''
-              }}
             >
               <ListItemIcon>{route.icon}</ListItemIcon>
               <ListItemText primary={route.text} />
@@ -58,7 +55,7 @@ const NavigationDrawer = ({ isOpen, handleCollapse }) => {
         </List>
       </div>
     ),
-    [classes.selectedLink, classes.toolbar, handleCollapse]
+    [classes.toolbar, handleCollapse]
   );
 
   return (
