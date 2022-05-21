@@ -1,6 +1,7 @@
 // Application
 export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR";
 export const COLLAPSE_SIDEBAR = "COLLAPSE_SIDEBAR";
+export const TOGGLE_DARK_MODE = "TOGGLE_DARK_MODE";
 
 // Cutscene actions
 export const UPDATE_CUTSCENE = "UPDATE_CUTSCENE";

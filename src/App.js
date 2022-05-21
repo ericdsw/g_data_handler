@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { Provider } from "react-redux";
-import { MuiThemeProvider, makeStyles } from "@material-ui/core/styles";
-import { CssBaseline } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { NavigationDrawer, ApplicationBar } from "./components/elements";
 import { drawerWidth } from "./globals";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
+import { useDispatch, useSelector } from "react-redux";
 
-import baseTheme from "./themes/baseTheme";
 import routes, { fallbackRoute } from "./router";
-import store from "./store";
 
-const styles = (theme) => ({
+import { toggleDarkMode } from "./actions/appActions";
+
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
@@ -23,7 +22,7 @@ const styles = (theme) => ({
       marginLeft: drawerWidth,
     },
   },
-});
+}));
 
 // Prevents tardiness
 window.onbeforeunload = function () {
@@ -31,51 +30,44 @@ window.onbeforeunload = function () {
 };
 
 const App = () => {
-  const [drawerOpen, toggleDrawerOpen] = useState(false);
-  const [darkMode, toggleDarkMode] = useState(true);
 
-  const classes = makeStyles(styles)();
+  const [drawerOpen, toggleDrawerOpen] = useState(false);
+
+  const dispatch = useDispatch();
+  const { darkMode } = useSelector(state => state.app);
+
+  const classes = useStyles();
 
   return (
-    <Provider store={store}>
-      <div className={classes.root}>
-        <MuiThemeProvider theme={baseTheme(darkMode ? "dark" : "light")}>
-          <SnackbarProvider maxSnack={3}>
-            <CssBaseline />
-            <Router>
-              <ApplicationBar
-                handleToggle={() => toggleDrawerOpen(!drawerOpen)}
-                handleDarkModeToggle={() => {
-                  if (darkMode) {
-                    console.log("Psychopath mode engaged");
-                  }
-                  toggleDarkMode(!darkMode);
-                }}
-                isDarkMode={darkMode}
-              />
-              <NavigationDrawer
-                isOpen={drawerOpen}
-                handleCollapse={() => toggleDrawerOpen(false)}
-              />
-              <main className={classes.content}>
-                <div className={classes.toolbar} />
-                <Switch>
-                  {routes.map((route) => (
-                    <Route
-                      key={route.path}
-                      path={route.path}
-                      exact={route.exact}
-                      component={route.component}
-                    />
-                  ))}
-                  <Route component={fallbackRoute.component} />
-                </Switch>
-              </main>
-            </Router>
-          </SnackbarProvider>
-        </MuiThemeProvider>
-      </div>
-    </Provider>
+    <div className={classes.root}>
+      <SnackbarProvider maxSnack={3}>
+        <Router>
+          <ApplicationBar
+            handleToggle={() => toggleDrawerOpen(!drawerOpen)}
+            handleDarkModeToggle={() => dispatch(toggleDarkMode())}
+            isDarkMode={darkMode}
+          />
+          <NavigationDrawer
+            isOpen={drawerOpen}
+            handleCollapse={() => toggleDrawerOpen(false)}
+          />
+          <main className={classes.content}>
+            <div className={classes.toolbar} />
+            <Switch>
+              {routes.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  exact={route.exact}
+                  component={route.component}
+                />
+              ))}
+              <Route component={fallbackRoute.component} />
+            </Switch>
+          </main>
+        </Router>
+      </SnackbarProvider>
+    </div>
   );
 };
 
