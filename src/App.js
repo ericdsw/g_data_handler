@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import makeStyles from '@mui/styles/makeStyles';
 import { NavigationDrawer, ApplicationBar } from "./components/elements";
 import { drawerWidth } from "./globals";
-import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+
+// import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+
 import { SnackbarProvider } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -53,17 +60,17 @@ const App = () => {
           />
           <main className={classes.content}>
             <div className={classes.toolbar} />
-            <Switch>
+            <Routes>
               {routes.map((route) => (
                 <Route
                   key={route.path}
                   path={route.path}
-                  exact={route.exact}
-                  component={route.component}
+                  exact={route.exact.toString()}
+                  element={route.component}
                 />
               ))}
               <Route component={fallbackRoute.component} />
-            </Switch>
+            </Routes>
           </main>
         </Router>
       </SnackbarProvider>

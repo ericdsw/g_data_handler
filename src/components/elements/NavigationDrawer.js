@@ -47,8 +47,9 @@ const NavigationDrawer = ({ isOpen, handleCollapse }) => {
               onClick={() => handleCollapse()}
               to={route.path}
               key={route.path}
-              exact
-              activeClassName={classes.selectedLink}
+              componentsProps={{
+                className: navData => navData.isActive ? classes.selectedLink : ''
+              }}
             >
               <ListItemIcon>{route.icon}</ListItemIcon>
               <ListItemText primary={route.text} />
