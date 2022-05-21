@@ -1,5 +1,5 @@
 import React from "react";
-import { green } from "@material-ui/core/colors";
+import { green } from "@mui/material/colors";
 
 const highlight = { color: green[400], fontWeight: "bold" };
 

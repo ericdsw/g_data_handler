@@ -1,8 +1,8 @@
 import React from "react";
-import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
-import SubscriptionsIcon from "@material-ui/icons/Subscriptions";
-import BubbleChartIcon from "@material-ui/icons/BubbleChart";
-import InfoIcon from "@material-ui/icons/Info";
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
+import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
+import BubbleChartIcon from "@mui/icons-material/BubbleChart";
+import InfoIcon from "@mui/icons-material/Info";
 import {
   CutscenePage,
   DialoguePage,

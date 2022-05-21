@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import {
   Paper,
   Typography,
@@ -10,7 +10,7 @@ import {
   IconButton,
   Icon,
   Divider,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { GenericDialogue, ConfirmationDialogue } from "../../elements";
 import { useDialogueManager } from "../../../hooks";
@@ -60,10 +60,10 @@ const CompleteCondition = (props) => {
         <Paper square elevation={0} className={classes.conditionContainer}>
           <List component="nav">{paramList}</List>
           <Typography align="left">
-            <IconButton onClick={() => toggleDialogue("editDialogue", "show")}>
+            <IconButton onClick={() => toggleDialogue("editDialogue", "show")} size="large">
               <Icon>edit</Icon>
             </IconButton>
-            <IconButton onClick={() => toggleDialogue("confirmDelete", "show")}>
+            <IconButton onClick={() => toggleDialogue("confirmDelete", "show")} size="large">
               <Icon>delete</Icon>
             </IconButton>
           </Typography>

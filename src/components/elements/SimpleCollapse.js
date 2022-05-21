@@ -1,6 +1,6 @@
 import React from "react";
 import { withSnackbar } from "notistack";
-import { Button, Icon } from "@material-ui/core";
+import { Button, Icon } from "@mui/material";
 
 class SimpleCollapse extends React.Component {
   state = {
@@ -32,7 +32,7 @@ class SimpleCollapse extends React.Component {
 
     return (
       <div>
-        <Button color="default" onClick={this.handleToggleCollapse}>
+        <Button onClick={this.handleToggleCollapse}>
           {displayMessage}
         </Button>
         <div style={{ display: collapsed ? "none" : "block" }}>

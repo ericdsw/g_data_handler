@@ -1,7 +1,5 @@
-import { DialoguePage } from "./dialogues";
-import { CutscenePage } from "./cutscene";
-import { StorylinePage } from "./storylines";
-import { NotFound } from "./notFound";
-import { AboutPage } from "./about";
-
-export { DialoguePage, CutscenePage, StorylinePage, NotFound, AboutPage };
+export { DialoguePage } from "./dialogues";
+export { CutscenePage } from "./cutscene";
+export { StorylinePage } from "./storylines";
+export { NotFound } from "./notFound";
+export { AboutPage } from "./about";

@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import { withSnackbar } from "notistack";
 import {
   MenuItem,
@@ -8,8 +8,8 @@ import {
   Menu,
   Typography,
   Avatar,
-} from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 import { speakerImages } from "../../../../globals/speakerSchema";
 
@@ -71,7 +71,7 @@ class DialogueImageSearcher extends React.Component {
           aria-owns={open ? "image-menu" : undefined}
           aria-haspopup="true"
           onClick={this.handleSearchImageShow}
-        >
+          size="large">
           <SearchIcon />
         </IconButton>
       );

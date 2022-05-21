@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import {
   Typography,
   Card,
@@ -11,7 +11,7 @@ import {
   Avatar,
   Icon,
   IconButton,
-} from "@material-ui/core";
+} from "@mui/material";
 import { ConfirmationDialogue, GenericDialogue } from "../../elements";
 import { useDialogueManager } from "../../../hooks";
 import CreateNPCInteractionForm from "./forms/CreateNPCInteractionForm";
@@ -50,10 +50,10 @@ const NPCInteraction = (props) => {
         }
         action={
           <React.Fragment>
-            <IconButton onClick={() => toggleDialogue("edit", "show")}>
+            <IconButton onClick={() => toggleDialogue("edit", "show")} size="large">
               <Icon>edit</Icon>
             </IconButton>
-            <IconButton onClick={() => toggleDialogue("confirmDelete", "show")}>
+            <IconButton onClick={() => toggleDialogue("confirmDelete", "show")} size="large">
               <Icon>delete</Icon>
             </IconButton>
           </React.Fragment>

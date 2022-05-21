@@ -7,7 +7,7 @@ import {
   Divider,
   ListItemIcon,
   ListItemText,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { useDialogueManager } from "../../../../hooks";
 import { GenericDialogue, ConfirmationDialogue } from "../../../elements";
@@ -224,7 +224,7 @@ const DialogueMessageToolbar = ({
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={(e) => handleMenuOpen(e)}
-      >
+        size="large">
         <Icon>more_vert</Icon>
       </IconButton>
 

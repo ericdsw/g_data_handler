@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Menu, MenuItem, Tooltip } from "@material-ui/core";
+import { Button, Menu, MenuItem, Tooltip } from "@mui/material";
 
 const MenuButton = ({
   elementId,

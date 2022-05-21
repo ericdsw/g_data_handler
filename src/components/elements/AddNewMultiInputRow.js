@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, TextField } from "@material-ui/core";
+import { Button, TextField } from "@mui/material";
 
 const AddNewMultiInputRow = ({ keyLabel, onNewRowDefined }) => {
   const [newRowValue, updateNewRowValue] = useState("");

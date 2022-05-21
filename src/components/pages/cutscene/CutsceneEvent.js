@@ -15,12 +15,12 @@ import {
   TableRow,
   Tooltip,
   Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+} from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 import classnames from "classnames";
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useDialogueManager } from "../../../hooks";
 import { GenericDialogue, ConfirmationDialogue } from "../../elements";
 import { CreateEventForm } from "./forms";
@@ -111,13 +111,13 @@ const CutsceneEvent = (props) => {
           <IconButton
             aria-label="Edit"
             onClick={() => toggleDialogue("editEvent", "show")}
-          >
+            size="large">
             <EditIcon />
           </IconButton>
           <IconButton
             aria-label="Delete"
             onClick={() => toggleDialogue("confirmDelete", "show")}
-          >
+            size="large">
             <DeleteIcon />
           </IconButton>
           <IconButton
@@ -127,7 +127,7 @@ const CutsceneEvent = (props) => {
             onClick={() => toggleExpand(!expanded)}
             aria-expanded={expanded}
             aria-label="More Info"
-          >
+            size="large">
             <ExpandMoreIcon />
           </IconButton>
         </CardActions>

@@ -6,9 +6,9 @@ import {
   DialogTitle,
   Button,
   Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { red, green } from "@material-ui/core/colors";
+} from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
+import { red, green } from "@mui/material/colors";
 
 const useStyles = makeStyles(() => ({
   cancelButton: {

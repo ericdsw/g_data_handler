@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import {
   Card,
   CardHeader,
@@ -15,7 +15,7 @@ import {
   List,
   ListItem,
   Collapse,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { interactionInputSchema } from "../../../globals";
 import NPCInteractionContainer from "../../containers/NPCInteractionContainer";
@@ -177,12 +177,12 @@ const StepMapEntity = (props) => {
 
       <CardActions className={classes.actions}>
         <Tooltip title="Edit entity name">
-          <IconButton onClick={() => toggleDialogue("editEntity", "show")}>
+          <IconButton onClick={() => toggleDialogue("editEntity", "show")} size="large">
             <Icon fontSize="small">edit</Icon>
           </IconButton>
         </Tooltip>
         <Tooltip title="Delete entity">
-          <IconButton onClick={() => toggleDialogue("confirmDelete", "show")}>
+          <IconButton onClick={() => toggleDialogue("confirmDelete", "show")} size="large">
             <Icon fontSize="small">delete</Icon>
           </IconButton>
         </Tooltip>

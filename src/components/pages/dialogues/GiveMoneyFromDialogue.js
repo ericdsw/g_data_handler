@@ -1,12 +1,7 @@
 import React, { useMemo } from "react";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  Typography,
-  Grid,
-  makeStyles,
-} from "@material-ui/core";
+import { Card, CardHeader, CardContent, Typography, Grid } from "@mui/material";
+
+import makeStyles from '@mui/styles/makeStyles';
 
 import { DialogueMessageToolbar, ConversationCardTitle } from "./elements";
 

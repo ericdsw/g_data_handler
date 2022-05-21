@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 import {
   Divider,
   Drawer,
@@ -8,7 +8,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-} from "@material-ui/core";
+} from "@mui/material";
 import { NavLink } from "react-router-dom";
 
 import routes from "../../router";
@@ -74,7 +74,7 @@ const NavigationDrawer = ({ isOpen, handleCollapse }) => {
         </Drawer>
       </Hidden>
 
-      <Hidden xsDown implementation="css">
+      <Hidden smDown implementation="css">
         <Drawer
           variant="permanent"
           open

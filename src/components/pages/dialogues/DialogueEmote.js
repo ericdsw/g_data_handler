@@ -1,12 +1,12 @@
 import React, { useMemo } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import {
   Card,
   CardContent,
   Typography,
   Grid,
   CardHeader,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { DialogueMessageToolbar, ConversationCardTitle } from "./elements";
 

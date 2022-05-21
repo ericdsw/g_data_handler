@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withSnackbar } from "notistack";
-import { Typography, Icon } from "@material-ui/core";
+import { Typography, Icon } from "@mui/material";
 import { normalize, denormalize } from "normalizr";
 
 import Storyline from "../pages/storylines/Storyline";

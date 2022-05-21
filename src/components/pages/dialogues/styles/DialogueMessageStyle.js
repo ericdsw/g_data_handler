@@ -1,4 +1,4 @@
-import { red, blue } from "@material-ui/core/colors";
+import { red, blue } from "@mui/material/colors";
 
 export const styles = (theme) => ({
   messageContainer: {

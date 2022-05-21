@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withSnackbar } from "notistack";
-import { Icon, Typography } from "@material-ui/core";
+import { Icon, Typography } from "@mui/material";
 import { DragDropContext } from "react-beautiful-dnd";
 
 import {

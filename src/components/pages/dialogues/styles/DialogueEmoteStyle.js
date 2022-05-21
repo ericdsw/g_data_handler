@@ -1,4 +1,4 @@
-import { blue } from "@material-ui/core/colors";
+import { blue } from "@mui/material/colors";
 import EmoteBackground from "../../../../images/emote_background.png";
 
 export const styles = (theme) => ({

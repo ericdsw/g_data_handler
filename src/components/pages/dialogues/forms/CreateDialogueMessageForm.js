@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import { withSnackbar } from "notistack";
 import {
   TextField,
@@ -19,7 +19,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { speakerSchema } from "../../../../globals";
 import { SimpleCollapse } from "../../../elements";
@@ -369,7 +369,7 @@ class CreateDialogueMessageForm extends React.Component {
             <br />
             <br />
             <Grid container justifyContent="center">
-              <IconButton onClick={this.handleInstructionsDialogueToggle}>
+              <IconButton onClick={this.handleInstructionsDialogueToggle} size="large">
                 <Icon>help</Icon>
               </IconButton>
             </Grid>

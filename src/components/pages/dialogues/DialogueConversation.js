@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 import {
   Accordion,
   AccordionSummary,
@@ -11,8 +11,8 @@ import {
   Icon,
   Tooltip,
   Checkbox,
-} from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Droppable } from "react-beautiful-dnd";
 
 import { ConfirmationDialogue, GenericDialogue } from "../../elements";
@@ -122,12 +122,12 @@ const DialogueConversation = ({
                 />
               </Tooltip>
               <Tooltip title="Edit Conversation Name" enterDelay={200}>
-                <IconButton onClick={(e) => onEditClick(e)}>
+                <IconButton onClick={(e) => onEditClick(e)} size="large">
                   <Icon>edit</Icon>
                 </IconButton>
               </Tooltip>
               <Tooltip title="Delete Conversation" enterDelay={200}>
-                <IconButton onClick={(e) => onDeleteClick(e)}>
+                <IconButton onClick={(e) => onDeleteClick(e)} size="large">
                   <Icon>delete</Icon>
                 </IconButton>
               </Tooltip>

@@ -1,8 +1,8 @@
 import React from "react";
 
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Button } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
+import makeStyles from '@mui/styles/makeStyles';
+import { Grid, Typography, Button } from "@mui/material";
+import { red } from "@mui/material/colors";
 
 import { useDialogueManager } from "../../../../hooks";
 import { GenericDialogue, ConfirmationDialogue } from "../../../elements";

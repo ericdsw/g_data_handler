@@ -1,9 +1,9 @@
-import { createTheme } from "@material-ui/core/styles";
+import { createTheme, adaptV4Theme } from "@mui/material/styles";
 
 const baseTheme = (mode) =>
-  createTheme({
+  createTheme(adaptV4Theme({
     palette: {
-      type: mode,
+      mode: mode,
       background: {
         default: mode === "dark" ? "#20171F" : "#fff",
         paper: mode === "dark" ? "#2b202a" : "#fefefe",
@@ -56,6 +56,6 @@ const baseTheme = (mode) =>
         },
       },
     },
-  });
+  }));
 
 export default baseTheme;

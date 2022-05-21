@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { blue } from "@material-ui/core/colors";
+import withStyles from '@mui/styles/withStyles';
+import { blue } from "@mui/material/colors";
 import {
   Table,
   TableHead,
@@ -14,7 +14,7 @@ import {
   Grid,
   Button,
   Divider,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { ConfirmationDialogue } from "../../../elements";
 import { useDialogueManager } from "../../../../hooks";
@@ -146,7 +146,7 @@ const StepMapEntityParameterList = (props) => {
                 </TableCell>
                 <TableCell>
                   <Typography align="right">
-                    <IconButton onClick={() => modifyParam(param)}>
+                    <IconButton onClick={() => modifyParam(param)} size="large">
                       {editingParam !== param && (
                         <Icon fontSize="small">edit</Icon>
                       )}
@@ -160,7 +160,7 @@ const StepMapEntityParameterList = (props) => {
                         toggleEditingParam(param);
                         toggleDialogue("confirmParamDelete", "show");
                       }}
-                    >
+                      size="large">
                       <Icon fontSize="small">delete</Icon>
                     </IconButton>
                   </Typography>

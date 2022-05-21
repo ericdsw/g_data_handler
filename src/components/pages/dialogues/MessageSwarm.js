@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 import {
   Card,
   CardHeader,
@@ -7,7 +7,7 @@ import {
   Typography,
   Tooltip,
   Zoom,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { DialogueMessageToolbar, ConversationCardTitle } from "./elements";
 import { cleanMessage } from "./functions";

@@ -1,6 +1,6 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Button } from "@material-ui/core";
+import makeStyles from '@mui/styles/makeStyles';
+import { Grid, Typography, Button } from "@mui/material";
 import { GenericDialogue, ConfirmationDialogue } from "../../elements";
 import { JumpForm } from "./forms";
 import { useDialogueManager } from "../../../hooks";

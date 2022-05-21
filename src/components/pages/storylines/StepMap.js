@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import {
   Card,
   CardHeader,
@@ -8,7 +8,7 @@ import {
   Icon,
   Avatar,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import StepMapEntityContainer from "../../containers/StepMapEntityContainer";
 import { GenericDialogue, MenuIconButton } from "../../elements";

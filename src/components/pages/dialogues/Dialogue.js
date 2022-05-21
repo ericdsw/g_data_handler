@@ -1,6 +1,6 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid, TextField, Button, Fab, Icon } from "@material-ui/core";
+import makeStyles from '@mui/styles/makeStyles';
+import { Grid, TextField, Button, Fab, Icon } from "@mui/material";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 import { GenericDialogue, ConfirmationDialogue } from "../../elements";

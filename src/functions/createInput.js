@@ -10,8 +10,8 @@ import {
   Icon,
   Tooltip,
   IconButton,
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import AddNewMultiInputRow from "../components/elements/AddNewMultiInputRow";
 
@@ -162,7 +162,7 @@ export default function createInput(
                 });
               }}
               style={{ width: 48, height: 48 }}
-            >
+              size="large">
               <DeleteIcon />
             </IconButton>
           </div>

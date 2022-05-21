@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import classnames from "classnames";
 import {
   Grid,
@@ -13,7 +13,7 @@ import {
   Icon,
   Divider,
   Tooltip,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import StepMapContainer from "../../containers/StepMapContainer";
 import CompletionBundleContainer from "../../containers/CompletionBundleContainer";
@@ -239,12 +239,12 @@ const StorylineStep = (props) => {
 
       <CardActions disableSpacing>
         <Tooltip title="Edit step name">
-          <IconButton onClick={() => toggleDialogue("editName", "show")}>
+          <IconButton onClick={() => toggleDialogue("editName", "show")} size="large">
             <Icon>edit</Icon>
           </IconButton>
         </Tooltip>
         <Tooltip title="Delete step">
-          <IconButton onClick={() => toggleDialogue("confirmDelete", "show")}>
+          <IconButton onClick={() => toggleDialogue("confirmDelete", "show")} size="large">
             <Icon>delete</Icon>
           </IconButton>
         </Tooltip>
@@ -262,7 +262,7 @@ const StorylineStep = (props) => {
             onClick={() => {
               toggleDialogue("createConditionBundle", "show");
             }}
-          >
+            size="large">
             <Icon>add_alert</Icon>
           </IconButton>
         </Tooltip>
@@ -271,7 +271,7 @@ const StorylineStep = (props) => {
             [classes.expandOpen]: expanded,
           })}
           onClick={() => toggleExpanded(!expanded)}
-        >
+          size="large">
           <Icon>expand_more</Icon>
         </IconButton>
       </CardActions>

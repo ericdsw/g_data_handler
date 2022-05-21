@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 import { withSnackbar } from "notistack";
-import { Grid, Button, Typography } from "@material-ui/core";
+import { Grid, Button, Typography } from "@mui/material";
 import {
   createInput,
   parseIn,

@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import { withSnackbar } from "notistack";
 import {
   TextField,
@@ -8,7 +8,7 @@ import {
   Button,
   Typography,
   Avatar,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { speakerSchema } from "../../../../globals";
 

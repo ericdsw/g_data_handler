@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Chip } from "@material-ui/core";
+import makeStyles from '@mui/styles/makeStyles';
+import { Chip } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   chip: {
     marginRight: theme.spacing(1),
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: theme.spacing(1),
     },
   },

@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 import {
   Grid,
   Typography,
@@ -8,7 +8,7 @@ import {
   FormControlLabel,
   Switch,
   Tooltip,
-} from "@material-ui/core";
+} from "@mui/material";
 import CutsceneRowContainer from "../../containers/CutsceneRowContainer";
 
 import { styles } from "./styles/CutsceneStyle";

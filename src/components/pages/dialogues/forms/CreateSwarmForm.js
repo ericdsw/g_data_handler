@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 import {
   Grid,
   Card,
@@ -8,8 +8,8 @@ import {
   Icon,
   Typography,
   Button,
-} from "@material-ui/core";
-import { blue } from "@material-ui/core/colors";
+} from "@mui/material";
+import { blue } from "@mui/material/colors";
 import { createInput } from "../../../../functions";
 
 const shortMessageSchema = {
@@ -188,14 +188,12 @@ const CreateSwarmForm = ({
                           requestEdit(index);
                         }
                       }}
-                    >
+                      size="large">
                       <Icon>
                         {index === curMessage.offset ? "cancel" : "edit"}
                       </Icon>
                     </IconButton>
-                    <IconButton
-                      onClick={() => removeSwarmMessageAtIndex(index)}
-                    >
+                    <IconButton onClick={() => removeSwarmMessageAtIndex(index)} size="large">
                       <Icon>delete</Icon>
                     </IconButton>
                   </React.Fragment>

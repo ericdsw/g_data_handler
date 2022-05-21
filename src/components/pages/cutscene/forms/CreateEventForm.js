@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import { withSnackbar } from "notistack";
 import {
   TextField,
@@ -10,7 +10,7 @@ import {
   Button,
   FormControlLabel,
   Switch,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { eventSchema } from "../../../../globals";
 import {

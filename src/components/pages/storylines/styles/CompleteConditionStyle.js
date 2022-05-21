@@ -1,6 +1,6 @@
-import { blue, green } from "@material-ui/core/colors";
+import { blue, green } from "@mui/material/colors";
 
-export const styles = (theme) => ({
+export const styles = () => ({
   conditionContainer: {
     padding: 16,
     width: "100%",

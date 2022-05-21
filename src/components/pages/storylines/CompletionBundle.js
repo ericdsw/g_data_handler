@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import {
   Card,
   CardHeader,
@@ -9,7 +9,7 @@ import {
   Tooltip,
   IconButton,
   Icon,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import CompleteConditionContainer from "../../containers/CompleteConditionContainer";
 import CompleteConditionForm from "./forms/CompleteConditionForm";
@@ -105,7 +105,7 @@ const CompletionBundle = (props) => {
                 onClick={() => {
                   toggleDialogue("editBundle", "show");
                 }}
-              >
+                size="large">
                 <Icon>edit</Icon>
               </IconButton>
             </Tooltip>
@@ -114,7 +114,7 @@ const CompletionBundle = (props) => {
                 onClick={() => {
                   toggleDialogue("confirmDelete", "show");
                 }}
-              >
+                size="large">
                 <Icon>delete</Icon>
               </IconButton>
             </Tooltip>

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withSnackbar } from "notistack";
 import Cutscene from "../pages/cutscene/Cutscene";
 import CutsceneToolbar from "../pages/cutscene/CutsceneToolbar";
-import { Icon, Typography } from "@material-ui/core";
+import { Icon, Typography } from "@mui/material";
 import { DragJsonFileManager } from "../elements";
 import {
   downloadJSON,

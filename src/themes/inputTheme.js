@@ -1,8 +1,8 @@
-import { createTheme } from "@material-ui/core/styles";
-import { blue } from "@material-ui/core/colors";
+import { createTheme, adaptV4Theme } from "@mui/material/styles";
+import { blue } from "@mui/material/colors";
 
 const inputTheme = (parentTheme) =>
-  createTheme({
+  createTheme(adaptV4Theme({
     ...parentTheme,
     palette: {
       ...parentTheme.palette,
@@ -10,6 +10,6 @@ const inputTheme = (parentTheme) =>
         main: blue[600],
       },
     },
-  });
+  }));
 
 export default inputTheme;

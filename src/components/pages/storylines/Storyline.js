@@ -1,6 +1,6 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography, TextField, Button } from "@material-ui/core";
+import withStyles from '@mui/styles/withStyles';
+import { Grid, Typography, TextField, Button } from "@mui/material";
 
 import StorylineStepContainer from "../../containers/StorylineStepContainer";
 import { GenericDialogue, ConfirmationDialogue } from "../../elements";

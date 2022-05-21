@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import {
   Card,
   CardContent,
@@ -8,7 +8,7 @@ import {
   Grid,
   Tooltip,
   Zoom,
-} from "@material-ui/core";
+} from "@mui/material";
 import clsx from "clsx";
 
 import { ConversationChoices, ConversationExtraParams } from "./elements";

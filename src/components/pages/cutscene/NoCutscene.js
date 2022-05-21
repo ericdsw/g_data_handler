@@ -1,6 +1,6 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, Divider, Paper, Grid, Typography } from "@material-ui/core";
+import makeStyles from '@mui/styles/makeStyles';
+import { Button, Divider, Paper, Grid, Typography } from "@mui/material";
 import { DragAndDrop } from "../../elements";
 
 import styles from "./styles/NoCutsceneStyle";

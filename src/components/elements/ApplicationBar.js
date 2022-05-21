@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 import {
   AppBar,
   Toolbar,
@@ -7,11 +7,11 @@ import {
   IconButton,
   Grid,
   Icon,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import { blue, green, yellow, amber, grey } from "@material-ui/core/colors";
-import Brightness4Icon from "@material-ui/icons/Brightness4";
-import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh";
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import { blue, green, yellow, amber, grey } from "@mui/material/colors";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import BrightnessHighIcon from "@mui/icons-material/BrightnessHigh";
 
 import { drawerWidth, applicationName } from "../../globals";
 import { useDialogueManager } from "../../hooks";
@@ -67,7 +67,12 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
   const [dialogues, toggleDialogue] = useDialogueManager("helpDialogue");
 
   return (
-    <AppBar position="fixed" color="primary" className={classes.appBar}>
+    <AppBar
+      position="fixed"
+      color="primary"
+      className={classes.appBar}
+      enableColorOnDark
+    >
       <Toolbar>
         <Grid container alignItems="center">
           <Grid item xs={8}>
@@ -77,7 +82,7 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
                 aria-label="Open Drawer"
                 onClick={() => handleToggle()}
                 className={classes.menuButton}
-              >
+                size="large">
                 <MenuIcon />
               </IconButton>
               {applicationName}
@@ -88,14 +93,14 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
               <IconButton
                 className={classes.buttons}
                 onClick={() => handleDarkModeToggle()}
-              >
+                size="large">
                 {!isDarkMode && <Brightness4Icon />}
                 {isDarkMode && <BrightnessHighIcon />}
               </IconButton>
               <IconButton
                 className={classes.buttons}
                 onClick={() => toggleDialogue("helpDialogue", "show")}
-              >
+                size="large">
                 <Icon>help_outline</Icon>
               </IconButton>
             </Grid>

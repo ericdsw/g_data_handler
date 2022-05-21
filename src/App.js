@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 import { NavigationDrawer, ApplicationBar } from "./components/elements";
 import { drawerWidth } from "./globals";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
