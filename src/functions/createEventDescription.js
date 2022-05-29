@@ -145,6 +145,13 @@ export default function createEventDescription(type, parameters) {
       }`;
     case 'give_currency':
       return `Will add ${parameters.given_amount} to the wallet`;
+    case 'seed_next_run':
+      return `Will apply the seed ${parameters.seed_name} to the next run.`
+    case 'toggle_player_control':
+      if (parameters.control_status) {
+        return "Will return control to the player";
+      }
+      return "Will take away control from the player";
     default:
       return '';
   }
