@@ -1,34 +1,34 @@
 @font-face {
-  font-family: "JF Dot Ayu Gothic 18";
-  src: url("./fonts/jfdot-webfont.woff2") format("woff2"),
-    url("./fonts/jfdot-webfont.woff") format("woff");
+  font-family: 'JF Dot Ayu Gothic 18';
+  src: url('./fonts/jfdot-webfont.woff2') format('woff2'),
+    url('./fonts/jfdot-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "DogicaPixel";
-  src: local("dogicapixel"), url("./fonts/dogicapixel.ttf") format("truetype");
+  font-family: 'DogicaPixel';
+  src: local('dogicapixel'), url('./fonts/dogicapixel.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Cascadia Code";
-  src: local("Cascadia Code"),
-    url("./fonts/CascadiaCode.ttf") format("truetype");
+  font-family: 'Cascadia Code';
+  src: local('Cascadia Code'),
+    url('./fonts/CascadiaCode.ttf') format('truetype');
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 

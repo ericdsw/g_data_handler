@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Button, Menu, MenuItem, Tooltip } from "@mui/material";
+import React, { useState } from 'react';
+import { Button, Menu, MenuItem, Tooltip } from '@mui/material';
 
 const MenuButton = ({
   elementId,
   contentDictionary,
-  tooltip = "",
-  color = "secondary",
+  tooltip = '',
+  color = 'secondary',
   buttonText,
   handleClick,
 }) => {

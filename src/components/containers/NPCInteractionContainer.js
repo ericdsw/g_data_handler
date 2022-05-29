@@ -1,12 +1,12 @@
-import React from "react";
-import { connect } from "react-redux";
-import { withSnackbar } from "notistack";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withSnackbar } from 'notistack';
 
-import NPCInteraction from "../pages/storylines/NPCInteraction";
+import NPCInteraction from '../pages/storylines/NPCInteraction';
 import {
   updateNPCInteraction,
   deleteNPCInteraction,
-} from "../../actions/storylineActions";
+} from '../../actions/storylineActions';
 
 class NPCInteractionContainer extends React.Component {
   deleteInteraction = () => {

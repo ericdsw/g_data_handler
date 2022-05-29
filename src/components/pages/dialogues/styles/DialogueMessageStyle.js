@@ -1,22 +1,22 @@
-import { red, blue } from "@mui/material/colors";
+import { red, blue } from '@mui/material/colors';
 
 export const styles = (theme) => ({
   messageContainer: {
-    width: "100%",
+    width: '100%',
     backgroundColor: theme.palette.messageBackground,
-    position: "relative",
-    borderBottom: "1px solid #666",
+    position: 'relative',
+    borderBottom: '1px solid #666',
     padding: theme.spacing(2),
   },
   details: {
-    display: "flex",
+    display: 'flex',
   },
   avatar: {
     width: 70,
     height: 70,
   },
   title: {
-    color: "white",
+    color: 'white',
     marginRight: 30,
   },
   subTitle: {
@@ -29,24 +29,24 @@ export const styles = (theme) => ({
    * Dimensions, colors and fonts mimics how the dialogues are being displayed in-game
    */
   content: {
-    display: "inline-block",
-    position: "relative",
+    display: 'inline-block',
+    position: 'relative',
     width: 310 * 2,
     height: 55 * 2,
     fontSize: 12 * 2,
-    backgroundColor: "#C9C3B8",
-    color: "black",
+    backgroundColor: '#C9C3B8',
+    color: 'black',
     borderRadius: 6 * 2,
     fontFamily: "'JF Dot Ayu Gothic 18'",
-    border: "2px solid #272523",
-    whiteSpace: "pre-line"
+    border: '2px solid #272523',
+    whiteSpace: 'pre-line',
   },
   contentText: {
     marginLeft: 8 * 2,
     marginTop: 6 * 2,
     width: 242 * 2,
     height: 47 * 2,
-    lineHeight: "30px",
+    lineHeight: '30px',
   },
   contentTextNoImage: {
     width: 282 * 2,
@@ -56,28 +56,28 @@ export const styles = (theme) => ({
     width: 100 * 2,
     height: 20 * 2,
     left: 18 * 2,
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     marginTop: -(30 * 2) / 2,
-    color: "#fff",
+    color: '#fff',
     borderRadius: 4 * 2,
-    backgroundColor: "#4C4945",
-    border: "4px solid #282624",
+    backgroundColor: '#4C4945',
+    border: '4px solid #282624',
     lineHeight: `${16 * 2}px`,
     paddingLeft: 2 * 2,
   },
   contentImage: {
-    width: "auto",
+    width: 'auto',
     height: 64 * 2,
-    position: "absolute",
+    position: 'absolute',
     bottom: 0,
     right: 1,
   },
   button: {
-    color: "white",
+    color: 'white',
   },
   chipContainer: {
-    borderTop: "1px solid #c5c5c5",
+    borderTop: '1px solid #c5c5c5',
     marginTop: 12,
     paddingTop: 12,
   },
@@ -86,7 +86,7 @@ export const styles = (theme) => ({
   },
   interruptDiv: {
     background: red[600],
-    color: "white",
+    color: 'white',
     padding: 6,
   },
 });

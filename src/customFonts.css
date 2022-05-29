@@ -1,10 +1,10 @@
 @font-face {
-  font-family: "DogicaPixel";
-  src: local("dogicapixel"), url("./fonts/dogicapixel.ttf") format("truetype");
+  font-family: 'DogicaPixel';
+  src: local('dogicapixel'), url('./fonts/dogicapixel.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Cascadia Code";
-  src: local("Cascadia Code"),
-    url("./fonts/CascadiaCode.ttf") format("truetype");
+  font-family: 'Cascadia Code';
+  src: local('Cascadia Code'),
+    url('./fonts/CascadiaCode.ttf') format('truetype');
 } ;

@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 import withStyles from '@mui/styles/withStyles';
 
 const styles = (theme) => ({
   dragWrapper: {
-    position: "relative",
+    position: 'relative',
   },
   dragOverlay: {
-    border: "dashed grey 4px",
-    backgroundColor: "rgba(255,255,255,0.8)",
-    position: "absolute",
+    border: 'dashed grey 4px',
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    position: 'absolute',
     top: 0,
     bottom: 0,
     left: 0,
@@ -16,12 +16,12 @@ const styles = (theme) => ({
     zIndex: 9999,
   },
   dragOverlayContent: {
-    position: "absolute",
-    top: "50%",
+    position: 'absolute',
+    top: '50%',
     right: 0,
     left: 0,
-    textAlign: "center",
-    color: "grey",
+    textAlign: 'center',
+    color: 'grey',
     fontSize: 36,
   },
 });
@@ -35,18 +35,18 @@ class DragAndDrop extends React.Component {
 
   componentDidMount() {
     let div = this.dropRef.current;
-    div.addEventListener("dragenter", this.handleDragIn);
-    div.addEventListener("dragleave", this.handleDragOut);
-    div.addEventListener("dragover", this.handleDrag);
-    div.addEventListener("drop", this.handleDrop);
+    div.addEventListener('dragenter', this.handleDragIn);
+    div.addEventListener('dragleave', this.handleDragOut);
+    div.addEventListener('dragover', this.handleDrag);
+    div.addEventListener('drop', this.handleDrop);
   }
 
   componentWillUnmount() {
     let div = this.dropRef.current;
-    div.removeEventListener("dragenter", this.handleDragIn);
-    div.removeEventListener("dragleave", this.handleDragOut);
-    div.removeEventListener("dragover", this.handleDrag);
-    div.removeEventListener("drop", this.handleDrop);
+    div.removeEventListener('dragenter', this.handleDragIn);
+    div.removeEventListener('dragleave', this.handleDragOut);
+    div.removeEventListener('dragover', this.handleDrag);
+    div.removeEventListener('drop', this.handleDrop);
   }
 
   handleDrag = (event) => {

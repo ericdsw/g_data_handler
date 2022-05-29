@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { Chip } from "@mui/material";
+import { Chip } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   chip: {
@@ -10,13 +10,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   chipContainer: {
-    borderTop: "1px solid #333",
+    borderTop: '1px solid #333',
     marginTop: 12,
     paddingTop: 12,
   },
 }));
 
-const extras = ["location", "voice_file", "control_level", "autopilot_offset"];
+const extras = ['location', 'voice_file', 'control_level', 'autopilot_offset'];
 
 const ConversationExtraParams = ({ message }) => {
   const classes = useStyles();

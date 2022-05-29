@@ -1,12 +1,12 @@
-import React from "react";
-import { connect } from "react-redux";
-import { withSnackbar } from "notistack";
-import CutsceneRow from "../pages/cutscene/CutsceneRow";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withSnackbar } from 'notistack';
+import CutsceneRow from '../pages/cutscene/CutsceneRow';
 import {
   addCutsceneRowAtPosition,
   deleteCutsceneRow,
   addCutsceneEvent,
-} from "../../actions/cutsceneActions";
+} from '../../actions/cutsceneActions';
 
 class CutsceneRowContainer extends React.Component {
   addRowBelow = () => {

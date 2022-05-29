@@ -1,7 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
-import { withSnackbar } from "notistack";
-import StorylineStep from "../pages/storylines/StorylineStep";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withSnackbar } from 'notistack';
+import StorylineStep from '../pages/storylines/StorylineStep';
 
 import {
   updateStepName,
@@ -9,7 +9,7 @@ import {
   addStepCompletionBundle,
   deleteStep,
   duplicateConfigurations,
-} from "../../actions/storylineActions";
+} from '../../actions/storylineActions';
 
 class StorylineStepContainer extends React.Component {
   addEntityWithMap = (mapName, entityData) => {
@@ -67,7 +67,7 @@ class StorylineStepContainer extends React.Component {
       return {
         bundle: curBundle,
         conditions: curBundle.conditions.map(
-          (condId, index) => completeConditions[condId]
+          (condId) => completeConditions[condId]
         ),
       };
     });

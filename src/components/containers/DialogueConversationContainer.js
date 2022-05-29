@@ -1,14 +1,14 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 import {
   deleteDialogueConversation,
   addMessageToConversation,
   editDialogueConversation,
   addToConversationMerger,
-} from "../../actions/dialogueActions";
-import { Draggable } from "react-beautiful-dnd";
+} from '../../actions/dialogueActions';
+import { Draggable } from 'react-beautiful-dnd';
 
-import DialogueConversation from "../pages/dialogues/DialogueConversation";
+import DialogueConversation from '../pages/dialogues/DialogueConversation';
 
 class DialogueConversationContainer extends React.Component {
   deleteConversation = () => {

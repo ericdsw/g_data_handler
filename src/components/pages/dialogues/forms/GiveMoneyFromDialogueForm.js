@@ -1,36 +1,36 @@
-import React, { useCallback } from "react";
-import { GenericForm } from "../../../elements";
+import React, { useCallback } from 'react';
+import { GenericForm } from '../../../elements';
 
 const schema = {
-  additionalText: "Will give the provided amount of money to the player",
+  additionalText: 'Will give the provided amount of money to the player',
   parameters: {
     amount: {
-      label: "Amount Given",
-      type: "number",
+      label: 'Amount Given',
+      type: 'number',
       required: true,
-      tooltip: "How much money to give",
+      tooltip: 'How much money to give',
     },
     custom_message: {
-      label: "Custom Message",
-      type: "text",
+      label: 'Custom Message',
+      type: 'text',
       required: false,
-      placeholder: "Got X Amount",
+      placeholder: 'Got X Amount',
       tooltip:
-        "If defined, this message will be used instead of the default one",
+        'If defined, this message will be used instead of the default one',
     },
   },
 };
 
 const GiveMoneyFromDialogueForm = ({
   data = {},
-  buttonText = "Create",
+  buttonText = 'Create',
   onSubmit,
 }) => {
   const handleSubmit = useCallback(
     (data) => {
       const returnData = {
         ...data,
-        type: "give_money",
+        type: 'give_money',
       };
       onSubmit(returnData);
     },

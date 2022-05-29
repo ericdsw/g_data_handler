@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import withStyles from '@mui/styles/withStyles';
+import React, { useState, useMemo, useCallback } from 'react';
+import { makeStyles } from '@mui/styles';
 import {
   Card,
   CardHeader,
@@ -8,52 +8,62 @@ import {
   Icon,
   Avatar,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
-import StepMapEntityContainer from "../../containers/StepMapEntityContainer";
-import { GenericDialogue, MenuIconButton } from "../../elements";
-import { storylineEntityInputSchema } from "../../../globals";
-import CreateMapEntityForm from "./forms/CreateMapEntityForm";
+import StepMapEntityContainer from '../../containers/StepMapEntityContainer';
+import { GenericDialogue, MenuIconButton } from '../../elements';
+import { storylineEntityInputSchema } from '../../../globals';
+import CreateMapEntityForm from './forms/CreateMapEntityForm';
 
-const styles = (theme) => ({
+const useStyles = makeStyles(() => ({
   mapCard: {
-    background: "#555",
+    background: '#555',
   },
-});
+}));
 
-const StepMap = (props) => {
-  // Parameters
-  const { classes, stepMap } = props;
+const StepMap = ({ stepMap, handleAddEntity }) => {
+  const classes = useStyles();
 
-  // Methods
-  const { handleAddEntity } = props;
+  const [curEntityType, setCurEntityType] = useState('');
 
-  const [curEntityType, setCurEntityType] = useState("");
+  const eTypeOptions = useMemo(() => {
+    const result = {};
+    for (const entityTypeKey in storylineEntityInputSchema) {
+      const curEntity = storylineEntityInputSchema[entityTypeKey];
+      result[entityTypeKey] = curEntity.name;
+    }
+    return result;
+  }, []);
 
-  const eTypeOptions = {};
-  for (const entityTypeKey in storylineEntityInputSchema) {
-    const curEntity = storylineEntityInputSchema[entityTypeKey];
-    eTypeOptions[entityTypeKey] = curEntity.name;
-  }
+  const createEntity = useCallback(
+    (name, _, parameters) => {
+      handleAddEntity({
+        name: name,
+        type: curEntityType,
+        parameters: parameters,
+      });
+    },
+    [curEntityType, handleAddEntity]
+  );
 
-  function createEntity(name, mapName, parameters) {
-    handleAddEntity({
-      name: name,
-      type: curEntityType,
-      parameters: parameters,
-    });
-  }
-
-  const content =
-    stepMap.entity_nodes &&
-    stepMap.entity_nodes.map((id, index) => (
-      <Grid item xs={12} md={4} key={id}>
-        <StepMapEntityContainer
-          currentMapEntityId={id}
-          curMapName={stepMap.map_name}
-        />
-      </Grid>
-    ));
+  /**
+   * Provide the length to the dependency array to make sure this recalculates when
+   * the entity_nodes changes.
+   */
+  const content = useMemo(
+    () =>
+      stepMap.entity_nodes &&
+      stepMap.entity_nodes.map((id) => (
+        <Grid item xs={12} md={4} key={id}>
+          <StepMapEntityContainer
+            currentMapEntityId={id}
+            curMapName={stepMap.map_name}
+          />
+        </Grid>
+      )),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [stepMap, stepMap.entity_nodes.length]
+  );
 
   return (
     <Card className={classes.mapCard}>
@@ -82,21 +92,21 @@ const StepMap = (props) => {
 
       <GenericDialogue
         title={
-          curEntityType !== ""
+          curEntityType !== ''
             ? storylineEntityInputSchema[curEntityType].name
-            : "Add Entity"
+            : 'Add Entity'
         }
-        open={curEntityType !== ""}
-        onClose={() => setCurEntityType("")}
+        open={curEntityType !== ''}
+        onClose={() => setCurEntityType('')}
         maxWidth="sm"
       >
         <CreateMapEntityForm
           data={{ map_name: stepMap.map_name }}
           curType={curEntityType}
-          disabledInputs={["map_name"]}
+          disabledInputs={['map_name']}
           handleSubmit={(name, mapName, parameters) => {
             createEntity(name, mapName, parameters);
-            setCurEntityType("");
+            setCurEntityType('');
           }}
         />
       </GenericDialogue>
@@ -104,4 +114,4 @@ const StepMap = (props) => {
   );
 };
 
-export default withStyles(styles)(StepMap);
+export default StepMap;

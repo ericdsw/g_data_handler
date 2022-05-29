@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import withStyles from '@mui/styles/withStyles';
+import React, { useState, useMemo } from 'react';
+import { makeStyles } from '@mui/styles';
 import {
   Paper,
   Typography,
@@ -10,33 +10,41 @@ import {
   IconButton,
   Icon,
   Divider,
-} from "@mui/material";
+} from '@mui/material';
 
-import { GenericDialogue, ConfirmationDialogue } from "../../elements";
-import { useDialogueManager } from "../../../hooks";
-import CompleteConditionForm from "./forms/CompleteConditionForm";
-import createConditionDescription from "./functions/createConditionDescription";
+import { GenericDialogue, ConfirmationDialogue } from '../../elements';
+import { useDialogueManager } from '../../../hooks';
+import CompleteConditionForm from './forms/CompleteConditionForm';
+import createConditionDescription from './functions/createConditionDescription';
 
-import { styles } from "./styles/CompleteConditionStyle";
+import { styles } from './styles/CompleteConditionStyle';
 
-const CompleteCondition = (props) => {
-  const { classes, completeCondition } = props;
+const useStyles = makeStyles(styles);
 
-  const { handleDeleteCondition, handleEditCondition } = props;
+const CompleteCondition = ({
+  completeCondition,
+  handleDeleteCondition,
+  handleEditCondition,
+}) => {
+  const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(
-    "confirmDelete",
-    "editDialogue"
+    'confirmDelete',
+    'editDialogue'
   );
   const [expanded, toggleExpand] = useState(false);
 
-  const paramList = Object.keys(completeCondition.parameters).map((key) => (
-    <ListItem key={key}>
-      <Typography variant="caption">
-        <b>{key}</b>: <i>{completeCondition.parameters[key]}</i>
-      </Typography>
-    </ListItem>
-  ));
+  const paramList = useMemo(
+    () =>
+      Object.keys(completeCondition.parameters).map((key) => (
+        <ListItem key={key}>
+          <Typography variant="caption">
+            <b>{key}</b>: <i>{completeCondition.parameters[key]}</i>
+          </Typography>
+        </ListItem>
+      )),
+    [completeCondition.parameters]
+  );
 
   return (
     <div>
@@ -48,8 +56,9 @@ const CompleteCondition = (props) => {
           onClick={(e) => toggleExpand(!expanded)}
         >
           <Typography variant="caption">
-            {completeCondition.unique_name}
+            [unique name: {completeCondition.unique_name}]
           </Typography>
+          <br />
           <Typography variant="caption" className={classes.interactionTypeText}>
             {createConditionDescription(completeCondition)}
           </Typography>
@@ -60,10 +69,16 @@ const CompleteCondition = (props) => {
         <Paper square elevation={0} className={classes.conditionContainer}>
           <List component="nav">{paramList}</List>
           <Typography align="left">
-            <IconButton onClick={() => toggleDialogue("editDialogue", "show")} size="large">
+            <IconButton
+              onClick={() => toggleDialogue('editDialogue', 'show')}
+              size="large"
+            >
               <Icon>edit</Icon>
             </IconButton>
-            <IconButton onClick={() => toggleDialogue("confirmDelete", "show")} size="large">
+            <IconButton
+              onClick={() => toggleDialogue('confirmDelete', 'show')}
+              size="large"
+            >
               <Icon>delete</Icon>
             </IconButton>
           </Typography>
@@ -72,18 +87,18 @@ const CompleteCondition = (props) => {
 
       <ConfirmationDialogue
         message={`Delete the condition ${completeCondition.unique_name}?`}
-        isOpen={dialogues["confirmDelete"]}
-        handleClose={() => toggleDialogue("confirmDelete", "hide")}
+        isOpen={dialogues['confirmDelete']}
+        handleClose={() => toggleDialogue('confirmDelete', 'hide')}
         handleConfirm={() => {
-          toggleDialogue("confirmDelete", "hide");
+          toggleDialogue('confirmDelete', 'hide');
           handleDeleteCondition();
         }}
       />
 
       <GenericDialogue
         title={`Edit the current condition`}
-        open={dialogues["editDialogue"]}
-        onClose={() => toggleDialogue("editDialogue", "hide")}
+        open={dialogues['editDialogue']}
+        onClose={() => toggleDialogue('editDialogue', 'hide')}
         maxWidth="sm"
       >
         <CompleteConditionForm
@@ -92,7 +107,7 @@ const CompleteCondition = (props) => {
           name={completeCondition.unique_name}
           buttonText="Update"
           handleSubmit={(name, data) => {
-            toggleDialogue("editDialogue", "hide");
+            toggleDialogue('editDialogue', 'hide');
             handleEditCondition(name, data);
           }}
         />
@@ -101,4 +116,4 @@ const CompleteCondition = (props) => {
   );
 };
 
-export default withStyles(styles)(CompleteCondition);
+export default CompleteCondition;

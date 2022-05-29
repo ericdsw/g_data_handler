@@ -1,19 +1,19 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 import {
   editConversationMessage,
   deleteConversationMessage,
   addMessageAtPosition,
   splitConversation,
-} from "../../actions/dialogueActions";
-import { Draggable } from "react-beautiful-dnd";
+} from '../../actions/dialogueActions';
+import { Draggable } from 'react-beautiful-dnd';
 
-import DialogueMessage from "../pages/dialogues/DialogueMessage";
-import DialogueEmote from "../pages/dialogues/DialogueEmote";
-import MessageSwarm from "../pages/dialogues/MessageSwarm";
-import GiveMoneyFromDialogue from "../pages/dialogues/GiveMoneyFromDialogue";
-import GiveItemFromDialogue from "../pages/dialogues/GiveItemFromDialogue";
-import PickItem from "../pages/dialogues/PickItem";
+import DialogueMessage from '../pages/dialogues/DialogueMessage';
+import DialogueEmote from '../pages/dialogues/DialogueEmote';
+import MessageSwarm from '../pages/dialogues/MessageSwarm';
+import GiveMoneyFromDialogue from '../pages/dialogues/GiveMoneyFromDialogue';
+import GiveItemFromDialogue from '../pages/dialogues/GiveItemFromDialogue';
+import PickItem from '../pages/dialogues/PickItem';
 
 class DialogueMessageContainer extends React.Component {
   editMessage = (data) => {
@@ -56,7 +56,7 @@ class DialogueMessageContainer extends React.Component {
 
     let content;
     switch (message.type) {
-      case "message":
+      case 'message':
         content = (
           <DialogueMessage
             message={message}
@@ -68,7 +68,7 @@ class DialogueMessageContainer extends React.Component {
           />
         );
         break;
-      case "emote":
+      case 'emote':
         content = (
           <DialogueEmote
             message={message}
@@ -79,7 +79,7 @@ class DialogueMessageContainer extends React.Component {
           />
         );
         break;
-      case "swarm":
+      case 'swarm':
         content = (
           <MessageSwarm
             swarmData={message}
@@ -89,7 +89,7 @@ class DialogueMessageContainer extends React.Component {
           />
         );
         break;
-      case "give_money":
+      case 'give_money':
         content = (
           <GiveMoneyFromDialogue
             message={message}
@@ -101,7 +101,7 @@ class DialogueMessageContainer extends React.Component {
           />
         );
         break;
-      case "give_item":
+      case 'give_item':
         content = (
           <GiveItemFromDialogue
             message={message}
@@ -114,7 +114,7 @@ class DialogueMessageContainer extends React.Component {
           />
         );
         break;
-      case "pick_item":
+      case 'pick_item':
         content = (
           <PickItem
             pickItemData={message}

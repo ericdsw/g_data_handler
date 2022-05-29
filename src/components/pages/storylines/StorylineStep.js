@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import withStyles from '@mui/styles/withStyles';
-import classnames from "classnames";
+import React, { useState, useMemo, useCallback } from 'react';
+import { makeStyles } from '@mui/styles';
+import classnames from 'classnames';
 import {
   Grid,
   Typography,
@@ -13,164 +13,204 @@ import {
   Icon,
   Divider,
   Tooltip,
-} from "@mui/material";
+} from '@mui/material';
 
-import StepMapContainer from "../../containers/StepMapContainer";
-import CompletionBundleContainer from "../../containers/CompletionBundleContainer";
+import StepMapContainer from '../../containers/StepMapContainer';
+import CompletionBundleContainer from '../../containers/CompletionBundleContainer';
 
 import {
   GenericDialogue,
   ConfirmationDialogue,
   MenuIconButton,
   MenuButton,
-} from "../../elements";
-import { useDialogueManager } from "../../../hooks";
-import { storylineEntityInputSchema } from "../../../globals";
-import CreateMapEntityForm from "./forms/CreateMapEntityForm";
-import CompletionBundleForm from "./forms/CompletionBundleForm";
-import StorylineStepForm from "./forms/StorylineStepForm";
+} from '../../elements';
+import { useDialogueManager } from '../../../hooks';
+import { storylineEntityInputSchema } from '../../../globals';
+import CreateMapEntityForm from './forms/CreateMapEntityForm';
+import CompletionBundleForm from './forms/CompletionBundleForm';
+import StorylineStepForm from './forms/StorylineStepForm';
 
-import { styles } from "./styles/StorylineStepStyle";
+import { styles } from './styles/StorylineStepStyle';
 
-const StorylineStep = (props) => {
-  // Properties
-  const {
-    classes,
-    storylineStep,
-    stepOffset,
-    allSteps,
-    completionDescription,
-    configDescription,
-  } = props;
+const useStyles = makeStyles(styles);
 
-  // Methods
-  const {
-    handleUpdateStepName,
-    handleAddMapConfiguration,
-    handleAddCompletionBundle,
-    handleDeleteStep,
-    handleDuplicateConfigs,
-  } = props;
+const StorylineStep = ({
+  storylineStep,
+  stepOffset,
+  allSteps,
+  completionDescription,
+  configDescription,
+  handleUpdateStepName,
+  handleAddMapConfiguration,
+  handleAddCompletionBundle,
+  handleDeleteStep,
+  handleDuplicateConfigs,
+}) => {
+  const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(
-    "createCompletionBundle",
-    "editName",
-    "confirmDelete"
+    'createCompletionBundle',
+    'editName',
+    'confirmDelete'
   );
 
   const [expanded, toggleExpanded] = useState(false);
-  const [curEntityType, setCurEntityType] = useState("");
+  const [curEntityType, setCurEntityType] = useState('');
 
-  const mapCount = storylineStep.configuration.length;
-  const bundleCount = storylineStep.completion.length;
-  const subHeader = `Configure ${mapCount} maps, watch ${bundleCount} bundles`;
+  const subHeader = useMemo(() => {
+    const mapCount = storylineStep.configuration.length;
+    const bundleCount = storylineStep.completion.length;
+    return `Configure ${mapCount} maps, watch ${bundleCount} bundles`;
+  }, [storylineStep]);
 
-  const eTypeOptions = {};
-  for (const entityTypeKey in storylineEntityInputSchema) {
-    const curEntity = storylineEntityInputSchema[entityTypeKey];
-    eTypeOptions[entityTypeKey] = curEntity.name;
-  }
-
-  const duplicateOptions = {};
-  for (const stepId in allSteps) {
-    if (stepId !== storylineStep.id) {
-      duplicateOptions[stepId] = allSteps[stepId].name;
+  const eTypeOptions = useMemo(() => {
+    const result = {};
+    for (const entityTypeKey in storylineEntityInputSchema) {
+      const curEntity = storylineEntityInputSchema[entityTypeKey];
+      result[entityTypeKey] = curEntity.name;
     }
-  }
+    return result;
+  }, []);
 
-  let fString = "";
-  if (stepOffset === 0) {
-    fString = "(Initial Step)";
-  }
-
-  function shortMapEntityDescription(mapEntity) {
-    const entityName = <b className={classes.blueText}>{mapEntity.name}</b>;
-    switch (mapEntity.type) {
-      case "create_npc":
-        return <Typography>Create NPC {entityName}</Typography>;
-      case "configure_npc":
-        return <Typography>Configure NPC {entityName}</Typography>;
-      case "create_area":
-        return <Typography>Create area {entityName}</Typography>;
-      case "configure_group":
-        return (
-          <Typography>
-            Configure GroupInteractionHandler {entityName}
-          </Typography>
-        );
-      default:
-        return entityName;
+  const duplicateOptions = useMemo(() => {
+    const result = {};
+    for (const stepId in allSteps) {
+      if (stepId !== storylineStep.id) {
+        result[stepId] = allSteps[stepId].name;
+      }
     }
-  }
+    return result;
+  }, [allSteps, storylineStep.id]);
 
-  function createNewEntity(name, mapName, parameters) {
-    handleAddMapConfiguration(mapName, {
-      name: name,
-      type: curEntityType,
-      parameters: parameters,
-    });
-  }
+  const fString = useMemo(
+    () => (stepOffset === 0 ? '(Initial Step)' : ''),
+    [stepOffset]
+  );
 
-  function duplicateConfigurationInStep(stepId) {
-    handleDuplicateConfigs(stepId);
-  }
-
-  const configDescriptionText = configDescription.map((mapData, index) => (
-    <li key={mapData.map.id}>
-      <Typography>
-        NPCs in map&nbsp;
-        <span className={classes.greenText}>{mapData.map.map_name}:</span>
-      </Typography>
-      <ul>
-        {mapData.entities.map((entity, index) => (
-          <li key={entity.id}>{shortMapEntityDescription(entity)}</li>
-        ))}
-      </ul>
-    </li>
-  ));
-
-  const completionDescriptionText = completionDescription.map((data, index) => (
-    <li key={data.bundle.id}>
-      <Typography>
-        Go to step&nbsp;
-        <span className={classes.greenText}>{data.bundle.next_step}</span>{" "}
-        after:
-      </Typography>
-      <ul>
-        {data.conditions.length > 0 &&
-          data.conditions.map((condition, index) => (
-            <li className={classes.blueText} key={condition.id}>
-              <Typography className={classes.blueText}>
-                {condition.unique_name}
-              </Typography>
-            </li>
-          ))}
-        {data.conditions.length <= 0 && (
-          <li className={classes.greyText}>
-            <Typography className={classes.greyText}>
-              <i>No conditions defined</i>
+  const shortMapEntityDescription = useCallback(
+    (mapEntity) => {
+      const entityName = <b className={classes.blueText}>{mapEntity.name}</b>;
+      switch (mapEntity.type) {
+        case 'create_npc':
+          return <Typography>Create NPC {entityName}</Typography>;
+        case 'configure_npc':
+          return <Typography>Configure NPC {entityName}</Typography>;
+        case 'create_area':
+          return <Typography>Create area {entityName}</Typography>;
+        case 'configure_group':
+          return (
+            <Typography>
+              Configure GroupInteractionHandler {entityName}
             </Typography>
-          </li>
-        )}
-      </ul>
-    </li>
-  ));
+          );
+        default:
+          return entityName;
+      }
+    },
+    [classes.blueText]
+  );
 
-  const mapConfData =
-    storylineStep.configuration &&
-    storylineStep.configuration.map((stepMapId, index) => (
-      <Grid item xs={12} key={stepMapId}>
-        <StepMapContainer currentMapId={stepMapId} />
-      </Grid>
-    ));
+  const createNewEntity = useCallback(
+    (name, mapName, parameters) => {
+      handleAddMapConfiguration(mapName, {
+        name: name,
+        type: curEntityType,
+        parameters: parameters,
+      });
+    },
+    [handleAddMapConfiguration, curEntityType]
+  );
 
-  const completionData =
-    storylineStep.completion &&
-    storylineStep.completion.map((bundleId, index) => (
-      <Grid item xs={12} key={bundleId}>
-        <CompletionBundleContainer currentCompletionBundleId={bundleId} />
-      </Grid>
-    ));
+  const duplicateConfigurationInStep = useCallback(
+    (stepId) => {
+      handleDuplicateConfigs(stepId);
+    },
+    [handleDuplicateConfigs]
+  );
+
+  const configDescriptionText = useMemo(
+    () =>
+      configDescription.map((mapData) => (
+        <li key={mapData.map.id}>
+          <Typography>
+            NPCs in map&nbsp;
+            <span className={classes.greenText}>{mapData.map.map_name}:</span>
+          </Typography>
+          <ul>
+            {mapData.entities.map((entity) => (
+              <li key={entity.id}>{shortMapEntityDescription(entity)}</li>
+            ))}
+          </ul>
+        </li>
+      )),
+    [classes.greenText, configDescription, shortMapEntityDescription]
+  );
+
+  const completionDescriptionText = useMemo(
+    () =>
+      completionDescription.map((data) => (
+        <li key={data.bundle.id}>
+          <Typography>
+            Go to step&nbsp;
+            <span className={classes.greenText}>
+              {data.bundle.next_step}
+            </span>{' '}
+            after:
+          </Typography>
+          <ul>
+            {data.conditions.length > 0 &&
+              data.conditions.map((condition, index) => (
+                <li className={classes.blueText} key={condition.id}>
+                  <Typography className={classes.blueText}>
+                    {condition.unique_name}
+                  </Typography>
+                </li>
+              ))}
+            {data.conditions.length <= 0 && (
+              <li className={classes.greyText}>
+                <Typography className={classes.greyText}>
+                  <i>No conditions defined</i>
+                </Typography>
+              </li>
+            )}
+          </ul>
+        </li>
+      )),
+    [classes, completionDescription]
+  );
+
+  /**
+   * Provide the length to the dependency array to make sure this recalculates when
+   * an entity is added/deleted
+   */
+  const mapConfData = useMemo(() => {
+    if (storylineStep.configuration) {
+      const result = storylineStep.configuration.map((stepMapId) => (
+        <Grid item xs={12} key={stepMapId}>
+          <StepMapContainer currentMapId={stepMapId} />
+        </Grid>
+      ));
+      return result;
+    }
+    return undefined;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storylineStep, storylineStep.configuration.length]);
+
+  /**
+   * Provide the length to the dependency array to make sure this recalculates when
+   * a completion bundle is added/deleted
+   */
+  const completionData = useMemo(
+    () =>
+      storylineStep.completion &&
+      storylineStep.completion.map((bundleId) => (
+        <Grid item xs={12} key={bundleId}>
+          <CompletionBundleContainer currentCompletionBundleId={bundleId} />
+        </Grid>
+      )),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [storylineStep, storylineStep.completion.length]
+  );
 
   return (
     <Card>
@@ -239,12 +279,18 @@ const StorylineStep = (props) => {
 
       <CardActions disableSpacing>
         <Tooltip title="Edit step name">
-          <IconButton onClick={() => toggleDialogue("editName", "show")} size="large">
+          <IconButton
+            onClick={() => toggleDialogue('editName', 'show')}
+            size="large"
+          >
             <Icon>edit</Icon>
           </IconButton>
         </Tooltip>
         <Tooltip title="Delete step">
-          <IconButton onClick={() => toggleDialogue("confirmDelete", "show")} size="large">
+          <IconButton
+            onClick={() => toggleDialogue('confirmDelete', 'show')}
+            size="large"
+          >
             <Icon>delete</Icon>
           </IconButton>
         </Tooltip>
@@ -260,9 +306,10 @@ const StorylineStep = (props) => {
         <Tooltip title="Add condition bundle">
           <IconButton
             onClick={() => {
-              toggleDialogue("createConditionBundle", "show");
+              toggleDialogue('createConditionBundle', 'show');
             }}
-            size="large">
+            size="large"
+          >
             <Icon>add_alert</Icon>
           </IconButton>
         </Tooltip>
@@ -271,10 +318,12 @@ const StorylineStep = (props) => {
             [classes.expandOpen]: expanded,
           })}
           onClick={() => toggleExpanded(!expanded)}
-          size="large">
+          size="large"
+        >
           <Icon>expand_more</Icon>
         </IconButton>
       </CardActions>
+
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Grid container spacing={2}>
@@ -291,7 +340,6 @@ const StorylineStep = (props) => {
                   }}
                 />
               </Typography>
-              <br />
               <Grid container spacing={2}>
                 {mapConfData}
               </Grid>
@@ -300,7 +348,6 @@ const StorylineStep = (props) => {
               <Typography variant="h5" align="center" gutterBottom>
                 Conditions
               </Typography>
-              <br />
               <Grid container spacing={2}>
                 {completionData}
               </Grid>
@@ -312,19 +359,19 @@ const StorylineStep = (props) => {
       {/* Add Entity Form */}
       <GenericDialogue
         title={
-          curEntityType !== ""
+          curEntityType !== ''
             ? storylineEntityInputSchema[curEntityType].name
-            : "Add Entity"
+            : 'Add Entity'
         }
-        open={curEntityType !== ""}
-        onClose={() => setCurEntityType("")}
+        open={curEntityType !== ''}
+        onClose={() => setCurEntityType('')}
         maxWidth="sm"
       >
         <CreateMapEntityForm
           curType={curEntityType}
           handleSubmit={(name, mapName, parameters) => {
             createNewEntity(name, mapName, parameters);
-            setCurEntityType("");
+            setCurEntityType('');
           }}
         />
       </GenericDialogue>
@@ -332,13 +379,13 @@ const StorylineStep = (props) => {
       {/* Condition Bundle Creation Form */}
       <GenericDialogue
         title="Add Condition Bundle"
-        open={dialogues["createConditionBundle"]}
-        onClose={() => toggleDialogue("createConditionBundle", "hide")}
+        open={dialogues['createConditionBundle']}
+        onClose={() => toggleDialogue('createConditionBundle', 'hide')}
         maxWidth="sm"
       >
         <CompletionBundleForm
           handleSubmit={(data) => {
-            toggleDialogue("createConditionBundle", "hide");
+            toggleDialogue('createConditionBundle', 'hide');
             handleAddCompletionBundle(data);
           }}
         />
@@ -348,14 +395,14 @@ const StorylineStep = (props) => {
       <GenericDialogue
         title="Edit step name"
         maxWidth="sm"
-        open={dialogues["editName"]}
-        onClose={() => toggleDialogue("editName", "hide")}
+        open={dialogues['editName']}
+        onClose={() => toggleDialogue('editName', 'hide')}
       >
         <StorylineStepForm
           stepName={storylineStep.name}
           buttonText="Update"
           handleSubmit={(newName) => {
-            toggleDialogue("editName", "hide");
+            toggleDialogue('editName', 'hide');
             handleUpdateStepName(newName);
           }}
         />
@@ -364,10 +411,10 @@ const StorylineStep = (props) => {
       {/* Delete Confirmation */}
       <ConfirmationDialogue
         message={`Delete the step ${storylineStep.name}?`}
-        isOpen={dialogues["confirmDelete"]}
-        handleClose={() => toggleDialogue("confirmDelete", "hide")}
+        isOpen={dialogues['confirmDelete']}
+        handleClose={() => toggleDialogue('confirmDelete', 'hide')}
         handleConfirm={() => {
-          toggleDialogue("confirmDelete", "hide");
+          toggleDialogue('confirmDelete', 'hide');
           handleDeleteStep();
         }}
       />
@@ -375,4 +422,4 @@ const StorylineStep = (props) => {
   );
 };
 
-export default withStyles(styles)(StorylineStep);
+export default StorylineStep;

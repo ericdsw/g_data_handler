@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 import withStyles from '@mui/styles/withStyles';
-import { withSnackbar } from "notistack";
-import { TextField, Grid, Button } from "@mui/material";
+import { withSnackbar } from 'notistack';
+import { TextField, Grid, Button } from '@mui/material';
 
 const styles = (theme) => ({});
 
 class CreateConversationForm extends React.Component {
   state = {
-    conversationName: "",
+    conversationName: '',
   };
 
   isEdit = false;
@@ -26,9 +26,9 @@ class CreateConversationForm extends React.Component {
     event.preventDefault();
     event.stopPropagation();
 
-    if (this.state.conversationName === "") {
-      this.props.enqueueSnackbar("The conversation name is required", {
-        variant: "error",
+    if (this.state.conversationName === '') {
+      this.props.enqueueSnackbar('The conversation name is required', {
+        variant: 'error',
       });
     } else {
       this.props.creationHandler(this.state.conversationName);
@@ -42,9 +42,9 @@ class CreateConversationForm extends React.Component {
   };
 
   render() {
-    let buttonText = "Create Conversation";
+    let buttonText = 'Create Conversation';
     if (this.isEdit) {
-      buttonText = "Edit Conversation";
+      buttonText = 'Edit Conversation';
     }
 
     return (
@@ -55,7 +55,7 @@ class CreateConversationForm extends React.Component {
               id="conversationName"
               label="Conversation Name"
               value={this.state.conversationName}
-              onChange={this.handleChange("conversationName")}
+              onChange={this.handleChange('conversationName')}
               autoFocus
               fullWidth
               variant="outlined"

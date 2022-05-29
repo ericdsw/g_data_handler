@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { Chip, Tooltip } from "@mui/material";
+import { Chip, Tooltip } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   chip: {
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   chipContainer: {
-    borderTop: "1px solid #333",
+    borderTop: '1px solid #333',
     marginTop: 12,
     paddingTop: 12,
   },
@@ -38,8 +38,8 @@ const ConversationChoices = ({ message }) => {
               label={label}
               style={{
                 border: currentChoice.isDefaultCancel
-                  ? "1px solid red"
-                  : "none",
+                  ? '1px solid red'
+                  : 'none',
               }}
             />
           </Tooltip>
@@ -51,7 +51,7 @@ const ConversationChoices = ({ message }) => {
             className={classes.chip}
             label={`${currentChoice.key}: ${currentChoice.value}`}
             style={{
-              border: currentChoice.isDefaultCancel ? "1px solid red" : "none",
+              border: currentChoice.isDefaultCancel ? '1px solid red' : 'none',
             }}
           />
         );

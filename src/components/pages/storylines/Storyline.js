@@ -1,25 +1,43 @@
-import React from "react";
-import withStyles from '@mui/styles/withStyles';
-import { Grid, Typography, TextField, Button } from "@mui/material";
+import React, { useMemo } from 'react';
+import { makeStyles } from '@mui/styles';
+import { Grid, Typography, TextField, Button } from '@mui/material';
 
-import StorylineStepContainer from "../../containers/StorylineStepContainer";
-import { GenericDialogue, ConfirmationDialogue } from "../../elements";
-import { useDialogueManager } from "../../../hooks";
-import StorylineStepForm from "./forms/StorylineStepForm";
+import StorylineStepContainer from '../../containers/StorylineStepContainer';
+import { GenericDialogue, ConfirmationDialogue } from '../../elements';
+import { useDialogueManager } from '../../../hooks';
+import StorylineStepForm from './forms/StorylineStepForm';
 
-import { styles } from "./styles/StorylineStyle";
+import { styles } from './styles/StorylineStyle';
 
-const Storyline = (props) => {
-  const { classes, storyline } = props;
+const useStyles = makeStyles(styles);
 
-  const { handleNameChange, handleAddStep, handleClear, handleExport } = props;
+const Storyline = ({
+  storyline,
+  handleNameChange,
+  handleAddStep,
+  handleClear,
+  handleExport,
+}) => {
+  const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(
-    "createStepDialogue",
-    "confirmDelete"
+    'createStepDialogue',
+    'confirmDelete'
   );
 
-  const fileName = `${storyline.name}.json`;
+  const fileName = useMemo(() => `${storyline.name}.json`, [storyline.name]);
+
+  const stepEntries = useMemo(
+    () =>
+      storyline.steps.map((stepId, index) => {
+        return (
+          <Grid item xs={12} key={stepId}>
+            <StorylineStepContainer currentStepId={stepId} stepOffset={index} />
+          </Grid>
+        );
+      }),
+    [storyline]
+  );
 
   return (
     <Grid className={classes.root} container spacing={2} alignItems="center">
@@ -32,7 +50,7 @@ const Storyline = (props) => {
         <Typography align="right">
           <Button
             className={classes.defaultButton}
-            onClick={() => toggleDialogue("createStepDialogue", "show")}
+            onClick={() => toggleDialogue('createStepDialogue', 'show')}
           >
             Add Step
           </Button>
@@ -41,7 +59,7 @@ const Storyline = (props) => {
           </Button>
           <Button
             className={classes.deleteButton}
-            onClick={() => toggleDialogue("confirmDelete", "show")}
+            onClick={() => toggleDialogue('confirmDelete', 'show')}
           >
             Clear Storyline
           </Button>
@@ -70,23 +88,13 @@ const Storyline = (props) => {
         />
       </Grid>
 
-      {storyline.steps &&
-        storyline.steps.map((stepId, index) => {
-          return (
-            <Grid item xs={12} key={stepId}>
-              <StorylineStepContainer
-                currentStepId={stepId}
-                stepOffset={index}
-              />
-            </Grid>
-          );
-        })}
+      {stepEntries}
 
       <Grid item xs={12}>
         <Typography align="center">
           <Button
             className={classes.defaultButton}
-            onClick={() => toggleDialogue("createStepDialogue", "show")}
+            onClick={() => toggleDialogue('createStepDialogue', 'show')}
           >
             Add Step
           </Button>
@@ -96,12 +104,12 @@ const Storyline = (props) => {
       <GenericDialogue
         title="Add Step"
         maxWidth="sm"
-        open={dialogues["createStepDialogue"]}
-        onClose={() => toggleDialogue("createStepDialogue", "hide")}
+        open={dialogues['createStepDialogue']}
+        onClose={() => toggleDialogue('createStepDialogue', 'hide')}
       >
         <StorylineStepForm
           handleSubmit={(stepName) => {
-            toggleDialogue("createStepDialogue", "hide");
+            toggleDialogue('createStepDialogue', 'hide');
             handleAddStep(stepName);
           }}
         />
@@ -109,10 +117,10 @@ const Storyline = (props) => {
 
       <ConfirmationDialogue
         message="Clear the current storyline?"
-        isOpen={dialogues["confirmDelete"]}
-        handleClose={() => toggleDialogue("confirmDelete", "hide")}
+        isOpen={dialogues['confirmDelete']}
+        handleClose={() => toggleDialogue('confirmDelete', 'hide')}
         handleConfirm={() => {
-          toggleDialogue("confirmDelete", "hide");
+          toggleDialogue('confirmDelete', 'hide');
           handleClear();
         }}
       />
@@ -120,4 +128,4 @@ const Storyline = (props) => {
   );
 };
 
-export default withStyles(styles)(Storyline);
+export default Storyline;

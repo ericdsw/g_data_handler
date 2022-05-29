@@ -1,5 +1,5 @@
-import React from "react";
-import { Icon, Typography, Grid } from "@mui/material";
+import React from 'react';
+import { Icon, Typography, Grid } from '@mui/material';
 
 import makeStyles from '@mui/styles/makeStyles';
 

@@ -19,7 +19,7 @@ import {
   DELETE_CONVERSATIONS_TO_MERGE,
   SELECT_ALL_CONVERSATIONS,
   UNSELECT_ALL_CONVERSATIONS,
-} from "./types";
+} from './types';
 
 // Create
 

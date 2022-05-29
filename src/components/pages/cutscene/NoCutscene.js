@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { Button, Divider, Paper, Grid, Typography } from "@mui/material";
-import { DragAndDrop } from "../../elements";
+import { Button, Divider, Paper, Grid, Typography } from '@mui/material';
+import { DragAndDrop } from '../../elements';
 
-import styles from "./styles/NoCutsceneStyle";
+import styles from './styles/NoCutsceneStyle';
 
-const NoCutscene = (props) => {
-  const classes = makeStyles(styles)();
+const useStyles = makeStyles(styles);
 
-  const { handleEmptyCutscene, handleUpdateFromFile } = props;
+const NoCutscene = ({ handleEmptyCutscene, handleUpdateFromFile }) => {
+  const classes = useStyles();
 
   return (
     <div>

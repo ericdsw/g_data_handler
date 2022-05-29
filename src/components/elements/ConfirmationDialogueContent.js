@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { DialogActions, DialogTitle, Button } from "@mui/material";
-import { red, green } from "@mui/material/colors";
+import { DialogActions, DialogTitle, Button } from '@mui/material';
+import { red, green } from '@mui/material/colors';
 
 const useStyles = makeStyles({
   cancelButton: {

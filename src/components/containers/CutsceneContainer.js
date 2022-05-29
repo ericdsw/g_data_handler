@@ -1,15 +1,15 @@
-import React from "react";
-import { connect } from "react-redux";
-import { withSnackbar } from "notistack";
-import Cutscene from "../pages/cutscene/Cutscene";
-import CutsceneToolbar from "../pages/cutscene/CutsceneToolbar";
-import { Icon, Typography } from "@mui/material";
-import { DragJsonFileManager } from "../elements";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withSnackbar } from 'notistack';
+import Cutscene from '../pages/cutscene/Cutscene';
+import CutsceneToolbar from '../pages/cutscene/CutsceneToolbar';
+import { Icon, Typography } from '@mui/material';
+import { DragJsonFileManager } from '../elements';
 import {
   downloadJSON,
   parseFile,
   fillCutsceneWithDefaults,
-} from "../../functions";
+} from '../../functions';
 import {
   updateCutsceneFileName,
   updateCutscene,
@@ -18,13 +18,13 @@ import {
   addCutsceneJump,
   deleteCutsceneJump,
   updateCutsceneHideBars,
-} from "../../actions/cutsceneActions";
+} from '../../actions/cutsceneActions';
 
 class CutsceneContainer extends React.Component {
   clearCutscene = () => {
     this.props.updateCutscene({
       cutscene: null,
-      fileName: "",
+      fileName: '',
       jumps: {},
       hideBars: false,
     });
@@ -34,25 +34,25 @@ class CutsceneContainer extends React.Component {
     this.props.updateCutscene({
       cutscene: [],
       jumps: {},
-      fileName: "cutscene_file_name.json",
+      fileName: 'cutscene_file_name.json',
       hideBars: false,
     });
   };
 
   updateCutsceneFromFile = (targetFile) => {
     const { updateCutscene } = this.props;
-    parseFile(targetFile, "application/json")
+    parseFile(targetFile, 'application/json')
       .then((json) => {
         let jumps = {};
         let hideBars = false;
-        if (json["cutscene_jumps"]) {
-          jumps = json["cutscene_jumps"];
+        if (json['cutscene_jumps']) {
+          jumps = json['cutscene_jumps'];
         }
-        if (json["hide_black_bars"]) {
-          hideBars = json["hide_black_bars"];
+        if (json['hide_black_bars']) {
+          hideBars = json['hide_black_bars'];
         }
         updateCutscene({
-          cutscene: fillCutsceneWithDefaults(json["data"]),
+          cutscene: fillCutsceneWithDefaults(json['data']),
           jumps: jumps,
           fileName: targetFile.name,
           hideBars: hideBars,
@@ -87,7 +87,7 @@ class CutsceneContainer extends React.Component {
 
     // Check that the cutscene is not empty
     if (currentCutscene.length <= 0) {
-      this.showError("Cannot export an empty cutscene");
+      this.showError('Cannot export an empty cutscene');
       return;
     }
 
@@ -100,7 +100,7 @@ class CutsceneContainer extends React.Component {
     });
     if (emptyRows > 0) {
       this.showError(
-        `${emptyRows} row${emptyRows > 1 ? "s are" : " is"} empty`
+        `${emptyRows} row${emptyRows > 1 ? 's are' : ' is'} empty`
       );
       return;
     }
@@ -115,7 +115,7 @@ class CutsceneContainer extends React.Component {
 
   // Extra
   showError = (errorMessage) => {
-    this.props.enqueueSnackbar(errorMessage, { variant: "error" });
+    this.props.enqueueSnackbar(errorMessage, { variant: 'error' });
   };
 
   // Render logic

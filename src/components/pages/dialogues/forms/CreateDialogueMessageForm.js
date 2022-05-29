@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import withStyles from '@mui/styles/withStyles';
-import { withSnackbar } from "notistack";
+import { withSnackbar } from 'notistack';
 import {
   TextField,
   MenuItem,
@@ -19,18 +19,18 @@ import {
   TableCell,
   TableHead,
   TableRow,
-} from "@mui/material";
+} from '@mui/material';
 
-import { speakerSchema } from "../../../../globals";
-import { SimpleCollapse } from "../../../elements";
+import { speakerSchema } from '../../../../globals';
+import { SimpleCollapse } from '../../../elements';
 
-import CreateChoiceForm from "./CreateChoiceForm";
-import DialogueImageSearcher from "./DialogueImageSearcher";
+import CreateChoiceForm from './CreateChoiceForm';
+import DialogueImageSearcher from './DialogueImageSearcher';
 
 const styles = () => ({
   imagePreview: {
-    backgroundColor: "#ccc",
-    width: "100%",
+    backgroundColor: '#ccc',
+    width: '100%',
     height: 125,
     marginTop: 12,
   },
@@ -46,24 +46,24 @@ const DEFAULT_STATE = {
   instructionsDialogueOpen: false,
 
   // Type
-  type: "message",
+  type: 'message',
 
   // Message variables
-  imagePreview: "",
-  speaker: "",
-  message: "",
-  image: "",
-  name: "",
-  location: "",
-  voice_file: "",
-  control_level: "",
-  autopilot_offset: "",
+  imagePreview: '',
+  speaker: '',
+  message: '',
+  image: '',
+  name: '',
+  location: '',
+  voice_file: '',
+  control_level: '',
+  autopilot_offset: '',
   choices: [],
   interrupts: false,
-  target_object: "",
+  target_object: '',
   is_emote: false,
-  enter_sound: "",
-  exit_sound: "",
+  enter_sound: '',
+  exit_sound: '',
 };
 
 class CreateDialogueMessageForm extends React.Component {
@@ -73,10 +73,10 @@ class CreateDialogueMessageForm extends React.Component {
     if (props.messageData) {
       stateData = Object.assign({}, stateData, props.messageData);
       if (props.messageData.image) {
-        stateData["imagePreview"] = props.messageData.image;
+        stateData['imagePreview'] = props.messageData.image;
       } else if (props.messageData.speaker) {
         const { speaker } = props.messageData;
-        stateData["imagePreview"] = speakerSchema[speaker].image || "";
+        stateData['imagePreview'] = speakerSchema[speaker].image || '';
       }
     }
     this.state = stateData;
@@ -104,16 +104,16 @@ class CreateDialogueMessageForm extends React.Component {
     event.preventDefault();
     event.stopPropagation();
 
-    if (this.state.message === "") {
-      this.props.enqueueSnackbar("The message must be specified", {
-        variant: "error",
+    if (this.state.message === '') {
+      this.props.enqueueSnackbar('The message must be specified', {
+        variant: 'error',
       });
       return;
     }
-    if (this.state.control_level === "autopilot") {
-      if (this.state.autopilotOffset === "") {
-        this.props.enqueueSnackbar("Specify autopilot offset", {
-          variant: "error",
+    if (this.state.control_level === 'autopilot') {
+      if (this.state.autopilotOffset === '') {
+        this.props.enqueueSnackbar('Specify autopilot offset', {
+          variant: 'error',
         });
         return;
       }
@@ -122,7 +122,7 @@ class CreateDialogueMessageForm extends React.Component {
     let messageData = {
       message: this.state.message,
       interrupts: this.state.interrupts,
-      type: "message",
+      type: 'message',
     };
 
     // Filters
@@ -165,7 +165,7 @@ class CreateDialogueMessageForm extends React.Component {
     if (this.state.freshStart) {
       this.setState(Object.assign({}, DEFAULT_STATE));
     } else {
-      this.setState({ message: "" });
+      this.setState({ message: '' });
     }
   };
 
@@ -180,21 +180,21 @@ class CreateDialogueMessageForm extends React.Component {
 
       const speakers = Object.keys(speakerSchema);
 
-      if (inputIdentifier === "image") {
+      if (inputIdentifier === 'image') {
         const { speaker } = this.state;
-        let defaultImage = "";
+        let defaultImage = '';
         if (speaker && speakers.includes(speaker)) {
-          defaultImage = speakerSchema[speaker].image || "";
+          defaultImage = speakerSchema[speaker].image || '';
         }
         this.setState({
           [inputIdentifier]: value,
-          imagePreview: value !== "" ? value : defaultImage,
+          imagePreview: value !== '' ? value : defaultImage,
         });
-      } else if (inputIdentifier === "speaker") {
+      } else if (inputIdentifier === 'speaker') {
         const { image } = this.state;
-        let defaultImage = "";
+        let defaultImage = '';
         if (value && speakers.includes(value)) {
-          defaultImage = speakerSchema[value].image || "";
+          defaultImage = speakerSchema[value].image || '';
         }
         const newImagePreview = image ? image : defaultImage;
         this.setState({
@@ -272,7 +272,7 @@ class CreateDialogueMessageForm extends React.Component {
             <TextField
               fullWidth
               label="Image"
-              onChange={this.handleInputChange("image")}
+              onChange={this.handleInputChange('image')}
               value={this.state.image}
               variant="outlined"
               margin="normal"
@@ -283,7 +283,7 @@ class CreateDialogueMessageForm extends React.Component {
               select
               fullWidth
               label="Speaker"
-              onChange={this.handleInputChange("speaker")}
+              onChange={this.handleInputChange('speaker')}
               value={this.state.speaker}
               variant="outlined"
               margin="normal"
@@ -293,7 +293,7 @@ class CreateDialogueMessageForm extends React.Component {
             <TextField
               fullWidth
               label="Name"
-              onChange={this.handleInputChange("name")}
+              onChange={this.handleInputChange('name')}
               value={this.state.name}
               placeholder="The name that will be displayed on top of the Dialogue"
               variant="outlined"
@@ -304,7 +304,7 @@ class CreateDialogueMessageForm extends React.Component {
                 <TextField
                   fullWidth
                   label="Enter Sound"
-                  onChange={this.handleInputChange("enter_sound")}
+                  onChange={this.handleInputChange('enter_sound')}
                   value={this.state.enter_sound}
                   variant="outlined"
                   margin="normal"
@@ -315,7 +315,7 @@ class CreateDialogueMessageForm extends React.Component {
                 <TextField
                   fullWidth
                   label="Exit Sound"
-                  onChange={this.handleInputChange("exit_sound")}
+                  onChange={this.handleInputChange('exit_sound')}
                   value={this.state.exit_sound}
                   variant="outlined"
                   margin="normal"
@@ -327,7 +327,7 @@ class CreateDialogueMessageForm extends React.Component {
             <TextField
               fullWidth
               label="Target Object"
-              onChange={this.handleInputChange("target_object")}
+              onChange={this.handleInputChange('target_object')}
               value={this.state.target_object}
               variant="outlined"
               margin="normal"
@@ -351,7 +351,7 @@ class CreateDialogueMessageForm extends React.Component {
               rows="5"
               autoFocus
               value={this.state.message}
-              onChange={this.handleInputChange("message")}
+              onChange={this.handleInputChange('message')}
             />
           </Grid>
           <Grid item xs={12} md={2}>
@@ -361,7 +361,7 @@ class CreateDialogueMessageForm extends React.Component {
               control={
                 <Switch
                   checked={this.state.interrupts}
-                  onChange={this.handleInputChange("interrupts", true)}
+                  onChange={this.handleInputChange('interrupts', true)}
                   value={this.state.interrupts}
                 />
               }
@@ -369,7 +369,10 @@ class CreateDialogueMessageForm extends React.Component {
             <br />
             <br />
             <Grid container justifyContent="center">
-              <IconButton onClick={this.handleInstructionsDialogueToggle} size="large">
+              <IconButton
+                onClick={this.handleInstructionsDialogueToggle}
+                size="large"
+              >
                 <Icon>help</Icon>
               </IconButton>
             </Grid>
@@ -388,7 +391,7 @@ class CreateDialogueMessageForm extends React.Component {
             select
             fullWidth
             label="Location"
-            onChange={this.handleInputChange("location")}
+            onChange={this.handleInputChange('location')}
             value={this.state.location}
             variant="outlined"
             margin="normal"
@@ -402,14 +405,14 @@ class CreateDialogueMessageForm extends React.Component {
             variant="outlined"
             fullWidth
             margin="normal"
-            onChange={this.handleInputChange("voice_file")}
+            onChange={this.handleInputChange('voice_file')}
             value={this.state.voice_file}
           />
           <TextField
             select
             fullWidth
             label="Control Level"
-            onChange={this.handleInputChange("control_level")}
+            onChange={this.handleInputChange('control_level')}
             value={this.state.control_level}
             variant="outlined"
             margin="normal"
@@ -427,9 +430,9 @@ class CreateDialogueMessageForm extends React.Component {
             fullWidth
             margin="normal"
             inputProps={{
-              step: "any",
+              step: 'any',
             }}
-            onChange={this.handleInputChange("autopilot_offset")}
+            onChange={this.handleInputChange('autopilot_offset')}
             value={this.state.autopilot_offset}
           />
         </SimpleCollapse>
@@ -449,7 +452,7 @@ class CreateDialogueMessageForm extends React.Component {
                       checked={this.state.createAndContinue}
                       value={this.state.createAndContinue}
                       onChange={this.handleInputChange(
-                        "createAndContinue",
+                        'createAndContinue',
                         true
                       )}
                     />
@@ -461,7 +464,7 @@ class CreateDialogueMessageForm extends React.Component {
                     <Switch
                       checked={this.state.freshStart}
                       value={this.state.freshStart}
-                      onChange={this.handleInputChange("freshStart", true)}
+                      onChange={this.handleInputChange('freshStart', true)}
                     />
                   }
                 />
@@ -476,7 +479,7 @@ class CreateDialogueMessageForm extends React.Component {
                 style={{ marginTop: 8 }}
                 color="primary"
               >
-                {this.props.isEdit ? "Edit" : "Create"}
+                {this.props.isEdit ? 'Edit' : 'Create'}
               </Button>
             </Grid>
           </Grid>
@@ -502,29 +505,29 @@ class CreateDialogueMessageForm extends React.Component {
               <TableBody>
                 <TableRow>
                   <TableCell>
-                    <code>{"{p=%d}"}</code>
+                    <code>{'{p=%d}'}</code>
                   </TableCell>
                   <TableCell>Pauses typing for %d seconds</TableCell>
                   <TableCell>
-                    <code>{"Hello,{p=0.5} good to see you here"}</code>
+                    <code>{'Hello,{p=0.5} good to see you here'}</code>
                   </TableCell>
                 </TableRow>
 
                 <TableRow>
                   <TableCell>
-                    <code>{"{s=%s}"}</code>
+                    <code>{'{s=%s}'}</code>
                   </TableCell>
                   <TableCell>
                     Emits the provided %s message as a signal at the position
                   </TableCell>
                   <TableCell>
-                    <code>{"I will {s=random_signal}emit something"}</code>
+                    <code>{'I will {s=random_signal}emit something'}</code>
                   </TableCell>
                 </TableRow>
 
                 <TableRow>
                   <TableCell>
-                    <code>{"{a=%s}"}</code>
+                    <code>{'{a=%s}'}</code>
                   </TableCell>
                   <TableCell>
                     If the message has a follower, they will play the %s
@@ -532,13 +535,13 @@ class CreateDialogueMessageForm extends React.Component {
                     finishes (and if it is not set to looping)
                   </TableCell>
                   <TableCell>
-                    <code>{"I will {a=stab}murder you"}</code>
+                    <code>{'I will {a=stab}murder you'}</code>
                   </TableCell>
                 </TableRow>
 
                 <TableRow>
                   <TableCell>
-                    <code>{"{a=%s[F]}"}</code>
+                    <code>{'{a=%s[F]}'}</code>
                   </TableCell>
                   <TableCell>
                     Basically the same as the previous one, but freezes the
@@ -546,13 +549,13 @@ class CreateDialogueMessageForm extends React.Component {
                     must not have looping enabled, otherwise it will not work
                   </TableCell>
                   <TableCell>
-                    <code>{"Hello {a=deep_dab[F]}world"}</code>
+                    <code>{'Hello {a=deep_dab[F]}world'}</code>
                   </TableCell>
                 </TableRow>
 
                 <TableRow>
                   <TableCell>
-                    <code>{"{a=%s[N=%s2]}"}</code>
+                    <code>{'{a=%s[N=%s2]}'}</code>
                   </TableCell>
                   <TableCell>
                     Plays the animation %s, then the animation %s2 as soon as %s
@@ -561,13 +564,13 @@ class CreateDialogueMessageForm extends React.Component {
                     account that non-looping %s2 will freeze at the last frame.
                   </TableCell>
                   <TableCell>
-                    <code>{"Hello {a=deep_dab[N=hate_crime]} world"}</code>
+                    <code>{'Hello {a=deep_dab[N=hate_crime]} world'}</code>
                   </TableCell>
                 </TableRow>
 
                 <TableRow>
                   <TableCell>
-                    <code>{"{v=%d}...{/v}"}</code>
+                    <code>{'{v=%d}...{/v}'}</code>
                   </TableCell>
                   <TableCell>
                     Modifies the typing speed for the text between the tags.
@@ -578,7 +581,7 @@ class CreateDialogueMessageForm extends React.Component {
                   <TableCell>
                     <code>
                       {
-                        "I will {v=0.05}talk really fast here{/v} but slower here"
+                        'I will {v=0.05}talk really fast here{/v} but slower here'
                       }
                     </code>
                   </TableCell>
@@ -586,7 +589,7 @@ class CreateDialogueMessageForm extends React.Component {
 
                 <TableRow>
                   <TableCell>
-                    <code>{"{g}...{/g}"}</code>
+                    <code>{'{g}...{/g}'}</code>
                   </TableCell>
                   <TableCell>
                     Modifies the font between the tags to the gibberish variant.
@@ -594,20 +597,20 @@ class CreateDialogueMessageForm extends React.Component {
                     characters on random intervals
                   </TableCell>
                   <TableCell>
-                    <code>{"The text is {g}cursed{/g}"}</code>
+                    <code>{'The text is {g}cursed{/g}'}</code>
                   </TableCell>
                 </TableRow>
 
                 <TableRow>
                   <TableCell>
-                    <code>{"{w}...{/w}"}</code>
+                    <code>{'{w}...{/w}'}</code>
                   </TableCell>
                   <TableCell>
                     Applies the wave bbcode tag with the parameters of amp=25
                     and freq=6, and applies it to the text between the tags.
                   </TableCell>
                   <TableCell>
-                    <code>{"The text will be {w}wavy{/w}"}</code>
+                    <code>{'The text will be {w}wavy{/w}'}</code>
                   </TableCell>
                 </TableRow>
               </TableBody>

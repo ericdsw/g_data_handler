@@ -1,4 +1,4 @@
-import { red } from "@mui/material/colors";
+import { red } from '@mui/material/colors';
 
 export const styles = (theme) => ({
   deleteButton: {

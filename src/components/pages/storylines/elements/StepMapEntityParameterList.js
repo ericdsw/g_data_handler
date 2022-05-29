@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import withStyles from '@mui/styles/withStyles';
-import { blue } from "@mui/material/colors";
+import React, { useState, useMemo, useCallback } from 'react';
+import { makeStyles } from '@mui/styles';
+import { blue } from '@mui/material/colors';
 import {
   Table,
   TableHead,
@@ -14,52 +14,57 @@ import {
   Grid,
   Button,
   Divider,
-} from "@mui/material";
+} from '@mui/material';
 
-import { ConfirmationDialogue } from "../../../elements";
-import { useDialogueManager } from "../../../../hooks";
+import { ConfirmationDialogue } from '../../../elements';
+import { useDialogueManager } from '../../../../hooks';
 
-const styles = (theme) => ({
+const useStyles = makeStyles(() => ({
   blueText: {
     color: blue[400],
   },
   emptyMessage: {
-    fontStyle: "italic",
+    fontStyle: 'italic',
     padding: 16,
   },
-});
+}));
 
-const StepMapEntityParameterList = (props) => {
-  // Properties
-  const { classes, entityParams } = props;
+const StepMapEntityParameterList = ({
+  entityParams,
+  handleAddParameter,
+  handleEditParameter,
+  handleDeleteParameter,
+}) => {
+  const classes = useStyles();
 
-  // Methods
-  const { handleAddParameter, handleEditParameter, handleDeleteParameter } =
-    props;
+  const [dialogues, toggleDialogue] = useDialogueManager('confirmParamDelete');
 
-  const [dialogues, toggleDialogue] = useDialogueManager("confirmParamDelete");
+  const paramKeys = useMemo(() => Object.keys(entityParams), [entityParams]);
 
-  const paramKeys = Object.keys(entityParams);
+  const [editingParam, toggleEditingParam] = useState('');
+  const [newParamName, setNewParamName] = useState('');
+  const [newParamVal, setNewParamVal] = useState('');
 
-  const [editingParam, toggleEditingParam] = useState("");
+  const modifyParam = useCallback(
+    (param) => {
+      if (editingParam === param) {
+        toggleEditingParam('');
+      } else {
+        toggleEditingParam(param);
+      }
+    },
+    [editingParam, toggleEditingParam]
+  );
 
-  const [newParamName, setNewParamName] = useState("");
-  const [newParamVal, setNewParamVal] = useState("");
-
-  function modifyParam(param) {
-    if (editingParam === param) {
-      toggleEditingParam("");
-    } else {
-      toggleEditingParam(param);
-    }
-  }
-
-  function formSubmitted(event) {
-    event.preventDefault();
-    handleAddParameter(newParamName, newParamVal);
-    setNewParamName("");
-    setNewParamVal("");
-  }
+  const formSubmitted = useCallback(
+    (event) => {
+      event.preventDefault();
+      handleAddParameter(newParamName, newParamVal);
+      setNewParamName('');
+      setNewParamVal('');
+    },
+    [handleAddParameter, newParamName, newParamVal]
+  );
 
   return (
     <React.Fragment>
@@ -158,9 +163,10 @@ const StepMapEntityParameterList = (props) => {
                     <IconButton
                       onClick={() => {
                         toggleEditingParam(param);
-                        toggleDialogue("confirmParamDelete", "show");
+                        toggleDialogue('confirmParamDelete', 'show');
                       }}
-                      size="large">
+                      size="large"
+                    >
                       <Icon fontSize="small">delete</Icon>
                     </IconButton>
                   </Typography>
@@ -173,19 +179,19 @@ const StepMapEntityParameterList = (props) => {
 
       <ConfirmationDialogue
         message={`Delete the parameter ${editingParam}?`}
-        isOpen={dialogues["confirmParamDelete"]}
+        isOpen={dialogues['confirmParamDelete']}
         handleClose={() => {
-          toggleDialogue("confirmParamDelete", "hide");
-          toggleEditingParam("");
+          toggleDialogue('confirmParamDelete', 'hide');
+          toggleEditingParam('');
         }}
         handleConfirm={() => {
-          toggleDialogue("confirmParamDelete", "hide");
+          toggleDialogue('confirmParamDelete', 'hide');
           handleDeleteParameter(editingParam);
-          toggleEditingParam("");
+          toggleEditingParam('');
         }}
       />
     </React.Fragment>
   );
 };
 
-export default withStyles(styles)(StepMapEntityParameterList);
+export default StepMapEntityParameterList;

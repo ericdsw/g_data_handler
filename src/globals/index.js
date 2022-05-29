@@ -1,9 +1,9 @@
-import eventSchema from "./eventSchema";
-import speakerSchema from "./speakerSchema";
-import interactionInputSchema from "./interactionInputSchema";
-import completionInputSchema from "./completionInputSchema";
-import storylineEntityInputSchema from "./storylineEntityInputSchema";
-import bundleEntityInputSchema from "./bundleEntityInputSchema";
+import eventSchema from './eventSchema';
+import speakerSchema from './speakerSchema';
+import interactionInputSchema from './interactionInputSchema';
+import completionInputSchema from './completionInputSchema';
+import storylineEntityInputSchema from './storylineEntityInputSchema';
+import bundleEntityInputSchema from './bundleEntityInputSchema';
 
 const appVersion = 0.5;
 const applicationName = `G Data Manager v${appVersion}`;

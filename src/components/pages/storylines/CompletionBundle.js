@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import withStyles from '@mui/styles/withStyles';
+import React, { useState, useMemo, useCallback } from 'react';
+import { makeStyles } from '@mui/styles';
 import {
   Card,
   CardHeader,
@@ -9,64 +9,88 @@ import {
   Tooltip,
   IconButton,
   Icon,
-} from "@mui/material";
+} from '@mui/material';
 
-import CompleteConditionContainer from "../../containers/CompleteConditionContainer";
-import CompleteConditionForm from "./forms/CompleteConditionForm";
-import CompletionBundleForm from "./forms/CompletionBundleForm";
+import CompleteConditionContainer from '../../containers/CompleteConditionContainer';
+import CompleteConditionForm from './forms/CompleteConditionForm';
+import CompletionBundleForm from './forms/CompletionBundleForm';
 import {
   GenericDialogue,
   ConfirmationDialogue,
   MenuIconButton,
-} from "../../elements";
-import { completionInputSchema } from "../../../globals";
-import { useDialogueManager } from "../../../hooks";
+} from '../../elements';
+import { completionInputSchema } from '../../../globals';
+import { useDialogueManager } from '../../../hooks';
 
-import { styles } from "./styles/CompletionBundleStyle";
+import { styles } from './styles/CompletionBundleStyle';
 
-const CompletionBundle = (props) => {
-  // Parameters
-  const { classes, completionBundle } = props;
+const useStyles = makeStyles(styles);
 
-  // Methods
-  const { handleCreateCondition, handleEditBundle, handleDeleteBundle } = props;
+const CompletionBundle = ({
+  completionBundle,
+  handleCreateCondition,
+  handleEditBundle,
+  handleDeleteBundle,
+}) => {
+  const classes = useStyles();
 
-  const [curCompletionType, setCurCompletionType] = useState("");
+  const [curCompletionType, setCurCompletionType] = useState('');
   const [dialogues, toggleDialogue] = useDialogueManager(
-    "editBundle",
-    "confirmDelete"
+    'editBundle',
+    'confirmDelete'
   );
 
-  const menuContent = {};
-  for (const key in completionInputSchema) {
-    menuContent[key] = completionInputSchema[key].name;
-  }
+  const menuContent = useMemo(() => {
+    const result = {};
+    for (const key in completionInputSchema) {
+      result[key] = completionInputSchema[key].name;
+    }
+    return result;
+  }, []);
 
-  let curTypeName = "";
-  if (curCompletionType !== "") {
-    curTypeName = completionInputSchema[curCompletionType].name;
-  }
+  let curTypeName = useMemo(() => {
+    let result = '';
+    if (curCompletionType !== '') {
+      result = completionInputSchema[curCompletionType].name;
+    }
+    return result;
+  }, [curCompletionType]);
 
-  const completionContent =
-    completionBundle.conditions &&
-    completionBundle.conditions.map((conditionId, index) => (
-      <React.Fragment key={conditionId}>
-        <CompleteConditionContainer conditionId={conditionId} />
-        {index < completionBundle.conditions.length - 1 && <Divider />}
-      </React.Fragment>
-    ));
+  /**
+   * Provide the length to the dependency array to make sure this recalculates when
+   * a condition is added/deleted
+   */
+  const completionContent = useMemo(() => {
+    return (
+      completionBundle.conditions &&
+      completionBundle.conditions.map((conditionId, index) => (
+        <React.Fragment key={conditionId}>
+          <CompleteConditionContainer conditionId={conditionId} />
+          {index < completionBundle.conditions.length - 1 && <Divider />}
+        </React.Fragment>
+      ))
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completionBundle, completionBundle.conditions.length]);
 
-  function handleMenuClick(menuValue) {
-    setCurCompletionType(menuValue);
-  }
+  const handleMenuClick = useCallback(
+    (menuValue) => {
+      setCurCompletionType(menuValue);
+    },
+    [setCurCompletionType]
+  );
 
-  function generateDescription() {
+  /**
+   * Provide the length to the dependency array to make sure this recalculates when
+   * a condition is added/deleted
+   */
+  const generateDescription = useCallback(() => {
     const { affected_map, change_cutscene, use_fade } = completionBundle;
     if (affected_map) {
       if (change_cutscene) {
         return (
           <React.Fragment>
-            Wil trigger cutscene <b>{change_cutscene}</b> if in map{" "}
+            Wil trigger cutscene <b>{change_cutscene}</b> if in map{' '}
             <b>{affected_map}</b>
           </React.Fragment>
         );
@@ -79,7 +103,8 @@ const CompletionBundle = (props) => {
       }
     }
     return `No transition will occur`;
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completionBundle, completionBundle.conditions.length]);
 
   return (
     <Card className={classes.bundleCard}>
@@ -103,18 +128,20 @@ const CompletionBundle = (props) => {
             <Tooltip title="Edit bundle">
               <IconButton
                 onClick={() => {
-                  toggleDialogue("editBundle", "show");
+                  toggleDialogue('editBundle', 'show');
                 }}
-                size="large">
+                size="large"
+              >
                 <Icon>edit</Icon>
               </IconButton>
             </Tooltip>
             <Tooltip title="Delete bundle">
               <IconButton
                 onClick={() => {
-                  toggleDialogue("confirmDelete", "show");
+                  toggleDialogue('confirmDelete', 'show');
                 }}
-                size="large">
+                size="large"
+              >
                 <Icon>delete</Icon>
               </IconButton>
             </Tooltip>
@@ -130,30 +157,30 @@ const CompletionBundle = (props) => {
 
       <GenericDialogue
         title={`Add Condition: ${curTypeName}`}
-        open={curCompletionType !== ""}
-        onClose={() => setCurCompletionType("")}
+        open={curCompletionType !== ''}
+        onClose={() => setCurCompletionType('')}
         maxWidth="sm"
       >
         <CompleteConditionForm
           completionType={curCompletionType}
           handleSubmit={(name, data) => {
             handleCreateCondition(curCompletionType, name, data);
-            setCurCompletionType("");
+            setCurCompletionType('');
           }}
         />
       </GenericDialogue>
 
       <GenericDialogue
         title="Edit Bundle"
-        open={dialogues["editBundle"]}
-        onClose={() => toggleDialogue("editBundle", "hide")}
+        open={dialogues['editBundle']}
+        onClose={() => toggleDialogue('editBundle', 'hide')}
         maxWidth="sm"
       >
         <CompletionBundleForm
           data={completionBundle}
           buttonText="Update"
           handleSubmit={(data) => {
-            toggleDialogue("editBundle", "hide");
+            toggleDialogue('editBundle', 'hide');
             handleEditBundle(data);
           }}
         />
@@ -161,15 +188,15 @@ const CompletionBundle = (props) => {
 
       <ConfirmationDialogue
         message="Delete the completion bundle?"
-        isOpen={dialogues["confirmDelete"]}
-        handleClose={() => toggleDialogue("confirmDelete", "hide")}
+        isOpen={dialogues['confirmDelete']}
+        handleClose={() => toggleDialogue('confirmDelete', 'hide')}
         handleConfirm={() => {
           handleDeleteBundle();
-          toggleDialogue("confirmDelete", "hide");
+          toggleDialogue('confirmDelete', 'hide');
         }}
       />
     </Card>
   );
 };
 
-export default withStyles(styles)(CompletionBundle);
+export default CompletionBundle;

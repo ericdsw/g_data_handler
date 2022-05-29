@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import withStyles from '@mui/styles/withStyles';
-import { withSnackbar } from "notistack";
+import { withSnackbar } from 'notistack';
 import {
   TextField,
   Grid,
@@ -10,8 +10,8 @@ import {
   Typography,
   Checkbox,
   FormControlLabel,
-} from "@mui/material";
-import { SimpleCollapse } from "../../../elements";
+} from '@mui/material';
+import { SimpleCollapse } from '../../../elements';
 
 const styles = () => ({
   container: {
@@ -30,9 +30,9 @@ const styles = () => ({
 
 class CreateChoiceForm extends React.Component {
   state = {
-    newChoiceKey: "",
-    newChoiceValue: "",
-    newChoiceMessage: "",
+    newChoiceKey: '',
+    newChoiceValue: '',
+    newChoiceMessage: '',
     newChoiceIsDefaultCancel: false,
   };
 
@@ -63,10 +63,10 @@ class CreateChoiceForm extends React.Component {
       newChoiceIsDefaultCancel,
     } = this.state;
 
-    if (newChoiceKey === "") {
-      enqueueSnackbar("Choice key is required", { variant: "error" });
-    } else if (newChoiceValue === "") {
-      enqueueSnackbar("Value is required", { variant: "error" });
+    if (newChoiceKey === '') {
+      enqueueSnackbar('Choice key is required', { variant: 'error' });
+    } else if (newChoiceValue === '') {
+      enqueueSnackbar('Value is required', { variant: 'error' });
     } else {
       const data = {
         key: newChoiceKey,
@@ -74,7 +74,7 @@ class CreateChoiceForm extends React.Component {
         isDefaultCancel: newChoiceIsDefaultCancel,
       };
       if (newChoiceMessage) {
-        data["next_message"] = newChoiceMessage;
+        data['next_message'] = newChoiceMessage;
       }
       creationHandler(data);
     }
@@ -114,7 +114,7 @@ class CreateChoiceForm extends React.Component {
    * display "Edit" or "Add"
    */
   getButtonName = () => {
-    return this.isOnEditMode() ? "Edit" : "Add";
+    return this.isOnEditMode() ? 'Edit' : 'Add';
   };
 
   render() {
@@ -130,8 +130,8 @@ class CreateChoiceForm extends React.Component {
           newChoiceMessage: currentChoice.next_message,
           newChoiceIsDefaultCancel: currentChoice.isDefaultCancel,
         });
-        this.props.enqueueSnackbar("Editing the selected choice", {
-          variant: "info",
+        this.props.enqueueSnackbar('Editing the selected choice', {
+          variant: 'info',
         });
       };
       if (currentChoice.next_message) {
@@ -147,7 +147,7 @@ class CreateChoiceForm extends React.Component {
               onDelete={this.handleDeleteChoice(currentChoice.key)}
               onClick={onClick}
               style={{
-                order: currentChoice.isDefaultCancel ? "1px solid red" : "none",
+                order: currentChoice.isDefaultCancel ? '1px solid red' : 'none',
               }}
             />
           </Tooltip>
@@ -162,7 +162,7 @@ class CreateChoiceForm extends React.Component {
             onDelete={this.handleDeleteChoice(currentChoice.key)}
             onClick={onClick}
             style={{
-              border: currentChoice.isDefaultCancel ? "1px solid red" : "none",
+              border: currentChoice.isDefaultCancel ? '1px solid red' : 'none',
             }}
           />
         );
@@ -182,7 +182,7 @@ class CreateChoiceForm extends React.Component {
               fullWidth
               margin="normal"
               value={this.state.newChoiceKey}
-              onChange={this.handleInputChange("newChoiceKey")}
+              onChange={this.handleInputChange('newChoiceKey')}
             />
             <TextField
               label="Value*"
@@ -190,7 +190,7 @@ class CreateChoiceForm extends React.Component {
               fullWidth
               margin="normal"
               value={this.state.newChoiceValue}
-              onChange={this.handleInputChange("newChoiceValue")}
+              onChange={this.handleInputChange('newChoiceValue')}
             />
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={8}>
@@ -200,7 +200,7 @@ class CreateChoiceForm extends React.Component {
                   fullWidth
                   margin="normal"
                   value={this.state.newChoiceMessage}
-                  onChange={this.handleInputChange("newChoiceMessage")}
+                  onChange={this.handleInputChange('newChoiceMessage')}
                 />
               </Grid>
               <Grid item xs={4}>
@@ -211,7 +211,7 @@ class CreateChoiceForm extends React.Component {
                       checked={this.state.newChoiceIsDefaultCancel}
                       value={this.state.newChoiceIsDefaultCancel}
                       onChange={this.handleCheckboxChange(
-                        "newChoiceIsDefaultCancel"
+                        'newChoiceIsDefaultCancel'
                       )}
                     />
                   }

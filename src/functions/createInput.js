@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   TextField,
   FormControlLabel,
@@ -10,10 +10,10 @@ import {
   Icon,
   Tooltip,
   IconButton,
-} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-import AddNewMultiInputRow from "../components/elements/AddNewMultiInputRow";
+import AddNewMultiInputRow from '../components/elements/AddNewMultiInputRow';
 
 const nodeTargetDescription = (
   <ul>
@@ -66,26 +66,25 @@ export default function createInput(
 ) {
   let label = inputData.label;
   if (inputData.required) {
-    label += "*";
+    label += '*';
   }
 
-  if (value === null || typeof value === "undefined") {
+  if (value === null || typeof value === 'undefined') {
     switch (inputData.type) {
-      case "boolean":
+      case 'boolean':
         value = inputData.default;
-        console.log(inputData.default);
         break;
-      case "number":
+      case 'number':
         const numberVal = parseFloat(inputData.default);
         if (Number.isNaN(numberVal)) {
-          value = "";
+          value = '';
         } else {
           value = numberVal;
         }
         break;
       default:
         if (!inputData.default) {
-          value = "";
+          value = '';
         } else {
           value = inputData.default;
         }
@@ -97,7 +96,7 @@ export default function createInput(
   let adornment = <React.Fragment />;
 
   switch (inputData.type) {
-    case "multi_input_object":
+    case 'multi_input_object':
       const keyField = inputData.key_field;
 
       /** Render one input row for each value */
@@ -105,9 +104,9 @@ export default function createInput(
         return (
           <div
             style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
           >
             {Object.keys(inputData.inputs).map((inputIdentifier) => {
@@ -116,7 +115,7 @@ export default function createInput(
                 <div
                   style={{
                     flex:
-                      inputData.inputs[inputIdentifier].type === "boolean"
+                      inputData.inputs[inputIdentifier].type === 'boolean'
                         ? undefined
                         : 1,
                     marginRight: 16,
@@ -135,7 +134,7 @@ export default function createInput(
                               ...value[valueKey],
                               [inputIdentifier]:
                                 inputData.inputs[inputIdentifier].type ===
-                                "boolean"
+                                'boolean'
                                   ? event.target.checked
                                   : event.target.value,
                             },
@@ -162,7 +161,8 @@ export default function createInput(
                 });
               }}
               style={{ width: 48, height: 48 }}
-              size="large">
+              size="large"
+            >
               <DeleteIcon />
             </IconButton>
           </div>
@@ -175,10 +175,10 @@ export default function createInput(
             paddingBottom: 24,
             marginBottom: 16,
             fontSize: 16,
-            borderBottom: "1px dashed #888",
+            borderBottom: '1px dashed #888',
           }}
         >
-          <span style={{ fontWeight: "bold" }}>{inputData.title}</span>
+          <span style={{ fontWeight: 'bold' }}>{inputData.title}</span>
           {renderedInputs}
           <AddNewMultiInputRow
             keyLabel={inputData.inputs[keyField].label}
@@ -205,7 +205,7 @@ export default function createInput(
       );
       break;
 
-    case "boolean":
+    case 'boolean':
       contentValue = (
         <FormControlLabel
           label={label}
@@ -221,7 +221,7 @@ export default function createInput(
       );
       break;
 
-    case "json":
+    case 'json':
       contentValue = (
         <TextField
           id={paramName}
@@ -240,7 +240,7 @@ export default function createInput(
       );
       break;
 
-    case "dropdown":
+    case 'dropdown':
       let options = [];
       for (const key in inputData.elements) {
         options.push(
@@ -274,13 +274,13 @@ export default function createInput(
       );
       break;
 
-    case "positionArray":
-    case "position":
-    case "number":
-    case "text":
-    case "node_target":
+    case 'positionArray':
+    case 'position':
+    case 'number':
+    case 'text':
+    case 'node_target':
     default:
-      if (inputData.type === "node_target") {
+      if (inputData.type === 'node_target') {
         // inputColor = green[600];
         adornment = (
           <Tooltip enterDelay={300} title={nodeTargetDescription}>
@@ -289,7 +289,7 @@ export default function createInput(
             </InputAdornment>
           </Tooltip>
         );
-      } else if (inputData.type === "position") {
+      } else if (inputData.type === 'position') {
         // inputColor = amber[600];
         adornment = (
           <Tooltip enterDelay={300} title="Position2D node name or JSON">
@@ -298,7 +298,7 @@ export default function createInput(
             </InputAdornment>
           </Tooltip>
         );
-      } else if (inputData.type === "positionArray") {
+      } else if (inputData.type === 'positionArray') {
         // inputColor = yellow[600];
         adornment = (
           <Tooltip enterDelay={300} title="NodeNames, separated by comma">
@@ -316,7 +316,7 @@ export default function createInput(
           placeholder={inputData.placeholder}
           onChange={handleChange(paramName)}
           value={value}
-          type={inputData.type === "number" ? "number" : "text"}
+          type={inputData.type === 'number' ? 'number' : 'text'}
           fullWidth
           variant="outlined"
           margin="normal"
@@ -325,7 +325,7 @@ export default function createInput(
             endAdornment: adornment,
           }}
           inputProps={{
-            step: "any",
+            step: 'any',
           }}
           {...extraParams}
         />

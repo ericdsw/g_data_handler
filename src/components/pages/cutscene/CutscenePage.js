@@ -1,10 +1,7 @@
-import React from "react";
-import CutsceneContainer from "../../containers/CutsceneContainer";
+import React from 'react';
 
-class CutscenePage extends React.Component {
-  render() {
-    return <CutsceneContainer />;
-  }
-}
+import CutsceneContainer from '../../containers/CutsceneContainer';
+
+const CutscenePage = () => <CutsceneContainer />;
 
 export default CutscenePage;

@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
 import makeStyles from '@mui/styles/makeStyles';
-import { Grid, Typography, Button } from "@mui/material";
-import { red } from "@mui/material/colors";
+import { Grid, Typography, Button } from '@mui/material';
+import { red } from '@mui/material/colors';
 
-import { useDialogueManager } from "../../../../hooks";
-import { GenericDialogue, ConfirmationDialogue } from "../../../elements";
-import { CreateConversationForm } from "../forms";
+import { useDialogueManager } from '../../../../hooks';
+import { GenericDialogue, ConfirmationDialogue } from '../../../elements';
+import { CreateConversationForm } from '../forms';
 
 const useStyles = makeStyles((theme) => ({
   deleteButton: {
@@ -25,8 +25,8 @@ const DialogueToolbar = ({
   const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(
-    "addConversation",
-    "confirmDelete"
+    'addConversation',
+    'confirmDelete'
   );
 
   return (
@@ -36,7 +36,7 @@ const DialogueToolbar = ({
           <Typography align="left">
             <Button
               onClick={() => {
-                toggleDialogue("addConversation", "show");
+                toggleDialogue('addConversation', 'show');
               }}
               color="primary"
               className={classes.defaultButton}
@@ -53,7 +53,7 @@ const DialogueToolbar = ({
             <Button
               className={classes.deleteButton}
               color="secondary"
-              onClick={() => toggleDialogue("confirmDelete", "show")}
+              onClick={() => toggleDialogue('confirmDelete', 'show')}
             >
               Clear Dialogue File
             </Button>
@@ -63,25 +63,25 @@ const DialogueToolbar = ({
 
       <GenericDialogue
         title="Create Conversation"
-        open={dialogues["addConversation"]}
-        onClose={() => toggleDialogue("addConversation", "hide")}
+        open={dialogues['addConversation']}
+        onClose={() => toggleDialogue('addConversation', 'hide')}
         maxWidth="sm"
       >
         <CreateConversationForm
           creationHandler={(conversationName) => {
             handleAddConversation(conversationName);
-            toggleDialogue("addConversation", "hide");
+            toggleDialogue('addConversation', 'hide');
           }}
         />
       </GenericDialogue>
 
       <ConfirmationDialogue
         message="Delete the current loaded dialogues?"
-        isOpen={dialogues["confirmDelete"]}
-        handleClose={() => toggleDialogue("confirmDelete", "hide")}
+        isOpen={dialogues['confirmDelete']}
+        handleClose={() => toggleDialogue('confirmDelete', 'hide')}
         handleConfirm={() => {
           handleClear();
-          toggleDialogue("confirmDelete", "hide");
+          toggleDialogue('confirmDelete', 'hide');
         }}
       />
     </React.Fragment>

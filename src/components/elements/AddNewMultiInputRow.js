@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { Button, TextField } from "@mui/material";
+import React, { useState } from 'react';
+import { Button, TextField } from '@mui/material';
 
 const AddNewMultiInputRow = ({ keyLabel, onNewRowDefined }) => {
-  const [newRowValue, updateNewRowValue] = useState("");
+  const [newRowValue, updateNewRowValue] = useState('');
 
   return (
     <div
       style={{
-        alignItems: "center",
-        display: "flex",
+        alignItems: 'center',
+        display: 'flex',
       }}
     >
       <span style={{ marginRight: 16 }}>Add new row:</span>
@@ -23,7 +23,7 @@ const AddNewMultiInputRow = ({ keyLabel, onNewRowDefined }) => {
         onClick={() => {
           if (newRowValue) {
             onNewRowDefined(newRowValue);
-            updateNewRowValue("");
+            updateNewRowValue('');
           }
         }}
         variant="contained"

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react';
 
 /**
  * A hook used to keep track of multiple dialogues inside a component
@@ -12,10 +12,10 @@ export default function useDialogueManager(...dialoguesToTrack) {
     return initialState;
   });
 
-  const toggleDialogue = useCallback((dialogueName, action = "show") => {
+  const toggleDialogue = useCallback((dialogueName, action = 'show') => {
     manageActiveDialogues((previousState) => {
       var newState = { ...previousState };
-      newState[dialogueName] = action === "show";
+      newState[dialogueName] = action === 'show';
       return newState;
     });
   }, []);

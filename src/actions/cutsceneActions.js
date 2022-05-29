@@ -10,7 +10,7 @@ import {
   UPDATE_CUTSCENE_HIDE_BARS,
   ADD_CUTSCENE_JUMP,
   DELETE_CUTSCENE_JUMP,
-} from "./types";
+} from './types';
 
 export const updateCutscene = (cutsceneData) => (dispatch) => {
   dispatch({

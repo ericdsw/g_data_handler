@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import {
   AppBar,
@@ -7,28 +7,28 @@ import {
   IconButton,
   Grid,
   Icon,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import { blue, green, yellow, amber, grey } from "@mui/material/colors";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import BrightnessHighIcon from "@mui/icons-material/BrightnessHigh";
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import { blue, green, yellow, amber, grey } from '@mui/material/colors';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import BrightnessHighIcon from '@mui/icons-material/BrightnessHigh';
 
-import { drawerWidth, applicationName } from "../../globals";
-import { useDialogueManager } from "../../hooks";
-import GenericDialogue from "./GenericDialogue";
+import { drawerWidth, applicationName } from '../../globals';
+import { useDialogueManager } from '../../hooks';
+import GenericDialogue from './GenericDialogue';
 
-import { createInput } from "../../functions";
+import { createInput } from '../../functions';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
     marginLeft: drawerWidth,
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up('sm')]: {
       width: `calc(100% - ${drawerWidth}px)`,
     },
   },
   menuButton: {
-    [theme.breakpoints.up("sm")]: {
-      display: "none",
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
     },
   },
   blueText: { color: blue[600] },
@@ -42,29 +42,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const textInputSchema = {
-  label: "Generic Text Input",
-  type: "text",
+  label: 'Generic Text Input',
+  type: 'text',
 };
 
 const positionInputSchema = {
-  label: "Position Input",
-  type: "position",
+  label: 'Position Input',
+  type: 'position',
 };
 
 const positionArrayInputSchema = {
-  label: "Position Array",
-  type: "positionArray",
+  label: 'Position Array',
+  type: 'positionArray',
 };
 
 const nodeTargetInputSchema = {
-  label: "Node Target",
-  type: "node_target",
+  label: 'Node Target',
+  type: 'node_target',
 };
 
 const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
   const classes = useStyles();
 
-  const [dialogues, toggleDialogue] = useDialogueManager("helpDialogue");
+  const [dialogues, toggleDialogue] = useDialogueManager('helpDialogue');
 
   return (
     <AppBar
@@ -82,7 +82,8 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
                 aria-label="Open Drawer"
                 onClick={() => handleToggle()}
                 className={classes.menuButton}
-                size="large">
+                size="large"
+              >
                 <MenuIcon />
               </IconButton>
               {applicationName}
@@ -93,14 +94,16 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
               <IconButton
                 className={classes.buttons}
                 onClick={() => handleDarkModeToggle()}
-                size="large">
+                size="large"
+              >
                 {!isDarkMode && <Brightness4Icon />}
                 {isDarkMode && <BrightnessHighIcon />}
               </IconButton>
               <IconButton
                 className={classes.buttons}
-                onClick={() => toggleDialogue("helpDialogue", "show")}
-                size="large">
+                onClick={() => toggleDialogue('helpDialogue', 'show')}
+                size="large"
+              >
                 <Icon>help_outline</Icon>
               </IconButton>
             </Grid>
@@ -109,8 +112,8 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
       </Toolbar>
 
       <GenericDialogue
-        open={dialogues["helpDialogue"]}
-        onClose={() => toggleDialogue("helpDialogue", "hide")}
+        open={dialogues['helpDialogue']}
+        onClose={() => toggleDialogue('helpDialogue', 'hide')}
         maxWidth="sm"
       >
         <Typography variant="h5" gutterBottom>
@@ -127,7 +130,7 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
           </Typography>
           Account for the mayority of cases and their specific format will
           depend on what the input is for.
-          {createInput("foo", textInputSchema, "Some Text", () => {})}
+          {createInput('foo', textInputSchema, 'Some Text', () => {})}
           <br />
           <br />
           <Typography variant="h6" className={classes.amberText}>
@@ -137,7 +140,7 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
           Position2D node inside the map, in which case only the node name must
           be defined.
           {createInput(
-            "bar",
+            'bar',
             positionInputSchema,
             '{"x": 200, "y": 300} or NodeName',
             () => {}
@@ -150,9 +153,9 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
           A position array is a list of Position2Ds on the map, and is defined
           as a comma separated list the position's node names.
           {createInput(
-            "baz",
+            'baz',
             positionArrayInputSchema,
-            "Position1, Position2, Position3",
+            'Position1, Position2, Position3',
             () => {}
           )}
           <br />
@@ -187,9 +190,9 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
             </li>
           </ul>
           {createInput(
-            "qux",
+            'qux',
             nodeTargetInputSchema,
-            "Default:NPCName",
+            'Default:NPCName',
             () => {}
           )}
         </Typography>

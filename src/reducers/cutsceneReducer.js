@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 import {
   UPDATE_CUTSCENE,
   ADD_CUTSCENE_ROW,
@@ -11,16 +10,16 @@ import {
   UPDATE_CUTSCENE_HIDE_BARS,
   ADD_CUTSCENE_JUMP,
   DELETE_CUTSCENE_JUMP,
-} from "../actions/types";
+} from '../actions/types';
 
 const initialState = {
   currentCutscene: null,
   currentCutsceneJumps: {},
-  fileName: "",
+  fileName: '',
   hideBars: false,
 };
 
-export default function (state = initialState, action) {
+export default function cutsceneReducer(state = initialState, action) {
   switch (action.type) {
     case UPDATE_CUTSCENE:
       return updateCutscene(state, action);

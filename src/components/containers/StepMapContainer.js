@@ -1,10 +1,10 @@
-import React from "react";
-import { connect } from "react-redux";
-import { withSnackbar } from "notistack";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withSnackbar } from 'notistack';
 
-import StepMap from "../pages/storylines/StepMap";
+import StepMap from '../pages/storylines/StepMap';
 
-import { addEntityToExistingMap } from "../../actions/storylineActions";
+import { addEntityToExistingMap } from '../../actions/storylineActions';
 
 class StepMapContainer extends React.Component {
   addEntity = (data) => {

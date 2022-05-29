@@ -1,5 +1,5 @@
-import React from "react";
-import { DialogTitle, DialogContent } from "@mui/material";
+import React from 'react';
+import { DialogTitle, DialogContent } from '@mui/material';
 
 const GenericDialogueContent = ({ title, childElements }) => {
   return (

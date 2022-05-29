@@ -1,28 +1,30 @@
-import React from "react";
+import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { Paper, Grid, Typography } from "@mui/material";
-import { CutsceneRowToolbar } from "./elements";
-import { CreateEventForm } from "./forms";
-import CutsceneEventContainer from "../../containers/CutsceneEventContainer";
-import { GenericDialogue, ConfirmationDialogue } from "../../elements";
-import { useDialogueManager } from "../../../hooks";
+import { Paper, Grid, Typography } from '@mui/material';
 
-import { styles } from "./styles/CutsceneRowStyle";
+import { CutsceneRowToolbar } from './elements';
+import { CreateEventForm } from './forms';
+import CutsceneEventContainer from '../../containers/CutsceneEventContainer';
+import { GenericDialogue, ConfirmationDialogue } from '../../elements';
+import { useDialogueManager } from '../../../hooks';
 
-const CutsceneRow = (props) => {
-  const classes = makeStyles(styles)();
+import { styles } from './styles/CutsceneRowStyle';
 
-  const { rowData, rowNumber } = props;
-  const {
-    handleAddRowBelow,
-    handleAddRowAbove,
-    handleDeleteRow,
-    handleAddEvent,
-  } = props;
+const useStyles = makeStyles(styles);
+
+const CutsceneRow = ({
+  rowData,
+  rowNumber,
+  handleAddRowBelow,
+  handleAddRowAbove,
+  handleDeleteRow,
+  handleAddEvent,
+}) => {
+  const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(
-    "confirmDelete",
-    "createEvent"
+    'confirmDelete',
+    'createEvent'
   );
 
   return (
@@ -39,10 +41,10 @@ const CutsceneRow = (props) => {
               addAboveClick={() => handleAddRowAbove()}
               addBelowClick={() => handleAddRowBelow()}
               addEventClick={() => {
-                toggleDialogue("createEvent", "show");
+                toggleDialogue('createEvent', 'show');
               }}
               deleteRowClick={() => {
-                toggleDialogue("confirmDelete", "show");
+                toggleDialogue('confirmDelete', 'show');
               }}
             />
           </Grid>
@@ -61,25 +63,25 @@ const CutsceneRow = (props) => {
 
       <GenericDialogue
         title="Create Cutscene Event"
-        open={dialogues["createEvent"]}
+        open={dialogues['createEvent']}
         maxWidth="sm"
-        onClose={() => toggleDialogue("createEvent", "hide")}
+        onClose={() => toggleDialogue('createEvent', 'hide')}
       >
         <CreateEventForm
           creationHandler={(eventData) => {
             handleAddEvent(eventData);
-            toggleDialogue("createEvent", "hide");
+            toggleDialogue('createEvent', 'hide');
           }}
         />
       </GenericDialogue>
 
       <ConfirmationDialogue
         message="Delete the cutscene row?"
-        isOpen={dialogues["confirmDelete"]}
-        handleClose={() => toggleDialogue("confirmDelete", "hide")}
+        isOpen={dialogues['confirmDelete']}
+        handleClose={() => toggleDialogue('confirmDelete', 'hide')}
         handleConfirm={() => {
           handleDeleteRow();
-          toggleDialogue("confirmDelete", "hide");
+          toggleDialogue('confirmDelete', 'hide');
         }}
       />
     </Grid>

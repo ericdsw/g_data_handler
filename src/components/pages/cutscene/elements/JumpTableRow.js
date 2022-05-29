@@ -1,12 +1,12 @@
-import React from "react";
-import { TableRow, TableCell, IconButton } from "@mui/material";
+import React from 'react';
+import { TableRow, TableCell, IconButton } from '@mui/material';
 
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
-import { useDialogueManager } from "../../../../hooks";
-import { GenericDialogue, ConfirmationDialogue } from "../../../elements";
-import { JumpForm } from "../forms";
+import { useDialogueManager } from '../../../../hooks';
+import { GenericDialogue, ConfirmationDialogue } from '../../../elements';
+import { JumpForm } from '../forms';
 
 const JumpTableRow = ({
   jumpName,
@@ -15,8 +15,8 @@ const JumpTableRow = ({
   handleEditJump,
 }) => {
   const [dialogues, toggleDialogue] = useDialogueManager(
-    "edit",
-    "confirmDelete"
+    'edit',
+    'confirmDelete'
   );
 
   return (
@@ -24,8 +24,8 @@ const JumpTableRow = ({
       {/* Edit Form */}
       <GenericDialogue
         title="Edit Jump"
-        open={dialogues["edit"]}
-        onClose={() => toggleDialogue("edit", "hide")}
+        open={dialogues['edit']}
+        onClose={() => toggleDialogue('edit', 'hide')}
         maxWidth="sm"
       >
         <JumpForm
@@ -36,7 +36,7 @@ const JumpTableRow = ({
           isEdit
           buttonText="Edit Jump"
           handleSubmit={(data) => {
-            toggleDialogue("edit", "hide");
+            toggleDialogue('edit', 'hide');
             handleEditJump(data);
           }}
         />
@@ -44,13 +44,13 @@ const JumpTableRow = ({
 
       {/* Delete Confirmation */}
       <ConfirmationDialogue
-        isOpen={dialogues["confirmDelete"]}
+        isOpen={dialogues['confirmDelete']}
         message={`Delete the cutscene jump "${jumpName}"?`}
         handleClose={() => {
-          toggleDialogue("confirmDelete", "hide");
+          toggleDialogue('confirmDelete', 'hide');
         }}
         handleConfirm={() => {
-          toggleDialogue("confirmDelete", "hide");
+          toggleDialogue('confirmDelete', 'hide');
           handleDeleteJump(jumpName);
         }}
       />
@@ -58,26 +58,28 @@ const JumpTableRow = ({
       <TableCell>
         <b>{jumpName}</b>
       </TableCell>
-      <TableCell style={{ width: "100%" }}>
+      <TableCell style={{ width: '100%' }}>
         <i>{jumpPath}</i>
       </TableCell>
 
       <TableCell style={{ width: 50 }} padding="dense">
         <IconButton
           onClick={() => {
-            toggleDialogue("confirmDelete", "show");
+            toggleDialogue('confirmDelete', 'show');
           }}
           aria-label="Delete"
-          size="large">
+          size="large"
+        >
           <DeleteIcon />
         </IconButton>
       </TableCell>
 
       <TableCell style={{ width: 50 }} padding="dense">
         <IconButton
-          onClick={() => toggleDialogue("edit", "show")}
+          onClick={() => toggleDialogue('edit', 'show')}
           aria-label="Delete"
-          size="large">
+          size="large"
+        >
           <EditIcon />
         </IconButton>
       </TableCell>

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import withStyles from '@mui/styles/withStyles';
-import { withSnackbar } from "notistack";
+import { withSnackbar } from 'notistack';
 import {
   TextField,
   MenuItem,
@@ -10,15 +10,15 @@ import {
   Button,
   FormControlLabel,
   Switch,
-} from "@mui/material";
+} from '@mui/material';
 
-import { eventSchema } from "../../../../globals";
+import { eventSchema } from '../../../../globals';
 import {
   createInput,
   checkForRequired,
   parseIn,
   parseOut,
-} from "../../../../functions";
+} from '../../../../functions';
 
 const styles = (theme) => ({
   errorMessage: {
@@ -28,15 +28,15 @@ const styles = (theme) => ({
     padding: theme.spacing(0.5),
   },
   additionalText: {
-    color: "grey",
+    color: 'grey',
     marginTop: 12,
     marginBottom: 12,
   },
 });
 
 class CreateEventForm extends React.Component {
-  formFields = eventSchema["ability_toggle"].parameters;
-  additionalText = eventSchema["ability_toggle"].additionalText;
+  formFields = eventSchema['ability_toggle'].parameters;
+  additionalText = eventSchema['ability_toggle'].additionalText;
 
   constructor(props) {
     super(props);
@@ -44,7 +44,7 @@ class CreateEventForm extends React.Component {
       let usedParameters = {};
       for (const paramName in props.existingData.parameters) {
         const data = props.existingData.parameters[paramName];
-        if (typeof data === "object" && data !== null) {
+        if (typeof data === 'object' && data !== null) {
           usedParameters[paramName] = JSON.stringify(data);
         } else {
           usedParameters[paramName] = data;
@@ -60,10 +60,10 @@ class CreateEventForm extends React.Component {
     } else {
       this.state = {
         lockType: false,
-        currentEventType: "ability_toggle",
+        currentEventType: 'ability_toggle',
         resultData: {
           is_important: false,
-          ability_name: "",
+          ability_name: '',
           enabled: false,
         },
       };
@@ -81,7 +81,7 @@ class CreateEventForm extends React.Component {
 
     for (const paramName in this.formFields) {
       if (this.formFields[paramName].required) {
-        resultData[paramName] = "";
+        resultData[paramName] = '';
       } else {
         resultData[paramName] = this.formFields[paramName].default;
       }
@@ -96,8 +96,8 @@ class CreateEventForm extends React.Component {
   handleInputChange = (inputIdentifier) => (event) => {
     let newResultData = { ...this.state.resultData };
     if (
-      inputIdentifier === "is_important" ||
-      this.formFields[inputIdentifier].type === "boolean"
+      inputIdentifier === 'is_important' ||
+      this.formFields[inputIdentifier].type === 'boolean'
     ) {
       newResultData[inputIdentifier] = event.target.checked;
     } else {
@@ -118,7 +118,7 @@ class CreateEventForm extends React.Component {
     let errorInputs = [];
     const eventType = this.state.currentEventType;
     for (let paramName in eventData) {
-      if (paramName === "is_important") {
+      if (paramName === 'is_important') {
         continue;
       }
       const paramValue = eventData[paramName];
@@ -128,10 +128,10 @@ class CreateEventForm extends React.Component {
     }
 
     if (errorInputs.length > 0) {
-      const errors = errorInputs.join(", ");
+      const errors = errorInputs.join(', ');
       this.props.enqueueSnackbar(
         `The following fields are required: ${errors}`,
-        { variant: "error" }
+        { variant: 'error' }
       );
     } else {
       let cutsceneData = {
@@ -168,9 +168,9 @@ class CreateEventForm extends React.Component {
         label="Is Important"
         control={
           <Switch
-            checked={this.state.resultData["is_important"]}
-            onChange={this.handleInputChange("is_important")}
-            value={this.state.resultData["is_important"]}
+            checked={this.state.resultData['is_important']}
+            onChange={this.handleInputChange('is_important')}
+            value={this.state.resultData['is_important']}
           />
         }
       />
@@ -225,7 +225,7 @@ class CreateEventForm extends React.Component {
             color="primary"
             onClick={this.showData}
           >
-            {this.state.lockType ? "Edit Cutscene Event" : "Add Cutscene Event"}
+            {this.state.lockType ? 'Edit Cutscene Event' : 'Add Cutscene Event'}
           </Button>
         </Grid>
       </form>

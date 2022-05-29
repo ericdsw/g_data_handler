@@ -1,14 +1,14 @@
-import React from "react";
-import { connect } from "react-redux";
-import { withSnackbar } from "notistack";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withSnackbar } from 'notistack';
 
-import CompletionBundle from "../pages/storylines/CompletionBundle";
+import CompletionBundle from '../pages/storylines/CompletionBundle';
 
 import {
   addStepCompleteCondition,
   updateBundle,
   deleteBundle,
-} from "../../actions/storylineActions";
+} from '../../actions/storylineActions';
 
 /**
  * Container that manages redux communication for the CompletionBundle

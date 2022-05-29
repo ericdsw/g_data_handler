@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import withStyles from '@mui/styles/withStyles';
-import { withSnackbar } from "notistack";
+import { withSnackbar } from 'notistack';
 import {
   MenuItem,
   Grid,
@@ -8,10 +8,10 @@ import {
   Menu,
   Typography,
   Avatar,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
-import { speakerImages } from "../../../../globals/speakerSchema";
+import { speakerImages } from '../../../../globals/speakerSchema';
 
 const ITEM_HEIGHT = 48;
 const PAPER_PROPS = {
@@ -23,7 +23,7 @@ const PAPER_PROPS = {
 
 const styles = () => ({
   imagePreview: {
-    backgroundColor: "#ccc",
+    backgroundColor: '#ccc',
     marginTop: 16,
     height: 225,
     borderRadius: 4,
@@ -68,10 +68,11 @@ class DialogueImageSearcher extends React.Component {
       searchContent = (
         <IconButton
           aria-label="Select Image"
-          aria-owns={open ? "image-menu" : undefined}
+          aria-owns={open ? 'image-menu' : undefined}
           aria-haspopup="true"
           onClick={this.handleSearchImageShow}
-          size="large">
+          size="large"
+        >
           <SearchIcon />
         </IconButton>
       );
@@ -80,7 +81,7 @@ class DialogueImageSearcher extends React.Component {
         <Avatar
           className={classes.largeAvatar}
           src={`images/${image}`}
-          aria-owns={open ? "image-menu" : undefined}
+          aria-owns={open ? 'image-menu' : undefined}
           aria-haspopup="true"
           onClick={this.handleSearchImageShow}
           alt="Speaker"

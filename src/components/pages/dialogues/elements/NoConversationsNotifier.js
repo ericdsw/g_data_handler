@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { Typography } from "@mui/material";
+import { Typography } from '@mui/material';
 
 const useStyles = makeStyles(() => ({
   emptyText: {
     padding: 32,
-    width: "100%",
+    width: '100%',
   },
 }));
 

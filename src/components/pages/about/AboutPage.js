@@ -1,6 +1,6 @@
-import React from "react";
-import { Typography, Button } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import React from 'react';
+import { Typography, Button } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
   link: {
@@ -14,7 +14,7 @@ const AboutPage = () => {
   return (
     <React.Fragment>
       <Typography variant="body1">
-        Copyright 2019-2021,{" "}
+        Copyright 2019-2021,{' '}
         <a href="https://github.com/ericdsw" className={classes.link}>
           Eric De Sedas
         </a>
@@ -22,7 +22,7 @@ const AboutPage = () => {
       </Typography>
       <br />
       <Typography variant="body2">
-        Currently working at World Eater Games alongside{" "}
+        Currently working at World Eater Games alongside{' '}
         <a className={classes.link} href="https://github.com/rnoriega31">
           rnoriega31
         </a>

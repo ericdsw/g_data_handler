@@ -1,20 +1,20 @@
-import React from "react";
-import { connect } from "react-redux";
-import { withSnackbar } from "notistack";
-import { Typography, Icon } from "@mui/material";
-import { normalize, denormalize } from "normalizr";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withSnackbar } from 'notistack';
+import { Typography, Icon } from '@mui/material';
+import { normalize, denormalize } from 'normalizr';
 
-import Storyline from "../pages/storylines/Storyline";
-import { DragJsonFileManager } from "../elements";
-import { downloadJSON, parseFile } from "../../functions";
-import StorylineSchema from "../../models/schemas/StorylineSchema";
+import Storyline from '../pages/storylines/Storyline';
+import { DragJsonFileManager } from '../elements';
+import { downloadJSON, parseFile } from '../../functions';
+import StorylineSchema from '../../models/schemas/StorylineSchema';
 import {
   updateStoryline,
   updateWithEmptyStoryline,
   updateStorylineName,
   addStorylineStep,
   clearStoryline,
-} from "../../actions/storylineActions";
+} from '../../actions/storylineActions';
 
 class StorylineContainer extends React.Component {
   clearStoryline = () => {
@@ -38,7 +38,7 @@ class StorylineContainer extends React.Component {
   updateStorylineFromFile = (targetFile) => {
     const { updateStoryline } = this.props;
 
-    parseFile(targetFile, "application/json")
+    parseFile(targetFile, 'application/json')
       .then((json) => {
         const normalizedData = normalize(json, StorylineSchema);
         updateStoryline(normalizedData.result, normalizedData.entities);
@@ -58,7 +58,7 @@ class StorylineContainer extends React.Component {
 
   // Extra
   showError = (errorMessage) => {
-    this.props.enqueueSnackbar(errorMessage, { variant: "error" });
+    this.props.enqueueSnackbar(errorMessage, { variant: 'error' });
   };
 
   // Render Logic
@@ -66,7 +66,7 @@ class StorylineContainer extends React.Component {
     const { currentStoryline, storylines } = this.props;
 
     let content;
-    if (currentStoryline !== "") {
+    if (currentStoryline !== '') {
       content = (
         <Storyline
           storyline={storylines[currentStoryline]}
@@ -100,7 +100,6 @@ class StorylineContainer extends React.Component {
 const mapStateToProps = (state) => ({
   currentStoryline: state.storyline.currentStoryline,
   storylines: state.storyline.storylines,
-  completeState: state.storyline,
 });
 
 export default connect(mapStateToProps, {

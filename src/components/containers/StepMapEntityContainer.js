@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { withSnackbar } from "notistack";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withSnackbar } from 'notistack';
 
-import StepMapEntity from "../pages/storylines/StepMapEntity";
+import StepMapEntity from '../pages/storylines/StepMapEntity';
 
 import {
   deleteMapEntity,
@@ -10,7 +10,7 @@ import {
   deleteMapEntityParam,
   addNPCInteraction,
   updateMapEntity,
-} from "../../actions/storylineActions";
+} from '../../actions/storylineActions';
 
 class StepMapEntityContainer extends React.Component {
   editOrAddParameter = (paramName, paramValue) => {

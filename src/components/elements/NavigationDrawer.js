@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import {
   Divider,
@@ -8,16 +8,16 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-} from "@mui/material";
-import { NavLink } from "react-router-dom";
+} from '@mui/material';
+import { NavLink } from 'react-router-dom';
 
-import routes from "../../router";
-import { drawerWidth } from "../../globals";
+import routes from '../../router';
+import { drawerWidth } from '../../globals';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   root: {
-    display: "flex",
+    display: 'flex',
   },
   drawerPaper: {
     width: drawerWidth,

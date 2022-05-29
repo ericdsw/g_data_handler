@@ -1,18 +1,18 @@
-import React, { useMemo } from "react";
-import { Card, CardHeader, CardContent, Typography, Grid } from "@mui/material";
+import React, { useMemo } from 'react';
+import { Card, CardHeader, CardContent, Typography, Grid } from '@mui/material';
 
 import makeStyles from '@mui/styles/makeStyles';
 
-import { DialogueMessageToolbar, ConversationCardTitle } from "./elements";
+import { DialogueMessageToolbar, ConversationCardTitle } from './elements';
 
 const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.palette.messageBackground,
-    borderBottom: "1px solid #666",
+    borderBottom: '1px solid #666',
     padding: theme.spacing(2),
   },
   itemIconContainer: {
-    color: "#2d81b5",
+    color: '#2d81b5',
   },
   itemIcon: {
     fontSize: 30,
@@ -31,7 +31,7 @@ const GiveItemFromDialogue = ({
 
   const usedMessage = useMemo(() => {
     return !message.custom_message
-      ? "Will use the default message"
+      ? 'Will use the default message'
       : `Custom message: ${message.custom_message}`;
   }, [message.custom_message]);
 

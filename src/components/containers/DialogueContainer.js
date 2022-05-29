@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { withSnackbar } from "notistack";
-import { Icon, Typography } from "@mui/material";
-import { DragDropContext } from "react-beautiful-dnd";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withSnackbar } from 'notistack';
+import { Icon, Typography } from '@mui/material';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 import {
   updateDialogue,
@@ -17,15 +17,15 @@ import {
   deleteConversationsToMerge,
   selectAllConversations,
   unselectAllConversations,
-} from "../../actions/dialogueActions";
-import { parseFile, downloadJSON } from "../../functions";
-import { DragJsonFileManager } from "../elements";
+} from '../../actions/dialogueActions';
+import { parseFile, downloadJSON } from '../../functions';
+import { DragJsonFileManager } from '../elements';
 import {
   transformIn,
   transformOut,
-} from "../../models/transformers/DialogueTransformer";
-import Dialogue from "../pages/dialogues/Dialogue";
-import DialogueToolbar from "../pages/dialogues/elements/DialogueToolbar";
+} from '../../models/transformers/DialogueTransformer';
+import Dialogue from '../pages/dialogues/Dialogue';
+import DialogueToolbar from '../pages/dialogues/elements/DialogueToolbar';
 
 class DialogueContainer extends React.Component {
   /**
@@ -42,7 +42,7 @@ class DialogueContainer extends React.Component {
    */
   updateWithEmptyDialogue = () => {
     const { updateWithEmptyDialogue } = this.props;
-    updateWithEmptyDialogue("file_name.json");
+    updateWithEmptyDialogue('file_name.json');
   };
 
   /**
@@ -50,7 +50,7 @@ class DialogueContainer extends React.Component {
    */
   updateDialogueFromFile = (targetFile) => {
     const { updateDialogue } = this.props;
-    parseFile(targetFile, "application/json")
+    parseFile(targetFile, 'application/json')
       .then((json) => {
         const { result, entities } = transformIn(json);
 
@@ -58,9 +58,9 @@ class DialogueContainer extends React.Component {
         Object.keys(entities.messages).forEach((mId) => {
           if (!entities.messages[mId].type) {
             if (!entities.messages[mId].is_emote) {
-              entities.messages[mId].type = "message";
+              entities.messages[mId].type = 'message';
             } else {
-              entities.messages[mId].type = "emote";
+              entities.messages[mId].type = 'emote';
             }
           }
         });
@@ -94,7 +94,7 @@ class DialogueContainer extends React.Component {
     const { allData, fileName, currentDialogue } = this.props;
 
     if (Object.keys(allData.conversations).length <= 0) {
-      this.showError("Cannot export an empty dialogue file");
+      this.showError('Cannot export an empty dialogue file');
       return;
     }
 
@@ -109,7 +109,7 @@ class DialogueContainer extends React.Component {
     if (emptyConversations > 0) {
       this.showError(
         `${emptyConversations} conversation${
-          emptyConversations === 1 ? " is" : "s are"
+          emptyConversations === 1 ? ' is' : 's are'
         } empty`
       );
       return;
@@ -122,7 +122,7 @@ class DialogueContainer extends React.Component {
    * Displays a "snackbar" with the provided error message
    */
   showError = (errorMessage) => {
-    this.props.enqueueSnackbar(errorMessage, { variant: "error" });
+    this.props.enqueueSnackbar(errorMessage, { variant: 'error' });
   };
 
   onDragEnd = (result) => {
@@ -137,7 +137,7 @@ class DialogueContainer extends React.Component {
       return;
     }
 
-    if (result.type === "conversations") {
+    if (result.type === 'conversations') {
       const { reorderConversations, currentDialogue } = this.props;
       reorderConversations(
         source.index,
@@ -194,7 +194,7 @@ class DialogueContainer extends React.Component {
 
     let content;
 
-    if (currentDialogue !== "") {
+    if (currentDialogue !== '') {
       content = (
         <React.Fragment>
           <DialogueToolbar

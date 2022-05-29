@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from 'react';
 import {
   Grid,
   Card,
@@ -15,74 +15,87 @@ import {
   TableRow,
   Tooltip,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import classnames from "classnames";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useDialogueManager } from "../../../hooks";
-import { GenericDialogue, ConfirmationDialogue } from "../../elements";
-import { CreateEventForm } from "./forms";
-import { eventSchema } from "../../../globals";
-import { createEventDescription } from "../../../functions";
+import classnames from 'classnames';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import { styles } from "./styles/CutsceneEventStyle";
+import { useDialogueManager } from '../../../hooks';
+import { GenericDialogue, ConfirmationDialogue } from '../../elements';
+import { CreateEventForm } from './forms';
+import { eventSchema } from '../../../globals';
+import { createEventDescription } from '../../../functions';
+
+import { styles } from './styles/CutsceneEventStyle';
 
 function parseParameter(parameter) {
   switch (typeof parameter) {
-    case "boolean":
-      return parameter ? "True" : "False";
-    case "object":
+    case 'boolean':
+      return parameter ? 'True' : 'False';
+    case 'object':
       return JSON.stringify(parameter);
     default:
       return parameter;
   }
 }
 
-const CutsceneEvent = (props) => {
-  const classes = makeStyles(styles)();
+const useStyles = makeStyles(styles);
 
-  // Extract value properties
-  const { cutsceneEventData, rowNumber, eventNumber } = props;
+const CutsceneEvent = ({
+  cutsceneEventData,
+  rowNumber,
+  eventNumber,
+  handleEditEvent,
+  handleDeleteEvent,
+}) => {
+  const classes = useStyles();
 
-  // Extract method properties
-  const { handleEditEvent, handleDeleteEvent } = props;
-
-  // Dialogue management
   const [dialogues, toggleDialogue] = useDialogueManager(
-    "editEvent",
-    "confirmDelete"
+    'editEvent',
+    'confirmDelete'
   );
 
-  // Expand/collapse management
   const [expanded, toggleExpand] = useState(false);
 
-  // Render props
-  const { name, icon } = eventSchema[cutsceneEventData.type];
-  const important = cutsceneEventData.parameters.is_important;
-
-  const eventDescription = createEventDescription(
-    cutsceneEventData.type,
-    cutsceneEventData.parameters
+  const { name, icon } = useMemo(
+    () => eventSchema[cutsceneEventData.type],
+    [cutsceneEventData.type]
   );
 
-  const paramNames = Object.keys(cutsceneEventData.parameters);
-  const listParams = paramNames.map((paramName, index) => {
-    const data = parseParameter(cutsceneEventData.parameters[paramName]);
-    return (
-      <TableRow key={index}>
-        <TableCell align="left" padding="none" size="small">
-          <b>{paramName}</b>
-        </TableCell>
-        <TableCell align="left">
-          <Tooltip title={data} enterDelay={300}>
-            <Typography>{data}</Typography>
-          </Tooltip>
-        </TableCell>
-      </TableRow>
-    );
-  });
+  const important = useMemo(
+    () => cutsceneEventData.parameters.is_important,
+    [cutsceneEventData]
+  );
+
+  const eventDescription = useMemo(
+    () =>
+      createEventDescription(
+        cutsceneEventData.type,
+        cutsceneEventData.parameters
+      ),
+    [cutsceneEventData]
+  );
+
+  const listParams = useMemo(() => {
+    const paramNames = Object.keys(cutsceneEventData.parameters);
+    return paramNames.map((paramName, index) => {
+      const data = parseParameter(cutsceneEventData.parameters[paramName]);
+      return (
+        <TableRow key={index}>
+          <TableCell align="left" padding="none" size="small">
+            <b>{paramName}</b>
+          </TableCell>
+          <TableCell align="left">
+            <Tooltip title={data} enterDelay={300}>
+              <Typography>{data}</Typography>
+            </Tooltip>
+          </TableCell>
+        </TableRow>
+      );
+    });
+  }, [cutsceneEventData]);
 
   return (
     <Grid item>
@@ -92,7 +105,7 @@ const CutsceneEvent = (props) => {
             <Avatar
               aria-label="Type"
               className={
-                typeof important !== "undefined" && !important
+                typeof important !== 'undefined' && !important
                   ? classes.avatarNonImportant
                   : classes.avatar
               }
@@ -110,14 +123,16 @@ const CutsceneEvent = (props) => {
         <CardActions className={classes.actions} disableSpacing>
           <IconButton
             aria-label="Edit"
-            onClick={() => toggleDialogue("editEvent", "show")}
-            size="large">
+            onClick={() => toggleDialogue('editEvent', 'show')}
+            size="large"
+          >
             <EditIcon />
           </IconButton>
           <IconButton
             aria-label="Delete"
-            onClick={() => toggleDialogue("confirmDelete", "show")}
-            size="large">
+            onClick={() => toggleDialogue('confirmDelete', 'show')}
+            size="large"
+          >
             <DeleteIcon />
           </IconButton>
           <IconButton
@@ -127,7 +142,8 @@ const CutsceneEvent = (props) => {
             onClick={() => toggleExpand(!expanded)}
             aria-expanded={expanded}
             aria-label="More Info"
-            size="large">
+            size="large"
+          >
             <ExpandMoreIcon />
           </IconButton>
         </CardActions>
@@ -142,26 +158,26 @@ const CutsceneEvent = (props) => {
 
       <GenericDialogue
         title="Edit Cutscene Event"
-        open={dialogues["editEvent"]}
+        open={dialogues['editEvent']}
         maxWidth="sm"
-        onClose={() => toggleDialogue("editEvent", "hide")}
+        onClose={() => toggleDialogue('editEvent', 'hide')}
       >
         <CreateEventForm
           existingData={cutsceneEventData}
           creationHandler={(cutsceneData) => {
             handleEditEvent(cutsceneData);
-            toggleDialogue("editEvent", "hide");
+            toggleDialogue('editEvent', 'hide');
           }}
         />
       </GenericDialogue>
 
       <ConfirmationDialogue
         message="Delete the cutscene event?"
-        isOpen={dialogues["confirmDelete"]}
-        handleClose={() => toggleDialogue("confirmDelete", "hide")}
+        isOpen={dialogues['confirmDelete']}
+        handleClose={() => toggleDialogue('confirmDelete', 'hide')}
         handleConfirm={() => {
           handleDeleteEvent(rowNumber, eventNumber);
-          toggleDialogue("confirmDelete", "hide");
+          toggleDialogue('confirmDelete', 'hide');
         }}
       />
     </Grid>

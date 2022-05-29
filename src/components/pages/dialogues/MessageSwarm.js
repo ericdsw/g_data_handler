@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import {
   Card,
@@ -7,16 +7,16 @@ import {
   Typography,
   Tooltip,
   Zoom,
-} from "@mui/material";
+} from '@mui/material';
 
-import { DialogueMessageToolbar, ConversationCardTitle } from "./elements";
-import { cleanMessage } from "./functions";
+import { DialogueMessageToolbar, ConversationCardTitle } from './elements';
+import { cleanMessage } from './functions';
 
 const styles = (theme) => ({
   swarmContainer: {
-    width: "100%",
+    width: '100%',
     backgroundColor: theme.palette.messageBackground,
-    borderBottom: "1px solid #666",
+    borderBottom: '1px solid #666',
     padding: theme.spacing(2),
   },
 
@@ -28,10 +28,10 @@ const styles = (theme) => ({
     height: 28 * 2,
     borderRadius: 6 * 2,
     fontSize: 12 * 2,
-    color: "#000",
-    backgroundColor: "#C9C3B8",
+    color: '#000',
+    backgroundColor: '#C9C3B8',
     fontFamily: "'JF Dot Ayu Gothic 18'",
-    border: "2px solid #272523",
+    border: '2px solid #272523',
   },
   swarmMessageTextContent: {
     marginLeft: 8 * 2,
@@ -40,7 +40,7 @@ const styles = (theme) => ({
   swarmMessage: {
     padding: theme.spacing(1),
     marginBottom: theme.spacing(0.5),
-    width: "100%",
+    width: '100%',
   },
 });
 
@@ -95,7 +95,7 @@ const MessageSwarm = ({
               </div>
             </Tooltip>
             <Typography variant="body2" style={{ marginTop: 8 }}>
-              Target: {swarmMessage.target_object}. Appears after{" "}
+              Target: {swarmMessage.target_object}. Appears after{' '}
               {swarmMessage.appearance_timeout} second(s).
             </Typography>
           </Card>

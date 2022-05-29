@@ -1,30 +1,26 @@
-import React from "react";
-import { interactionInputSchema } from "../../../../globals";
-import { GenericForm } from "../../../elements";
+import React, { useMemo } from 'react';
+import { interactionInputSchema } from '../../../../globals';
+import { GenericForm } from '../../../elements';
 
-const CreateNPCInteractionForm = (props) => {
-  // Parameters
-  const { data = {}, interactionType = "", buttonText = "Create" } = props;
+const CreateNPCInteractionForm = ({
+  data = {},
+  interactionType = '',
+  buttonText = 'Create',
+  handleSubmit,
+}) => {
+  const currentSchema = useMemo(
+    () =>
+      interactionType !== '' ? interactionInputSchema[interactionType] : {},
+    [interactionType]
+  );
 
-  // Methods
-  const { handleSubmit } = props;
-
-  let currentSchema = {};
-  if (interactionType !== "") {
-    currentSchema = interactionInputSchema[interactionType];
-  }
-
-  const onSubmit = (data) => {
-    handleSubmit(data);
-  };
-
-  if (interactionType !== "") {
+  if (interactionType !== '') {
     return (
       <GenericForm
         initialDataSet={data}
         schema={currentSchema}
         buttonText={buttonText}
-        handleSubmit={(data) => onSubmit(data)}
+        handleSubmit={handleSubmit}
       />
     );
   }

@@ -1,4 +1,4 @@
-import { eventSchema } from "../globals";
+import { eventSchema } from '../globals';
 
 /**
  * This method will return true if the provided value is an actual
@@ -7,9 +7,9 @@ import { eventSchema } from "../globals";
  */
 function valueIsValid(value) {
   return (
-    value !== "" &&
+    value !== '' &&
     value !== null &&
-    typeof value !== "undefined" &&
+    typeof value !== 'undefined' &&
     !Number.isNaN(value)
   );
 }
@@ -20,10 +20,10 @@ function valueIsValid(value) {
  * provided
  */
 export default function checkForRequired(eventType, inputName, value) {
-  const inputData = eventSchema[eventType]["parameters"][inputName];
+  const inputData = eventSchema[eventType]['parameters'][inputName];
 
   if (
-    inputName !== "is_important" &&
+    inputName !== 'is_important' &&
     inputData.required &&
     !valueIsValid(value)
   ) {

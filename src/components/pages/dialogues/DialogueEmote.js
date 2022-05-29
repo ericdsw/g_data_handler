@@ -1,16 +1,10 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import withStyles from '@mui/styles/withStyles';
-import {
-  Card,
-  CardContent,
-  Typography,
-  Grid,
-  CardHeader,
-} from "@mui/material";
+import { Card, CardContent, Typography, Grid, CardHeader } from '@mui/material';
 
-import { DialogueMessageToolbar, ConversationCardTitle } from "./elements";
+import { DialogueMessageToolbar, ConversationCardTitle } from './elements';
 
-import { styles } from "./styles/DialogueEmoteStyle";
+import { styles } from './styles/DialogueEmoteStyle';
 
 const DialogueEmote = ({
   message,

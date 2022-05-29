@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import withStyles from '@mui/styles/withStyles';
 import {
   Card,
@@ -8,15 +8,15 @@ import {
   Grid,
   Tooltip,
   Zoom,
-} from "@mui/material";
-import clsx from "clsx";
+} from '@mui/material';
+import clsx from 'clsx';
 
-import { ConversationChoices, ConversationExtraParams } from "./elements";
-import { DialogueMessageToolbar } from "./elements";
-import { speakerSchema } from "../../../globals";
+import { ConversationChoices, ConversationExtraParams } from './elements';
+import { DialogueMessageToolbar } from './elements';
+import { speakerSchema } from '../../../globals';
 
-import { styles } from "./styles/DialogueMessageStyle";
-import { cleanMessage } from "./functions";
+import { styles } from './styles/DialogueMessageStyle';
+import { cleanMessage } from './functions';
 
 const DialogueMessage = ({
   handleEdit,
@@ -50,7 +50,7 @@ const DialogueMessage = ({
   }, [message]);
 
   const hasImage = useMemo(
-    () => usedImagePath && usedImagePath !== "NONE",
+    () => usedImagePath && usedImagePath !== 'NONE',
     [usedImagePath]
   );
 
@@ -58,8 +58,6 @@ const DialogueMessage = ({
     () => cleanMessage(message.message),
     [message.message]
   );
-
-  console.log(messageTextOnly);
 
   return (
     <Card square className={classes.messageContainer}>
@@ -73,7 +71,7 @@ const DialogueMessage = ({
       <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <div style={{ display: "flex", alignItems: "flex-start" }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
               <div style={{ flex: 1 }}>
                 {message.speaker && (
                   <Typography
@@ -109,7 +107,7 @@ const DialogueMessage = ({
                     <div
                       className={clsx(
                         classes.contentText,
-                        hasImage ? "" : classes.contentTextNoImage
+                        hasImage ? '' : classes.contentTextNoImage
                       )}
                     >
                       {messageTextOnly}

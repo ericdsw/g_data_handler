@@ -1,33 +1,37 @@
-import React from "react";
-import { completionInputSchema } from "../../../../globals";
-import { GenericForm } from "../../../elements";
+import React, { useMemo, useCallback } from 'react';
+import { completionInputSchema } from '../../../../globals';
+import { GenericForm } from '../../../elements';
 
-const CompleteConditionForm = (props) => {
-  // Parameters
-  const {
-    completionType = "",
-    conditionParams = {},
-    name = "",
-    buttonText = "Create",
-  } = props;
+const CompleteConditionForm = ({
+  completionType = '',
+  conditionParams = {},
+  name = '',
+  buttonText = 'Create',
+  handleSubmit,
+}) => {
+  const currentSchema = useMemo(
+    () => (completionType !== '' ? completionInputSchema[completionType] : {}),
+    [completionType]
+  );
 
-  // Methods
-  const { handleSubmit } = props;
+  const initialDataSet = useMemo(
+    () => ({
+      ...conditionParams,
+      unique_name: name,
+    }),
+    [conditionParams, name]
+  );
 
-  let currentSchema = {};
-  if (completionType !== "") {
-    currentSchema = completionInputSchema[completionType];
-  }
+  const onSubmit = useCallback(
+    (data) => {
+      const newData = { ...data };
+      delete newData.unique_name;
+      handleSubmit(data.unique_name, newData);
+    },
+    [handleSubmit]
+  );
 
-  const initialDataSet = Object.assign(conditionParams, { unique_name: name });
-
-  const onSubmit = (data) => {
-    const newData = { ...data };
-    delete newData.unique_name;
-    handleSubmit(data.unique_name, newData);
-  };
-
-  if (completionType === "") {
+  if (completionType === '') {
     return <React.Fragment />;
   }
 

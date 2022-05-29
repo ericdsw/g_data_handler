@@ -1,37 +1,38 @@
-import React from "react";
-import { storylineEntityInputSchema } from "../../../../globals";
-import { GenericForm } from "../../../elements";
+import React, { useCallback, useMemo } from 'react';
+import { storylineEntityInputSchema } from '../../../../globals';
+import { GenericForm } from '../../../elements';
 
-const CreateMapEntityForm = (props) => {
-  const {
-    data = {},
-    curType = "",
-    disabledInputs = [],
-    buttonText = "Create",
-  } = props;
-  const { handleSubmit } = props;
+const CreateMapEntityForm = ({
+  data = {},
+  curType = '',
+  disabledInputs = [],
+  buttonText = 'Create',
+  handleSubmit,
+}) => {
+  const usedSchema = useMemo(
+    () => (curType !== '' ? storylineEntityInputSchema[curType] : {}),
+    [curType]
+  );
 
-  const onSubmit = (data) => {
-    const newData = { ...data };
-    delete newData.name;
-    delete newData.map_name;
+  const onSubmit = useCallback(
+    (data) => {
+      const newData = { ...data };
+      delete newData.name;
+      delete newData.map_name;
 
-    for (const key in newData) {
-      const curType = usedSchema.parameters[key].type;
-      if (curType !== "boolean" && !newData[key]) {
-        delete newData[key];
+      for (const key in newData) {
+        const curType = usedSchema.parameters[key].type;
+        if (curType !== 'boolean' && !newData[key]) {
+          delete newData[key];
+        }
       }
-    }
 
-    handleSubmit(data.name, data.map_name, newData);
-  };
+      handleSubmit(data.name, data.map_name, newData);
+    },
+    [handleSubmit, usedSchema]
+  );
 
-  let usedSchema = {};
-  if (curType !== "") {
-    usedSchema = storylineEntityInputSchema[curType];
-  }
-
-  if (curType !== "") {
+  if (curType !== '') {
     return (
       <GenericForm
         initialDataSet={data}

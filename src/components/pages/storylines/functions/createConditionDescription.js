@@ -1,11 +1,11 @@
-import React from "react";
-import { green } from "@mui/material/colors";
+import React from 'react';
+import { green } from '@mui/material/colors';
 
-const highlight = { color: green[400], fontWeight: "bold" };
+const highlight = { color: green[400], fontWeight: 'bold' };
 
 const createConditionDescription = (condition) => {
   switch (condition.type) {
-    case "npc_interaction":
+    case 'npc_interaction':
       return (
         <React.Fragment>
           Interact with&nbsp;
@@ -13,16 +13,16 @@ const createConditionDescription = (condition) => {
         </React.Fragment>
       );
 
-    case "npc_finished_dialogues":
+    case 'npc_finished_dialogues':
       return (
         <React.Fragment>
           Exhaust&nbsp;
-          <span style={highlight}>{condition.parameters.target_npc}</span>{" "}
+          <span style={highlight}>{condition.parameters.target_npc}</span>{' '}
           dialogues
         </React.Fragment>
       );
 
-    case "enter_trigger_area":
+    case 'enter_trigger_area':
       return (
         <React.Fragment>
           Enter Area&nbsp;
@@ -30,7 +30,7 @@ const createConditionDescription = (condition) => {
         </React.Fragment>
       );
 
-    case "got_item":
+    case 'got_item':
       return (
         <React.Fragment>
           Get Item&nbsp;
@@ -38,7 +38,7 @@ const createConditionDescription = (condition) => {
         </React.Fragment>
       );
 
-    case "item_used":
+    case 'item_used':
       return (
         <React.Fragment>
           Use Item&nbsp;
@@ -46,7 +46,7 @@ const createConditionDescription = (condition) => {
         </React.Fragment>
       );
 
-    case "choice_selected":
+    case 'choice_selected':
       return (
         <React.Fragment>
           Select choice&nbsp;
@@ -56,7 +56,7 @@ const createConditionDescription = (condition) => {
         </React.Fragment>
       );
 
-    case "advance_storyline":
+    case 'advance_storyline':
       return (
         <React.Fragment>
           Advance Storyline&nbsp;
@@ -66,7 +66,7 @@ const createConditionDescription = (condition) => {
         </React.Fragment>
       );
 
-    case "storyline_message":
+    case 'storyline_message':
       return (
         <React.Fragment>
           Listen to message&nbsp;

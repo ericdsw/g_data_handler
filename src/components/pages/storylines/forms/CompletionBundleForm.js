@@ -1,18 +1,18 @@
-import React from "react";
-import { GenericForm } from "../../../elements";
-import { bundleEntityInputSchema } from "../../../../globals";
+import React from 'react';
+import { GenericForm } from '../../../elements';
+import { bundleEntityInputSchema } from '../../../../globals';
 
-const CompletionBundleForm = (props) => {
-  const { buttonText = "Create", data = {} } = props;
-
-  const { handleSubmit } = props;
-
+const CompletionBundleForm = ({
+  buttonText = 'Create',
+  data = {},
+  handleSubmit,
+}) => {
   return (
     <GenericForm
       initialDataSet={data}
       schema={bundleEntityInputSchema}
       buttonText={buttonText}
-      handleSubmit={(data) => handleSubmit(data)}
+      handleSubmit={handleSubmit}
     />
   );
 };

@@ -1,12 +1,12 @@
-import { schema } from "normalizr";
+import { schema } from 'normalizr';
 
-const MessageSchema = new schema.Entity("messages");
+const MessageSchema = new schema.Entity('messages');
 
-const ConversationSchema = new schema.Entity("conversations", {
+const ConversationSchema = new schema.Entity('conversations', {
   messages: [MessageSchema],
 });
 
-const DialogueSchema = new schema.Entity("dialogues", {
+const DialogueSchema = new schema.Entity('dialogues', {
   conversations: [ConversationSchema],
 });
 

@@ -1,16 +1,15 @@
-/* eslint-disable import/no-anonymous-default-export */
-import { 
+import {
   TOGGLE_SIDEBAR,
   COLLAPSE_SIDEBAR,
-  TOGGLE_DARK_MODE
-} from "../actions/types";
+  TOGGLE_DARK_MODE,
+} from '../actions/types';
 
 const initialState = {
   drawerOpen: false,
-  darkMode: true
+  darkMode: true,
 };
 
-export default function (state = initialState, action) {
+export default function appReducer(state = initialState, action) {
   switch (action.type) {
     case TOGGLE_SIDEBAR:
       return { ...state, drawerOpen: !state.drawerOpen };

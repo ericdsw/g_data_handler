@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from "react";
-import withStyles from '@mui/styles/withStyles';
+import React, { useState, useMemo } from 'react';
+import { makeStyles } from '@mui/styles';
 import {
   Card,
   CardHeader,
@@ -15,104 +15,125 @@ import {
   List,
   ListItem,
   Collapse,
-} from "@mui/material";
+} from '@mui/material';
 
-import { interactionInputSchema } from "../../../globals";
-import NPCInteractionContainer from "../../containers/NPCInteractionContainer";
-import StepMapEntityParameterList from "./elements/StepMapEntityParameterList";
-import CreateNPCInteractionForm from "./forms/CreateNPCInteractionForm";
+import { interactionInputSchema } from '../../../globals';
+import NPCInteractionContainer from '../../containers/NPCInteractionContainer';
+import StepMapEntityParameterList from './elements/StepMapEntityParameterList';
+import CreateNPCInteractionForm from './forms/CreateNPCInteractionForm';
 import {
   GenericDialogue,
   ConfirmationDialogue,
   MenuIconButton,
-} from "../../elements";
-import { useDialogueManager } from "../../../hooks";
-import CreateMapEntityForm from "./forms/CreateMapEntityForm";
-import ItemDependentInteractionInstructions from "./elements/ItemDependentInteractionInstructions";
+} from '../../elements';
+import { useDialogueManager } from '../../../hooks';
+import CreateMapEntityForm from './forms/CreateMapEntityForm';
+import ItemDependentInteractionInstructions from './elements/ItemDependentInteractionInstructions';
 
-import { styles } from "./styles/StepMapEntityStyle";
+import { styles } from './styles/StepMapEntityStyle';
 
-const StepMapEntity = (props) => {
-  // Properties
-  const { classes, stepMapEntity, curMapName } = props;
+const useStyles = makeStyles(styles);
 
-  // Methods
-  const {
-    handleAddParameter,
-    handleEditParameter,
-    handleDeleteParameter,
-    handleAddInteraction,
-    handleUpdateEntity,
-    handleDeleteEntity,
-  } = props;
+const StepMapEntity = ({
+  stepMapEntity,
+  curMapName,
+  handleAddParameter,
+  handleEditParameter,
+  handleDeleteParameter,
+  handleAddInteraction,
+  handleUpdateEntity,
+  handleDeleteEntity,
+}) => {
+  const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(
-    "viewParameters",
-    "viewInteractions",
-    "confirmDelete",
-    "editEntity",
-    "confirmParameterDelete",
-    "addInteraction"
+    'viewParameters',
+    'viewInteractions',
+    'confirmDelete',
+    'editEntity',
+    'confirmParameterDelete',
+    'addInteraction'
   );
-  const [curInteractionType, setCurInteractionType] = useState("");
+  const [curInteractionType, setCurInteractionType] = useState('');
   const [paramsExpanded, toggleParamsExpanded] = useState(false);
 
-  const interactionTypes = {};
-  for (const key in interactionInputSchema) {
-    interactionTypes[key] = interactionInputSchema[key].name;
-  }
-
-  const paramKeys = Object.keys(stepMapEntity.parameters);
-  const paramAmount = paramKeys.length;
-  const paramList = paramKeys.map((key, index) => (
-    <ListItem key={key}>
-      <Tooltip title={`${stepMapEntity.parameters[key]}`}>
-        <Typography variant="caption">
-          {typeof stepMapEntity.parameters[key] === "boolean" && (
-            <React.Fragment>
-              <b>{key}</b>:{" "}
-              <i>{stepMapEntity.parameters[key] ? `True` : `False`}</i>
-            </React.Fragment>
-          )}
-          {typeof stepMapEntity.parameters[key] !== "boolean" && (
-            <React.Fragment>
-              <b>{key}</b>: <i>{stepMapEntity.parameters[key]}</i>
-            </React.Fragment>
-          )}
-        </Typography>
-      </Tooltip>
-    </ListItem>
-  ));
-
-  let inAmount = 0;
-  if (typeof stepMapEntity.configurator_data !== "undefined") {
-    inAmount = stepMapEntity.configurator_data.length;
-  }
-
-  function getEntityType(entity) {
-    switch (entity.type) {
-      case "create_npc":
-        return "Create NPC";
-      case "configure_npc":
-        return "Configure NPC";
-      case "configure_group":
-        return "Configure Group";
-      case "create_area":
-        return "Create Notification Area";
-      case "create_dialogue_area":
-        return "Create Dialogue Area";
-      case "create_cutscene_area":
-        return "Create Cutscene Area";
-      case "remove_entity":
-        return "Remove Entity";
-      default:
-        return entity.type;
+  const interactionTypes = useMemo(() => {
+    const result = {};
+    for (const key in interactionInputSchema) {
+      result[key] = interactionInputSchema[key].name;
     }
-  }
+    return result;
+  }, []);
+
+  const paramKeys = useMemo(
+    () => Object.keys(stepMapEntity.parameters),
+    [
+      stepMapEntity,
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      Object.keys(stepMapEntity.parameters).length,
+    ]
+  );
+
+  const paramAmount = useMemo(() => paramKeys.length, [paramKeys.length]);
+
+  const paramList = useMemo(
+    () =>
+      paramKeys.map((key) => (
+        <ListItem key={key}>
+          <Tooltip title={`${stepMapEntity.parameters[key]}`}>
+            <Typography variant="caption">
+              {typeof stepMapEntity.parameters[key] === 'boolean' && (
+                <React.Fragment>
+                  <b>{key}</b>:{' '}
+                  <i>{stepMapEntity.parameters[key] ? `True` : `False`}</i>
+                </React.Fragment>
+              )}
+              {typeof stepMapEntity.parameters[key] !== 'boolean' && (
+                <React.Fragment>
+                  <b>{key}</b>: <i>{stepMapEntity.parameters[key]}</i>
+                </React.Fragment>
+              )}
+            </Typography>
+          </Tooltip>
+        </ListItem>
+      )),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [paramKeys, paramKeys.length, stepMapEntity.parameters]
+  );
+
+  const inAmount = useMemo(
+    () =>
+      typeof stepMapEntity.configurator_data !== 'undefined'
+        ? stepMapEntity.configurator_data.length
+        : 0,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [stepMapEntity.configurator_data, stepMapEntity.configurator_data.length]
+  );
+
+  const entityType = useMemo(() => {
+    switch (stepMapEntity.type) {
+      case 'create_npc':
+        return 'Create NPC';
+      case 'configure_npc':
+        return 'Configure NPC';
+      case 'configure_group':
+        return 'Configure Group';
+      case 'create_area':
+        return 'Create Notification Area';
+      case 'create_dialogue_area':
+        return 'Create Dialogue Area';
+      case 'create_cutscene_area':
+        return 'Create Cutscene Area';
+      case 'remove_entity':
+        return 'Remove Entity';
+      default:
+        return stepMapEntity.type;
+    }
+  }, [stepMapEntity]);
 
   const usedHelpContent = useMemo(() => {
     if (
-      ["item_dialogue_interaction", "item_cutscene_interaction"].includes(
+      ['item_dialogue_interaction', 'item_cutscene_interaction'].includes(
         curInteractionType
       )
     ) {
@@ -129,20 +150,20 @@ const StepMapEntity = (props) => {
         }
         subheader={
           <Typography variant="caption" className={classes.typeSubheader}>
-            {getEntityType(stepMapEntity)}
+            {entityType}
           </Typography>
         }
       />
 
       <Divider />
-      {stepMapEntity.type !== "remove_entity" && (
+      {stepMapEntity.type !== 'remove_entity' && (
         <React.Fragment>
           <ButtonBase
             className={classes.descriptionWrapper}
             onClick={() => toggleParamsExpanded(!paramsExpanded)}
           >
             <Paper elevation={0} className={classes.descriptionElement}>
-              {paramsExpanded ? "Hide" : "Show"} parameters
+              {paramsExpanded ? 'Hide' : 'Show'} parameters
             </Paper>
           </ButtonBase>
           <Collapse in={paramsExpanded} timeout="auto" unmountOnExit>
@@ -158,15 +179,15 @@ const StepMapEntity = (props) => {
           <Divider />
           <ButtonBase
             className={classes.descriptionWrapper}
-            onClick={() => toggleDialogue("viewInteractions", "show")}
+            onClick={() => toggleDialogue('viewInteractions', 'show')}
           >
             <Paper elevation={0} className={classes.descriptionElement}>
-              Contains {inAmount} interaction{inAmount === 1 ? "" : "s"}
+              Contains {inAmount} interaction{inAmount === 1 ? '' : 's'}
             </Paper>
           </ButtonBase>
         </React.Fragment>
       )}
-      {stepMapEntity.type === "remove_entity" && (
+      {stepMapEntity.type === 'remove_entity' && (
         <Paper elevation={0} className={classes.descriptionWrapper}>
           <Typography variant="caption" className={classes.descriptionElement}>
             Remove Entity has no parameters and no interactions
@@ -177,12 +198,18 @@ const StepMapEntity = (props) => {
 
       <CardActions className={classes.actions}>
         <Tooltip title="Edit entity name">
-          <IconButton onClick={() => toggleDialogue("editEntity", "show")} size="large">
+          <IconButton
+            onClick={() => toggleDialogue('editEntity', 'show')}
+            size="large"
+          >
             <Icon fontSize="small">edit</Icon>
           </IconButton>
         </Tooltip>
         <Tooltip title="Delete entity">
-          <IconButton onClick={() => toggleDialogue("confirmDelete", "show")} size="large">
+          <IconButton
+            onClick={() => toggleDialogue('confirmDelete', 'show')}
+            size="large"
+          >
             <Icon fontSize="small">delete</Icon>
           </IconButton>
         </Tooltip>
@@ -190,8 +217,8 @@ const StepMapEntity = (props) => {
 
       <GenericDialogue
         title="Edit Current Entity"
-        open={dialogues["editEntity"]}
-        onClose={() => toggleDialogue("editEntity", "hide")}
+        open={dialogues['editEntity']}
+        onClose={() => toggleDialogue('editEntity', 'hide')}
         maxWidth="sm"
       >
         <CreateMapEntityForm
@@ -200,9 +227,9 @@ const StepMapEntity = (props) => {
             map_name: curMapName,
           })}
           curType={stepMapEntity.type}
-          disabledInputs={["map_name"]}
+          disabledInputs={['map_name']}
           handleSubmit={(name, _mapName, parameters) => {
-            toggleDialogue("editEntity", "hide");
+            toggleDialogue('editEntity', 'hide');
             handleUpdateEntity(name, parameters);
           }}
           buttonText="Edit"
@@ -211,8 +238,8 @@ const StepMapEntity = (props) => {
 
       <GenericDialogue
         title="Add Parameters"
-        open={dialogues["viewParameters"]}
-        onClose={() => toggleDialogue("viewParameters", "hide")}
+        open={dialogues['viewParameters']}
+        onClose={() => toggleDialogue('viewParameters', 'hide')}
         maxWidth="md"
       >
         <StepMapEntityParameterList
@@ -246,13 +273,13 @@ const StepMapEntity = (props) => {
             </Grid>
           </Grid>
         }
-        open={dialogues["viewInteractions"]}
-        onClose={() => toggleDialogue("viewInteractions", "hide")}
+        open={dialogues['viewInteractions']}
+        onClose={() => toggleDialogue('viewInteractions', 'hide')}
         maxWidth="md"
       >
         <Grid container spacing={2}>
           {stepMapEntity.configurator_data.length <= 0 && (
-            <Grid item xs="12">
+            <Grid item xs={12}>
               <Typography variant="body2" align="center" gutterBottom>
                 <i>No interactions found</i>
               </Typography>
@@ -271,8 +298,8 @@ const StepMapEntity = (props) => {
 
       <GenericDialogue
         title="Create Interaction"
-        open={curInteractionType !== ""}
-        onClose={() => setCurInteractionType("")}
+        open={curInteractionType !== ''}
+        onClose={() => setCurInteractionType('')}
         maxWidth="sm"
         helpComponent={usedHelpContent}
       >
@@ -280,17 +307,17 @@ const StepMapEntity = (props) => {
           interactionType={curInteractionType}
           handleSubmit={(data) => {
             handleAddInteraction(curInteractionType, data);
-            setCurInteractionType("");
+            setCurInteractionType('');
           }}
         />
       </GenericDialogue>
 
       <ConfirmationDialogue
         message={`Delete the entity ${stepMapEntity.name}?`}
-        isOpen={dialogues["confirmDelete"]}
-        handleClose={() => toggleDialogue("confirmDelete", "hide")}
+        isOpen={dialogues['confirmDelete']}
+        handleClose={() => toggleDialogue('confirmDelete', 'hide')}
         handleConfirm={() => {
-          toggleDialogue("confirmDelete", "hide");
+          toggleDialogue('confirmDelete', 'hide');
           handleDeleteEntity();
         }}
       />
@@ -298,4 +325,4 @@ const StepMapEntity = (props) => {
   );
 };
 
-export default withStyles(styles)(StepMapEntity);
+export default StepMapEntity;

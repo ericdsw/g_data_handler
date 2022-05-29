@@ -1,5 +1,5 @@
-import React from "react";
-import DialogueContainer from "../../containers/DialogueContainer";
+import React from 'react';
+import DialogueContainer from '../../containers/DialogueContainer';
 
 const DialoguePage = () => {
   return <DialogueContainer />;

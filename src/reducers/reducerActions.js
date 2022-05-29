@@ -1,4 +1,6 @@
-// Removes the specified reference from the provided dictionary
+/**
+ * Removes the specified reference from the provided dictionary
+ */
 export const deleteReference = (sourceDict, refName, val) => {
   for (const dictionaryKey in sourceDict) {
     const curElement = sourceDict[dictionaryKey];

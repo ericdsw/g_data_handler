@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   ADD_STORYLINE_STEP,
@@ -26,10 +26,10 @@ import {
   DELETE_BUNDLE,
   CLEAR_STORYLINE,
   DUPLICATE_CONFIGURATIONS,
-} from "../actions/types";
+} from '../actions/types';
 
 const initialState = {
-  currentStoryline: "",
+  currentStoryline: '',
   storylines: {},
   storylineSteps: {},
   completionBundles: {},
@@ -117,7 +117,7 @@ function addStorylineStep(state, action) {
 
   const curStoryline = state.storylines[storylineId];
   curStoryline.steps.push(id);
-  storylines[storylineId] = curStoryline;
+  storylines[storylineId] = { ...curStoryline };
 
   return {
     ...state,
@@ -192,8 +192,8 @@ function addStepCompletionBundle(state, action) {
     id: bundleId,
     next_step: data.next_step,
     use_fade: data.use_fade ? data.use_fade : false,
-    change_cutscene: data.change_cutscene ? data.change_cutscene : "",
-    affected_map: data.affected_map ? data.affected_map : "",
+    change_cutscene: data.change_cutscene ? data.change_cutscene : '',
+    affected_map: data.affected_map ? data.affected_map : '',
     conditions: [],
   };
 
@@ -289,13 +289,13 @@ function updateStoryline(state, action) {
 function updateWithEmptyStoryline(state, action) {
   const defaultData = {
     DefaultStoryline: {
-      id: "DefaultStoryline",
-      name: "DefaultStoryline",
+      id: 'DefaultStoryline',
+      name: 'DefaultStoryline',
       steps: [],
     },
   };
   return {
-    currentStoryline: "DefaultStoryline",
+    currentStoryline: 'DefaultStoryline',
     storylines: defaultData,
     storylineSteps: {},
     completionBundles: {},
@@ -415,7 +415,7 @@ function deleteStorylineStep(state, action) {
   delete steps[stepId];
 
   const storylines = { ...state.storylines };
-  deleteReference(storylines, "steps", stepId);
+  deleteReference(storylines, 'steps', stepId);
 
   return {
     ...state,
@@ -433,12 +433,12 @@ function deleteMapEntity(state, action) {
 
   delete entities[entityId];
 
-  deleteReference(maps, "entity_nodes", entityId);
+  deleteReference(maps, 'entity_nodes', entityId);
   for (const mapId in maps) {
     var mapEntityAmount = maps[mapId].entity_nodes.length;
     if (mapEntityAmount <= 0) {
       delete maps[mapId];
-      deleteReference(steps, "configuration", mapId);
+      deleteReference(steps, 'configuration', mapId);
     }
   }
 
@@ -468,7 +468,7 @@ function deleteNPCInteraction(state, action) {
   delete interactions[interactionId];
 
   const entities = { ...state.stepMapEntities };
-  deleteReference(entities, "configurator_data", interactionId);
+  deleteReference(entities, 'configurator_data', interactionId);
 
   return {
     ...state,
@@ -485,7 +485,7 @@ function deleteCondition(state, action) {
 
   delete conditions[conditionId];
 
-  deleteReference(bundles, "conditions", conditionId);
+  deleteReference(bundles, 'conditions', conditionId);
 
   return {
     ...state,
@@ -501,7 +501,7 @@ function deleteBundle(state, action) {
   const steps = { ...state.storylineSteps };
 
   delete bundles[bundleId];
-  deleteReference(steps, "completion", bundleId);
+  deleteReference(steps, 'completion', bundleId);
 
   return {
     ...state,

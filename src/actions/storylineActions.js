@@ -23,7 +23,7 @@ import {
   UPDATE_STEP_NAME,
   CLEAR_STORYLINE,
   DUPLICATE_CONFIGURATIONS,
-} from "./types";
+} from './types';
 
 export const updateStoryline = (currentStoryline, data) => (dispatch) => {
   dispatch({

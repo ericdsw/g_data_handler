@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import {
   Accordion,
@@ -11,14 +11,14 @@ import {
   Icon,
   Tooltip,
   Checkbox,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Droppable } from "react-beautiful-dnd";
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Droppable } from 'react-beautiful-dnd';
 
-import { ConfirmationDialogue, GenericDialogue } from "../../elements";
-import { useDialogueManager } from "../../../hooks";
-import DialogueMessageContainer from "../../containers/DialogueMessageContainer";
-import { CreateConversationForm } from "./forms";
+import { ConfirmationDialogue, GenericDialogue } from '../../elements';
+import { useDialogueManager } from '../../../hooks';
+import DialogueMessageContainer from '../../containers/DialogueMessageContainer';
+import { CreateConversationForm } from './forms';
 import {
   CreateDialogueMessageForm,
   CreateEmoteForm,
@@ -26,9 +26,9 @@ import {
   GiveMoneyFromDialogueForm,
   GiveItemFromDialogueForm,
   PickItemFromDialogueForm,
-} from "./forms";
+} from './forms';
 
-import { styles } from "./styles/DialogueConversationStyle";
+import { styles } from './styles/DialogueConversationStyle';
 
 const useStyles = makeStyles(styles);
 
@@ -44,21 +44,21 @@ const DialogueConversation = ({
   const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(
-    "confirmDelete",
-    "updateConversation",
-    "addMessage",
-    "addEmote",
-    "addSwarm",
-    "addGiveItem",
-    "addGiveMoney",
-    "addPickItem"
+    'confirmDelete',
+    'updateConversation',
+    'addMessage',
+    'addEmote',
+    'addSwarm',
+    'addGiveItem',
+    'addGiveMoney',
+    'addPickItem'
   );
   const [isExpanded, setIsExpanded] = useState(false);
 
   const onEditClick = useCallback(
     (event) => {
       event.stopPropagation();
-      toggleDialogue("updateConversation", "show");
+      toggleDialogue('updateConversation', 'show');
     },
     [toggleDialogue]
   );
@@ -66,7 +66,7 @@ const DialogueConversation = ({
   const onDeleteClick = useCallback(
     (event) => {
       event.stopPropagation();
-      toggleDialogue("confirmDelete", "show");
+      toggleDialogue('confirmDelete', 'show');
     },
     [toggleDialogue]
   );
@@ -103,8 +103,8 @@ const DialogueConversation = ({
                   <b>Name: {conversation.conversationName}</b>
                 </Typography>
                 <Typography className={classes.subHeading}>
-                  ({conversation.messages.length}{" "}
-                  {conversation.messages.length === 1 ? "message" : "messages"})
+                  ({conversation.messages.length}{' '}
+                  {conversation.messages.length === 1 ? 'message' : 'messages'})
                 </Typography>
               </Grid>
             </Grid>
@@ -169,7 +169,7 @@ const DialogueConversation = ({
               color="primary"
               variant="contained"
               onClick={() => {
-                toggleDialogue("addMessage", "show");
+                toggleDialogue('addMessage', 'show');
               }}
             >
               Add message
@@ -179,7 +179,7 @@ const DialogueConversation = ({
               color="secondary"
               variant="contained"
               onClick={() => {
-                toggleDialogue("addEmote", "show");
+                toggleDialogue('addEmote', 'show');
               }}
             >
               Emote
@@ -188,7 +188,7 @@ const DialogueConversation = ({
               style={{ marginTop: 8, marginRight: 16 }}
               color="secondary"
               variant="contained"
-              onClick={() => toggleDialogue("addSwarm", "show")}
+              onClick={() => toggleDialogue('addSwarm', 'show')}
             >
               Dialogue Swarn
             </Button>
@@ -196,7 +196,7 @@ const DialogueConversation = ({
               style={{ marginTop: 8, marginRight: 16 }}
               color="secondary"
               variant="contained"
-              onClick={() => toggleDialogue("addGiveMoney", "show")}
+              onClick={() => toggleDialogue('addGiveMoney', 'show')}
             >
               Give Money
             </Button>
@@ -204,7 +204,7 @@ const DialogueConversation = ({
               style={{ marginTop: 8, marginRight: 16 }}
               color="secondary"
               variant="contained"
-              onClick={() => toggleDialogue("addGiveItem", "show")}
+              onClick={() => toggleDialogue('addGiveItem', 'show')}
             >
               Give Item
             </Button>
@@ -212,7 +212,7 @@ const DialogueConversation = ({
               style={{ marginTop: 8 }}
               color="secondary"
               variant="contained"
-              onClick={() => toggleDialogue("addPickItem", "show")}
+              onClick={() => toggleDialogue('addPickItem', 'show')}
             >
               Select Item
             </Button>
@@ -223,13 +223,13 @@ const DialogueConversation = ({
       {/* Create Message Form */}
       <GenericDialogue
         title="Create Conversation"
-        open={dialogues["addMessage"]}
-        onClose={() => toggleDialogue("addMessage", "hide")}
+        open={dialogues['addMessage']}
+        onClose={() => toggleDialogue('addMessage', 'hide')}
       >
         <CreateDialogueMessageForm
           creationHandler={(data, createAndContinue) => {
             if (!createAndContinue) {
-              toggleDialogue("addMessage", "hide");
+              toggleDialogue('addMessage', 'hide');
             }
             handleAddToConversation(data);
           }}
@@ -240,13 +240,13 @@ const DialogueConversation = ({
       {/* Create Emote form */}
       <GenericDialogue
         title="Create Emote"
-        open={dialogues["addEmote"]}
-        onClose={() => toggleDialogue("addEmote", "hide")}
+        open={dialogues['addEmote']}
+        onClose={() => toggleDialogue('addEmote', 'hide')}
         maxWidth="sm"
       >
         <CreateEmoteForm
           creationHandler={(data) => {
-            toggleDialogue("addEmote", "hide");
+            toggleDialogue('addEmote', 'hide');
             handleAddToConversation(data);
           }}
         />
@@ -255,13 +255,13 @@ const DialogueConversation = ({
       {/* Create Swarm form */}
       <GenericDialogue
         title="Create Swarm"
-        open={dialogues["addSwarm"]}
-        onClose={() => toggleDialogue("addSwarm", "hide")}
+        open={dialogues['addSwarm']}
+        onClose={() => toggleDialogue('addSwarm', 'hide')}
       >
         <CreateSwarmForm
           isEdit={false}
           handleSubmit={(data) => {
-            toggleDialogue("addSwarm", "hide");
+            toggleDialogue('addSwarm', 'hide');
             handleAddToConversation(data);
           }}
         />
@@ -270,13 +270,13 @@ const DialogueConversation = ({
       {/* Give money dialogue */}
       <GenericDialogue
         title="Give Money"
-        open={dialogues["addGiveMoney"]}
-        onClose={() => toggleDialogue("addGiveMoney", "hide")}
+        open={dialogues['addGiveMoney']}
+        onClose={() => toggleDialogue('addGiveMoney', 'hide')}
         maxWidth="sm"
       >
         <GiveMoneyFromDialogueForm
           onSubmit={(data) => {
-            toggleDialogue("addGiveMoney", "hide");
+            toggleDialogue('addGiveMoney', 'hide');
             handleAddToConversation(data);
           }}
         />
@@ -285,13 +285,13 @@ const DialogueConversation = ({
       {/* Give Item Dialogue */}
       <GenericDialogue
         title="Give Item"
-        open={dialogues["addGiveItem"]}
-        onClose={() => toggleDialogue("addGiveItem", "hide")}
+        open={dialogues['addGiveItem']}
+        onClose={() => toggleDialogue('addGiveItem', 'hide')}
         maxWidth="sm"
       >
         <GiveItemFromDialogueForm
           onSubmit={(data) => {
-            toggleDialogue("addGiveItem", "hide");
+            toggleDialogue('addGiveItem', 'hide');
             handleAddToConversation(data);
           }}
         />
@@ -300,14 +300,14 @@ const DialogueConversation = ({
       {/* Pick Item Dialogue */}
       <GenericDialogue
         title="Pick Item"
-        open={dialogues["addPickItem"]}
-        onClose={() => toggleDialogue("addPickItem", "hide")}
+        open={dialogues['addPickItem']}
+        onClose={() => toggleDialogue('addPickItem', 'hide')}
         maxWidth="md"
       >
         <PickItemFromDialogueForm
           isEdit={false}
           onSubmit={(data) => {
-            toggleDialogue("addPickItem", "hide");
+            toggleDialogue('addPickItem', 'hide');
             handleAddToConversation(data);
           }}
         />
@@ -316,14 +316,14 @@ const DialogueConversation = ({
       {/* Edit Conversation Name */}
       <GenericDialogue
         title="Edit Conversation"
-        open={dialogues["updateConversation"]}
-        onClose={() => toggleDialogue("updateConversation", "hide")}
+        open={dialogues['updateConversation']}
+        onClose={() => toggleDialogue('updateConversation', 'hide')}
         maxWidth="sm"
       >
         <CreateConversationForm
           conversationName={conversation.conversationName}
           creationHandler={(newName) => {
-            toggleDialogue("updateConversation", "hide");
+            toggleDialogue('updateConversation', 'hide');
             handleUpdateConversation(newName);
           }}
         />
@@ -332,11 +332,11 @@ const DialogueConversation = ({
       {/* Delete Confirmation */}
       <ConfirmationDialogue
         message="Delete the current conversation?"
-        isOpen={dialogues["confirmDelete"]}
-        handleClose={() => toggleDialogue("confirmDelete", "hide")}
+        isOpen={dialogues['confirmDelete']}
+        handleClose={() => toggleDialogue('confirmDelete', 'hide')}
         handleConfirm={() => {
           handleDeleteConversation();
-          toggleDialogue("confirmDelete", "hide");
+          toggleDialogue('confirmDelete', 'hide');
         }}
       />
     </Accordion>

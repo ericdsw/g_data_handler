@@ -1,5 +1,5 @@
-import React from "react";
-import withStyles from '@mui/styles/withStyles';
+import React, { useMemo, useCallback } from 'react';
+import { makeStyles } from '@mui/styles';
 import {
   Typography,
   Card,
@@ -11,35 +11,33 @@ import {
   Avatar,
   Icon,
   IconButton,
-} from "@mui/material";
-import { ConfirmationDialogue, GenericDialogue } from "../../elements";
-import { useDialogueManager } from "../../../hooks";
-import CreateNPCInteractionForm from "./forms/CreateNPCInteractionForm";
-import { interactionInputSchema } from "../../../globals";
+} from '@mui/material';
+import { ConfirmationDialogue, GenericDialogue } from '../../elements';
+import { useDialogueManager } from '../../../hooks';
+import CreateNPCInteractionForm from './forms/CreateNPCInteractionForm';
+import { interactionInputSchema } from '../../../globals';
 
-const styles = (theme) => ({
+const useStyles = makeStyles(() => ({
   interactionCard: {
-    background: "#555",
+    background: '#555',
   },
-});
+}));
 
-const NPCInteraction = (props) => {
-  // Properties
-  const { npcInteraction, classes } = props;
+const NPCInteraction = ({ npcInteraction, handleEdit, handleDelete }) => {
+  const classes = useStyles();
 
-  // Methods
-  const { handleEdit, handleDelete } = props;
-
-  const paramKeys = Object.keys(npcInteraction.parameters);
-
-  const [dialogues, toggleDialogue] = useDialogueManager(
-    "confirmDelete",
-    "edit"
+  const paramKeys = useMemo(
+    () => Object.keys(npcInteraction.parameters),
+    [npcInteraction]
   );
 
-  function getHeader(type) {
-    const { name, icon } = interactionInputSchema[type];
+  const [dialogues, toggleDialogue] = useDialogueManager(
+    'confirmDelete',
+    'edit'
+  );
 
+  const header = useMemo(() => {
+    const { name, icon } = interactionInputSchema[npcInteraction.type];
     return (
       <CardHeader
         title={<Typography variant="h6">{name}</Typography>}
@@ -50,21 +48,27 @@ const NPCInteraction = (props) => {
         }
         action={
           <React.Fragment>
-            <IconButton onClick={() => toggleDialogue("edit", "show")} size="large">
+            <IconButton
+              onClick={() => toggleDialogue('edit', 'show')}
+              size="large"
+            >
               <Icon>edit</Icon>
             </IconButton>
-            <IconButton onClick={() => toggleDialogue("confirmDelete", "show")} size="large">
+            <IconButton
+              onClick={() => toggleDialogue('confirmDelete', 'show')}
+              size="large"
+            >
               <Icon>delete</Icon>
             </IconButton>
           </React.Fragment>
         }
       />
     );
-  }
+  }, [toggleDialogue, npcInteraction.type]);
 
-  function getParameterDescription(value) {
+  const getParameterDescription = useCallback((value) => {
     if (Array.isArray(value)) {
-      return value.map((curValue, index) => (
+      return value.map((curValue) => (
         <React.Fragment key={curValue}>
           <b>-</b>&nbsp; <i>{curValue}</i>
           <br />
@@ -73,11 +77,11 @@ const NPCInteraction = (props) => {
     } else {
       return <i>{value}</i>;
     }
-  }
+  }, []);
 
   return (
     <Card className={classes.interactionCard}>
-      {getHeader(npcInteraction.type)}
+      {header}
       <Table>
         <TableBody>
           {paramKeys.map((key, index) => (
@@ -100,8 +104,8 @@ const NPCInteraction = (props) => {
 
       <GenericDialogue
         title="Edit Interaction"
-        open={dialogues["edit"]}
-        onClose={() => toggleDialogue("edit", "hide")}
+        open={dialogues['edit']}
+        onClose={() => toggleDialogue('edit', 'hide')}
         maxWidth="sm"
       >
         <CreateNPCInteractionForm
@@ -109,7 +113,7 @@ const NPCInteraction = (props) => {
           data={npcInteraction.parameters}
           buttonText="Edit"
           handleSubmit={(data) => {
-            toggleDialogue("edit", "hide");
+            toggleDialogue('edit', 'hide');
             handleEdit(data);
           }}
         />
@@ -117,10 +121,10 @@ const NPCInteraction = (props) => {
 
       <ConfirmationDialogue
         message="Delete the current NPC Interaction?"
-        isOpen={dialogues["confirmDelete"]}
-        handleClose={() => toggleDialogue("confirmDelete", "hide")}
+        isOpen={dialogues['confirmDelete']}
+        handleClose={() => toggleDialogue('confirmDelete', 'hide')}
         handleConfirm={() => {
-          toggleDialogue("confirmDelete", "hide");
+          toggleDialogue('confirmDelete', 'hide');
           handleDelete();
         }}
       />
@@ -128,4 +132,4 @@ const NPCInteraction = (props) => {
   );
 };
 
-export default withStyles(styles)(NPCInteraction);
+export default NPCInteraction;

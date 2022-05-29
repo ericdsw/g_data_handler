@@ -1,26 +1,26 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { withSnackbar } from "notistack";
-import { Grid, Button, Typography } from "@mui/material";
+import { withSnackbar } from 'notistack';
+import { Grid, Button, Typography } from '@mui/material';
 import {
   createInput,
   parseIn,
   parseOut,
   getMissingRequired,
-} from "../../functions";
+} from '../../functions';
 
 const useStyles = makeStyles(() => ({
   additionalText: {
-    color: "grey",
+    color: 'grey',
   },
 }));
 
 const GenericForm = ({
   initialDataSet = {},
   schema = {},
-  buttonText = "Create",
+  buttonText = 'Create',
   disabledInputs = [],
-  buttonColor = "primary",
+  buttonColor = 'primary',
   handleSubmit,
   enqueueSnackbar,
 }) => {
@@ -37,7 +37,7 @@ const GenericForm = ({
     (inputName) => (event) => {
       const newData = { ...formData };
       newData[inputName] = event.target.value;
-      if (parameters[inputName].type === "boolean") {
+      if (parameters[inputName].type === 'boolean') {
         newData[inputName] = event.target.checked;
       } else {
         newData[inputName] = event.target.value;
@@ -60,9 +60,9 @@ const GenericForm = ({
           .map((key) => {
             return parameters[key].label;
           })
-          .join(", ");
+          .join(', ');
         const eMessage = `The following fields are required: ${reqString}`;
-        enqueueSnackbar(eMessage, { variant: "error" });
+        enqueueSnackbar(eMessage, { variant: 'error' });
       }
     },
     [enqueueSnackbar, formData, handleSubmit, parameters]

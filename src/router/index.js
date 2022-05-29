@@ -1,15 +1,16 @@
-import React from "react";
-import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
-import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
-import BubbleChartIcon from "@mui/icons-material/BubbleChart";
-import InfoIcon from "@mui/icons-material/Info";
+import React from 'react';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
+import BubbleChartIcon from '@mui/icons-material/BubbleChart';
+import InfoIcon from '@mui/icons-material/Info';
+
 import {
   CutscenePage,
   DialoguePage,
   StorylinePage,
   NotFound,
   AboutPage,
-} from "../components/pages";
+} from '../components/pages';
 
 export const fallbackRoute = {
   component: NotFound,
@@ -17,32 +18,32 @@ export const fallbackRoute = {
 
 const routes = [
   {
-    path: "/",
+    path: '/',
     exact: true,
     component: <CutscenePage />,
     icon: <SubscriptionsIcon />,
-    text: "Cutscenes",
+    text: 'Cutscenes',
   },
   {
-    path: "/dialogues",
+    path: '/dialogues',
     exact: true,
     component: <DialoguePage />,
     icon: <QuestionAnswerIcon />,
-    text: "Dialogues",
+    text: 'Dialogues',
   },
   {
-    path: "/storylines",
+    path: '/storylines',
     exact: true,
     component: <StorylinePage />,
     icon: <BubbleChartIcon />,
-    text: "Storylines",
+    text: 'Storylines',
   },
   {
-    path: "/about",
+    path: '/about',
     exact: true,
     component: <AboutPage />,
     icon: <InfoIcon />,
-    text: "About",
+    text: 'About',
   },
 ];
 export default routes;

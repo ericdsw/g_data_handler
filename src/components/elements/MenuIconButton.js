@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { IconButton, Icon, Menu, MenuItem, Tooltip } from "@mui/material";
+import React, { useState } from 'react';
+import { IconButton, Icon, Menu, MenuItem, Tooltip } from '@mui/material';
 
 const MenuIconButton = ({
   elementId,
   contentDictionary,
-  tooltip = "",
+  tooltip = '',
   icon,
   handleClick,
 }) => {
@@ -17,7 +17,8 @@ const MenuIconButton = ({
           aria-owns={anchorEl ? elementId : undefined}
           aria-haspopup="true"
           onClick={(e) => setAnchorEl(e.currentTarget)}
-          size="large">
+          size="large"
+        >
           <Icon>{icon}</Icon>
         </IconButton>
       </Tooltip>

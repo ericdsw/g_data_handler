@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import {
   Grid,
@@ -8,29 +8,29 @@ import {
   Icon,
   Typography,
   Button,
-} from "@mui/material";
-import { blue } from "@mui/material/colors";
-import { createInput } from "../../../../functions";
+} from '@mui/material';
+import { blue } from '@mui/material/colors';
+import { createInput } from '../../../../functions';
 
 const shortMessageSchema = {
   parameters: {
     message: {
-      label: "Message",
-      type: "text",
+      label: 'Message',
+      type: 'text',
       required: true,
-      tooltip: "The short message",
-      placeholder: "Cannot be too long...",
+      tooltip: 'The short message',
+      placeholder: 'Cannot be too long...',
     },
     target_object: {
-      label: "Target Object",
-      type: "text",
+      label: 'Target Object',
+      type: 'text',
       required: true,
-      tooltip: "Object that the dialogue will follow",
-      placeholder: "foo",
+      tooltip: 'Object that the dialogue will follow',
+      placeholder: 'foo',
     },
     appearance_timeout: {
-      label: "Appearance Timeout",
-      type: "number",
+      label: 'Appearance Timeout',
+      type: 'number',
       required: true,
       default: 0.0,
     },
@@ -39,7 +39,7 @@ const shortMessageSchema = {
 
 const useStyles = makeStyles((theme) => ({
   swarmMessageCard: {
-    backgroundColor: "#222",
+    backgroundColor: '#222',
     margin: theme.spacing(0.5),
   },
   targetObject: {
@@ -57,8 +57,8 @@ const CreateSwarmForm = ({
   const [swarmMessages, updateSwarmMessages] = useState(initialSwarmData);
   const [curMessage, updateCurMessage] = useState({
     offset: -1,
-    message: "",
-    target_object: "",
+    message: '',
+    target_object: '',
     appearance_timeout: 0.0,
   });
 
@@ -92,8 +92,8 @@ const CreateSwarmForm = ({
 
     updateCurMessage({
       offset: -1,
-      message: "",
-      target_object: "",
+      message: '',
+      target_object: '',
       appearance_timeout: 0.0,
     });
   };
@@ -107,8 +107,8 @@ const CreateSwarmForm = ({
   const clearEdit = () => {
     updateCurMessage({
       offset: -1,
-      message: "",
-      target_object: "",
+      message: '',
+      target_object: '',
       appearance_timeout: 0.0,
     });
   };
@@ -121,7 +121,7 @@ const CreateSwarmForm = ({
 
   const createSwarmRequest = () => {
     const returnData = {
-      type: "swarm",
+      type: 'swarm',
       swarmData: swarmMessages,
     };
     handleSubmit(returnData);
@@ -149,7 +149,7 @@ const CreateSwarmForm = ({
                 type="submit"
                 style={{ marginTop: 8 }}
               >
-                {curMessage.offset !== -1 ? "Edit Message" : "Add To Swarm"}
+                {curMessage.offset !== -1 ? 'Edit Message' : 'Add To Swarm'}
               </Button>
             </Grid>
           </form>
@@ -165,7 +165,7 @@ const CreateSwarmForm = ({
               key={index}
               className={classes.swarmMessageCard}
               style={{
-                border: curMessage.offset === index ? "1px solid red" : "none",
+                border: curMessage.offset === index ? '1px solid red' : 'none',
               }}
             >
               <CardHeader
@@ -173,7 +173,7 @@ const CreateSwarmForm = ({
                   <React.Fragment>
                     {currentMessage.message} <br />
                     <small>
-                      Target: {currentMessage.target_object}. Appears after{" "}
+                      Target: {currentMessage.target_object}. Appears after{' '}
                       {currentMessage.appearance_timeout} second(s)
                     </small>
                   </React.Fragment>
@@ -188,12 +188,16 @@ const CreateSwarmForm = ({
                           requestEdit(index);
                         }
                       }}
-                      size="large">
+                      size="large"
+                    >
                       <Icon>
-                        {index === curMessage.offset ? "cancel" : "edit"}
+                        {index === curMessage.offset ? 'cancel' : 'edit'}
                       </Icon>
                     </IconButton>
-                    <IconButton onClick={() => removeSwarmMessageAtIndex(index)} size="large">
+                    <IconButton
+                      onClick={() => removeSwarmMessageAtIndex(index)}
+                      size="large"
+                    >
                       <Icon>delete</Icon>
                     </IconButton>
                   </React.Fragment>
@@ -209,7 +213,7 @@ const CreateSwarmForm = ({
               color="primary"
               onClick={() => createSwarmRequest()}
             >
-              {isEdit ? "Edit Swarm" : "Create Swarm"}
+              {isEdit ? 'Edit Swarm' : 'Create Swarm'}
             </Button>
           </Grid>
         </Grid>

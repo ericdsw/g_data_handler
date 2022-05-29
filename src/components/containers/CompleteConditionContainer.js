@@ -1,12 +1,12 @@
-import React from "react";
-import { connect } from "react-redux";
-import { withSnackbar } from "notistack";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withSnackbar } from 'notistack';
 
 import {
   updateCondition,
   deleteCondition,
-} from "../../actions/storylineActions";
-import CompleteCondition from "../pages/storylines/CompleteCondition";
+} from '../../actions/storylineActions';
+import CompleteCondition from '../pages/storylines/CompleteCondition';
 
 /**
  * Container that handles redux communication for the CompleteCondition

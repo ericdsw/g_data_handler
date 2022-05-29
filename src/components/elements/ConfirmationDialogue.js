@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Dialog,
   DialogContent,
@@ -6,9 +6,9 @@ import {
   DialogTitle,
   Button,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { red, green } from "@mui/material/colors";
+import { red, green } from '@mui/material/colors';
 
 const useStyles = makeStyles(() => ({
   cancelButton: {
@@ -24,7 +24,7 @@ const ConfirmationDialogue = ({
   handleClose,
   handleConfirm,
   message,
-  descriptionText = "",
+  descriptionText = '',
 }) => {
   const classes = useStyles();
 
@@ -35,7 +35,7 @@ const ConfirmationDialogue = ({
   return (
     <Dialog open={isOpen} onClose={handleClose} fullWidth={true} maxWidth="sm">
       <DialogTitle>{message}</DialogTitle>
-      {descriptionText !== "" && (
+      {descriptionText !== '' && (
         <DialogContent>
           <Typography variant="subtitle2">{descriptionText}</Typography>
         </DialogContent>

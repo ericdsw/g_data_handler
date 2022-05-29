@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import {
   Grid,
@@ -8,19 +8,23 @@ import {
   FormControlLabel,
   Switch,
   Tooltip,
-} from "@mui/material";
-import CutsceneRowContainer from "../../containers/CutsceneRowContainer";
+} from '@mui/material';
 
-import { styles } from "./styles/CutsceneStyle";
+import CutsceneRowContainer from '../../containers/CutsceneRowContainer';
 
-const Cutscene = (props) => {
-  const classes = makeStyles(styles)();
+import { styles } from './styles/CutsceneStyle';
 
-  // Extract value properties
-  const { cutsceneRows, fileName, hideBars } = props;
+const useStyles = makeStyles(styles);
 
-  // Extract method properties
-  const { handleFileNameChange, handleAddRow, handleShouldHideBars } = props;
+const Cutscene = ({
+  cutsceneRows,
+  fileName,
+  hideBars,
+  handleFileNameChange,
+  handleAddRow,
+  handleShouldHideBars,
+}) => {
+  const classes = useStyles();
 
   return (
     <Grid className={classes.root} container spacing={2} alignItems="center">

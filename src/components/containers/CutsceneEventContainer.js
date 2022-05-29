@@ -1,11 +1,11 @@
-import React from "react";
-import { connect } from "react-redux";
-import { withSnackbar } from "notistack";
-import CutsceneEvent from "../pages/cutscene/CutsceneEvent";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withSnackbar } from 'notistack';
+import CutsceneEvent from '../pages/cutscene/CutsceneEvent';
 import {
   editCutsceneEvent,
   deleteCutsceneEvent,
-} from "../../actions/cutsceneActions";
+} from '../../actions/cutsceneActions';
 
 class CutsceneEventContainer extends React.Component {
   editEvent = (newEventData) => {

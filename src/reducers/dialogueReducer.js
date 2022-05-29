@@ -1,6 +1,5 @@
-/* eslint-disable import/no-anonymous-default-export */
-import { v4 as uuidv4 } from "uuid";
-import { deleteReference } from "./reducerActions";
+import { v4 as uuidv4 } from 'uuid';
+import { deleteReference } from './reducerActions';
 import {
   UPDATE_DIALOGUE,
   UPDATE_EMPTY_DIALOGUE,
@@ -22,11 +21,11 @@ import {
   DELETE_CONVERSATIONS_TO_MERGE,
   SELECT_ALL_CONVERSATIONS,
   UNSELECT_ALL_CONVERSATIONS,
-} from "../actions/types";
+} from '../actions/types';
 
 const initialState = {
-  fileName: "",
-  currentDialogue: "",
+  fileName: '',
+  currentDialogue: '',
   conversationsToMerge: [],
 
   dialogues: {},
@@ -34,7 +33,7 @@ const initialState = {
   messages: {},
 };
 
-export default function (state = initialState, action) {
+export default function dialogueReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_CONVERSATION:
       return addDialogueConversation(state, action);
@@ -240,7 +239,7 @@ function deleteDialogueConversation(state, action) {
   }
 
   const dialogues = { ...state.dialogues };
-  deleteReference(dialogues, "conversations", conversationId);
+  deleteReference(dialogues, 'conversations', conversationId);
 
   return { ...state, dialogues, conversations, conversationsToMerge };
 }
@@ -252,7 +251,7 @@ function deleteConversationMessage(state, action) {
   delete messages[messageId];
 
   const conversations = { ...state.conversations };
-  deleteReference(conversations, "messages", messageId);
+  deleteReference(conversations, 'messages', messageId);
 
   return { ...state, conversations, messages };
 }
@@ -351,7 +350,7 @@ function deleteAllConversationsToMerge(state, action) {
 
   conversationsToMerge.forEach((conversationId) => {
     delete conversations[conversationId];
-    deleteReference(dialogues, "conversations", conversationId);
+    deleteReference(dialogues, 'conversations', conversationId);
   });
 
   conversationsToMerge = [];
@@ -379,7 +378,7 @@ function confirmConversationMerge(state, action) {
       delete conversations[conversationId];
 
       // Delete any reference to this conversation
-      deleteReference(dialogues, "conversations", conversationId);
+      deleteReference(dialogues, 'conversations', conversationId);
     }
   });
 

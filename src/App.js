@@ -1,31 +1,27 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { NavigationDrawer, ApplicationBar } from "./components/elements";
-import { drawerWidth } from "./globals";
+import { NavigationDrawer, ApplicationBar } from './components/elements';
+import { drawerWidth } from './globals';
 
 // import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { SnackbarProvider } from "notistack";
-import { useDispatch, useSelector } from "react-redux";
+import { SnackbarProvider } from 'notistack';
+import { useDispatch, useSelector } from 'react-redux';
 
-import routes, { fallbackRoute } from "./router";
+import routes, { fallbackRoute } from './router';
 
-import { toggleDarkMode } from "./actions/appActions";
+import { toggleDarkMode } from './actions/appActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    display: 'flex',
   },
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up('sm')]: {
       marginLeft: drawerWidth,
     },
   },
@@ -33,15 +29,14 @@ const useStyles = makeStyles((theme) => ({
 
 // Prevents tardiness
 window.onbeforeunload = function () {
-  return "u sure?";
+  return 'u sure?';
 };
 
 const App = () => {
-
   const [drawerOpen, toggleDrawerOpen] = useState(false);
 
   const dispatch = useDispatch();
-  const { darkMode } = useSelector(state => state.app);
+  const { darkMode } = useSelector((state) => state.app);
 
   const classes = useStyles();
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import {
   Card,
@@ -8,19 +8,19 @@ import {
   Icon,
   Chip,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
-import { DialogueMessageToolbar, ConversationCardTitle } from "./elements";
+import { DialogueMessageToolbar, ConversationCardTitle } from './elements';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: "100%",
+    width: '100%',
     backgroundColor: theme.palette.messageBackground,
-    borderBottom: "1px solid #666",
+    borderBottom: '1px solid #666',
     padding: theme.spacing(2),
   },
   iconContainer: {
-    color: "#2d81b5",
+    color: '#2d81b5',
   },
   actionContainer: {
     padding: theme.spacing(2),
@@ -67,13 +67,13 @@ const PickItem = ({
         >
           {Object.keys(pickItemData.item_conditions).map((conditionItemId) => {
             const action = pickItemData.item_conditions[conditionItemId].action;
-            var actionString = "";
-            if (action === "nothing") {
-              actionString = "Nothing";
-            } else if (action === "mark_delivered") {
-              actionString = "Mark Delivered";
-            } else if (action === "delete") {
-              actionString = "Destroy";
+            var actionString = '';
+            if (action === 'nothing') {
+              actionString = 'Nothing';
+            } else if (action === 'mark_delivered') {
+              actionString = 'Mark Delivered';
+            } else if (action === 'delete') {
+              actionString = 'Destroy';
             }
 
             return (

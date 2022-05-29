@@ -1,8 +1,4 @@
-import { 
-  TOGGLE_SIDEBAR,
-  COLLAPSE_SIDEBAR,
-  TOGGLE_DARK_MODE
-} from "./types";
+import { TOGGLE_SIDEBAR, COLLAPSE_SIDEBAR, TOGGLE_DARK_MODE } from './types';
 
 export const toggleDrawer = () => (dispatch) => {
   dispatch({
@@ -18,6 +14,6 @@ export const collapseDrawer = () => (dispatch) => {
 
 export const toggleDarkMode = () => (dispatch) => {
   dispatch({
-    type: TOGGLE_DARK_MODE
-  })
-}
+    type: TOGGLE_DARK_MODE,
+  });
+};

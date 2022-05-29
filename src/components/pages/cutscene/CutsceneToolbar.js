@@ -1,33 +1,31 @@
-import React from "react";
+import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { Grid, Typography, Button } from "@mui/material";
-import { GenericDialogue, ConfirmationDialogue } from "../../elements";
-import { JumpForm } from "./forms";
-import { useDialogueManager } from "../../../hooks";
-import JumpList from "./JumpList";
+import { Grid, Typography, Button } from '@mui/material';
 
-import { styles } from "./styles/CutsceneToolbarStyle";
+import { GenericDialogue, ConfirmationDialogue } from '../../elements';
+import { JumpForm } from './forms';
+import { useDialogueManager } from '../../../hooks';
+import JumpList from './JumpList';
 
-const CutsceneToolbar = (props) => {
-  const classes = makeStyles(styles)();
+import { styles } from './styles/CutsceneToolbarStyle';
 
-  // Extract value properties
-  const { jumps } = props;
+const useStyles = makeStyles(styles);
 
-  // Extract method properties
-  const {
-    handleAddRow,
-    handleAddJump,
-    handleDeleteJump,
-    handleExport,
-    handleClearCutscene,
-  } = props;
+const CutsceneToolbar = ({
+  jumps,
+  handleAddRow,
+  handleAddJump,
+  handleDeleteJump,
+  handleExport,
+  handleClearCutscene,
+}) => {
+  const classes = useStyles();
 
   // Dialogue management
   const [dialogues, toggleDialogue] = useDialogueManager(
-    "confirmDelete",
-    "viewJumps",
-    "createJump"
+    'confirmDelete',
+    'viewJumps',
+    'createJump'
   );
 
   return (
@@ -44,7 +42,7 @@ const CutsceneToolbar = (props) => {
           <Button
             color="primary"
             className={classes.defaultButton}
-            onClick={() => toggleDialogue("createJump", "show")}
+            onClick={() => toggleDialogue('createJump', 'show')}
           >
             Add Jump
           </Button>
@@ -54,7 +52,7 @@ const CutsceneToolbar = (props) => {
         <Typography align="right">
           <Button
             color="secondary"
-            onClick={() => toggleDialogue("viewJumps", "show")}
+            onClick={() => toggleDialogue('viewJumps', 'show')}
           >
             View Jumps ({Object.keys(jumps).length})
           </Button>
@@ -64,7 +62,7 @@ const CutsceneToolbar = (props) => {
           <Button
             color="secondary"
             className={classes.deleteButton}
-            onClick={() => toggleDialogue("confirmDelete", "show")}
+            onClick={() => toggleDialogue('confirmDelete', 'show')}
           >
             Clear Cutscene
           </Button>
@@ -73,22 +71,22 @@ const CutsceneToolbar = (props) => {
 
       <GenericDialogue
         title="Add Jump"
-        open={dialogues["createJump"]}
-        onClose={() => toggleDialogue("createJump", "hide")}
+        open={dialogues['createJump']}
+        onClose={() => toggleDialogue('createJump', 'hide')}
         maxWidth="sm"
       >
         <JumpForm
           handleSubmit={({ jump_name, jump_file }) => {
             handleAddJump(jump_name, jump_file);
-            toggleDialogue("createJump", "hide");
+            toggleDialogue('createJump', 'hide');
           }}
         />
       </GenericDialogue>
 
       <GenericDialogue
         title="Current Jumps"
-        open={dialogues["viewJumps"]}
-        onClose={() => toggleDialogue("viewJumps", "hide")}
+        open={dialogues['viewJumps']}
+        onClose={() => toggleDialogue('viewJumps', 'hide')}
       >
         <JumpList
           jumpList={jumps}
@@ -107,12 +105,12 @@ const CutsceneToolbar = (props) => {
 
       <ConfirmationDialogue
         message="Delete the current cutscene?"
-        isOpen={dialogues["confirmDelete"]}
+        isOpen={dialogues['confirmDelete']}
         handleConfirm={() => {
           handleClearCutscene();
-          toggleDialogue("confirmDelete", "hide");
+          toggleDialogue('confirmDelete', 'hide');
         }}
-        handleClose={() => toggleDialogue("confirmDelete", "hide")}
+        handleClose={() => toggleDialogue('confirmDelete', 'hide')}
       />
     </Grid>
   );

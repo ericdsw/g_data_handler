@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import withStyles from '@mui/styles/withStyles';
-import { withSnackbar } from "notistack";
+import { withSnackbar } from 'notistack';
 import {
   TextField,
   MenuItem,
@@ -8,40 +8,40 @@ import {
   Button,
   Typography,
   Avatar,
-} from "@mui/material";
+} from '@mui/material';
 
-import { speakerSchema } from "../../../../globals";
+import { speakerSchema } from '../../../../globals';
 
 const styles = () => ({
   emoteAvatar: {
     width: 16,
     height: 16,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     padding: 8,
   },
 });
 
 const VALID_EMOTES = {
-  angry: "Angry",
-  exclamation: "Exclamation",
-  question: "Question",
-  three_dots: "Three Dots",
-  sweat: "Sweat",
-  heart: "Heart",
+  angry: 'Angry',
+  exclamation: 'Exclamation',
+  question: 'Question',
+  three_dots: 'Three Dots',
+  sweat: 'Sweat',
+  heart: 'Heart',
 };
 
 class CreateEmoteForm extends React.Component {
   state = {
-    type: "emote",
-    target_object: "",
-    message: "",
+    type: 'emote',
+    target_object: '',
+    message: '',
     is_emote: true,
-    speaker: "",
+    speaker: '',
   };
 
   handleInputChange = (inputIdentifier) => (event) => {
     let value = event.target.value;
-    if (inputIdentifier === "speaker") {
+    if (inputIdentifier === 'speaker') {
       var newSpeaker = speakerSchema[value];
       this.setState({
         speaker: value,
@@ -66,13 +66,13 @@ class CreateEmoteForm extends React.Component {
     event.preventDefault();
     event.stopPropagation();
 
-    if (this.state.message === "") {
-      enqueueSnackbar("The emote must be specified", { variant: "error" });
+    if (this.state.message === '') {
+      enqueueSnackbar('The emote must be specified', { variant: 'error' });
       return;
     }
-    if (this.state.target_object === "") {
-      enqueueSnackbar("The target object must be specified", {
-        variant: "error",
+    if (this.state.target_object === '') {
+      enqueueSnackbar('The target object must be specified', {
+        variant: 'error',
       });
       return;
     }
@@ -90,7 +90,7 @@ class CreateEmoteForm extends React.Component {
     ];
     for (const speakerId in speakerSchema) {
       const target = speakerSchema[speakerId].target_object;
-      if (target && target !== "NONE") {
+      if (target && target !== 'NONE') {
         speakerMenuItems.push(
           <MenuItem key={speakerId} value={speakerId}>
             {speakerId} ({target})
@@ -122,7 +122,7 @@ class CreateEmoteForm extends React.Component {
               select
               fullWidth
               label="Speaker"
-              onChange={this.handleInputChange("speaker")}
+              onChange={this.handleInputChange('speaker')}
               value={this.state.speaker}
               variant="outlined"
               margin="normal"
@@ -133,7 +133,7 @@ class CreateEmoteForm extends React.Component {
               fullWidth
               label="Target Object*"
               value={this.state.target_object}
-              onChange={this.handleInputChange("target_object")}
+              onChange={this.handleInputChange('target_object')}
               variant="outlined"
               margin="normal"
             />
@@ -142,7 +142,7 @@ class CreateEmoteForm extends React.Component {
               fullWidth
               label="Emote*"
               value={this.state.message}
-              onChange={this.handleInputChange("message")}
+              onChange={this.handleInputChange('message')}
               variant="outlined"
               margin="normal"
             >

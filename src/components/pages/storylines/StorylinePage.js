@@ -1,10 +1,7 @@
-import React from "react";
-import StorylineContainer from "../../containers/StorylineContainer";
+import React from 'react';
 
-class StorylinePage extends React.Component {
-  render() {
-    return <StorylineContainer />;
-  }
-}
+import StorylineContainer from '../../containers/StorylineContainer';
+
+const StorylinePage = () => <StorylineContainer />;
 
 export default StorylinePage;

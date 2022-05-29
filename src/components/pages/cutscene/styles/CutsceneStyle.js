@@ -1,4 +1,4 @@
-import { red, blue } from "@mui/material/colors";
+import { red, blue } from '@mui/material/colors';
 
 export const styles = (theme) => ({
   root: {
@@ -18,6 +18,6 @@ export const styles = (theme) => ({
   },
   emptyText: {
     padding: 32,
-    width: "100%",
+    width: '100%',
   },
 });

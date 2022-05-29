@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import {
   Table,
   TableBody,
@@ -6,9 +6,9 @@ import {
   TableHead,
   TableRow,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
-import { JumpTableRow } from "./elements";
+import { JumpTableRow } from './elements';
 
 const JumpList = ({ jumpList, handleDeleteJump, handleEditJump }) => {
   const rows = useMemo(
