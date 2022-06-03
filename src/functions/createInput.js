@@ -96,13 +96,15 @@ export default function createInput(
   let adornment = <React.Fragment />;
 
   switch (inputData.type) {
+    
     case 'multi_input_object':
       const keyField = inputData.key_field;
 
       /** Render one input row for each value */
-      const renderedInputs = Object.keys(value).map((valueKey) => {
+      const renderedInputs = Object.keys(value).map((valueKey, index) => {
         return (
           <div
+            key={`${index}`}
             style={{
               display: 'flex',
               flexDirection: 'row',
@@ -113,6 +115,7 @@ export default function createInput(
               const isKey = inputIdentifier === keyField;
               return (
                 <div
+                  key={inputIdentifier}
                   style={{
                     flex:
                       inputData.inputs[inputIdentifier].type === 'boolean'
@@ -149,7 +152,6 @@ export default function createInput(
               );
             })}
             <IconButton
-              color="inherith"
               aria-label="Delete"
               onClick={() => {
                 const cleanedValues = { ...value };
