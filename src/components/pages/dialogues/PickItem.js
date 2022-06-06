@@ -77,7 +77,7 @@ const PickItem = ({
             }
 
             return (
-              <Grid container alignItems="center">
+              <Grid key={conditionItemId} container alignItems="center">
                 <Chip
                   label={`Item Id: ${conditionItemId}`}
                   style={{ minWidth: 200 }}

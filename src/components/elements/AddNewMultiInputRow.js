@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Button, TextField } from '@mui/material';
 
 const AddNewMultiInputRow = ({ keyLabel, onNewRowDefined }) => {
+
   const [newRowValue, updateNewRowValue] = useState('');
+
+  const onButtonPressed = useCallback(() => {
+    if (newRowValue) {
+      onNewRowDefined(newRowValue);
+      updateNewRowValue('');
+    }
+  }, [onNewRowDefined, newRowValue]);
 
   return (
     <div
@@ -16,20 +24,22 @@ const AddNewMultiInputRow = ({ keyLabel, onNewRowDefined }) => {
         label={keyLabel}
         value={newRowValue}
         onChange={(e) => updateNewRowValue(e.target.value)}
+        onKeyDown={e => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+            onButtonPressed();
+          }
+        }}
         variant="outlined"
         margin="normal"
       />
       <Button
-        onClick={() => {
-          if (newRowValue) {
-            onNewRowDefined(newRowValue);
-            updateNewRowValue('');
-          }
-        }}
         variant="contained"
         color="secondary"
         type="button"
         style={{ marginLeft: 16 }}
+        onClick={onButtonPressed}
       >
         Add
       </Button>
