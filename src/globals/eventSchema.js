@@ -247,6 +247,13 @@ const eventSchema = {
         tooltip:
           'Which nodes will be visible between changes, must have a Sprite child',
       },
+      follower_target_positions: {
+        label: "Follower Target Positions",
+        type: "positionArray",
+        placeholder: "pos_follower_1, pos_follower_2",
+        tooltip: "Where the followers should spawn, separated by comma (one for each follower)",
+        default: ""
+      }
     },
   },
 
