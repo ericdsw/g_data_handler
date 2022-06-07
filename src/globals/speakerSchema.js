@@ -1,22 +1,10 @@
-export const speakerImages = [
-  'Phoenix_Cool.png',
-  'Phoenix_Defiant.png',
-  'Phoenix_Despair.png',
-  'Phoenix_Serious.png',
-  'Phoenix_Shocked.png',
-  'Vega_mask_laughing.png',
-  'Vega_mask_menacing_sans.png',
-  'Vega_mask_menacing.png',
-  'Vega_mask_neutral.png',
-  'Speaker.png',
-];
-
 const speakerSchema = {
   narrator: {
     image: null,
     name: null,
     voice_file: 'default_voice.wav',
     target_object: 'NONE',
+    speakerImages: []
   },
 
   phoenix: {
@@ -24,6 +12,13 @@ const speakerSchema = {
     name: 'Rocc',
     voice_file: 'phoenix_voice.wav',
     target_object: 'PhoenixNPC',
+    speakerImages: [
+      'Phoenix_Cool.png',
+      'Phoenix_Defiant.png',
+      'Phoenix_Despair.png',
+      'Phoenix_Serious.png',
+      'Phoenix_Shocked.png'
+    ]
   },
 
   vampire: {
@@ -31,13 +26,32 @@ const speakerSchema = {
     name: 'Vega',
     voice_file: 'vampire_voice.wav',
     target_object: 'VegaNPC',
+    speakerImages: [
+      'Vega_mask_laughing.png',
+      'Vega_mask_menacing_sans.png',
+      'Vega_mask_menacing.png',
+      'Vega_mask_neutral.png'
+    ]
   },
 
   ghost: {
-    image: '',
+    image: 'Cerie-Portrait-Neutral.png',
     name: 'Cerie',
     voice_file: 'ghost_voice.wav',
     target_object: 'CerieNPC',
+    speakerImages: [
+      'Cerie-Portrait-Shocked.png',
+      'Cerie-Portrait-Crying.png',
+      'Cerie-Portrait-Hmm.png',
+      'Cerie-Portrait-Wink.png',
+      'Cerie-Portrait-Tongue.png',
+      'Cerie-Portrait-Smile.png',
+      'Cerie-Portrait-Neutral.png',
+      'Cerie-Portrait-ECSmile.png',
+      'Cerie-Portrait-Laugh.png',
+      'Cerie-Portrait-Angry.png',
+      'Cerie-Portrait-Baffled.png'
+    ]
   },
 
   scientist: {
@@ -45,12 +59,14 @@ const speakerSchema = {
     name: 'Ada',
     voice_file: 'scientist_voice.wav',
     target_object: 'AdaNPC',
+    speakerImages: []
   },
 
   default: {
     image: null,
     name: null,
     voice_file: 'default_voice.wav',
+    speakerImages: []
   },
 
   phoenix_unknown: {
@@ -58,6 +74,7 @@ const speakerSchema = {
     name: '???',
     voice_file: 'phoenix_voice.wav',
     target_object: 'PhoenixNPC',
+    speakerImages: []
   },
 
   vampire_unknown: {
@@ -65,6 +82,7 @@ const speakerSchema = {
     name: '???',
     voice_file: 'vampire_voice.wav',
     target_object: 'VegaNPC',
+    speakerImages: []
   },
 
   ghost_unknown: {
@@ -72,6 +90,7 @@ const speakerSchema = {
     name: '???',
     voice_file: 'ghost_voice.wav',
     target_object: 'CerieNPC',
+    speakerImages: []
   },
 
   scientist_unknown: {
@@ -79,6 +98,7 @@ const speakerSchema = {
     name: '???',
     voice_file: 'scientist_voice.wav',
     target_object: 'AdaNPC',
+    speakerImages: []
   },
 
   main_character: {
@@ -86,6 +106,7 @@ const speakerSchema = {
     name: '',
     voice_file: 'default_voice.wav',
     target_object: 'CONTROL_PLAYER',
+    speakerImages: []
   },
 };
 

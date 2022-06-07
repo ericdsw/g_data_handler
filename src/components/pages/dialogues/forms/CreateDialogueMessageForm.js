@@ -268,6 +268,7 @@ class CreateDialogueMessageForm extends React.Component {
             <DialogueImageSearcher
               image={this.state.imagePreview}
               updateImage={this.handleImageChange}
+              selectedSpeaker={this.state.speaker}
             />
             <TextField
               fullWidth

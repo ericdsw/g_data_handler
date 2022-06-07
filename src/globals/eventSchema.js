@@ -140,6 +140,13 @@ const eventSchema = {
         tooltip:
           'How long the battle will last (time rush memory circumstances). 0 means no limit',
       },
+      custom_win_return_map: {
+        label: 'Custom Win Return Map',
+        type: 'string',
+        default: '',
+        placeholder: 'V/fe',
+        tooltip: 'Where the player will return after beating the fight (alias)'
+      }
     },
   },
 
