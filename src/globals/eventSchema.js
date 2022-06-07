@@ -146,6 +146,12 @@ const eventSchema = {
         default: '',
         placeholder: 'V/fe',
         tooltip: 'Where the player will return after beating the fight (alias)'
+      },
+      custom_win_return_position: {
+        label: 'Custom Win Return Position',
+        type: 'position',
+        default: '',
+        tooltip: 'The position where the player will return'
       }
     },
   },
