@@ -1461,6 +1461,22 @@ const eventSchema = {
       },
     },
   },
+
+  toggle_pocket_dimension: {
+    name: 'Toggle Pocket Dimension',
+    icon: 'monochrome_photos',
+    additionalText: 'Toggles the pocket dimension mantle on or off',
+    defaultImportant: true,
+    parameters: {
+      ...defaultParameters,
+      mantle_lifted: {
+        label: 'Mantle Lifted',
+        required: true,
+        type: 'boolean',
+        tooltip: 'Whether the mantle wil be lowereed (false) or lifted (true)'
+      }
+    }
+  }
 };
 
 export default eventSchema;
