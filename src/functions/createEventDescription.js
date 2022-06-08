@@ -152,6 +152,11 @@ export default function createEventDescription(type, parameters) {
         return "Will return control to the player";
       }
       return "Will take away control from the player";
+    case 'toggle_pocket_dimension':
+      if (parameters.mantle_lifted) {
+        return "Mantle will be lifted";
+      }
+      return "Mantle will be lowered"
     default:
       return '';
   }

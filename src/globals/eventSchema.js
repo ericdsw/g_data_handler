@@ -1473,6 +1473,7 @@ const eventSchema = {
         label: 'Mantle Lifted',
         required: true,
         type: 'boolean',
+        default: true,
         tooltip: 'Whether the mantle wil be lowereed (false) or lifted (true)'
       }
     }
