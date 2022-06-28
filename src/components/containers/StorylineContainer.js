@@ -17,6 +17,7 @@ import {
 } from '../../actions/storylineActions';
 
 class StorylineContainer extends React.Component {
+
   clearStoryline = () => {
     this.props.clearStoryline();
   };
@@ -26,7 +27,11 @@ class StorylineContainer extends React.Component {
   };
 
   export = () => {
+
     const { currentStoryline, storylines, completeState } = this.props;
+    console.log(completeState);
+    console.log(currentStoryline);
+
     const output = denormalize(
       currentStoryline,
       StorylineSchema,
@@ -100,6 +105,12 @@ class StorylineContainer extends React.Component {
 const mapStateToProps = (state) => ({
   currentStoryline: state.storyline.currentStoryline,
   storylines: state.storyline.storylines,
+  
+  /**
+   * We need access to the complete state inside the storyline reducer, which is what
+   * normalizr expects.
+   */
+  completeState: state.storyline
 });
 
 export default connect(mapStateToProps, {
