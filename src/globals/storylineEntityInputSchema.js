@@ -28,7 +28,7 @@ const storylineEntityInputSchema = {
         type: 'text',
         required: true,
         tooltip: 'Path to the NPC scene, starting from the NPC/Custom folder',
-        placeholder: 'path/to/npc.tscn',
+        placeholder: 'path/to/npc',
       },
       parent_node_name: {
         label: 'Parent Node Name (optional)',
@@ -443,6 +443,12 @@ const storylineEntityInputSchema = {
         tooltip:
           'If true, missing items are treated as an OR comparison (by default, all must be absent)',
       },
+      do_not_re_create: {
+        label: 'Do not re-create',
+        type: 'boolean',
+        default: false,
+        tooltip: 'If true, the area will not be re-created upon re-entering the map'
+      }
     },
   },
 
@@ -524,6 +530,12 @@ const storylineEntityInputSchema = {
         tooltip:
           'If true, missing items are treated as an OR comparison (by default, all must be absent)',
       },
+      do_not_re_create: {
+        label: 'Do not re-create',
+        type: 'boolean',
+        default: false,
+        tooltip: 'If true, the area will not be re-created upon re-entering the map'
+      }
     },
   },
 
