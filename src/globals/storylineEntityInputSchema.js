@@ -443,6 +443,12 @@ const storylineEntityInputSchema = {
         tooltip:
           'If true, missing items are treated as an OR comparison (by default, all must be absent)',
       },
+      self_destruct: {
+        label: 'Self Destruct',
+        type: 'boolean',
+        default: true,
+        tooltip: 'If true, the area will be self-destructed when the player enters it'
+      },
       do_not_re_create: {
         label: 'Do not re-create',
         type: 'boolean',
@@ -529,6 +535,12 @@ const storylineEntityInputSchema = {
         default: false,
         tooltip:
           'If true, missing items are treated as an OR comparison (by default, all must be absent)',
+      },
+      self_destruct: {
+        label: 'Self Destruct',
+        type: 'boolean',
+        default: true,
+        tooltip: 'If true, the area will be self-destructed when the player enters it'
       },
       do_not_re_create: {
         label: 'Do not re-create',
