@@ -68,7 +68,7 @@ const speakerNames = {
   "SPEAKER_NAME_BAMO": "Bamo",
   "SPEAKER_NAME_ROBIN": "Robin",
   "SPEAKER_NAME_JOHANN": "Johann",
-  "SPEAKER_NAME_SCIENTIST": "Scientist"
+  "SPEAKER_NAME_RESEARCHER": "Researcher"
 };
 
 export default speakerNames;
