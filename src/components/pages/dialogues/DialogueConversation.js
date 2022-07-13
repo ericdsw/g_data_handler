@@ -51,7 +51,8 @@ const DialogueConversation = ({
     'addSwarm',
     'addGiveItem',
     'addGiveMoney',
-    'addPickItem'
+    'addPickItem',
+    'searchSpeaker'
   );
   const [isExpanded, setIsExpanded] = useState(false);
 
