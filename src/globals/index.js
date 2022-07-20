@@ -19,5 +19,5 @@ export {
   completionInputSchema,
   storylineEntityInputSchema,
   bundleEntityInputSchema,
-  speakerNames
+  speakerNames,
 };

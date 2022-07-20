@@ -42,7 +42,7 @@ const styles = () => ({
   smallAvatar: {
     width: SMALL_AVATAR_SIZE,
     height: SMALL_AVATAR_SIZE,
-    borderRadius: 0
+    borderRadius: 0,
   },
 });
 
@@ -79,11 +79,11 @@ class DialogueImageSearcher extends React.Component {
     }
 
     Object.keys(speakerSchema)
-      .filter(speakerKey => speakerKey !== selectedSpeaker)
-      .forEach(speakerKey => {
+      .filter((speakerKey) => speakerKey !== selectedSpeaker)
+      .forEach((speakerKey) => {
         const currentSpeaker = speakerSchema[speakerKey];
         speakerImages.push(...currentSpeaker.speakerImages);
-      })
+      });
 
     if (!image || !speakerImages.includes(image)) {
       searchContent = (
@@ -103,7 +103,7 @@ class DialogueImageSearcher extends React.Component {
           className={classes.largeAvatar}
           // src={`images/${image}`}
           style={{
-            backgroundImage: `url(images/${image})` 
+            backgroundImage: `url(images/${image})`,
           }}
           aria-owns={open ? 'image-menu' : undefined}
           aria-haspopup="true"
@@ -112,8 +112,8 @@ class DialogueImageSearcher extends React.Component {
           imgProps={{
             style: {
               width: LARGE_AVATAR_SIZE,
-              height: LARGE_AVATAR_SIZE
-            }
+              height: LARGE_AVATAR_SIZE,
+            },
           }}
         />
       );
@@ -145,10 +145,11 @@ class DialogueImageSearcher extends React.Component {
                 alt="Speaker"
                 imgProps={{
                   style: {
-                    width: SMALL_AVATAR_SIZE, height: 'auto' 
-                  }
+                    width: SMALL_AVATAR_SIZE,
+                    height: 'auto',
+                  },
                 }}
-             /> 
+              />
               <Typography variant="body2">{image}</Typography>
             </MenuItem>
           ))}

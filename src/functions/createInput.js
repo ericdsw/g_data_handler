@@ -96,7 +96,6 @@ export default function createInput(
   let adornment = <React.Fragment />;
 
   switch (inputData.type) {
-    
     case 'multi_input_object':
       const keyField = inputData.key_field;
 

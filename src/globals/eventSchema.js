@@ -145,14 +145,14 @@ const eventSchema = {
         type: 'string',
         default: '',
         placeholder: 'V/fe',
-        tooltip: 'Where the player will return after beating the fight (alias)'
+        tooltip: 'Where the player will return after beating the fight (alias)',
       },
       custom_win_return_position: {
         label: 'Custom Win Return Position',
         type: 'position',
         default: '',
-        tooltip: 'The position where the player will return'
-      }
+        tooltip: 'The position where the player will return',
+      },
     },
   },
 
@@ -261,12 +261,13 @@ const eventSchema = {
           'Which nodes will be visible between changes, must have a Sprite child',
       },
       follower_target_positions: {
-        label: "Follower Target Positions",
-        type: "positionArray",
-        placeholder: "pos_follower_1, pos_follower_2",
-        tooltip: "Where the followers should spawn, separated by comma (one for each follower)",
-        default: ""
-      }
+        label: 'Follower Target Positions',
+        type: 'positionArray',
+        placeholder: 'pos_follower_1, pos_follower_2',
+        tooltip:
+          'Where the followers should spawn, separated by comma (one for each follower)',
+        default: '',
+      },
     },
   },
 
@@ -1112,6 +1113,13 @@ const eventSchema = {
     additionalText: 'Displays a static glitch overlay',
     parameters: {
       ...defaultParameters,
+      with_crackling_sounds: {
+        label: 'With Crackling Sounds',
+        type: 'boolean',
+        default: true,
+        tooltip:
+          'Whether the crackling glithch sounds will play with the glitch',
+      },
       duration: {
         label: 'Custom Duration',
         type: 'number',
@@ -1474,10 +1482,10 @@ const eventSchema = {
         required: true,
         type: 'boolean',
         default: true,
-        tooltip: 'Whether the mantle wil be lowereed (false) or lifted (true)'
-      }
-    }
-  }
+        tooltip: 'Whether the mantle wil be lowereed (false) or lifted (true)',
+      },
+    },
+  },
 };
 
 export default eventSchema;

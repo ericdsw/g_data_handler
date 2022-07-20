@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 import { Button, TextField } from '@mui/material';
 
 const AddNewMultiInputRow = ({ keyLabel, onNewRowDefined }) => {
-
   const [newRowValue, updateNewRowValue] = useState('');
 
   const onButtonPressed = useCallback(() => {
@@ -24,7 +23,7 @@ const AddNewMultiInputRow = ({ keyLabel, onNewRowDefined }) => {
         label={keyLabel}
         value={newRowValue}
         onChange={(e) => updateNewRowValue(e.target.value)}
-        onKeyDown={e => {
+        onKeyDown={(e) => {
           if (e.key === 'Enter') {
             e.preventDefault();
             e.stopPropagation();

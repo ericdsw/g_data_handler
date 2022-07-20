@@ -4,7 +4,7 @@ const speakerSchema = {
     name: null,
     voice_file: 'default_voice.wav',
     target_object: 'NONE',
-    speakerImages: []
+    speakerImages: [],
   },
 
   phoenix: {
@@ -17,8 +17,8 @@ const speakerSchema = {
       'Phoenix_Defiant.png',
       'Phoenix_Despair.png',
       'Phoenix_Serious.png',
-      'Phoenix_Shocked.png'
-    ]
+      'Phoenix_Shocked.png',
+    ],
   },
 
   vampire: {
@@ -30,8 +30,8 @@ const speakerSchema = {
       'Vega_mask_laughing.png',
       'Vega_mask_menacing_sans.png',
       'Vega_mask_menacing.png',
-      'Vega_mask_neutral.png'
-    ]
+      'Vega_mask_neutral.png',
+    ],
   },
 
   ghost: {
@@ -51,8 +51,8 @@ const speakerSchema = {
       'Cerie-Portrait-Laugh.png',
       'Cerie-Portrait-Angry.png',
       'Cerie-Portrait-Baffled.png',
-      'Cerie-Portrait-Confident.png'
-    ]
+      'Cerie-Portrait-Confident.png',
+    ],
   },
 
   scientist: {
@@ -60,14 +60,14 @@ const speakerSchema = {
     name: 'Ada',
     voice_file: 'scientist_voice.wav',
     target_object: 'AdaNPC',
-    speakerImages: []
+    speakerImages: [],
   },
 
   default: {
     image: null,
     name: null,
     voice_file: 'default_voice.wav',
-    speakerImages: []
+    speakerImages: [],
   },
 
   phoenix_unknown: {
@@ -75,7 +75,7 @@ const speakerSchema = {
     name: '???',
     voice_file: 'phoenix_voice.wav',
     target_object: 'PhoenixNPC',
-    speakerImages: []
+    speakerImages: [],
   },
 
   vampire_unknown: {
@@ -83,7 +83,7 @@ const speakerSchema = {
     name: '???',
     voice_file: 'vampire_voice.wav',
     target_object: 'VegaNPC',
-    speakerImages: []
+    speakerImages: [],
   },
 
   ghost_unknown: {
@@ -91,7 +91,7 @@ const speakerSchema = {
     name: '???',
     voice_file: 'ghost_voice.wav',
     target_object: 'CerieNPC',
-    speakerImages: []
+    speakerImages: [],
   },
 
   scientist_unknown: {
@@ -99,7 +99,7 @@ const speakerSchema = {
     name: '???',
     voice_file: 'scientist_voice.wav',
     target_object: 'AdaNPC',
-    speakerImages: []
+    speakerImages: [],
   },
 
   main_character: {
@@ -107,7 +107,7 @@ const speakerSchema = {
     name: '',
     voice_file: 'default_voice.wav',
     target_object: 'CONTROL_PLAYER',
-    speakerImages: []
+    speakerImages: [],
   },
 };
 

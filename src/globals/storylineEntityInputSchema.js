@@ -447,14 +447,16 @@ const storylineEntityInputSchema = {
         label: 'Self Destruct',
         type: 'boolean',
         default: true,
-        tooltip: 'If true, the area will be self-destructed when the player enters it'
+        tooltip:
+          'If true, the area will be self-destructed when the player enters it',
       },
       do_not_re_create: {
         label: 'Do not re-create',
         type: 'boolean',
         default: false,
-        tooltip: 'If true, the area will not be re-created upon re-entering the map'
-      }
+        tooltip:
+          'If true, the area will not be re-created upon re-entering the map',
+      },
     },
   },
 
@@ -540,14 +542,16 @@ const storylineEntityInputSchema = {
         label: 'Self Destruct',
         type: 'boolean',
         default: true,
-        tooltip: 'If true, the area will be self-destructed when the player enters it'
+        tooltip:
+          'If true, the area will be self-destructed when the player enters it',
       },
       do_not_re_create: {
         label: 'Do not re-create',
         type: 'boolean',
         default: false,
-        tooltip: 'If true, the area will not be re-created upon re-entering the map'
-      }
+        tooltip:
+          'If true, the area will not be re-created upon re-entering the map',
+      },
     },
   },
 

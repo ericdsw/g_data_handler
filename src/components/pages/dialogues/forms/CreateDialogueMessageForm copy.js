@@ -66,11 +66,10 @@ const DEFAULT_STATE = {
   exit_sound: '',
 };
 
-
 class CreateDialogueMessageForm extends React.Component {
   constructor(props) {
     super(props);
-    let stateData = {...DEFAULT_STATE};
+    let stateData = { ...DEFAULT_STATE };
     if (props.messageData) {
       stateData = Object.assign({}, stateData, props.messageData);
       if (props.messageData.image) {
@@ -305,7 +304,7 @@ class CreateDialogueMessageForm extends React.Component {
                   <IconButton>
                     <Icon>search</Icon>
                   </IconButton>
-                )
+                ),
               }}
             />
             <Grid container spacing={2}>

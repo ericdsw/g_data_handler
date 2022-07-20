@@ -4,5 +4,5 @@ export { default as ConversationExtraParams } from './ConversationExtraParams';
 export { default as DialogueMessageToolbar } from './DialogueMessageToolbar';
 export { default as NoConversationsNotifier } from './NoConversationsNotifier';
 export { default as ConversationCardTitle } from './ConversationCardTitle';
-export { default as DialogueMessageInstructions} from './DialogueMessageInstructions';
+export { default as DialogueMessageInstructions } from './DialogueMessageInstructions';
 export { default as SpeakerNameSearchForm } from './SpeakerNameSearchForm';
