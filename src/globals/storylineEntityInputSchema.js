@@ -83,6 +83,12 @@ const storylineEntityInputSchema = {
         type: 'number',
         tooltip: 'Time to wait between each point',
       },
+      player_faces_npc_on_interact: {
+        label: 'Player faces NPC on interact',
+        type: 'boolean',
+        default: true,
+        tooltip: 'Whether the player is forced to face the npc on interaction'
+      }
     },
   },
 
@@ -153,6 +159,12 @@ const storylineEntityInputSchema = {
         type: 'number',
         tooltip: 'Time to wait between each point',
       },
+      player_faces_npc_on_interact: {
+        label: 'Player faces NPC on interact',
+        type: 'boolean',
+        default: true,
+        tooltip: 'Whether the player is forced to face the npc on interaction'
+      }
     },
   },
 
@@ -249,6 +261,12 @@ const storylineEntityInputSchema = {
         default: false,
         tooltip: 'If true, the door will be locked when spawned',
       },
+      player_faces_npc_on_interact: {
+        label: 'Player faces NPC on interact',
+        type: 'boolean',
+        default: false,
+        tooltip: 'Whether the player is forced to face the door on interaction'
+      }
     },
   },
 
@@ -317,6 +335,12 @@ const storylineEntityInputSchema = {
         default: false,
         tooltip: 'If true, door will lock',
       },
+      player_faces_npc_on_interact: {
+        label: 'Player faces NPC on interact',
+        type: 'boolean',
+        default: false,
+        tooltip: 'Whether the player is forced to face the door on interaction'
+      }
     },
   },
 
