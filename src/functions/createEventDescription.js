@@ -123,6 +123,9 @@ export default function createEventDescription(type, parameters) {
     case 'look_at':
       return `Node ${parameters.subject} will look at ${parameters.look_target}`;
     case 'inject_bgm_player':
+      if (!parameters.intro_res && !parameters.bgm_res) {
+        return `No resources, bgm will fade out.`;
+      }
       if (!parameters.intro_res) {
         return `Will inject bgm ${parameters.bgm_res}`;
       }
