@@ -854,6 +854,13 @@ const eventSchema = {
         tooltip:
           'Will not perform the 0.25s of invisibility spawned objects have, which prevents invalid animations from showing for 1 frame',
       },
+      initial_props: {
+        label: 'Initial Properties',
+        type: 'json',
+        default: null,
+        tooltip: 'Initial parameters (key/value pair) that will be injected to the instance',
+        placeholder: '{ "property_name": "property_value" }'
+      }
     },
   },
 
