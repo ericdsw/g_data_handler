@@ -346,7 +346,7 @@ export default function createInput(
             marginRight: 6,
           }}
         >
-          <Typography gutterBottom variant="subtitle1">
+          <Typography gutterBottom variant="h6">
             {inputData.afterSeparator}
           </Typography>
           <Divider />

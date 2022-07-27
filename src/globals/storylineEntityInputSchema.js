@@ -86,9 +86,13 @@ const storylineEntityInputSchema = {
       player_faces_npc_on_interact: {
         label: 'Player faces NPC on interact',
         type: 'boolean',
-        default: true,
         tooltip: 'Whether the player is forced to face the npc on interaction'
-      }
+      },
+      appear_glitched: {
+        label: 'Appear Glitched',
+        type: 'boolean',
+        tooltip: 'If true, the npc will be rendered with a noise distortion flashing in and out'
+      } 
     },
   },
 
@@ -162,8 +166,12 @@ const storylineEntityInputSchema = {
       player_faces_npc_on_interact: {
         label: 'Player faces NPC on interact',
         type: 'boolean',
-        default: true,
         tooltip: 'Whether the player is forced to face the npc on interaction'
+      },
+      appear_glitched: {
+        label: 'Appear Glitched',
+        type: 'boolean',
+        tooltip: 'If true, the npc will be rendered with a noise distortion flashing in and out'
       }
     },
   },
