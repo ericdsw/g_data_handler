@@ -1,3 +1,5 @@
+import { createReducer } from '@reduxjs/toolkit';
+
 import {
   UPDATE_CUTSCENE,
   ADD_CUTSCENE_ROW,
@@ -19,107 +21,77 @@ const initialState = {
   hideBars: false,
 };
 
-export default function cutsceneReducer(state = initialState, action) {
-  switch (action.type) {
-    case UPDATE_CUTSCENE:
-      return updateCutscene(state, action);
-    case ADD_CUTSCENE_ROW:
-      return addCutsceneRow(state, action);
-    case ADD_CUTSCENE_ROW_AT_POS:
-      return addCutsceneRowAtPosition(state, action);
-    case DELETE_CUTSCENE_ROW:
-      return deleteCutsceneRow(state, action);
-    case ADD_CUTSCENE_EVENT:
-      return addCutsceneEvent(state, action);
-    case DELETE_CUTSCENE_EVENT:
-      return deleteCutsceneEvent(state, action);
-    case EDIT_CUTSCENE_EVENT:
-      return editCutsceneEvent(state, action);
-    case UPDATE_CUTSCENE_FILE_NAME:
-      return updateCutsceneFileName(state, action);
-    case UPDATE_CUTSCENE_HIDE_BARS:
-      return updateCutsceneHideBars(state, action);
-    case ADD_CUTSCENE_JUMP:
-      return addCutsceneJump(state, action);
-    case DELETE_CUTSCENE_JUMP:
-      return deleteCutsceneJump(state, action);
-    default:
-      return state;
-  }
-}
+const cutsceneReducer = createReducer(initialState, builder => {
+  builder
+    .addCase(UPDATE_CUTSCENE, updateCutscene)
+    .addCase(ADD_CUTSCENE_ROW, addCutsceneRow)
+    .addCase(ADD_CUTSCENE_ROW_AT_POS, addCutsceneRowAtPosition)
+    .addCase(DELETE_CUTSCENE_ROW, deleteCutsceneRow)
+    .addCase(ADD_CUTSCENE_EVENT, addCutsceneEvent)
+    .addCase(DELETE_CUTSCENE_EVENT, deleteCutsceneEvent)
+    .addCase(EDIT_CUTSCENE_EVENT, editCutsceneEvent)
+    .addCase(UPDATE_CUTSCENE_FILE_NAME, updateCutsceneFileName)
+    .addCase(UPDATE_CUTSCENE_HIDE_BARS, updateCutsceneHideBars)
+    .addCase(ADD_CUTSCENE_JUMP, addCutsceneJump)
+    .addCase(DELETE_CUTSCENE_JUMP, deleteCutsceneJump)
+});
+
 
 function updateCutscene(state, action) {
   const { cutscene, jumps, fileName, hideBars } = action.payload;
-  return {
-    ...state,
-    currentCutscene: cutscene,
-    currentCutsceneJumps: jumps,
-    fileName: fileName,
-    hideBars: hideBars,
-  };
+  state.currentCutscene = cutscene;
+  state.currentCutsceneJumps = jumps;
+  state.fileName = fileName;
+  state.hideBars = hideBars;
 }
 
 function addCutsceneRow(state, action) {
-  return { ...state, currentCutscene: [...state.currentCutscene, []] };
+  state.currentCutscene = [...state.currentCutscene, []]
 }
 
 function addCutsceneRowAtPosition(state, action) {
   const { position } = action.payload;
-  let rows = [...state.currentCutscene];
-  rows.splice(position, 0, []);
-  return { ...state, currentCutscene: rows };
+  state.currentCutscene.splice(position, 0, [])
 }
 
 function deleteCutsceneRow(state, action) {
-  let rows = state.currentCutscene.slice(0);
-  rows.splice(action.payload, 1);
-  return { ...state, currentCutscene: rows };
+  state.currentCutscene.splice(action.payload, 1);
 }
 
 function addCutsceneEvent(state, action) {
   const { rowOffset, cutsceneEventData } = action.payload;
-  let rows = [...state.currentCutscene];
-  rows[rowOffset].push(cutsceneEventData);
-  return { ...state, currentCutscene: rows };
+  state.currentCutscene[rowOffset].push(cutsceneEventData);
 }
 
 function deleteCutsceneEvent(state, action) {
   const { rowOffset, eventOffset } = action.payload;
-  let rows = [...state.currentCutscene];
-  rows[rowOffset] = [...rows[rowOffset]];
-  rows[rowOffset].splice(eventOffset, 1);
-  return { ...state, currentCutscene: rows };
+  state.currentCutscene[rowOffset].splice(eventOffset, 1);
 }
 
 function editCutsceneEvent(state, action) {
   const { rowOffset, eventOffset, data } = action.payload;
-  let rows = [...state.currentCutscene];
-  rows[rowOffset] = [...rows[rowOffset]];
-  rows[rowOffset].splice(eventOffset, 1);
-  rows[rowOffset].splice(eventOffset, 0, data);
-  return { ...state, currentCutscene: rows };
+  state.currentCutscene[rowOffset].splice(eventOffset, 1, data);
 }
 
 function updateCutsceneFileName(state, action) {
   const { newFileName } = action.payload;
-  return { ...state, fileName: newFileName };
+  state.fileName = newFileName;
 }
 
 function addCutsceneJump(state, action) {
   const { jumpName, cutsceneFile } = action.payload;
-  let newJumps = { ...state.currentCutsceneJumps };
-  newJumps[jumpName] = cutsceneFile;
-  return { ...state, currentCutsceneJumps: newJumps };
+  state.currentCutsceneJumps[jumpName] = cutsceneFile;
 }
 
 function deleteCutsceneJump(state, action) {
   const { jumpName } = action.payload;
-  let newJumps = { ...state.currentCutsceneJumps };
-  delete newJumps[jumpName];
-  return { ...state, currentCutsceneJumps: newJumps };
+  delete state.currentCutsceneJumps[jumpName];
 }
 
 function updateCutsceneHideBars(state, action) {
   const { hideBars } = action.payload;
-  return { ...state, hideBars };
+  state.hideBars = hideBars;
 }
+
+
+export default cutsceneReducer;
