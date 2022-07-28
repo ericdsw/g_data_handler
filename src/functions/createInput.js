@@ -95,6 +95,9 @@ export default function createInput(
   let contentValue;
   let adornment = <React.Fragment />;
 
+  // If defined, will be displayed under the text as an additional "helper" tip.
+  const helperText = inputData.helperText || '';
+
   switch (inputData.type) {
     case 'multi_input_object':
       const keyField = inputData.key_field;
@@ -328,6 +331,7 @@ export default function createInput(
           inputProps={{
             step: 'any',
           }}
+          helperText={helperText}
           {...extraParams}
         />
       );
