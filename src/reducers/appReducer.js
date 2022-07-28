@@ -1,3 +1,4 @@
+import { createReducer } from '@reduxjs/toolkit';
 import {
   TOGGLE_SIDEBAR,
   COLLAPSE_SIDEBAR,
@@ -9,15 +10,18 @@ const initialState = {
   darkMode: true,
 };
 
-export default function appReducer(state = initialState, action) {
-  switch (action.type) {
-    case TOGGLE_SIDEBAR:
-      return { ...state, drawerOpen: !state.drawerOpen };
-    case COLLAPSE_SIDEBAR:
-      return { ...state, drawerOpen: false };
-    case TOGGLE_DARK_MODE:
-      return { ...state, darkMode: !state.darkMode };
-    default:
-      return state;
-  }
-}
+const appReducer = createReducer(initialState, builder => {
+  builder
+    .addCase(TOGGLE_SIDEBAR, state => {
+      state.drawerOpen = !state.drawerOpen
+    })
+    .addCase(COLLAPSE_SIDEBAR, state => {
+      state.drawerOpen = false;
+    })
+    .addCase(TOGGLE_DARK_MODE, state => {
+      state.darkMode = !state.darkMode;
+    })
+});
+
+export default appReducer;
+
