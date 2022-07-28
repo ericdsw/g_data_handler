@@ -27,6 +27,16 @@ const Storyline = ({
 
   const fileName = useMemo(() => `${storyline.name}.json`, [storyline.name]);
 
+  /**
+   * This useMemo hook is not detecting when the storyline's steps are deleted since
+   * it seems that it is only checking the references to the values passed, and since
+   * what changes is the length of an existing array, I'm adding it as a dependency even
+   * though it should not be required.
+   * 
+   * Note that this is most likely an issue with how redux is configured for this project
+   * (more specifically, how the reducer is not actually creating new instances, but instead
+   * reusing old references).
+   */
   const stepEntries = useMemo(
     () =>
       storyline.steps.map((stepId, index) => {
@@ -36,7 +46,8 @@ const Storyline = ({
           </Grid>
         );
       }),
-    [storyline]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [storyline, storyline.steps.length]
   );
 
   return (

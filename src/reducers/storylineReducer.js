@@ -409,10 +409,14 @@ function updateInteraction(state, action) {
 // DELETES
 
 function deleteStorylineStep(state, action) {
+
   const { stepId } = action.payload;
+
 
   const steps = { ...state.storylineSteps };
   delete steps[stepId];
+
+  console.log(steps)
 
   const storylines = { ...state.storylines };
   deleteReference(storylines, 'steps', stepId);
@@ -580,6 +584,7 @@ function duplicateConfigurations(state, action) {
  * Deletes the reference from the provided dictionary
  */
 function deleteReference(fromDictionary, referenceName, value) {
+  console.log(fromDictionary);
   for (const dictionaryKey in fromDictionary) {
     const curElement = fromDictionary[dictionaryKey];
     if (curElement[referenceName].includes(value)) {
@@ -589,4 +594,5 @@ function deleteReference(fromDictionary, referenceName, value) {
       );
     }
   }
+
 }
