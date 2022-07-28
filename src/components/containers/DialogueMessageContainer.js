@@ -18,7 +18,6 @@ import PickItem from '../pages/dialogues/PickItem';
 class DialogueMessageContainer extends React.Component {
   editMessage = (data) => {
     const { messageId, editConversationMessage } = this.props;
-    console.log(data);
     editConversationMessage(messageId, data);
   };
 

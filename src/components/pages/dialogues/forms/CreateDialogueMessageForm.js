@@ -101,7 +101,8 @@ const CreateDialogueMessageForm = ({
         interrupts: curMessageData.interrupts,
         type: 'message',
       };
-      Object.keys(messageData).forEach((messageDataKey) => {
+
+      Object.keys(EMPTY_MESSAGE_DATA).forEach((messageDataKey) => {
         if (curMessageData[messageDataKey]) {
           returningMessageData[messageDataKey] = curMessageData[messageDataKey];
         }
@@ -121,7 +122,6 @@ const CreateDialogueMessageForm = ({
     [
       curMessageData,
       enqueueSnackbar,
-      messageData,
       creationHandler,
       createAndContinue,
       freshStart,
