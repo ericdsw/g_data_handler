@@ -1,5 +1,6 @@
 /**
- * Removes the specified reference from the provided dictionary
+ * Removes the specified reference from the provided dictionary.
+ * This is basically a helper method that other reducers use.
  */
 export const deleteReference = (sourceDict, refName, val) => {
   for (const dictionaryKey in sourceDict) {

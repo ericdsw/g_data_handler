@@ -112,7 +112,7 @@ function addToConversationMerger(state, action) {
 
 function updateDialogue(state, action) {
   const { fileName, dialogueId, entities } = action.payload;
-  state = {
+  return {
     ...state,
     ...entities,
     fileName,
@@ -165,7 +165,7 @@ function updateDialogueFilename(state, action) {
 // Delete
 
 function deleteCurrentDialogue(state, action) {
-  state = initialState;
+  return initialState;
 }
 
 function deleteDialogueConversation(state, action) {
