@@ -92,7 +92,12 @@ const storylineEntityInputSchema = {
         label: 'Appear Glitched',
         type: 'boolean',
         tooltip: 'If true, the npc will be rendered with a noise distortion flashing in and out'
-      } 
+      },
+      spawn_below_balcony: {
+        label: 'Spawn below balcony',
+        type: 'boolean',
+        tooltip: 'If true and the npc is in the upper/lower balcony intersection area, it will spawn on the lower area (otherwise it will always spawn on top)'
+      }
     },
   },
 
@@ -172,6 +177,11 @@ const storylineEntityInputSchema = {
         label: 'Appear Glitched',
         type: 'boolean',
         tooltip: 'If true, the npc will be rendered with a noise distortion flashing in and out'
+      },
+      spawn_below_balcony: {
+        label: 'Spawn below balcony',
+        type: 'boolean',
+        tooltip: 'If true and the npc is in the upper/lower balcony intersection area, it will spawn on the lower area (otherwise it will always spawn on top)'
       }
     },
   },
