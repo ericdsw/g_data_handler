@@ -60,7 +60,9 @@ const speakerSchema = {
     name: 'Ada',
     voice_file: 'scientist_voice.wav',
     target_object: 'AdaNPC',
-    speakerImages: [],
+    speakerImages: [
+      'Speaker.png'
+    ],
   },
 
   default: {
