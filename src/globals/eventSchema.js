@@ -1005,11 +1005,11 @@ const eventSchema = {
     parameters: {
       ...defaultParameters,
       object_path: {
-        label: 'Object Path',
+        label: 'Follower Resource Path',
         type: 'text',
         required: true,
         tooltip: 'The full path to the follower scene',
-        placeholder: 'BASE:node_path',
+        placeholder: 'res://path/to/follower/scene.tscn',
       },
       position: {
         label: 'Object Position',
