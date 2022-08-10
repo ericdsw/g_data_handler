@@ -854,6 +854,12 @@ const eventSchema = {
         tooltip:
           'Will not perform the 0.25s of invisibility spawned objects have, which prevents invalid animations from showing for 1 frame',
       },
+      initial_animation: {
+        label: 'Initial Animation',
+        type: 'string',
+        default: '',
+        tooltip: 'Animation to perform as the object spawns. Will only apply if the object has an animation player'
+      },
       initial_props: {
         label: 'Initial Properties',
         type: 'json',
