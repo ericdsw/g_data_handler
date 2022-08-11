@@ -1047,6 +1047,12 @@ const eventSchema = {
         tooltip: 'The follower id to be removed',
         placeholder: 'unique_follower_id',
       },
+      keep_on_map: {
+        label: 'Keep on map',
+        type: 'boolean',
+        default: false,
+        tooltip: 'Whether the follower will be removed or will just stop following the player'
+      }
     },
   },
 
@@ -1057,6 +1063,12 @@ const eventSchema = {
     additionalText: 'Removes all followers currently registered to the player',
     parameters: {
       ...defaultParameters,
+      keep_on_map: {
+        label: 'Keep on map',
+        type: 'boolean',
+        default: false,
+        tooltip: 'Whether the follower will be removed or will just stop following the player'
+      }
     },
   },
 
