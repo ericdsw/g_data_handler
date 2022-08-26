@@ -69,6 +69,12 @@ const speakerNames = {
   SPEAKER_NAME_ROBIN: 'Robin',
   SPEAKER_NAME_JOHANN: 'Johann',
   SPEAKER_NAME_RESEARCHER: 'Researcher',
+
+  SPEAKER_NAME_VIP_BOUNCER: 'Bouncer',
+  SPEAKER_NAME_BACKSTAGE_BOUNCER: 'Bouncer (backstace)',
+  SPEAKER_NAME_DRUMMER: 'Drummer',
+  SPEAKER_NAME_BASSIST: 'Bassist',
+  SPEAKER_NAME_KEYBOARD_PLAYER: 'Keyboard Player'
 };
 
 export default speakerNames;
