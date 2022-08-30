@@ -788,6 +788,12 @@ const eventSchema = {
     additionalText: 'Causes the camera to shake with the provided parameters',
     parameters: {
       ...defaultParameters,
+      shake_id: {
+        label: 'Shake ID',
+        type: 'text',
+        default: '',
+        tooltip: 'Identifies a single shake request. A blank one will create a random shake id if the shake_amount is more than 0, or will cancel all active shake transactions'
+      },
       duration: {
         label: 'Shake Duration',
         type: 'number',
@@ -798,7 +804,7 @@ const eventSchema = {
         label: 'Shake Strength',
         type: 'number',
         default: 1.0,
-        tooltip: 'How strong will the shake be',
+        tooltip: 'How strong will the shake be. If the value is 0 or less, the shake will be cancelled instead (Shake duration will be ignored)',
       },
     },
   },

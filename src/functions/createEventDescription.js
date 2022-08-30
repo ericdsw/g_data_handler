@@ -82,8 +82,14 @@ export default function createEventDescription(type, parameters) {
         return 'Partial Save';
       }
     case 'shake':
-      const { duration, shake_amount } = parameters;
-      return `For ${duration} seconds, with ${shake_amount} intensity`;
+      const { duration, shake_amount, shake_id } = parameters;
+      if (shake_amount <= 0){
+        if (!shake_id) {
+          return `Will cancel all active shakes`
+        }
+        return `Will cancel shake transaction with id: ${shake_id}`;
+      }
+      return `For ${duration} seconds, with ${shake_amount} intensity (ID: ${shake_id || 'Not Specified'})`;
     case 'sound':
       return `Play sound ${parameters.sound}`;
     case 'spawn_object':
