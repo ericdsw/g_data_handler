@@ -89,7 +89,10 @@ export default function createEventDescription(type, parameters) {
         }
         return `Will cancel shake transaction with id: ${shake_id}`;
       }
-      return `For ${duration} seconds, with ${shake_amount} intensity (ID: ${shake_id || 'Not Specified'})`;
+      if (duration > 0) {
+        return `For ${duration} seconds, with ${shake_amount} intensity (ID: ${shake_id || 'Not Specified'})`;
+      }
+      return `Will shake with intensity ${shake_amount} indefinitely (ID: ${shake_id || 'Not Specified'})`
     case 'sound':
       return `Play sound ${parameters.sound}`;
     case 'spawn_object':
