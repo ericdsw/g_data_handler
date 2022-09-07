@@ -15,6 +15,8 @@ import {
   DialogTitle,
   DialogContent,
 } from '@mui/material';
+import ToggleOffOutlinedIcon from '@mui/icons-material/ToggleOffOutlined';
+import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 
 import { speakerSchema } from '../../../../globals';
 import { SimpleCollapse } from '../../../elements';
@@ -42,6 +44,8 @@ const EMPTY_MESSAGE_DATA = {
   is_emote: false,
   enter_sound: '',
   exit_sound: '',
+  mute_enter_sound: false,
+  mute_exit_sound: false
 };
 
 function initialImagePreview(data) {
@@ -294,6 +298,20 @@ const CreateDialogueMessageForm = ({
                 variant="outlined"
                 margin="normal"
                 placeholder="Sound when dialogue enters"
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      onClick={() => {
+                        updateCurMessageData({
+                          ...curMessageData,
+                          mute_enter_sound: !curMessageData.mute_enter_sound
+                        })
+                      }}
+                    >
+                      {curMessageData.mute_enter_sound ? <ToggleOffOutlinedIcon /> : <ToggleOnIcon />}
+                    </IconButton>
+                  )
+                }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -305,6 +323,20 @@ const CreateDialogueMessageForm = ({
                 variant="outlined"
                 margin="normal"
                 placeholder="Sound when dialogue exits"
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      onClick={() => {
+                        updateCurMessageData({
+                          ...curMessageData,
+                          mute_exit_sound: !curMessageData.mute_exit_sound
+                        })
+                      }}
+                    >
+                      {curMessageData.mute_exit_sound ? <ToggleOffOutlinedIcon /> : <ToggleOnIcon />}
+                    </IconButton>
+                  )
+                }}
               />
             </Grid>
           </Grid>
