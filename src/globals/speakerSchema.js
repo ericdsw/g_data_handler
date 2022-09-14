@@ -61,7 +61,18 @@ const speakerSchema = {
     voice_file: 'scientist_voice.wav',
     target_object: 'AdaNPC',
     speakerImages: [
-      'Speaker.png'
+      'Speaker.png',
+      'Ada-thunk.png',
+      'Ada-thunk-glare.png',
+      'Ada-sigh.png',
+      'Ada-sigh-glare.png',
+      'Ada-serious.png',
+      'Ada-serious-glare.png',
+      'Ada-sans.png',
+      'Ada-releived_glare.png',
+      'Ada-releived.png',
+      'Ada-fix-glasses.png',
+      'Ada-fix-glasses-glare.png'
     ],
   },
 
