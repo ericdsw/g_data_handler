@@ -268,6 +268,12 @@ const eventSchema = {
           'Where the followers should spawn, separated by comma (one for each follower)',
         default: '',
       },
+      new_controllable_player_id: {
+        label: 'New Controllable player id',
+        type: 'string',
+        default: '',
+        tooltip: 'If defined, this will be the new player on the new map (see CharacterProvider for possible values)'
+      }
     },
   },
 

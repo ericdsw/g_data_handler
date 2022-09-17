@@ -101,7 +101,6 @@ class DialogueImageSearcher extends React.Component {
       searchContent = (
         <div
           className={classes.largeAvatar}
-          // src={`images/${image}`}
           style={{
             backgroundImage: `url(images/${image})`,
           }}

@@ -122,6 +122,22 @@ const speakerSchema = {
     target_object: 'CONTROL_PLAYER',
     speakerImages: [],
   },
+
+  controllable_rocc: {
+    name: 'Rocc',
+    voice_file: 'phoenix_voice.wav',
+    target_object: 'CONTROL_PLAYER',
+    speakerImages: []
+  },
+
+  controllable_cerie: {
+    image: 'Cerie-Portrait-Neutral.png',
+    name: 'Cerie',
+    voice_file: 'ghost_voice.wav',
+    target_object: 'CONTROL_PLAYER',
+    speakerImages: []
+  },
+  
 };
 
 export default speakerSchema;

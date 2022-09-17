@@ -3,13 +3,14 @@ import withStyles from '@mui/styles/withStyles';
 import { withSnackbar } from 'notistack';
 import {
   TextField,
-  MenuItem,
   Icon,
   Typography,
   Grid,
   Button,
   FormControlLabel,
   Switch,
+  Autocomplete,
+  Box
 } from '@mui/material';
 
 import { eventSchema } from '../../../../globals';
@@ -70,8 +71,7 @@ class CreateEventForm extends React.Component {
     }
   }
 
-  handleTypeChange = (event) => {
-    const newType = event.target.value;
+  handleTypeChange = (newType) => {
     this.formFields = eventSchema[newType].parameters;
     this.additionalText = eventSchema[newType].additionalText;
 
@@ -150,17 +150,6 @@ class CreateEventForm extends React.Component {
      * a "chainable" method.
      */
     const sortedKeys = Object.keys(eventSchema).sort();
-    const optionTypes = sortedKeys
-      .filter((key) => !eventSchema[key].hidden)
-      .map((key) => (
-        <MenuItem key={key} value={key}>
-          <Grid container alignItems="center">
-            <Icon>{eventSchema[key].icon}</Icon>
-            &nbsp;
-            <Typography>{eventSchema[key].name}</Typography>
-          </Grid>
-        </MenuItem>
-      ));
 
     fields.push(
       <FormControlLabel
@@ -193,19 +182,40 @@ class CreateEventForm extends React.Component {
 
     return (
       <form onSubmit={this.submitData}>
-        <TextField
-          id="event_type_select"
-          select
-          fullWidth
-          label="Event Type"
-          onChange={this.handleTypeChange}
-          value={this.state.currentEventType}
-          variant="outlined"
-          disabled={this.state.lockType}
-          margin="normal"
-        >
-          {optionTypes}
-        </TextField>
+        <Grid container>
+          <Grid item xs={12}>
+            <Autocomplete
+              id="event_type_select"
+              options={sortedKeys}
+              autoHighlight
+              getOptionLabel={option => eventSchema[option].name}
+              renderOption={(props, option) => (
+                <Box component="li" {...props}>
+                  <Icon sx={{ marginRight: 2 }}>{eventSchema[option].icon}</Icon>
+                  <Typography>{eventSchema[option].name}</Typography>
+                </Box>
+              )}
+              value={this.state.currentEventType}
+              onChange={(_, val) => this.handleTypeChange(val)}
+              clearOnBlur
+              clearOnEscape
+              disableClearable
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  label="Event Type"
+                  fullWidth
+                  margin="normal"
+                  inputProps={{
+                    ...params.inputProps,
+                    autocomplete: 'new-password'
+                  }}
+                />
+              )}
+            />
+          </Grid>
+        </Grid>
+        
         <Grid container>{fields}</Grid>
         <Grid container>
           <Grid item xs={12}>
