@@ -260,6 +260,27 @@ const eventSchema = {
         tooltip:
           'Which nodes will be visible between changes, must have a Sprite child',
       },
+      fade_to_black_duration: {
+        label: 'Fade to black duration',
+        type: 'number',
+        default: 0,
+        helperText: 'Leave it at 0 to use the default value (should be 0.35)',
+        tooltip: 'If it is more than 0, the fade out will last this long'
+      },
+      stay_black_duration: {
+        label: 'Stay black duration',
+        type: 'number',
+        default: 0,
+        helperText: 'Leave it at 0 to use the default value (which should be 0)',
+        tooltip: 'If it is more than 0, the screen will stay black for this long'
+      },
+      fade_to_transparent_duration: {
+        label: 'Fade to transparent duration',
+        type: 'number',
+        default: 0,
+        helperText: 'Leave it at 0 to use the default value',
+        tooltip: 'If it is more than 0, the fade in will last this long (should be 0.35)'
+      },
       follower_target_positions: {
         label: 'Follower Target Positions',
         type: 'positionArray',
