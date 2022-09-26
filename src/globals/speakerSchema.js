@@ -137,6 +137,22 @@ const speakerSchema = {
     target_object: 'CONTROL_PLAYER',
     speakerImages: []
   },
+
+  robin: {
+		image: null,
+		name: "SPEAKER_NAME_ROBIN",
+		voice_file: "default_voice.wav",
+		target_object: "RobinNPC",
+    speakerImages: []
+	},
+
+	johann: {
+		image: null,
+		name: "SPEAKER_NAME_JOHANN",
+		voice_file: "default_voice.wav",
+		target_object: "JohannNPC",
+    speakerImages: []
+	}
   
 };
 
