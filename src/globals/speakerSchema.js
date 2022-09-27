@@ -152,7 +152,7 @@ const speakerSchema = {
 		voice_file: "default_voice.wav",
 		target_object: "JohannNPC",
     speakerImages: []
-	}
+	},
   
   "claire": {
 		"image": null,
