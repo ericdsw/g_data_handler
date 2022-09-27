@@ -74,7 +74,17 @@ const speakerNames = {
   SPEAKER_NAME_BACKSTAGE_BOUNCER: 'Bouncer (backstace)',
   SPEAKER_NAME_DRUMMER: 'Drummer',
   SPEAKER_NAME_BASSIST: 'Bassist',
-  SPEAKER_NAME_KEYBOARD_PLAYER: 'Keyboard Player'
+  SPEAKER_NAME_KEYBOARD_PLAYER: 'Keyboard Player',
+
+  SPEAKER_NAME_CLAIRE: 'Claire',
+  SPEAKER_NAME_SELEDON: 'Seledon',
+  SPEAKER_NAME_CIMMERIA: 'Cimmeria',
+  SPEAKER_NAME_DILLENS: 'Dillens',
+  SPEAKER_NAME_IAN: 'Ian',
+  SPEAKER_NAME_FERBAN: 'Ferban',
+  SPEAKER_NAME_SANDEST: 'Sandest',
+  SPEAKER_NAME_RELMA: 'Relma',
+  SPEAKER_NAME_DAD: 'Dad'
 };
 
 export default speakerNames;
