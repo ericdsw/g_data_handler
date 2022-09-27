@@ -154,6 +154,78 @@ const speakerSchema = {
     speakerImages: []
 	}
   
+  "claire": {
+		"image": null,
+		"name": "SPEAKER_NAME_CLAIRE",
+		"voice_file": "default_voice.wav",
+		"target_object": "ClaireNPC",
+    speakerImages: []
+	},
+	
+	"seledon": {
+		"image": null,
+		"name": "SPEAKER_NAME_SELEDON",
+		"voice_file": "default_voice.wav",
+		"target_object": "SeledonNPC",
+    speakerImages: []
+	},
+	
+	"cimmeria": {
+		"image": null,
+		"name": "SPEAKER_NAME_CIMMERIA",
+		"voice_file": "default_voice.wav",
+		"target_object": "CimmeriaNPC",
+    speakerImages: []
+	},
+	
+	"dillens": {
+		"image": null,
+		"name": "SPEAKER_NAME_DILLENS",
+		"voice_file": "default_voice.wav",
+		"target_object": "DillensNPC",
+    speakerImages: []
+	},
+	
+	"ian": {
+		"image": null,
+		"name": "SPEAKER_NAME_IAN",
+		"voice_file": "default_voice.wav",
+		"target_object": "IanNPC",
+    speakerImages: []
+	},
+	
+	"ferban": {
+		"image": null,
+		"name": "SPEAKER_NAME_FERBAN",
+		"voice_file": "default_voice.wav",
+		"target_object": "FerbanNPC",
+    speakerImages: []
+	},
+	
+	"sandest": {
+		"image": null,
+		"name": "SPEAKER_NAME_SANDEST",
+		"voice_file": "default_voice.wav",
+		"target_object": "SandestNPC",
+    speakerImages: []
+	},
+	
+	"relma": {
+		"image": null,
+		"name": "SPEAKER_NAME_RELMA",
+		"voice_file": "default_voice.wav",
+		"target_object": "RelmaNPC",
+    speakerImages: []
+	},
+	
+	"dad": {
+		"image": null,
+		"name": "SPEAKER_NAME_DAD",
+		"voice_file": "default_voice.wav",
+		"target_object": "DadNPC",
+    speakerImages: []
+	}
+
 };
 
 export default speakerSchema;
