@@ -28,6 +28,12 @@ const schema = {
       tooltip:
         'If defined, will be shown after either the default or the custom message',
     },
+    show_fanfare: {
+      label: 'Show Fanfare',
+      type: 'boolean',
+      default: true,
+      tooltip: 'Whether the fanfare will be shown'
+    }
   },
 };
 

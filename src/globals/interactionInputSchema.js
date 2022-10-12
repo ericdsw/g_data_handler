@@ -112,7 +112,7 @@ const interactionInputSchema = {
         required: true,
         placeholder:
           'Relative nodepath to the trigger dialogue interaction node',
-      },
+      }
     },
   },
 

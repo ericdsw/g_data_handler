@@ -596,6 +596,12 @@ const eventSchema = {
         default: null,
         tooltip: 'Will be displayed after the item is given',
       },
+      show_fanfare: {
+        label: 'Show Fanfare',
+        type: 'boolean',
+        default: true,
+        tooltip: 'Whether the got item fanfare will be displayed'
+      }
     },
   },
 

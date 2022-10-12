@@ -60,21 +60,30 @@ const GiveItemFromDialogue = ({
         }
       />
       <CardContent>
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <Typography variant="body2">{usedMessage}</Typography>
+        {message.show_fanfare && (
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Typography variant="body2">{usedMessage}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              {message.flavor_message && (
+                <Typography variant="caption">
+                  Flavor: {message.flavor_message}
+                </Typography>
+              )}
+              {!message.flavor_message && (
+                <Typography variant="caption">No flavor defined</Typography>
+              )}
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            {message.flavor_message && (
-              <Typography variant="caption">
-                Flavor: {message.flavor_message}
-              </Typography>
-            )}
-            {!message.flavor_message && (
-              <Typography variant="caption">No flavor defined</Typography>
-            )}
+        )}
+        {!message.show_fanfare && (
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Typography variant="body1"><b>Will skip fanfare &nbsp;&nbsp;ಥ_ಥ</b></Typography>
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </CardContent>
     </Card>
   );
