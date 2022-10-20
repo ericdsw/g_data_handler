@@ -52,8 +52,8 @@ const completionInputSchema = {
     },
   },
 
-  enter_trigger_area: {
-    name: 'Enter Trigger Area',
+  entered_trigger_area: {
+    name: 'Entered Trigger Area',
     parameters: {
       unique_name: {
         label: 'Unique Name',

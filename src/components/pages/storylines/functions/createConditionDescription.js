@@ -22,7 +22,7 @@ const createConditionDescription = (condition) => {
         </React.Fragment>
       );
 
-    case 'enter_trigger_area':
+    case 'entered_trigger_area':
       return (
         <React.Fragment>
           Enter Area&nbsp;
@@ -75,7 +75,7 @@ const createConditionDescription = (condition) => {
       );
 
     default:
-      return condition;
+      return <>{condition}</>;
   }
 };
 
