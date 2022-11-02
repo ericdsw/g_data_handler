@@ -169,6 +169,8 @@ export default function createEventDescription(type, parameters) {
         return 'Mantle will be lifted';
       }
       return 'Mantle will be lowered';
+    case 'branching_player_input':
+      return 'Will branch depending on the player input'
     default:
       return '';
   }

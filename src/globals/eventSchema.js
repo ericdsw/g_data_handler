@@ -1550,6 +1550,22 @@ const eventSchema = {
       },
     },
   },
+
+  branching_player_input: {
+    name: 'Branching Player Input',
+    icon: 'alt_route',
+    additionalText: 'Performs a jump based on the pressed input',
+    defaultImportant: true,
+    parameters: {
+      ...defaultParameters,
+      action_string: {
+        label: 'Action String',
+        required: true,
+        type: 'text',
+        placeholder: 'action_name:jump_name:label(?),action_name_2:jump_name_2'
+      }
+    }
+  }
 };
 
 export default eventSchema;
