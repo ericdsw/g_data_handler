@@ -1,3 +1,5 @@
+import { number } from "prop-types";
+
 /**
  * These parameters are defined in the base CutsceneEvent file.
  */
@@ -1184,6 +1186,12 @@ const eventSchema = {
         type: 'boolean',
         default: false,
         tooltip: 'If true, the action command promtp will be invisible'
+      },
+      auto_advance_fallback_timeout: {
+        label: 'Auto Advance fallback timeout',
+        type: 'number',
+        default: 0.0,
+        tooltip: 'If this value is more than 0, the event will force finish after this duration if the player has not pressed anything'
       }
     },
   },
