@@ -1167,6 +1167,24 @@ const eventSchema = {
         required: true,
         tooltip: 'Prompt text',
       },
+      zooms_camera: {
+        label: 'Zooms camera',
+        type: 'boolean',
+        default: true,
+        tooltip: 'Whether the camera will use the target_zoom'
+      },
+      pauses: {
+        label: 'Pauses',
+        type: 'boolean',
+        default: true,
+        tooltip: "If true, the game will pause until the action command is pressed"
+      },
+      invisible_action: {
+        label: 'Invisible Action',
+        type: 'boolean',
+        default: false,
+        tooltip: 'If true, the action command promtp will be invisible'
+      }
     },
   },
 
