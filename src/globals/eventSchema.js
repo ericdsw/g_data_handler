@@ -813,6 +813,12 @@ const eventSchema = {
         default: '',
         tooltip: 'If defined, the player will enter the game in this state',
       },
+      new_controllable_player_id: {
+        label: 'Controllable Player Id',
+        type: 'string',
+        default: '',
+        tooltip: 'If defined, this player will be used.',
+      }
     },
   },
 
