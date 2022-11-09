@@ -131,11 +131,18 @@ const speakerSchema = {
   },
 
   controllable_cerie: {
-    image: 'Cerie-Portrait-Neutral.png',
+    image: 'kidcerie-portrait-neutral.png',
     name: 'Cerie',
     voice_file: 'ghost_voice.wav',
     target_object: 'CONTROL_PLAYER',
-    speakerImages: []
+    speakerImages: [
+      "kidcerie-portrait-taunt.png",
+      "kidcerie-portrait-smug.png",
+      "kidcerie-portrait-worried.png",
+      "kidcerie-portrait-bummed.png",
+      "kidcerie-portrait-hype.png",
+      "kidcerie-portrait-neutral.png"
+    ]
   },
 
   robin: {
