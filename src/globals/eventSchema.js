@@ -1077,6 +1077,12 @@ const eventSchema = {
         tooltip: 'An unique identifier for the follower, used to delete it',
         placeholder: 'unique_follower_id',
       },
+      do_not_muffle_footsteps: {
+        label: 'Do Not muffle footsteps',
+        type: 'boolean',
+        default: false,
+        tooltip: 'If true, the foostep player will not be muffled for the follower'
+      }
     },
   },
 
@@ -1140,6 +1146,12 @@ const eventSchema = {
         tooltip: 'An unique identifier for the follower, used to delete it',
         placeholder: 'unique_follower_id',
       },
+      do_not_muffle_footsteps: {
+        label: 'Do Not muffle footsteps',
+        type: 'boolean',
+        default: false,
+        tooltip: 'If true, the foostep player will not be muffled for the follower'
+      }
     },
   },
 
