@@ -1407,6 +1407,12 @@ const eventSchema = {
         required: true,
         placeholder: 'The minigame node, inside res://Minigames',
       },
+      save_on_cutscene_finish: {
+        label: 'Save game when the minigame starts',
+        type: 'boolean',
+        default: false,
+        tooltip: 'Whether starting the minigame after the cutscene finishes will force a save'
+      }
     },
   },
 
