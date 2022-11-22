@@ -155,6 +155,18 @@ const eventSchema = {
         default: '',
         tooltip: 'The position where the player will return',
       },
+      win_used_character: {
+        label: 'Win used character',
+        type: 'text',
+        default: '',
+        tooltip: 'What playable character will be controlled after the battle is won'
+      },
+      peeks_outside_of_battle_map: {
+        label: 'Peeks outside of battle map',
+        type: 'boolean',
+        default: false,
+        tooltip: 'If true, the player will not be visible on the next map'
+      }
     },
   },
 
