@@ -1,5 +1,3 @@
-import { number } from "prop-types";
-
 /**
  * These parameters are defined in the base CutsceneEvent file.
  */
@@ -141,6 +139,12 @@ const eventSchema = {
         default: 0,
         tooltip:
           'How long the battle will last (time rush memory circumstances). 0 means no limit',
+      },
+      battle_character: {
+        label: 'Used battle character',
+        type: 'text',
+        default: '',
+        tooltip: 'If defined, this battle character will be used instead of whatever is on the save file'
       },
       custom_win_return_map: {
         label: 'Custom Win Return Map',

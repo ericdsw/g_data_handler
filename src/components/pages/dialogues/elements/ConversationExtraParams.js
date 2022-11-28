@@ -16,13 +16,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const extras = ['location', 'voice_file', 'control_level', 'autopilot_offset'];
+const EXTRAS = ['location', 'voice_file', 'control_level', 'autopilot_offset'];
 
 const ConversationExtraParams = ({ message }) => {
   const classes = useStyles();
   const extraChips = useMemo(() => {
-    return extras
+    return EXTRAS
       .filter((extraProperty) => message.hasOwnProperty(extraProperty))
+      .filter(extraProperty => message[extraProperty] !== '')
       .map((extraProperty) => (
         <Chip
           key={extraProperty}
@@ -30,7 +31,7 @@ const ConversationExtraParams = ({ message }) => {
           label={`${extraProperty}: ${message[extraProperty]}`}
         />
       ));
-  }, [classes, message]);
+  }, [classes.chip, message]);
 
   return (
     <React.Fragment>

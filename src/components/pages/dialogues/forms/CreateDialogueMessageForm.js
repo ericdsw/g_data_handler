@@ -45,7 +45,7 @@ const EMPTY_MESSAGE_DATA = {
   enter_sound: '',
   exit_sound: '',
   mute_enter_sound: false,
-  mute_exit_sound: false
+  mute_exit_sound: false,
 };
 
 function initialImagePreview(data) {
@@ -107,7 +107,7 @@ const CreateDialogueMessageForm = ({
       };
 
       Object.keys(EMPTY_MESSAGE_DATA).forEach((messageDataKey) => {
-        if (curMessageData[messageDataKey]) {
+        if (typeof curMessageData[messageDataKey] !== 'undefined' && curMessageData[messageDataKey] !== null) {
           returningMessageData[messageDataKey] = curMessageData[messageDataKey];
         }
       });
