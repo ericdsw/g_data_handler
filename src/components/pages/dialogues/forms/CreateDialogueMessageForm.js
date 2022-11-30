@@ -107,7 +107,7 @@ const CreateDialogueMessageForm = ({
       };
 
       Object.keys(EMPTY_MESSAGE_DATA).forEach((messageDataKey) => {
-        if (typeof curMessageData[messageDataKey] !== 'undefined' && curMessageData[messageDataKey] !== null) {
+        if (curMessageData[messageDataKey]) {
           returningMessageData[messageDataKey] = curMessageData[messageDataKey];
         }
       });
