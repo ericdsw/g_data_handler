@@ -111,7 +111,7 @@ const CreateDialogueMessageForm = ({
           returningMessageData[messageDataKey] = curMessageData[messageDataKey];
         }
       });
-
+      
       creationHandler(returningMessageData, createAndContinue);
 
       if (freshStart) {

@@ -151,8 +151,9 @@ function updateDialogueConversation(state, action) {
 
 function editConversationMessage(state, action) {
   const { messageId, data } = action.payload;
+
   state.messages[messageId] = {
-    ...state.messages[messageId],
+    id: state.messages[messageId].id,
     ...data
   }
 }
