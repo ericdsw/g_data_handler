@@ -18,6 +18,10 @@ const speakerSchema = {
       'Phoenix_Despair.png',
       'Phoenix_Serious.png',
       'Phoenix_Shocked.png',
+      'Phoenix-sobbing.png',
+      'Phoenix-happy.png',
+      'Phoenix-crying.png',
+      'Phoenix-angry.png'
     ],
   },
 
