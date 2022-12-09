@@ -1631,7 +1631,46 @@ const eventSchema = {
         placeholder: 'action_name:jump_name:label(?),action_name_2:jump_name_2'
       }
     }
+  },
+
+  toggle_cutscene_bars: {
+    name: 'Toggle Cutscene Bars',
+    icon: 'movie_filter',
+    additionalText: 'Shows/Hides the cutscene bars',
+    defaultImportant: false,
+    parameter: {
+      ...defaultParameters,
+      bars_visible: {
+        label: 'Bars Visible',
+        type: 'boolean',
+        default: true,
+        tooltip: 'Whether the bars will show/hide (should do nothing if the bars are already in the desired state)'
+      }
+    }
+  },
+
+  slowdown_event: {
+    name: 'Slowdown',
+    icon: 'hourglass_bottom',
+    additionalText: 'Modifies the world speed',
+    defaultImportant: true,
+    parameters: {
+      ...defaultParameters,
+      world_speed: {
+        label: 'World Speed',
+        type: 'number',
+        required: true,
+        tooltip: 'The final world speed'
+      },
+      transition_duration: {
+        label: 'Transition Duration',
+        type: 'number',
+        default: 0.0,
+        tooltip: 'How long the change will take (0 will be instant)'
+      }
+    }
   }
+
 };
 
 export default eventSchema;
