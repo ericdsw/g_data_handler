@@ -1667,6 +1667,12 @@ const eventSchema = {
         type: 'number',
         default: 0.0,
         tooltip: 'How long the change will take (0 will be instant)'
+      },
+      transition_ignores_world_speed: {
+        label: 'Transition ignores world speed',
+        type: 'boolean',
+        default: true,
+        tooltip: 'Ignoring the world speed will make the transition last the same time, regardless of slowdown. Not ignoring it will make the event eaiser to time with other events that ARE slowed down/sped up.'
       }
     }
   }
