@@ -1638,7 +1638,7 @@ const eventSchema = {
     icon: 'movie_filter',
     additionalText: 'Shows/Hides the cutscene bars',
     defaultImportant: false,
-    parameter: {
+    parameters: {
       ...defaultParameters,
       bars_visible: {
         label: 'Bars Visible',

@@ -170,7 +170,11 @@ export default function createEventDescription(type, parameters) {
       }
       return 'Mantle will be lowered';
     case 'branching_player_input':
-      return 'Will branch depending on the player input'
+      return 'Will branch depending on the player input';
+    case 'toggle_cutscene_bars':
+      return `Will ${parameters.bars_visible ? 'Show' : 'Hide'} bars`;
+    case 'slowdown_event':
+      return `Will modify world time scale to ${parameters.world_speed} (duration: ${parameters.transition_duration})`;
     default:
       return '';
   }
