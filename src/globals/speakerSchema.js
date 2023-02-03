@@ -134,6 +134,13 @@ const speakerSchema = {
     speakerImages: []
   },
 
+  controllable_vega: {
+    name: 'Vega',
+    voice_file: 'vampire_voice.wav',
+    target_object: 'CONTROL_PLAYER',
+    speakerImages: []
+  },
+
   controllable_cerie: {
     image: 'kidcerie-portrait-neutral.png',
     name: 'Cerie',
