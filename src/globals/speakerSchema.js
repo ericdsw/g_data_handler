@@ -156,6 +156,14 @@ const speakerSchema = {
     ]
   },
 
+  controllable_ada: {
+    image: '',
+    name: 'Ada',
+    voice_file: 'scientist_voice.wav',
+    target_object: 'CONTROL_PLAYER',
+    speakerImages: [],
+  },
+
   robin: {
 		image: null,
 		name: "SPEAKER_NAME_ROBIN",
