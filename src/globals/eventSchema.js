@@ -808,6 +808,7 @@ const eventSchema = {
         default: null,
         tooltip: 'The map data to save',
         placeholder: '{ "map_name": {"key":"value"} }',
+        helperText: 'Use the map alias to identify each map (example: V/p, UF/c)'
       },
       npc_data: {
         label: 'NPC Data',
@@ -815,6 +816,7 @@ const eventSchema = {
         default: null,
         tooltip: 'The NPC data to save',
         placeholder: '{ "npc_name": {"map_name": "data"} }',
+        helperText: 'To identify a map for an NPC, you need to use the actual scene name (unlike the previous field)'
       },
       player_data: {
         label: 'Player Data',

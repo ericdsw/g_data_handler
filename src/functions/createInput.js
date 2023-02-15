@@ -239,6 +239,7 @@ export default function createInput(
           variant="outlined"
           margin="normal"
           disabled={disabled}
+          helperText={helperText}
           {...extraParams}
         />
       );
