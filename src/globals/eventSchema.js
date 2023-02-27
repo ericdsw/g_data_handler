@@ -1282,7 +1282,7 @@ const eventSchema = {
 
   look_at: {
     name: 'Look At',
-    icon: 'my_location',
+    icon: 'person_search',
     defaultImportant: false,
     additionalText:
       'Subjet must be a MovableBody, and Look Target must be a Node2D',
@@ -1299,6 +1299,35 @@ const eventSchema = {
         type: 'node_target',
         required: true,
         placeholder: 'Who the subject will face',
+      },
+    },
+  },
+
+  look_at_direction: {
+    name: 'Look At Direction',
+    icon: 'travel_explore',
+    defaultImportant: false,
+    additionalText:
+      'Subject must be a movable body',
+    parameters: {
+      ...defaultParameters,
+      subject: {
+        label: 'Subject',
+        type: 'node_target',
+        required: true,
+        placeholder: 'The node that will "look" at a given direction',
+      },
+      direction: {
+        label: 'Look Target',
+        type: 'dropdown',
+        required: true,
+        placeholder: 'The direction the subject will face',
+        elements: {
+          up: "Up",
+          down: "Down",
+          left: "Left",
+          right: "Right"
+        }
       },
     },
   },

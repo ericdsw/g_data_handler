@@ -175,6 +175,27 @@ export default function createEventDescription(type, parameters) {
       return `Will ${parameters.bars_visible ? 'Show' : 'Hide'} bars`;
     case 'slowdown_event':
       return `Will modify world time scale to ${parameters.world_speed} (duration: ${parameters.transition_duration})`;
+    case 'look_at_direction':
+      let dirWord = "";
+      switch (parameters.direction) {
+        case "up":
+          dirWord = "up";
+          break;
+        case "down":
+          dirWord = "down";
+          break;
+        case "left":
+          dirWord = "to the left"
+          break;
+        case "right":
+          dirWord = "to the right";
+          break;
+        default:
+          break;
+
+      }
+
+      return `Will look ${dirWord}`
     default:
       return '';
   }
