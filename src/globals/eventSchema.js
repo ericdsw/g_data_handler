@@ -312,6 +312,12 @@ const eventSchema = {
         type: 'string',
         default: '',
         tooltip: 'If defined, this will be the new player on the new map (see CharacterProvider for possible values)'
+      },
+      custom_transition_color: {
+        label: 'Custom Transition Color',
+        type: 'string',
+        placeholder: '#ccff0d',
+        tooltip: 'If defined, the overlay will use this color instead of using black'
       }
     },
   },

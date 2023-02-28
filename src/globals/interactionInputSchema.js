@@ -388,6 +388,14 @@ const interactionInputSchema = {
       },
     },
   },
+
+  save_bed_interaction: {
+    name: 'Save Bed Interaction',
+    icon: 'bed',
+    parameters: {
+
+    }
+  }
 };
 
 export default interactionInputSchema;
