@@ -1706,6 +1706,26 @@ const eventSchema = {
         tooltip: 'Ignoring the world speed will make the transition last the same time, regardless of slowdown. Not ignoring it will make the event eaiser to time with other events that ARE slowed down/sped up.'
       }
     }
+  },
+
+  mark_flashback_visited: {
+    name: "Mark Flashback Visited",
+    icon: 'hourglass_bottom',
+    additionalText: 'Modifies the world speed',
+    defaultImportant: true,
+    parameters: {
+      ...defaultParameters,
+      flashback_name: {
+        label: "Flashback Name",
+        type: "dropdown",
+        required: true,
+        elements: {
+          village_morning: "Village Morning",
+          village_night: "Village Night",
+          mansion: "Mansion"
+        } 
+      }
+    }
   }
 
 };

@@ -192,10 +192,11 @@ export default function createEventDescription(type, parameters) {
           break;
         default:
           break;
-
       }
 
       return `Will look ${dirWord}`
+    case 'mark_flashback_visited':
+      return `Will mark the flashback ${parameters.flashback_name} as visited`;
     default:
       return '';
   }
