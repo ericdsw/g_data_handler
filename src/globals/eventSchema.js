@@ -1716,8 +1716,8 @@ const eventSchema = {
 
   mark_flashback_visited: {
     name: "Mark Flashback Visited",
-    icon: 'hourglass_bottom',
-    additionalText: 'Modifies the world speed',
+    icon: 'bookmark_added',
+    additionalText: "Marks the provided flashback as visited",
     defaultImportant: true,
     parameters: {
       ...defaultParameters,
@@ -1725,6 +1725,27 @@ const eventSchema = {
         label: "Flashback Name",
         type: "dropdown",
         required: true,
+        elements: {
+          village_morning: "Village Morning",
+          village_night: "Village Night",
+          mansion: "Mansion"
+        } 
+      }
+    }
+  },
+
+  mark_active_flashback: {
+    name: "Mark Active Flashback",
+    icon: 'push_pin',
+    additionalText: "Marks the provided flashback as active",
+    defaultImportant: true,
+    parameters: {
+      ...defaultParameters,
+      flashback_name: {
+        label: "Flashback Name",
+        type: "dropdown",
+        required: false,
+        default : "",
         elements: {
           village_morning: "Village Morning",
           village_night: "Village Night",

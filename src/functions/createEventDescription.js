@@ -197,6 +197,11 @@ export default function createEventDescription(type, parameters) {
       return `Will look ${dirWord}`
     case 'mark_flashback_visited':
       return `Will mark the flashback ${parameters.flashback_name} as visited`;
+    case 'mark_active_flashback':
+      if (parameters.flashback_name) {
+        return `Will mark the flashback ${parameters.flashback_name} as active`;
+      }
+      return `Will remove any active flashback`;
     default:
       return '';
   }
