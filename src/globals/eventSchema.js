@@ -1753,6 +1753,16 @@ const eventSchema = {
         } 
       }
     }
+  },
+
+  attempt_wakeup: {
+    name: "Attempt Wakeup",
+    icon: "airline_seat_flat_angled",
+    additionalText: "Tries to wakeup if you are revisiting a flashback",
+    defaultImportant: true,
+    parameters: {
+      ...defaultParameters,
+    }
   }
 
 };
