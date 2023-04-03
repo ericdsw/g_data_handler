@@ -28,10 +28,12 @@ import {
   DELETE_BUNDLE,
   CLEAR_STORYLINE,
   DUPLICATE_CONFIGURATIONS,
+  UPDATE_STORYLINE_APPLIES_TO_END_RUN
 } from '../actions/types';
 
 const initialState = {
   currentStoryline: '',
+  appliesToEndRun: false,
   storylines: {},
   storylineSteps: {},
   completionBundles: {},
@@ -70,8 +72,14 @@ const storylineReducer = createReducer(initialState, builder => {
     .addCase(CLEAR_STORYLINE, clearStoryline)
 
     .addCase(DUPLICATE_CONFIGURATIONS, duplicateConfigurations)
-    
+    .addCase(UPDATE_STORYLINE_APPLIES_TO_END_RUN, updateAppliesToEndRun)
 })
+
+
+function updateAppliesToEndRun(state, action) {
+  const { appliesToEndRun } = action.payload;
+  state.appliesToEndRun = appliesToEndRun;
+}
 
 // ADDS
 
@@ -192,11 +200,13 @@ function addEntityToExistingMap(state, action) {
 // UPDATES
 
 function updateStoryline(state, action) {
-  const { currentStoryline, data } = action.payload;
+  const { currentStoryline, data, appliesToEndRun } = action.payload;
+  console.log(appliesToEndRun);
   return {
     ...state,
     currentStoryline,
-    ...data
+    ...data,
+    appliesToEndRun,
   }
 }
 
@@ -219,6 +229,7 @@ function updateWithEmptyStoryline() {
     stepMapEntities: {},
     completeConditions: {},
     entityConfigurators: {},
+    appliesToEndRun: false
   };
 }
 

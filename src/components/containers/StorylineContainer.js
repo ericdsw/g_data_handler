@@ -14,6 +14,7 @@ import {
   updateStorylineName,
   addStorylineStep,
   clearStoryline,
+  updateAppliesToEndRun 
 } from '../../actions/storylineActions';
 
 class StorylineContainer extends React.Component {
@@ -26,16 +27,30 @@ class StorylineContainer extends React.Component {
   };
 
   export = () => {
-    const { currentStoryline, storylines, completeState } = this.props;
-    console.log(completeState);
-    console.log(currentStoryline);
+    const { 
+      currentStoryline,
+      storylines,
+      completeState,
+      appliesToEndRun
+    } = this.props;
 
     const output = denormalize(
       currentStoryline,
       StorylineSchema,
       completeState
     );
-    downloadJSON(storylines[currentStoryline].name, output);
+
+    console.log(this.props);
+
+    downloadJSON(storylines[currentStoryline].name, {
+      ...output,
+      applies_in_end_run: appliesToEndRun
+    });
+  };
+
+  toggleAppliesToEndrun = (newValue) => {
+    const { updateAppliesToEndRun } = this.props;
+    updateAppliesToEndRun(newValue);
   };
 
   updateStorylineFromFile = (targetFile) => {
@@ -44,7 +59,11 @@ class StorylineContainer extends React.Component {
     parseFile(targetFile, 'application/json')
       .then((json) => {
         const normalizedData = normalize(json, StorylineSchema);
-        updateStoryline(normalizedData.result, normalizedData.entities);
+        let appliesToEndRun = false;
+        if ("applies_in_end_run" in json) {
+          appliesToEndRun = json.applies_in_end_run;
+        }
+        updateStoryline(normalizedData.result, normalizedData.entities, appliesToEndRun);
       })
       .catch((error) => this.showError(error.message));
   };
@@ -66,7 +85,7 @@ class StorylineContainer extends React.Component {
 
   // Render Logic
   render() {
-    const { currentStoryline, storylines } = this.props;
+    const { currentStoryline, storylines, appliesToEndRun } = this.props;
 
     let content;
     if (currentStoryline !== '') {
@@ -77,6 +96,8 @@ class StorylineContainer extends React.Component {
           handleAddStep={this.addStep}
           handleClear={this.clearStoryline}
           handleExport={this.export}
+          updateAppliesToEndRun={this.toggleAppliesToEndrun}
+          appliesToEndRun={appliesToEndRun}
         />
       );
     } else {
@@ -103,6 +124,7 @@ class StorylineContainer extends React.Component {
 const mapStateToProps = (state) => ({
   currentStoryline: state.storyline.currentStoryline,
   storylines: state.storyline.storylines,
+  appliesToEndRun: state.storyline.appliesToEndRun,
 
   /**
    * We need access to the complete state inside the storyline reducer, which is what
@@ -117,4 +139,5 @@ export default connect(mapStateToProps, {
   updateStorylineName,
   addStorylineStep,
   clearStoryline,
+  updateAppliesToEndRun,
 })(withSnackbar(StorylineContainer));

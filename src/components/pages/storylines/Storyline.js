@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { makeStyles } from '@mui/styles';
-import { Grid, Typography, TextField, Button } from '@mui/material';
+import { Grid, Typography, TextField, Button, FormControlLabel, Switch, Tooltip } from '@mui/material';
 
 import StorylineStepContainer from '../../containers/StorylineStepContainer';
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
@@ -17,6 +17,8 @@ const Storyline = ({
   handleAddStep,
   handleClear,
   handleExport,
+  appliesToEndRun,
+  updateAppliesToEndRun
 }) => {
   const classes = useStyles();
 
@@ -26,6 +28,8 @@ const Storyline = ({
   );
 
   const fileName = useMemo(() => `${storyline.name}.json`, [storyline.name]);
+
+  // const [appliesToEndRun, toggleAppliesToEndRun] = useState(false);
 
   /**
    * This useMemo hook is not detecting when the storyline's steps are deleted since
@@ -76,7 +80,7 @@ const Storyline = ({
           </Button>
         </Typography>
       </Grid>
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} lg={5}>
         <TextField
           id="storyline_name"
           label="Storyline Name"
@@ -87,7 +91,7 @@ const Storyline = ({
           onChange={(e) => handleNameChange(e.target.value)}
         />
       </Grid>
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} lg={5}>
         <TextField
           id="file_name"
           label="File Name"
@@ -98,7 +102,21 @@ const Storyline = ({
           disabled
         />
       </Grid>
-
+      <Grid item xs={12} lg={2}>
+        <Tooltip enterDelay={300} title="If true, will only apply to the end run.">
+          <FormControlLabel
+            label="Applies to end run"
+            control={
+              <Switch
+                checked={appliesToEndRun}
+                onChange={e => {
+                  updateAppliesToEndRun(e.target.checked);
+                }}
+              />
+            }
+          />
+        </Tooltip>
+      </Grid>
       {stepEntries}
 
       <Grid item xs={12}>
