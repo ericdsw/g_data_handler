@@ -22,7 +22,7 @@ const nodeTargetDescription = (
       NodeName inside the state statename
     </li>
     <li>
-      <code>CAMERA:NodeName</code>&nbsp; Will search for a node named NodeName
+      <code>CAMERA_VIEWPORT:NodeName</code>&nbsp; Will search for a node named NodeName
       inside the viewport
     </li>
     <li>

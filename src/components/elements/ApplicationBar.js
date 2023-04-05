@@ -171,7 +171,7 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
               Will search for a node named NodeName inside the state statename
             </li>
             <li>
-              <code classname={classes.codetext}>CAMERA:NodeName</code>&nbsp;
+              <code classname={classes.codetext}>CAMERA_VIEWPORT:NodeName</code>&nbsp;
               Will search for a node named NodeName inside the viewport
             </li>
             <li>
