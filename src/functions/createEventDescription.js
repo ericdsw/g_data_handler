@@ -202,6 +202,8 @@ export default function createEventDescription(type, parameters) {
         return `Will mark the flashback ${parameters.flashback_name} as active`;
       }
       return `Will remove any active flashback`;
+    case 'lock_camera':
+      return 'Will lock the camera at the current position';
     default:
       return '';
   }

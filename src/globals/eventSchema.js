@@ -1763,6 +1763,16 @@ const eventSchema = {
     parameters: {
       ...defaultParameters,
     }
+  },
+
+  lock_camera: {
+    name: "Lock Camera",
+    icon: "control_camera",
+    additionalText: "Forces the camera to stay at the current position",
+    defaultImportant: false,
+    parameters: {
+      ...defaultParameters
+    }
   }
 
 };
