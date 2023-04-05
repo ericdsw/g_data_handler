@@ -18,12 +18,17 @@ import AddNewMultiInputRow from '../components/elements/AddNewMultiInputRow';
 const nodeTargetDescription = (
   <ul>
     <li>
+      <code>CAMERA_VIEWPORT</code>&nbsp; Returns the camera node directly, useful
+      if you want to add something directly to the camera.
+    </li>
+    <li>
       <code>StateName:NodeName</code>&nbsp; Will search for a node named
       NodeName inside the state statename
     </li>
     <li>
-      <code>CAMERA_VIEWPORT:NodeName</code>&nbsp; Will search for a node named NodeName
-      inside the viewport
+      <code>CAMERA:NodeName</code>&nbsp; Will search for a node named NodeName
+      inside the viewport. Useful when you want to modify or delete something that is
+      already inside the camera.
     </li>
     <li>
       <code>PERMANENT:NodeName</code>&nbsp; Will search for a node named
