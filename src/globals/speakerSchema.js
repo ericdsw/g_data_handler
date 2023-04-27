@@ -180,6 +180,14 @@ const speakerSchema = {
     speakerImages: []
 	},
 
+  mc_npc: {
+    image: null,
+    name: "SPEAKER_NAME_UNKNOWN",
+    voice_file: "default_voice.wav",
+    target_object: "MCNPC",
+    speakerImages: []
+  }
+
 };
 
 export default speakerSchema;
