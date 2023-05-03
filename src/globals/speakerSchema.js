@@ -165,19 +165,32 @@ const speakerSchema = {
   },
 
   robin: {
-		image: null,
+		image: "robin_neutral.png",
 		name: "SPEAKER_NAME_ROBIN",
 		voice_file: "default_voice.wav",
 		target_object: "RobinNPC",
-    speakerImages: []
+    speakerImages: [
+      "robin_glare.png",
+      "robin_neutral.png",
+      "robin_sad.png",
+      "robin_shocked.png",
+      "robin_sigh.png",
+      "robin_smile.png",
+      "robin_smirk.png"
+    ]
 	},
 
 	johann: {
-		image: null,
+		image: "johann_neutral.png",
 		name: "SPEAKER_NAME_JOHANN",
 		voice_file: "default_voice.wav",
 		target_object: "JohannNPC",
-    speakerImages: []
+    speakerImages: [
+      "johann_glare.png",
+      "johann_mad.png",
+      "johann_neutral.png",
+      "johann_smirk.png"
+    ]
 	},
 
   mc_npc: {
