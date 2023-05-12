@@ -318,6 +318,12 @@ const eventSchema = {
         type: 'string',
         placeholder: '#ccff0d',
         tooltip: 'If defined, the overlay will use this color instead of using black'
+      },
+      fast_change: {
+        label: 'Fast Map Change',
+        type: 'boolean',
+        default: false,
+        tooltip: 'If true, the brief delay between map changes will be skipped (this can mess up more complex maps, so make sure you actually need to use it)',
       }
     },
   },
