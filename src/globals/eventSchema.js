@@ -323,7 +323,7 @@ const eventSchema = {
         label: 'Fast Map Change',
         type: 'boolean',
         default: false,
-        tooltip: 'If true, the brief delay between map changes will be skipped (this can mess up more complex maps, so make sure you actually need to use it)',
+        tooltip: 'If true, the brief delay between map changes will be skipped',
       }
     },
   },
@@ -707,6 +707,12 @@ const eventSchema = {
         default: 1,
         tooltip: 'How long the camera will take to focus on the new target',
       },
+      focus_floor: {
+        label: 'Focus Floor',
+        type: 'boolean',
+        default: false,
+        tooltip: 'If true, the camera will focus the node\'s base position rather than the center. Note that this property will be reset after the cutscene finished back to focusing the node\'s center'
+      }
     },
   },
 
