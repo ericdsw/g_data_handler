@@ -29,7 +29,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "serve": "^13.0.2",
-    "uuid": "^8.2.0"
+    "uuid": "^9.0.0"
   },
   "scripts": {
     "start": "serve -s build",
