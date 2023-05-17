@@ -1,6 +1,5 @@
 import React from 'react';
 import withStyles from '@mui/styles/withStyles';
-import { withSnackbar } from 'notistack';
 import {
   MenuItem,
   Grid,
@@ -158,4 +157,4 @@ class DialogueImageSearcher extends React.Component {
   }
 }
 
-export default withSnackbar(withStyles(styles)(DialogueImageSearcher));
+export default withStyles(styles)(DialogueImageSearcher);

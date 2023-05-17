@@ -1,44 +1,35 @@
-import React from 'react';
-import { withSnackbar } from 'notistack';
+import React, { useState, useMemo } from 'react';
 import { Button, Icon } from '@mui/material';
 
-class SimpleCollapse extends React.Component {
-  state = {
-    collapsed: true,
-  };
 
-  handleToggleCollapse = () => {
-    this.setState({ collapsed: !this.state.collapsed });
-  };
+const SimpleCollapse = ({
+  collapsedMessage,
+  openedMessage,
+  children
+}) => {
 
-  render() {
-    const { collapsedMessage, openedMessage } = this.props;
-    const { collapsed } = this.state;
-
-    let displayMessage = (
-      <React.Fragment>
-        {openedMessage}
-        <Icon>expand_less</Icon>
-      </React.Fragment>
-    );
-    if (collapsed) {
-      displayMessage = (
-        <React.Fragment>
-          {collapsedMessage}
-          <Icon>expand_more</Icon>
-        </React.Fragment>
-      );
-    }
-
+  const [collapsed, toggleCollapsed] = useState(true);
+  const displayMessage = useMemo(() => {
     return (
-      <div>
-        <Button onClick={this.handleToggleCollapse}>{displayMessage}</Button>
-        <div style={{ display: collapsed ? 'none' : 'block' }}>
-          {this.props.children}
-        </div>
+      <>
+        {collapsed ? collapsedMessage : openedMessage}
+        <Icon>{collapsed ? 'expand_less' : 'expand_more'}</Icon>
+      </>
+    )
+  }, [collapsedMessage, openedMessage, collapsed]);
+
+  return (
+    <div>
+      <Button
+        onClick={() => { toggleCollapsed(!collapsed) }}
+      >
+        {displayMessage}
+      </Button>
+      <div style={{ display: collapsed ? 'none' : 'block' }}>
+        {children}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default withSnackbar(SimpleCollapse);
+export default SimpleCollapse;

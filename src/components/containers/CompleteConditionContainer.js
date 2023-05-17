@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withSnackbar } from 'notistack';
 
 import {
   updateCondition,
@@ -12,28 +11,19 @@ import CompleteCondition from '../pages/storylines/CompleteCondition';
  * Container that handles redux communication for the CompleteCondition
  * component
  */
-class CompleteConditionContainer extends React.Component {
-  deleteCondition = () => {
-    const { conditionId, deleteCondition } = this.props;
-    deleteCondition(conditionId);
-  };
-
-  editCondition = (name, parameters) => {
-    const { conditionId, updateCondition } = this.props;
-    updateCondition(conditionId, name, parameters);
-  };
-
-  render() {
-    const { conditionId, completeConditions } = this.props;
-    const currentCompleteCondition = completeConditions[conditionId];
-    return (
-      <CompleteCondition
-        completeCondition={currentCompleteCondition}
-        handleEditCondition={this.editCondition}
-        handleDeleteCondition={this.deleteCondition}
-      />
-    );
-  }
+const CompleteConditionContainer = ({
+  conditionId,
+  deleteCondition,
+  updateCondition,
+  completeConditions
+}) => {
+  return (
+    <CompleteCondition
+      completeCondition={completeConditions[conditionId]}
+      handleEditCondition={(name, data) => updateCondition(conditionId, name, data)}
+      handleDeleteCondition={() => deleteCondition(conditionId)}
+    />
+  );
 }
 
 const mapStateToProps = (state) => ({
@@ -43,4 +33,4 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   updateCondition,
   deleteCondition,
-})(withSnackbar(CompleteConditionContainer));
+})(CompleteConditionContainer);
