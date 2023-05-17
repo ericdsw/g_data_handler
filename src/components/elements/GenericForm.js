@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { withSnackbar } from 'notistack';
+import { enqueueSnackbar } from 'notistack';
 import { Grid, Button, Typography } from '@mui/material';
 import {
   createInput,
@@ -22,7 +22,6 @@ const GenericForm = ({
   disabledInputs = [],
   buttonColor = 'primary',
   handleSubmit,
-  enqueueSnackbar,
 }) => {
   const classes = useStyles();
 
@@ -65,7 +64,7 @@ const GenericForm = ({
         enqueueSnackbar(eMessage, { variant: 'error' });
       }
     },
-    [enqueueSnackbar, formData, handleSubmit, parameters]
+    [formData, handleSubmit, parameters]
   );
 
   return (
@@ -103,4 +102,4 @@ const GenericForm = ({
   );
 };
 
-export default withSnackbar(GenericForm);
+export default GenericForm;

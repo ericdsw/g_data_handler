@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withSnackbar } from 'notistack';
+import { enqueueSnackbar } from 'notistack';
 import Cutscene from '../pages/cutscene/Cutscene';
 import CutsceneToolbar from '../pages/cutscene/CutsceneToolbar';
 import { Icon, Typography } from '@mui/material';
@@ -115,7 +115,7 @@ class CutsceneContainer extends React.Component {
 
   // Extra
   showError = (errorMessage) => {
-    this.props.enqueueSnackbar(errorMessage, { variant: 'error' });
+    enqueueSnackbar(errorMessage, { variant: 'error' });
   };
 
   // Render logic
@@ -182,4 +182,4 @@ export default connect(mapStateToProps, {
   addCutsceneJump,
   deleteCutsceneJump,
   updateCutsceneHideBars,
-})(withSnackbar(CutsceneContainer));
+})(CutsceneContainer);

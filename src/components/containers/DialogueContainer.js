@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withSnackbar } from 'notistack';
+import { enqueueSnackbar } from 'notistack';
 import { Icon, Typography } from '@mui/material';
 import { DragDropContext } from 'react-beautiful-dnd';
 
@@ -122,7 +122,7 @@ class DialogueContainer extends React.Component {
    * Displays a "snackbar" with the provided error message
    */
   showError = (errorMessage) => {
-    this.props.enqueueSnackbar(errorMessage, { variant: 'error' });
+    enqueueSnackbar(errorMessage, { variant: 'error' });
   };
 
   onDragEnd = (result) => {
@@ -261,4 +261,4 @@ export default connect(mapStateToProps, {
   deleteConversationsToMerge,
   selectAllConversations,
   unselectAllConversations,
-})(withSnackbar(DialogueContainer));
+})(DialogueContainer);

@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from '@mui/styles/withStyles';
-import { withSnackbar } from 'notistack';
+import { enqueueSnackbar } from 'notistack';
 import {
   TextField,
   Icon,
@@ -129,7 +129,7 @@ class CreateEventForm extends React.Component {
 
     if (errorInputs.length > 0) {
       const errors = errorInputs.join(', ');
-      this.props.enqueueSnackbar(
+      enqueueSnackbar(
         `The following fields are required: ${errors}`,
         { variant: 'error' }
       );
@@ -245,4 +245,4 @@ class CreateEventForm extends React.Component {
   }
 }
 
-export default withSnackbar(withStyles(styles)(CreateEventForm));
+export default withStyles(styles)(CreateEventForm);

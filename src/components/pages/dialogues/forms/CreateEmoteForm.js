@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from '@mui/styles/withStyles';
-import { withSnackbar } from 'notistack';
+import { enqueueSnackbar } from 'notistack';
 import {
   TextField,
   MenuItem,
@@ -61,7 +61,7 @@ class CreateEmoteForm extends React.Component {
   };
 
   submitData = (event) => {
-    const { enqueueSnackbar, creationHandler } = this.props;
+    const { creationHandler } = this.props;
 
     event.preventDefault();
     event.stopPropagation();
@@ -168,4 +168,4 @@ class CreateEmoteForm extends React.Component {
   }
 }
 
-export default withSnackbar(withStyles(styles)(CreateEmoteForm));
+export default withStyles(styles)(CreateEmoteForm);

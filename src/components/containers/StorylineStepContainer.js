@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withSnackbar } from 'notistack';
 import StorylineStep from '../pages/storylines/StorylineStep';
 
 import {
@@ -103,4 +102,4 @@ export default connect(mapStateToProps, {
   addStepCompletionBundle,
   deleteStep,
   duplicateConfigurations,
-})(withSnackbar(StorylineStepContainer));
+})(StorylineStepContainer);

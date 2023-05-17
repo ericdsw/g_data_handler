@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from '@mui/styles/withStyles';
-import { withSnackbar } from 'notistack';
+import { enqueueSnackbar } from 'notistack';
 import { TextField, Grid, Button } from '@mui/material';
 
 const styles = (theme) => ({});
@@ -27,7 +27,7 @@ class CreateConversationForm extends React.Component {
     event.stopPropagation();
 
     if (this.state.conversationName === '') {
-      this.props.enqueueSnackbar('The conversation name is required', {
+      enqueueSnackbar('The conversation name is required', {
         variant: 'error',
       });
     } else {
@@ -78,4 +78,4 @@ class CreateConversationForm extends React.Component {
   }
 }
 
-export default withSnackbar(withStyles(styles)(CreateConversationForm));
+export default withStyles(styles)(CreateConversationForm);

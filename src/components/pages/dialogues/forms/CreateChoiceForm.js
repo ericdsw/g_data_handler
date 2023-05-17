@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from '@mui/styles/withStyles';
-import { withSnackbar } from 'notistack';
+import { enqueueSnackbar } from 'notistack';
 import {
   TextField,
   Grid,
@@ -55,7 +55,7 @@ class CreateChoiceForm extends React.Component {
     event.preventDefault();
     event.stopPropagation();
 
-    const { creationHandler, enqueueSnackbar } = this.props;
+    const { creationHandler } = this.props;
     const {
       newChoiceKey,
       newChoiceValue,
@@ -130,7 +130,7 @@ class CreateChoiceForm extends React.Component {
           newChoiceMessage: currentChoice.next_message,
           newChoiceIsDefaultCancel: currentChoice.isDefaultCancel,
         });
-        this.props.enqueueSnackbar('Editing the selected choice', {
+        enqueueSnackbar('Editing the selected choice', {
           variant: 'info',
         });
       };
@@ -245,4 +245,4 @@ class CreateChoiceForm extends React.Component {
   }
 }
 
-export default withSnackbar(withStyles(styles)(CreateChoiceForm));
+export default withStyles(styles)(CreateChoiceForm);

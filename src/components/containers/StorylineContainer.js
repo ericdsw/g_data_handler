@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withSnackbar } from 'notistack';
+import { enqueueSnackbar } from 'notistack';
 import { Typography, Icon } from '@mui/material';
 import { normalize, denormalize } from 'normalizr';
 
@@ -80,7 +80,7 @@ class StorylineContainer extends React.Component {
 
   // Extra
   showError = (errorMessage) => {
-    this.props.enqueueSnackbar(errorMessage, { variant: 'error' });
+    enqueueSnackbar(errorMessage, { variant: 'error' });
   };
 
   // Render Logic
@@ -140,4 +140,4 @@ export default connect(mapStateToProps, {
   addStorylineStep,
   clearStoryline,
   updateAppliesToEndRun,
-})(withSnackbar(StorylineContainer));
+})(StorylineContainer);
