@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useSnackbar } from 'notistack';
 
 import {
@@ -24,6 +24,7 @@ import { SimpleCollapse } from '../../../elements';
 import {
   DialogueMessageInstructions,
   SpeakerNameSearchForm,
+  SpeakerDropdown
 } from '../elements';
 
 import CreateChoiceForm from './CreateChoiceForm';
@@ -73,9 +74,10 @@ const CreateDialogueMessageForm = ({
   const [createAndContinue, toggleCreateAndContinue] = useState(false);
   const [freshStart, toggleFreshStart] = useState(false);
 
-  const [curMessageData, updateCurMessageData] = useState(
-    Object.assign({}, EMPTY_MESSAGE_DATA, messageData)
-  );
+  const [curMessageData, updateCurMessageData] = useState({
+    ...EMPTY_MESSAGE_DATA,
+    ...messageData
+  })
 
   /**
    * Submits the data
@@ -218,37 +220,6 @@ const CreateDialogueMessageForm = ({
     [curMessageData]
   );
 
-  /**
-   * Memoized speaker dropdown
-   */
-  const speakerDropdown = useMemo(() => {
-    const parsedSpeakers = Object.keys(speakerSchema).map((speakerKey) => (
-      <MenuItem key={speakerKey} value={speakerKey}>
-        {speakerKey} ({speakerSchema[speakerKey].name || <em>No Name</em>})
-      </MenuItem>
-    ));
-    const elements = [
-      <MenuItem key="---" value="">
-        {' '}
-        ---{' '}
-      </MenuItem>,
-      ...parsedSpeakers,
-    ];
-    return (
-      <TextField
-        select
-        fullWidth
-        label="Speaker"
-        value={curMessageData.speaker}
-        onChange={(e) => handleInputChange('speaker', e)}
-        variant="outlined"
-        margin="normal"
-      >
-        {elements}
-      </TextField>
-    );
-  }, [curMessageData, handleInputChange]);
-
   return (
     <form onSubmit={submitData}>
       <Grid container spacing={3}>
@@ -271,7 +242,10 @@ const CreateDialogueMessageForm = ({
 
         {/* Additional Data */}
         <Grid item xs={12} md={8}>
-          {speakerDropdown}
+          <SpeakerDropdown
+            value={curMessageData.speaker}
+            onChange={e => handleInputChange('speaker', e)}
+          />
           <TextField
             fullWidth
             label="Name"

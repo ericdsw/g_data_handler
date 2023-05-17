@@ -6,3 +6,4 @@ export { default as NoConversationsNotifier } from './NoConversationsNotifier';
 export { default as ConversationCardTitle } from './ConversationCardTitle';
 export { default as DialogueMessageInstructions } from './DialogueMessageInstructions';
 export { default as SpeakerNameSearchForm } from './SpeakerNameSearchForm';
+export { default as SpeakerDropdown } from './SpeakerDropdown';

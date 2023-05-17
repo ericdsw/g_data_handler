@@ -72,19 +72,11 @@ const DialogueConversation = ({
     [toggleDialogue]
   );
 
-  function handlePanelChange(expanded) {
-    setIsExpanded(expanded);
-  }
-
-  function handleCheckboxChange(event) {
-    handleToggleFromMerger(event.target.checked);
-  }
-
   return (
     <Accordion
       className={classes.conversationContainer}
       square={true}
-      onChange={(_, expanded) => handlePanelChange(expanded)}
+      onChange={(_, expanded) => setIsExpanded(expanded)}
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Grid container alignItems="center">
@@ -118,7 +110,7 @@ const DialogueConversation = ({
                 <Checkbox
                   checked={conversationsToMerge.includes(conversation.id)}
                   value={conversation.id}
-                  onChange={(e) => handleCheckboxChange(e)}
+                  onChange={e => handleToggleFromMerger(e.target.checked)}
                   onClick={(e) => e.stopPropagation()}
                 />
               </Tooltip>
