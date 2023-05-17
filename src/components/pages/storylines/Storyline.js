@@ -1,6 +1,14 @@
 import React, { useMemo } from 'react';
 import { makeStyles } from '@mui/styles';
-import { Grid, Typography, TextField, Button, FormControlLabel, Switch, Tooltip } from '@mui/material';
+import {
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  FormControlLabel,
+  Switch,
+  Tooltip,
+} from '@mui/material';
 
 import StorylineStepContainer from '../../containers/StorylineStepContainer';
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
@@ -18,7 +26,7 @@ const Storyline = ({
   handleClear,
   handleExport,
   appliesToEndRun,
-  updateAppliesToEndRun
+  updateAppliesToEndRun,
 }) => {
   const classes = useStyles();
 
@@ -36,7 +44,7 @@ const Storyline = ({
    * it seems that it is only checking the references to the values passed, and since
    * what changes is the length of an existing array, I'm adding it as a dependency even
    * though it should not be required.
-   * 
+   *
    * Note that this is most likely an issue with how redux is configured for this project
    * (more specifically, how the reducer is not actually creating new instances, but instead
    * reusing old references).
@@ -103,13 +111,16 @@ const Storyline = ({
         />
       </Grid>
       <Grid item xs={12} lg={2}>
-        <Tooltip enterDelay={300} title="If true, will only apply to the end run.">
+        <Tooltip
+          enterDelay={300}
+          title="If true, will only apply to the end run."
+        >
           <FormControlLabel
             label="Applies to end run"
             control={
               <Switch
                 checked={appliesToEndRun}
-                onChange={e => {
+                onChange={(e) => {
                   updateAppliesToEndRun(e.target.checked);
                 }}
               />

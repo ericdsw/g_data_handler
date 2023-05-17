@@ -10,7 +10,7 @@ import {
   FormControlLabel,
   Switch,
   Autocomplete,
-  Box
+  Box,
 } from '@mui/material';
 
 import { eventSchema } from '../../../../globals';
@@ -188,10 +188,12 @@ class CreateEventForm extends React.Component {
               id="event_type_select"
               options={sortedKeys}
               autoHighlight
-              getOptionLabel={option => eventSchema[option].name}
+              getOptionLabel={(option) => eventSchema[option].name}
               renderOption={(props, option) => (
                 <Box component="li" {...props}>
-                  <Icon sx={{ marginRight: 2 }}>{eventSchema[option].icon}</Icon>
+                  <Icon sx={{ marginRight: 2 }}>
+                    {eventSchema[option].icon}
+                  </Icon>
                   <Typography>{eventSchema[option].name}</Typography>
                 </Box>
               )}
@@ -200,7 +202,7 @@ class CreateEventForm extends React.Component {
               clearOnBlur
               clearOnEscape
               disableClearable
-              renderInput={params => (
+              renderInput={(params) => (
                 <TextField
                   {...params}
                   label="Event Type"
@@ -208,14 +210,14 @@ class CreateEventForm extends React.Component {
                   margin="normal"
                   inputProps={{
                     ...params.inputProps,
-                    autocomplete: 'new-password'
+                    autocomplete: 'new-password',
                   }}
                 />
               )}
             />
           </Grid>
         </Grid>
-        
+
         <Grid container>{fields}</Grid>
         <Grid container>
           <Grid item xs={12}>

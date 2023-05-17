@@ -111,7 +111,7 @@ const CreateDialogueMessageForm = ({
           returningMessageData[messageDataKey] = curMessageData[messageDataKey];
         }
       });
-      
+
       creationHandler(returningMessageData, createAndContinue);
 
       if (freshStart) {
@@ -304,13 +304,17 @@ const CreateDialogueMessageForm = ({
                       onClick={() => {
                         updateCurMessageData({
                           ...curMessageData,
-                          mute_enter_sound: !curMessageData.mute_enter_sound
-                        })
+                          mute_enter_sound: !curMessageData.mute_enter_sound,
+                        });
                       }}
                     >
-                      {curMessageData.mute_enter_sound ? <ToggleOffOutlinedIcon /> : <ToggleOnIcon />}
+                      {curMessageData.mute_enter_sound ? (
+                        <ToggleOffOutlinedIcon />
+                      ) : (
+                        <ToggleOnIcon />
+                      )}
                     </IconButton>
-                  )
+                  ),
                 }}
               />
             </Grid>
@@ -329,13 +333,17 @@ const CreateDialogueMessageForm = ({
                       onClick={() => {
                         updateCurMessageData({
                           ...curMessageData,
-                          mute_exit_sound: !curMessageData.mute_exit_sound
-                        })
+                          mute_exit_sound: !curMessageData.mute_exit_sound,
+                        });
                       }}
                     >
-                      {curMessageData.mute_exit_sound ? <ToggleOffOutlinedIcon /> : <ToggleOnIcon />}
+                      {curMessageData.mute_exit_sound ? (
+                        <ToggleOffOutlinedIcon />
+                      ) : (
+                        <ToggleOnIcon />
+                      )}
                     </IconButton>
-                  )
+                  ),
                 }}
               />
             </Grid>

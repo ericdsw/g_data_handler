@@ -83,16 +83,20 @@ export default function createEventDescription(type, parameters) {
       }
     case 'shake':
       const { duration, shake_amount, shake_id } = parameters;
-      if (shake_amount <= 0){
+      if (shake_amount <= 0) {
         if (!shake_id) {
-          return `Will cancel all active shakes`
+          return `Will cancel all active shakes`;
         }
         return `Will cancel shake transaction with id: ${shake_id}`;
       }
       if (duration > 0) {
-        return `For ${duration} seconds, with ${shake_amount} intensity (ID: ${shake_id || 'Not Specified'})`;
+        return `For ${duration} seconds, with ${shake_amount} intensity (ID: ${
+          shake_id || 'Not Specified'
+        })`;
       }
-      return `Will shake with intensity ${shake_amount} indefinitely (ID: ${shake_id || 'Not Specified'})`
+      return `Will shake with intensity ${shake_amount} indefinitely (ID: ${
+        shake_id || 'Not Specified'
+      })`;
     case 'sound':
       return `Play sound ${parameters.sound}`;
     case 'spawn_object':
@@ -176,25 +180,25 @@ export default function createEventDescription(type, parameters) {
     case 'slowdown_event':
       return `Will modify world time scale to ${parameters.world_speed} (duration: ${parameters.transition_duration})`;
     case 'look_at_direction':
-      let dirWord = "";
+      let dirWord = '';
       switch (parameters.direction) {
-        case "up":
-          dirWord = "up";
+        case 'up':
+          dirWord = 'up';
           break;
-        case "down":
-          dirWord = "down";
+        case 'down':
+          dirWord = 'down';
           break;
-        case "left":
-          dirWord = "to the left"
+        case 'left':
+          dirWord = 'to the left';
           break;
-        case "right":
-          dirWord = "to the right";
+        case 'right':
+          dirWord = 'to the right';
           break;
         default:
           break;
       }
 
-      return `Will look ${dirWord}`
+      return `Will look ${dirWord}`;
     case 'mark_flashback_visited':
       return `Will mark the flashback ${parameters.flashback_name} as visited`;
     case 'mark_active_flashback':

@@ -167,8 +167,9 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
           parameters:
           <ul>
             <li>
-              <code>CAMERA_VIEWPORT</code>&nbsp; Returns the camera node directly, useful
-              if you want to add something directly to the camera.
+              <code>CAMERA_VIEWPORT</code>&nbsp; Returns the camera node
+              directly, useful if you want to add something directly to the
+              camera.
             </li>
             <li>
               <code classname={classes.codetext}>StateName:NodeName</code>&nbsp;
@@ -176,8 +177,9 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
             </li>
             <li>
               <code classname={classes.codetext}>CAMERA:NodeName</code>&nbsp;
-              Will search for a node named NodeName inside the viewport. Useful when
-              you want to modify or delete something that is already inside the camera.
+              Will search for a node named NodeName inside the viewport. Useful
+              when you want to modify or delete something that is already inside
+              the camera.
             </li>
             <li>
               <code classname={classes.codetext}>PERMANENT:NodeName</code>&nbsp;

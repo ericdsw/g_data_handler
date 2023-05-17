@@ -32,8 +32,8 @@ const schema = {
       label: 'Show Fanfare',
       type: 'boolean',
       default: true,
-      tooltip: 'Whether the fanfare will be shown'
-    }
+      tooltip: 'Whether the fanfare will be shown',
+    },
   },
 };
 

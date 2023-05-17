@@ -14,7 +14,7 @@ import {
   updateStorylineName,
   addStorylineStep,
   clearStoryline,
-  updateAppliesToEndRun 
+  updateAppliesToEndRun,
 } from '../../actions/storylineActions';
 
 class StorylineContainer extends React.Component {
@@ -27,12 +27,8 @@ class StorylineContainer extends React.Component {
   };
 
   export = () => {
-    const { 
-      currentStoryline,
-      storylines,
-      completeState,
-      appliesToEndRun
-    } = this.props;
+    const { currentStoryline, storylines, completeState, appliesToEndRun } =
+      this.props;
 
     const output = denormalize(
       currentStoryline,
@@ -44,7 +40,7 @@ class StorylineContainer extends React.Component {
 
     downloadJSON(storylines[currentStoryline].name, {
       ...output,
-      applies_in_end_run: appliesToEndRun
+      applies_in_end_run: appliesToEndRun,
     });
   };
 
@@ -60,10 +56,14 @@ class StorylineContainer extends React.Component {
       .then((json) => {
         const normalizedData = normalize(json, StorylineSchema);
         let appliesToEndRun = false;
-        if ("applies_in_end_run" in json) {
+        if ('applies_in_end_run' in json) {
           appliesToEndRun = json.applies_in_end_run;
         }
-        updateStoryline(normalizedData.result, normalizedData.entities, appliesToEndRun);
+        updateStoryline(
+          normalizedData.result,
+          normalizedData.entities,
+          appliesToEndRun
+        );
       })
       .catch((error) => this.showError(error.message));
   };

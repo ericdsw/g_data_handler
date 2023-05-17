@@ -28,7 +28,7 @@ import {
   DELETE_BUNDLE,
   CLEAR_STORYLINE,
   DUPLICATE_CONFIGURATIONS,
-  UPDATE_STORYLINE_APPLIES_TO_END_RUN
+  UPDATE_STORYLINE_APPLIES_TO_END_RUN,
 } from '../actions/types';
 
 const initialState = {
@@ -43,7 +43,7 @@ const initialState = {
   entityConfigurators: {},
 };
 
-const storylineReducer = createReducer(initialState, builder => {
+const storylineReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(ADD_STORYLINE_STEP, addStorylineStep)
     .addCase(ADD_ENTITY_TO_NEW_MAP, addEntityToNewMap)
@@ -62,7 +62,7 @@ const storylineReducer = createReducer(initialState, builder => {
     .addCase(UPDATE_MAP_ENTITY, updateMapEntity)
     .addCase(UPDATE_BUNDLE, updateBundle)
     .addCase(UPDATE_INTERACTION, updateInteraction)
-    
+
     .addCase(DELETE_MAP_ENTITY_PARAM, deleteMapEntityParam)
     .addCase(DELETE_NPC_INTERACTION, deleteNPCInteraction)
     .addCase(DELETE_STEP, deleteStorylineStep)
@@ -72,9 +72,8 @@ const storylineReducer = createReducer(initialState, builder => {
     .addCase(CLEAR_STORYLINE, clearStoryline)
 
     .addCase(DUPLICATE_CONFIGURATIONS, duplicateConfigurations)
-    .addCase(UPDATE_STORYLINE_APPLIES_TO_END_RUN, updateAppliesToEndRun)
-})
-
+    .addCase(UPDATE_STORYLINE_APPLIES_TO_END_RUN, updateAppliesToEndRun);
+});
 
 function updateAppliesToEndRun(state, action) {
   const { appliesToEndRun } = action.payload;
@@ -93,11 +92,10 @@ function addStorylineStep(state, action) {
     configuration: [],
     completion: [],
   };
-  state.storylines[storylineId].steps.push(id)
+  state.storylines[storylineId].steps.push(id);
 }
 
 function addEntityToNewMap(state, action) {
-
   const { stepId, mapName, entityData } = action.payload;
   const steps = { ...state.storylineSteps };
 
@@ -115,7 +113,7 @@ function addEntityToNewMap(state, action) {
   const entity = {
     id: entityId,
     configurator_data: [],
-    ...entityData
+    ...entityData,
   };
 
   let mapId;
@@ -168,7 +166,6 @@ function addNPCInteraction(state, action) {
     parameters: parameters,
   };
   state.stepMapEntities[entityId].configurator_data.push(interactionId);
-  
 }
 
 function addStepCompleteCondition(state, action) {
@@ -180,7 +177,7 @@ function addStepCompleteCondition(state, action) {
     type: type,
     unique_name: name,
     parameters: parameters,
-  }
+  };
   state.completionBundles[bundleId].conditions.push(conditionId);
 }
 
@@ -191,8 +188,8 @@ function addEntityToExistingMap(state, action) {
   const entity = {
     id: entityId,
     configurator_data: [],
-    ...entityData
-  }
+    ...entityData,
+  };
   state.stepMapEntities[entityId] = entity;
   state.stepMaps[mapId].entity_nodes.push(entityId);
 }
@@ -207,11 +204,10 @@ function updateStoryline(state, action) {
     currentStoryline,
     ...data,
     appliesToEndRun,
-  }
+  };
 }
 
 function updateWithEmptyStoryline() {
-
   const defaultData = {
     DefaultStoryline: {
       id: 'DefaultStoryline',
@@ -219,7 +215,7 @@ function updateWithEmptyStoryline() {
       steps: [],
     },
   };
-  
+
   return {
     currentStoryline: 'DefaultStoryline',
     storylines: defaultData,
@@ -229,7 +225,7 @@ function updateWithEmptyStoryline() {
     stepMapEntities: {},
     completeConditions: {},
     entityConfigurators: {},
-    appliesToEndRun: false
+    appliesToEndRun: false,
   };
 }
 
@@ -270,8 +266,8 @@ function updateBundle(state, action) {
   const { bundleId, data } = action.payload;
   state.completionBundles[bundleId] = {
     ...state.completionBundles[bundleId],
-    ...data 
-  }
+    ...data,
+  };
 }
 
 function updateInteraction(state, action) {
@@ -294,7 +290,7 @@ function deleteMapEntity(state, action) {
   deleteReference(state.stepMaps, 'entity_nodes', entityId);
 
   // If a map has no entities, delete it.
-  Object.keys(state.stepMaps).forEach(mapId => {
+  Object.keys(state.stepMaps).forEach((mapId) => {
     var entityAmount = state.stepMaps[mapId].entity_nodes.length;
     if (entityAmount <= 0) {
       delete state.stepMaps[mapId];
@@ -311,7 +307,7 @@ function deleteMapEntityParam(state, action) {
 function deleteNPCInteraction(state, action) {
   const { interactionId } = action.payload;
   delete state.entityConfigurators[interactionId];
-  deleteReference(state.stepMapEntities, 'configurator_data', interactionId)
+  deleteReference(state.stepMapEntities, 'configurator_data', interactionId);
 }
 
 function deleteCondition(state, action) {
@@ -339,8 +335,13 @@ function duplicateConfigurations(state, action) {
     let duplicateMap;
 
     // Check if a map with that name already exist
-    for (let i = 0; i < state.storylineSteps[targetStepId].configuration.length; i++) {
-      const foundMap = state.stepMaps[state.storylineSteps[targetStepId].configuration[i]];
+    for (
+      let i = 0;
+      i < state.storylineSteps[targetStepId].configuration.length;
+      i++
+    ) {
+      const foundMap =
+        state.stepMaps[state.storylineSteps[targetStepId].configuration[i]];
       if (foundMap.map_name === curMap.map_name) {
         duplicateMap = JSON.parse(JSON.stringify(foundMap));
         break;
@@ -350,7 +351,7 @@ function duplicateConfigurations(state, action) {
     if (!duplicateMap) {
       duplicateMap = JSON.parse(JSON.stringify(curMap));
       duplicateMap.id = uuidv4();
-      duplicateMap.entity_nodes = []; 
+      duplicateMap.entity_nodes = [];
     }
 
     state.storylineSteps[targetStepId].configuration.push(duplicateMap.id);
@@ -376,6 +377,5 @@ function duplicateConfigurations(state, action) {
     });
   });
 }
-
 
 export default storylineReducer;

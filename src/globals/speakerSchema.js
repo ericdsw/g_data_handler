@@ -21,7 +21,7 @@ const speakerSchema = {
       'Phoenix-sobbing.png',
       'Phoenix-happy.png',
       'Phoenix-crying.png',
-      'Phoenix-angry.png'
+      'Phoenix-angry.png',
     ],
   },
 
@@ -76,7 +76,7 @@ const speakerSchema = {
       'Ada-releived_glare.png',
       'Ada-releived.png',
       'Ada-fix-glasses.png',
-      'Ada-fix-glasses-glare.png'
+      'Ada-fix-glasses-glare.png',
     ],
   },
 
@@ -131,14 +131,14 @@ const speakerSchema = {
     name: 'Rocc',
     voice_file: 'phoenix_voice.wav',
     target_object: 'CONTROL_PLAYER',
-    speakerImages: []
+    speakerImages: [],
   },
 
   controllable_vega: {
     name: 'Vega',
     voice_file: 'vampire_voice.wav',
     target_object: 'CONTROL_PLAYER',
-    speakerImages: []
+    speakerImages: [],
   },
 
   controllable_cerie: {
@@ -147,13 +147,13 @@ const speakerSchema = {
     voice_file: 'ghost_voice.wav',
     target_object: 'CONTROL_PLAYER',
     speakerImages: [
-      "kidcerie-portrait-taunt.png",
-      "kidcerie-portrait-smug.png",
-      "kidcerie-portrait-worried.png",
-      "kidcerie-portrait-bummed.png",
-      "kidcerie-portrait-hype.png",
-      "kidcerie-portrait-neutral.png"
-    ]
+      'kidcerie-portrait-taunt.png',
+      'kidcerie-portrait-smug.png',
+      'kidcerie-portrait-worried.png',
+      'kidcerie-portrait-bummed.png',
+      'kidcerie-portrait-hype.png',
+      'kidcerie-portrait-neutral.png',
+    ],
   },
 
   controllable_ada: {
@@ -165,42 +165,41 @@ const speakerSchema = {
   },
 
   robin: {
-		image: "robin_neutral.png",
-		name: "SPEAKER_NAME_ROBIN",
-		voice_file: "default_voice.wav",
-		target_object: "RobinNPC",
+    image: 'robin_neutral.png',
+    name: 'SPEAKER_NAME_ROBIN',
+    voice_file: 'default_voice.wav',
+    target_object: 'RobinNPC',
     speakerImages: [
-      "robin_glare.png",
-      "robin_neutral.png",
-      "robin_sad.png",
-      "robin_shocked.png",
-      "robin_sigh.png",
-      "robin_smile.png",
-      "robin_smirk.png"
-    ]
-	},
+      'robin_glare.png',
+      'robin_neutral.png',
+      'robin_sad.png',
+      'robin_shocked.png',
+      'robin_sigh.png',
+      'robin_smile.png',
+      'robin_smirk.png',
+    ],
+  },
 
-	johann: {
-		image: "johann_neutral.png",
-		name: "SPEAKER_NAME_JOHANN",
-		voice_file: "default_voice.wav",
-		target_object: "JohannNPC",
+  johann: {
+    image: 'johann_neutral.png',
+    name: 'SPEAKER_NAME_JOHANN',
+    voice_file: 'default_voice.wav',
+    target_object: 'JohannNPC',
     speakerImages: [
-      "johann_glare.png",
-      "johann_mad.png",
-      "johann_neutral.png",
-      "johann_smirk.png"
-    ]
-	},
+      'johann_glare.png',
+      'johann_mad.png',
+      'johann_neutral.png',
+      'johann_smirk.png',
+    ],
+  },
 
   mc_npc: {
     image: null,
-    name: "SPEAKER_NAME_UNKNOWN",
-    voice_file: "default_voice.wav",
-    target_object: "MCNPC",
-    speakerImages: []
-  }
-
+    name: 'SPEAKER_NAME_UNKNOWN',
+    voice_file: 'default_voice.wav',
+    target_object: 'MCNPC',
+    speakerImages: [],
+  },
 };
 
 export default speakerSchema;

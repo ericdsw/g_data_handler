@@ -80,7 +80,9 @@ const GiveItemFromDialogue = ({
         {!message.show_fanfare && (
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <Typography variant="body1"><b>Will skip fanfare &nbsp;&nbsp;ಥ_ಥ</b></Typography>
+              <Typography variant="body1">
+                <b>Will skip fanfare &nbsp;&nbsp;ಥ_ಥ</b>
+              </Typography>
             </Grid>
           </Grid>
         )}

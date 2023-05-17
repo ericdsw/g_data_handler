@@ -144,7 +144,8 @@ const eventSchema = {
         label: 'Used battle character',
         type: 'text',
         default: '',
-        tooltip: 'If defined, this battle character will be used instead of whatever is on the save file'
+        tooltip:
+          'If defined, this battle character will be used instead of whatever is on the save file',
       },
       custom_win_return_map: {
         label: 'Custom Win Return Map',
@@ -163,14 +164,15 @@ const eventSchema = {
         label: 'Win used character',
         type: 'text',
         default: '',
-        tooltip: 'What playable character will be controlled after the battle is won'
+        tooltip:
+          'What playable character will be controlled after the battle is won',
       },
       peeks_outside_of_battle_map: {
         label: 'Peeks outside of battle map',
         type: 'boolean',
         default: false,
-        tooltip: 'If true, the player will not be visible on the next map'
-      }
+        tooltip: 'If true, the player will not be visible on the next map',
+      },
     },
   },
 
@@ -283,21 +285,24 @@ const eventSchema = {
         type: 'number',
         default: 0,
         helperText: 'Leave it at 0 to use the default value (should be 0.35)',
-        tooltip: 'If it is more than 0, the fade out will last this long'
+        tooltip: 'If it is more than 0, the fade out will last this long',
       },
       stay_black_duration: {
         label: 'Stay black duration',
         type: 'number',
         default: 0,
-        helperText: 'Leave it at 0 to use the default value (which should be 0)',
-        tooltip: 'If it is more than 0, the screen will stay black for this long'
+        helperText:
+          'Leave it at 0 to use the default value (which should be 0)',
+        tooltip:
+          'If it is more than 0, the screen will stay black for this long',
       },
       fade_to_transparent_duration: {
         label: 'Fade to transparent duration',
         type: 'number',
         default: 0,
         helperText: 'Leave it at 0 to use the default value',
-        tooltip: 'If it is more than 0, the fade in will last this long (should be 0.35)'
+        tooltip:
+          'If it is more than 0, the fade in will last this long (should be 0.35)',
       },
       follower_target_positions: {
         label: 'Follower Target Positions',
@@ -311,20 +316,22 @@ const eventSchema = {
         label: 'New Controllable player id',
         type: 'string',
         default: '',
-        tooltip: 'If defined, this will be the new player on the new map (see CharacterProvider for possible values)'
+        tooltip:
+          'If defined, this will be the new player on the new map (see CharacterProvider for possible values)',
       },
       custom_transition_color: {
         label: 'Custom Transition Color',
         type: 'string',
         placeholder: '#ccff0d',
-        tooltip: 'If defined, the overlay will use this color instead of using black'
+        tooltip:
+          'If defined, the overlay will use this color instead of using black',
       },
       fast_change: {
         label: 'Fast Map Change',
         type: 'boolean',
         default: false,
         tooltip: 'If true, the brief delay between map changes will be skipped',
-      }
+      },
     },
   },
 
@@ -630,8 +637,8 @@ const eventSchema = {
         label: 'Show Fanfare',
         type: 'boolean',
         default: true,
-        tooltip: 'Whether the got item fanfare will be displayed'
-      }
+        tooltip: 'Whether the got item fanfare will be displayed',
+      },
     },
   },
 
@@ -711,8 +718,9 @@ const eventSchema = {
         label: 'Focus Floor',
         type: 'boolean',
         default: false,
-        tooltip: 'If true, the camera will focus the node\'s base position rather than the center. Note that this property will be reset after the cutscene finished back to focusing the node\'s center'
-      }
+        tooltip:
+          "If true, the camera will focus the node's base position rather than the center. Note that this property will be reset after the cutscene finished back to focusing the node's center",
+      },
     },
   },
 
@@ -826,7 +834,8 @@ const eventSchema = {
         default: null,
         tooltip: 'The map data to save',
         placeholder: '{ "map_name": {"key":"value"} }',
-        helperText: 'Use the map alias to identify each map (example: V/p, UF/c)'
+        helperText:
+          'Use the map alias to identify each map (example: V/p, UF/c)',
       },
       npc_data: {
         label: 'NPC Data',
@@ -834,7 +843,8 @@ const eventSchema = {
         default: null,
         tooltip: 'The NPC data to save',
         placeholder: '{ "npc_name": {"map_name": "data"} }',
-        helperText: 'To identify a map for an NPC, you need to use the actual scene name (unlike the previous field)'
+        helperText:
+          'To identify a map for an NPC, you need to use the actual scene name (unlike the previous field)',
       },
       player_data: {
         label: 'Player Data',
@@ -854,7 +864,7 @@ const eventSchema = {
         type: 'string',
         default: '',
         tooltip: 'If defined, this player will be used.',
-      }
+      },
     },
   },
 
@@ -869,7 +879,8 @@ const eventSchema = {
         label: 'Shake ID',
         type: 'text',
         default: '',
-        tooltip: 'Identifies a single shake request. A blank one will create a random shake id if the shake_amount is more than 0, or will cancel all active shake transactions'
+        tooltip:
+          'Identifies a single shake request. A blank one will create a random shake id if the shake_amount is more than 0, or will cancel all active shake transactions',
       },
       duration: {
         label: 'Shake Duration',
@@ -881,7 +892,8 @@ const eventSchema = {
         label: 'Shake Strength',
         type: 'number',
         default: 1.0,
-        tooltip: 'How strong will the shake be. If the value is 0 or less, the shake will be cancelled instead (Shake duration will be ignored)',
+        tooltip:
+          'How strong will the shake be. If the value is 0 or less, the shake will be cancelled instead (Shake duration will be ignored)',
       },
     },
   },
@@ -941,15 +953,17 @@ const eventSchema = {
         label: 'Initial Animation',
         type: 'string',
         default: '',
-        tooltip: 'Animation to perform as the object spawns. Will only apply if the object has an animation player'
+        tooltip:
+          'Animation to perform as the object spawns. Will only apply if the object has an animation player',
       },
       initial_props: {
         label: 'Initial Properties',
         type: 'json',
         default: null,
-        tooltip: 'Initial parameters (key/value pair) that will be injected to the instance',
-        placeholder: '{ "property_name": "property_value" }'
-      }
+        tooltip:
+          'Initial parameters (key/value pair) that will be injected to the instance',
+        placeholder: '{ "property_name": "property_value" }',
+      },
     },
   },
 
@@ -1117,8 +1131,9 @@ const eventSchema = {
         label: 'Do Not muffle footsteps',
         type: 'boolean',
         default: false,
-        tooltip: 'If true, the foostep player will not be muffled for the follower'
-      }
+        tooltip:
+          'If true, the foostep player will not be muffled for the follower',
+      },
     },
   },
 
@@ -1140,8 +1155,9 @@ const eventSchema = {
         label: 'Keep on map',
         type: 'boolean',
         default: false,
-        tooltip: 'Whether the follower will be removed or will just stop following the player'
-      }
+        tooltip:
+          'Whether the follower will be removed or will just stop following the player',
+      },
     },
   },
 
@@ -1156,8 +1172,9 @@ const eventSchema = {
         label: 'Keep on map',
         type: 'boolean',
         default: false,
-        tooltip: 'Whether the follower will be removed or will just stop following the player'
-      }
+        tooltip:
+          'Whether the follower will be removed or will just stop following the player',
+      },
     },
   },
 
@@ -1186,8 +1203,9 @@ const eventSchema = {
         label: 'Do Not muffle footsteps',
         type: 'boolean',
         default: false,
-        tooltip: 'If true, the foostep player will not be muffled for the follower'
-      }
+        tooltip:
+          'If true, the foostep player will not be muffled for the follower',
+      },
     },
   },
 
@@ -1227,26 +1245,28 @@ const eventSchema = {
         label: 'Zooms camera',
         type: 'boolean',
         default: true,
-        tooltip: 'Whether the camera will use the target_zoom'
+        tooltip: 'Whether the camera will use the target_zoom',
       },
       pauses: {
         label: 'Pauses',
         type: 'boolean',
         default: true,
-        tooltip: "If true, the game will pause until the action command is pressed"
+        tooltip:
+          'If true, the game will pause until the action command is pressed',
       },
       invisible_action: {
         label: 'Invisible Action',
         type: 'boolean',
         default: false,
-        tooltip: 'If true, the action command promtp will be invisible'
+        tooltip: 'If true, the action command promtp will be invisible',
       },
       auto_advance_fallback_timeout: {
         label: 'Auto Advance fallback timeout',
         type: 'number',
         default: 0.0,
-        tooltip: 'If this value is more than 0, the event will force finish after this duration if the player has not pressed anything'
-      }
+        tooltip:
+          'If this value is more than 0, the event will force finish after this duration if the player has not pressed anything',
+      },
     },
   },
 
@@ -1325,8 +1345,7 @@ const eventSchema = {
     name: 'Look At Direction',
     icon: 'travel_explore',
     defaultImportant: false,
-    additionalText:
-      'Subject must be a movable body',
+    additionalText: 'Subject must be a movable body',
     parameters: {
       ...defaultParameters,
       subject: {
@@ -1341,11 +1360,11 @@ const eventSchema = {
         required: true,
         placeholder: 'The direction the subject will face',
         elements: {
-          up: "Up",
-          down: "Down",
-          left: "Left",
-          right: "Right"
-        }
+          up: 'Up',
+          down: 'Down',
+          left: 'Left',
+          right: 'Right',
+        },
       },
     },
   },
@@ -1488,8 +1507,9 @@ const eventSchema = {
         label: 'Save game when the minigame starts',
         type: 'boolean',
         default: false,
-        tooltip: 'Whether starting the minigame after the cutscene finishes will force a save'
-      }
+        tooltip:
+          'Whether starting the minigame after the cutscene finishes will force a save',
+      },
     },
   },
 
@@ -1677,9 +1697,9 @@ const eventSchema = {
         label: 'Action String',
         required: true,
         type: 'text',
-        placeholder: 'action_name:jump_name:label(?),action_name_2:jump_name_2'
-      }
-    }
+        placeholder: 'action_name:jump_name:label(?),action_name_2:jump_name_2',
+      },
+    },
   },
 
   toggle_cutscene_bars: {
@@ -1693,9 +1713,10 @@ const eventSchema = {
         label: 'Bars Visible',
         type: 'boolean',
         default: true,
-        tooltip: 'Whether the bars will show/hide (should do nothing if the bars are already in the desired state)'
-      }
-    }
+        tooltip:
+          'Whether the bars will show/hide (should do nothing if the bars are already in the desired state)',
+      },
+    },
   },
 
   slowdown_event: {
@@ -1709,84 +1730,84 @@ const eventSchema = {
         label: 'World Speed',
         type: 'number',
         required: true,
-        tooltip: 'The final world speed'
+        tooltip: 'The final world speed',
       },
       transition_duration: {
         label: 'Transition Duration',
         type: 'number',
         default: 0.0,
-        tooltip: 'How long the change will take (0 will be instant)'
+        tooltip: 'How long the change will take (0 will be instant)',
       },
       transition_ignores_world_speed: {
         label: 'Transition ignores world speed',
         type: 'boolean',
         default: true,
-        tooltip: 'Ignoring the world speed will make the transition last the same time, regardless of slowdown. Not ignoring it will make the event eaiser to time with other events that ARE slowed down/sped up.'
-      }
-    }
+        tooltip:
+          'Ignoring the world speed will make the transition last the same time, regardless of slowdown. Not ignoring it will make the event eaiser to time with other events that ARE slowed down/sped up.',
+      },
+    },
   },
 
   mark_flashback_visited: {
-    name: "Mark Flashback Visited",
+    name: 'Mark Flashback Visited',
     icon: 'bookmark_added',
-    additionalText: "Marks the provided flashback as visited",
+    additionalText: 'Marks the provided flashback as visited',
     defaultImportant: true,
     parameters: {
       ...defaultParameters,
       flashback_name: {
-        label: "Flashback Name",
-        type: "dropdown",
+        label: 'Flashback Name',
+        type: 'dropdown',
         required: true,
         elements: {
-          village_morning: "Village Morning",
-          village_night: "Village Night",
-          mansion: "Mansion"
-        } 
-      }
-    }
+          village_morning: 'Village Morning',
+          village_night: 'Village Night',
+          mansion: 'Mansion',
+        },
+      },
+    },
   },
 
   mark_active_flashback: {
-    name: "Mark Active Flashback",
+    name: 'Mark Active Flashback',
     icon: 'push_pin',
-    additionalText: "Marks the provided flashback as active",
+    additionalText: 'Marks the provided flashback as active',
     defaultImportant: true,
     parameters: {
       ...defaultParameters,
       flashback_name: {
-        label: "Flashback Name",
-        type: "dropdown",
+        label: 'Flashback Name',
+        type: 'dropdown',
         required: false,
-        default : "",
+        default: '',
         elements: {
-          village_morning: "Village Morning",
-          village_night: "Village Night",
-          mansion: "Mansion"
-        } 
-      }
-    }
+          village_morning: 'Village Morning',
+          village_night: 'Village Night',
+          mansion: 'Mansion',
+        },
+      },
+    },
   },
 
   attempt_wakeup: {
-    name: "Attempt Wakeup",
-    icon: "airline_seat_flat_angled",
-    additionalText: "Tries to wakeup if you are revisiting a flashback",
+    name: 'Attempt Wakeup',
+    icon: 'airline_seat_flat_angled',
+    additionalText: 'Tries to wakeup if you are revisiting a flashback',
     defaultImportant: true,
     parameters: {
       ...defaultParameters,
-    }
+    },
   },
 
   lock_camera: {
-    name: "Lock Camera",
-    icon: "control_camera",
-    additionalText: "Forces the camera to stay at the current position",
+    name: 'Lock Camera',
+    icon: 'control_camera',
+    additionalText: 'Forces the camera to stay at the current position',
     defaultImportant: false,
     parameters: {
-      ...defaultParameters
-    }
-  }
-
+      ...defaultParameters,
+    },
+  },
 };
 
 export default eventSchema;

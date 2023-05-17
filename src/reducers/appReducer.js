@@ -10,18 +10,17 @@ const initialState = {
   darkMode: true,
 };
 
-const appReducer = createReducer(initialState, builder => {
+const appReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(TOGGLE_SIDEBAR, state => {
-      state.drawerOpen = !state.drawerOpen
+    .addCase(TOGGLE_SIDEBAR, (state) => {
+      state.drawerOpen = !state.drawerOpen;
     })
-    .addCase(COLLAPSE_SIDEBAR, state => {
+    .addCase(COLLAPSE_SIDEBAR, (state) => {
       state.drawerOpen = false;
     })
-    .addCase(TOGGLE_DARK_MODE, state => {
+    .addCase(TOGGLE_DARK_MODE, (state) => {
       state.darkMode = !state.darkMode;
-    })
+    });
 });
 
 export default appReducer;
-

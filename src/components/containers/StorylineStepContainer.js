@@ -12,7 +12,6 @@ import {
 } from '../../actions/storylineActions';
 
 class StorylineStepContainer extends React.Component {
-
   addEntityWithMap = (mapName, entityData) => {
     const { addEntityToNewMap, currentStepId } = this.props;
     addEntityToNewMap(currentStepId, mapName, entityData);

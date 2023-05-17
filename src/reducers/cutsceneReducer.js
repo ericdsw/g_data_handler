@@ -21,7 +21,7 @@ const initialState = {
   hideBars: false,
 };
 
-const cutsceneReducer = createReducer(initialState, builder => {
+const cutsceneReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(UPDATE_CUTSCENE, updateCutscene)
     .addCase(ADD_CUTSCENE_ROW, addCutsceneRow)
@@ -33,9 +33,8 @@ const cutsceneReducer = createReducer(initialState, builder => {
     .addCase(UPDATE_CUTSCENE_FILE_NAME, updateCutsceneFileName)
     .addCase(UPDATE_CUTSCENE_HIDE_BARS, updateCutsceneHideBars)
     .addCase(ADD_CUTSCENE_JUMP, addCutsceneJump)
-    .addCase(DELETE_CUTSCENE_JUMP, deleteCutsceneJump)
+    .addCase(DELETE_CUTSCENE_JUMP, deleteCutsceneJump);
 });
-
 
 function updateCutscene(state, action) {
   const { cutscene, jumps, fileName, hideBars } = action.payload;
@@ -46,12 +45,12 @@ function updateCutscene(state, action) {
 }
 
 function addCutsceneRow(state, action) {
-  state.currentCutscene = [...state.currentCutscene, []]
+  state.currentCutscene = [...state.currentCutscene, []];
 }
 
 function addCutsceneRowAtPosition(state, action) {
   const { position } = action.payload;
-  state.currentCutscene.splice(position, 0, [])
+  state.currentCutscene.splice(position, 0, []);
 }
 
 function deleteCutsceneRow(state, action) {
@@ -92,6 +91,5 @@ function updateCutsceneHideBars(state, action) {
   const { hideBars } = action.payload;
   state.hideBars = hideBars;
 }
-
 
 export default cutsceneReducer;

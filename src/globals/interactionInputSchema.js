@@ -112,7 +112,7 @@ const interactionInputSchema = {
         required: true,
         placeholder:
           'Relative nodepath to the trigger dialogue interaction node',
-      }
+      },
     },
   },
 
@@ -392,10 +392,8 @@ const interactionInputSchema = {
   save_bed_interaction: {
     name: 'Save Bed Interaction',
     icon: 'bed',
-    parameters: {
-
-    }
-  }
+    parameters: {},
+  },
 };
 
 export default interactionInputSchema;

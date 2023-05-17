@@ -23,19 +23,20 @@ import {
   UPDATE_STEP_NAME,
   CLEAR_STORYLINE,
   DUPLICATE_CONFIGURATIONS,
-  UPDATE_STORYLINE_APPLIES_TO_END_RUN
+  UPDATE_STORYLINE_APPLIES_TO_END_RUN,
 } from './types';
 
-export const updateStoryline = (currentStoryline, data, appliesToEndRun) => (dispatch) => {
-  dispatch({
-    type: UPDATE_STORYLINE,
-    payload: {
-      currentStoryline,
-      data,
-      appliesToEndRun
-    },
-  });
-};
+export const updateStoryline =
+  (currentStoryline, data, appliesToEndRun) => (dispatch) => {
+    dispatch({
+      type: UPDATE_STORYLINE,
+      payload: {
+        currentStoryline,
+        data,
+        appliesToEndRun,
+      },
+    });
+  };
 
 export const updateWithEmptyStoryline = () => (dispatch) => {
   dispatch({
@@ -210,11 +211,11 @@ export const duplicateConfigurations =
     });
   };
 
-export const updateAppliesToEndRun = (applies) => dispatch => {
+export const updateAppliesToEndRun = (applies) => (dispatch) => {
   dispatch({
     type: UPDATE_STORYLINE_APPLIES_TO_END_RUN,
     payload: {
-      appliesToEndRun: applies
-    }
-  })
-}
+      appliesToEndRun: applies,
+    },
+  });
+};

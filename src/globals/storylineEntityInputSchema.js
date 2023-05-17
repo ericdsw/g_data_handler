@@ -86,18 +86,20 @@ const storylineEntityInputSchema = {
       player_faces_npc_on_interact: {
         label: 'Player faces NPC on interact',
         type: 'boolean',
-        tooltip: 'Whether the player is forced to face the npc on interaction'
+        tooltip: 'Whether the player is forced to face the npc on interaction',
       },
       appear_glitched: {
         label: 'Appear Glitched',
         type: 'boolean',
-        tooltip: 'If true, the npc will be rendered with a noise distortion flashing in and out'
+        tooltip:
+          'If true, the npc will be rendered with a noise distortion flashing in and out',
       },
       spawn_below_balcony: {
         label: 'Spawn below balcony',
         type: 'boolean',
-        tooltip: 'If true and the npc is in the upper/lower balcony intersection area, it will spawn on the lower area (otherwise it will always spawn on top)'
-      }
+        tooltip:
+          'If true and the npc is in the upper/lower balcony intersection area, it will spawn on the lower area (otherwise it will always spawn on top)',
+      },
     },
   },
 
@@ -171,18 +173,20 @@ const storylineEntityInputSchema = {
       player_faces_npc_on_interact: {
         label: 'Player faces NPC on interact',
         type: 'boolean',
-        tooltip: 'Whether the player is forced to face the npc on interaction'
+        tooltip: 'Whether the player is forced to face the npc on interaction',
       },
       appear_glitched: {
         label: 'Appear Glitched',
         type: 'boolean',
-        tooltip: 'If true, the npc will be rendered with a noise distortion flashing in and out'
+        tooltip:
+          'If true, the npc will be rendered with a noise distortion flashing in and out',
       },
       spawn_below_balcony: {
         label: 'Spawn below balcony',
         type: 'boolean',
-        tooltip: 'If true and the npc is in the upper/lower balcony intersection area, it will spawn on the lower area (otherwise it will always spawn on top)'
-      }
+        tooltip:
+          'If true and the npc is in the upper/lower balcony intersection area, it will spawn on the lower area (otherwise it will always spawn on top)',
+      },
     },
   },
 
@@ -283,8 +287,8 @@ const storylineEntityInputSchema = {
         label: 'Player faces NPC on interact',
         type: 'boolean',
         default: false,
-        tooltip: 'Whether the player is forced to face the door on interaction'
-      }
+        tooltip: 'Whether the player is forced to face the door on interaction',
+      },
     },
   },
 
@@ -357,8 +361,8 @@ const storylineEntityInputSchema = {
         label: 'Player faces NPC on interact',
         type: 'boolean',
         default: false,
-        tooltip: 'Whether the player is forced to face the door on interaction'
-      }
+        tooltip: 'Whether the player is forced to face the door on interaction',
+      },
     },
   },
 

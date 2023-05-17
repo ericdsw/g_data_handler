@@ -34,7 +34,7 @@ const initialState = {
   messages: {},
 };
 
-const dialogueReducer = createReducer(initialState, builder => {
+const dialogueReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(ADD_CONVERSATION, addDialogueConversation)
     .addCase(ADD_CONVERSATION_MESSAGE, addConversationMessage)
@@ -54,12 +54,12 @@ const dialogueReducer = createReducer(initialState, builder => {
     .addCase(REORDER_CONVERSATION, reorderConversations)
     .addCase(REORDER_MESSAGE, reorderMessage)
     .addCase(MOVE_MESSAGE, moveMessage)
-    .addCase(SPLIT_CONVERSATION , splitConversation)
+    .addCase(SPLIT_CONVERSATION, splitConversation)
 
     .addCase(DELETE_CONVERSATIONS_TO_MERGE, deleteAllConversationsToMerge)
     .addCase(CONFIRM_CONVERSATION_MERGE, confirmConversationMerge)
     .addCase(SELECT_ALL_CONVERSATIONS, selectAllConversations)
-    .addCase(UNSELECT_ALL_CONVERSATIONS, unselectAllConversations)
+    .addCase(UNSELECT_ALL_CONVERSATIONS, unselectAllConversations);
 });
 
 // Create
@@ -81,8 +81,8 @@ function addConversationMessage(state, action) {
 
   state.messages[newMessageId] = {
     id: newMessageId,
-    ...data
-  }
+    ...data,
+  };
   state.conversations[conversationId].messages.push(newMessageId);
 }
 
@@ -92,7 +92,7 @@ function addConversationMessageAtPos(state, action) {
 
   state.messages[newMessageId] = {
     id: newMessageId,
-    ...data
+    ...data,
   };
   state.conversations[conversationId].messages.splice(offset, 0, newMessageId);
 }
@@ -116,8 +116,8 @@ function updateDialogue(state, action) {
     ...state,
     ...entities,
     fileName,
-    currentDialogue: dialogueId
-  }
+    currentDialogue: dialogueId,
+  };
 }
 
 function updateWithEmptyDialogue(state, action) {
@@ -145,8 +145,8 @@ function updateDialogueConversation(state, action) {
   const { conversationId, data } = action.payload;
   state.conversations[conversationId] = {
     ...state.conversations[conversationId],
-    ...data
-  }
+    ...data,
+  };
 }
 
 function editConversationMessage(state, action) {
@@ -154,8 +154,8 @@ function editConversationMessage(state, action) {
 
   state.messages[messageId] = {
     id: state.messages[messageId].id,
-    ...data
-  }
+    ...data,
+  };
 }
 
 function updateDialogueFilename(state, action) {
@@ -178,8 +178,9 @@ function deleteDialogueConversation(state, action) {
   // Second, if the conversation is in a merge transaction, remove it from the array
   if (state.conversationsToMerge.includes(conversationId)) {
     state.conversationsToMerge.splice(
-      state.conversationsToMerge.indexOf(conversationId), 1
-    )
+      state.conversationsToMerge.indexOf(conversationId),
+      1
+    );
   }
 
   // Third, delete the reference from the dialogue
@@ -195,27 +196,27 @@ function deleteConversationMessage(state, action) {
 // Extra
 
 function reorderConversations(state, action) {
-  const {
-    sourcePosition,
-    destinationPosition,
-    dialogueId,
-    conversationId
-  } = action.payload;
+  const { sourcePosition, destinationPosition, dialogueId, conversationId } =
+    action.payload;
 
   state.dialogues[dialogueId].conversations.splice(sourcePosition, 1);
-  state.dialogues[dialogueId].conversations.splice(destinationPosition, 0, conversationId)
+  state.dialogues[dialogueId].conversations.splice(
+    destinationPosition,
+    0,
+    conversationId
+  );
 }
 
 function reorderMessage(state, action) {
-  const {
-    sourcePosition,
-    destinationPosition,
-    conversationId,
-    messageId
-  } = action.payload;
+  const { sourcePosition, destinationPosition, conversationId, messageId } =
+    action.payload;
 
   state.conversations[conversationId].messages.splice(sourcePosition, 1);
-  state.conversations[conversationId].messages.splice(destinationPosition, 0, messageId);
+  state.conversations[conversationId].messages.splice(
+    destinationPosition,
+    0,
+    messageId
+  );
 }
 
 function moveMessage(state, action) {
@@ -229,12 +230,13 @@ function moveMessage(state, action) {
 
   state.conversations[sourceConversationId].messages.splice(sourcePosition, 1);
   state.conversations[destinationConversationId].messages.splice(
-    destinationPosition, 0, messageId
+    destinationPosition,
+    0,
+    messageId
   );
 }
 
 function splitConversation(state, action) {
-
   const { conversationId, messageId, newName } = action.payload;
 
   const conversations = { ...state.conversations };
@@ -276,12 +278,10 @@ function deleteAllConversationsToMerge(state) {
 }
 
 function confirmConversationMerge(state) {
-
   const finalConversationId = state.conversationsToMerge[0];
 
   state.conversationsToMerge.forEach((conversationId) => {
     if (conversationId !== finalConversationId) {
-
       // Add conversations to the final conversation
       const convMessages = state.conversations[conversationId].messages;
       state.conversations[finalConversationId].messages = [
@@ -301,12 +301,12 @@ function confirmConversationMerge(state) {
 }
 
 function selectAllConversations(state) {
-  state.conversationsToMerge = state.dialogues[state.currentDialogue].conversations;
+  state.conversationsToMerge =
+    state.dialogues[state.currentDialogue].conversations;
 }
 
 function unselectAllConversations(state) {
   state.conversationsToMerge = [];
 }
-
 
 export default dialogueReducer;

@@ -88,7 +88,7 @@ const CutsceneEvent = ({
             <b>{paramName}</b>
           </TableCell>
           <TableCell align="left">
-            <Tooltip title={data || ""} enterDelay={300}>
+            <Tooltip title={data || ''} enterDelay={300}>
               <Typography>{data}</Typography>
             </Tooltip>
           </TableCell>

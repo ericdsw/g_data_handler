@@ -21,9 +21,10 @@ const EXTRAS = ['location', 'voice_file', 'control_level', 'autopilot_offset'];
 const ConversationExtraParams = ({ message }) => {
   const classes = useStyles();
   const extraChips = useMemo(() => {
-    return EXTRAS
-      .filter((extraProperty) => message.hasOwnProperty(extraProperty))
-      .filter(extraProperty => message[extraProperty] !== '')
+    return EXTRAS.filter((extraProperty) =>
+      message.hasOwnProperty(extraProperty)
+    )
+      .filter((extraProperty) => message[extraProperty] !== '')
       .map((extraProperty) => (
         <Chip
           key={extraProperty}
