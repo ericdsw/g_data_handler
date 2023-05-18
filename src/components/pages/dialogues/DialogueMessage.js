@@ -97,8 +97,12 @@ const DialogueMessage = ({
             </div>
             <div className={classes.details}>
               <Grid container justifyContent="center">
-                <div className={classes.content}>
-                  {speakerName && (
+                <div
+                  className={
+                    clsx(classes.content, message.ui_variant !== 'default' ? classes.transparentContent : '')
+                  }
+                >
+                  {(speakerName && message.ui_variant === 'default') && (
                     <div className={classes.contentSpeakerName}>
                       {speakerName}
                     </div>
@@ -107,13 +111,13 @@ const DialogueMessage = ({
                     <div
                       className={clsx(
                         classes.contentText,
-                        hasImage ? '' : classes.contentTextNoImage
+                        (hasImage && message.ui_variant === 'default') ? '' : classes.contentTextNoImage
                       )}
                     >
                       {messageTextOnly}
                     </div>
                   </Tooltip>
-                  {hasImage && (
+                  {(hasImage && message.ui_variant === 'default') && (
                     <img
                       alt="asdf"
                       className={classes.contentImage}

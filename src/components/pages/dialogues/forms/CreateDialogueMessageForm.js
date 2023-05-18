@@ -15,8 +15,6 @@ import {
   DialogTitle,
   DialogContent,
 } from '@mui/material';
-import ToggleOffOutlinedIcon from '@mui/icons-material/ToggleOffOutlined';
-import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 
 import { speakerSchema } from '../../../../globals';
 import { SimpleCollapse } from '../../../elements';
@@ -24,7 +22,9 @@ import { SimpleCollapse } from '../../../elements';
 import {
   DialogueMessageInstructions,
   SpeakerNameSearchForm,
-  SpeakerDropdown
+  SpeakerDropdown,
+  DialogueUITypeDropDown,
+  InputDecorationToggle
 } from '../elements';
 
 import CreateChoiceForm from './CreateChoiceForm';
@@ -47,6 +47,7 @@ const EMPTY_MESSAGE_DATA = {
   exit_sound: '',
   mute_enter_sound: false,
   mute_exit_sound: false,
+  ui_variant: 'default'
 };
 
 function initialImagePreview(data) {
@@ -274,20 +275,13 @@ const CreateDialogueMessageForm = ({
                 placeholder="Sound when dialogue enters"
                 InputProps={{
                   endAdornment: (
-                    <IconButton
-                      onClick={() => {
-                        updateCurMessageData({
-                          ...curMessageData,
-                          mute_enter_sound: !curMessageData.mute_enter_sound,
-                        });
-                      }}
-                    >
-                      {curMessageData.mute_enter_sound ? (
-                        <ToggleOffOutlinedIcon />
-                      ) : (
-                        <ToggleOnIcon />
-                      )}
-                    </IconButton>
+                    <InputDecorationToggle
+                      checked={curMessageData.mute_enter_sound}
+                      onClick={() => updateCurMessageData({
+                        ...curMessageData,
+                        mute_enter_sound: !curMessageData.mute_enter_sound
+                      })}
+                    />
                   ),
                 }}
               />
@@ -303,34 +297,37 @@ const CreateDialogueMessageForm = ({
                 placeholder="Sound when dialogue exits"
                 InputProps={{
                   endAdornment: (
-                    <IconButton
-                      onClick={() => {
-                        updateCurMessageData({
-                          ...curMessageData,
-                          mute_exit_sound: !curMessageData.mute_exit_sound,
-                        });
-                      }}
-                    >
-                      {curMessageData.mute_exit_sound ? (
-                        <ToggleOffOutlinedIcon />
-                      ) : (
-                        <ToggleOnIcon />
-                      )}
-                    </IconButton>
+                    <InputDecorationToggle
+                      checked={curMessageData.mute_exit_sound}
+                      onClick={() => updateCurMessageData({
+                        ...curMessageData,
+                        mute_exit_sound: !curMessageData.mute_exit_sound
+                      })}
+                    />
                   ),
                 }}
               />
             </Grid>
           </Grid>
-          <TextField
-            fullWidth
-            label="Target Object"
-            onChange={(e) => handleInputChange('target_object', e)}
-            value={curMessageData.target_object}
-            variant="outlined"
-            margin="normal"
-            placeholder="Object that the dialogue will attach to (node name only)"
-          />
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                label="Target Object"
+                onChange={(e) => handleInputChange('target_object', e)}
+                value={curMessageData.target_object}
+                variant="outlined"
+                margin="normal"
+                placeholder="Object that the dialogue will attach to (node name only)"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <DialogueUITypeDropDown
+                value={curMessageData.ui_variant}
+                onChange={e => handleInputChange('ui_variant', e)}
+              />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
 

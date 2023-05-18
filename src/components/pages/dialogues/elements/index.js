@@ -7,3 +7,5 @@ export { default as ConversationCardTitle } from './ConversationCardTitle';
 export { default as DialogueMessageInstructions } from './DialogueMessageInstructions';
 export { default as SpeakerNameSearchForm } from './SpeakerNameSearchForm';
 export { default as SpeakerDropdown } from './SpeakerDropdown';
+export { default as DialogueUITypeDropDown } from './DialogueUITypeDropdown';
+export { default as InputDecorationToggle } from './InputDecorationToggle';
