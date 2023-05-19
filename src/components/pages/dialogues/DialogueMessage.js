@@ -59,6 +59,13 @@ const DialogueMessage = ({
     [message.message]
   );
 
+  const variant = useMemo(() => {
+    if (!message.ui_variant) {
+      return "default";
+    }
+    return message.ui_variant;
+  }, [message]);
+
   return (
     <Card square className={classes.messageContainer}>
       {message.interrupts && (
@@ -99,10 +106,10 @@ const DialogueMessage = ({
               <Grid container justifyContent="center">
                 <div
                   className={
-                    clsx(classes.content, message.ui_variant !== 'default' ? classes.transparentContent : '')
+                    clsx(classes.content, variant !== 'default' ? classes.transparentContent : '')
                   }
                 >
-                  {(speakerName && message.ui_variant === 'default') && (
+                  {(speakerName && variant === 'default') && (
                     <div className={classes.contentSpeakerName}>
                       {speakerName}
                     </div>
@@ -111,13 +118,13 @@ const DialogueMessage = ({
                     <div
                       className={clsx(
                         classes.contentText,
-                        (hasImage && message.ui_variant === 'default') ? '' : classes.contentTextNoImage
+                        (hasImage && variant === 'default') ? '' : classes.contentTextNoImage
                       )}
                     >
                       {messageTextOnly}
                     </div>
                   </Tooltip>
-                  {(hasImage && message.ui_variant === 'default') && (
+                  {(hasImage && variant === 'default') && (
                     <img
                       alt="asdf"
                       className={classes.contentImage}
