@@ -3,11 +3,10 @@ import { IconButton } from '@mui/material';
 import ToggleOffOutlinedIcon from '@mui/icons-material/ToggleOffOutlined';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 
-
 const InputDecorationToggle = ({ checked, onClick }) => (
   <IconButton onClick={onClick}>
     {checked ? <ToggleOffOutlinedIcon /> : <ToggleOnIcon />}
   </IconButton>
-)
+);
 
 export default InputDecorationToggle;

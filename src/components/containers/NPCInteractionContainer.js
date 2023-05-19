@@ -11,16 +11,20 @@ const NPCInteractionContainer = ({
   currentInteractionId,
   deleteNPCInteraction,
   updateNPCInteraction,
-  npcInteractions
+  npcInteractions,
 }) => {
   return (
     <NPCInteraction
       npcInteraction={npcInteractions[currentInteractionId]}
-      handleEdit={(parameters) => { updateNPCInteraction(currentInteractionId, parameters) }}
-      handleDelete={() => { deleteNPCInteraction(currentInteractionId) }}
+      handleEdit={(parameters) => {
+        updateNPCInteraction(currentInteractionId, parameters);
+      }}
+      handleDelete={() => {
+        deleteNPCInteraction(currentInteractionId);
+      }}
     />
   );
-}
+};
 
 const mapStateToProps = (state) => ({
   npcInteractions: state.storyline.entityConfigurators,

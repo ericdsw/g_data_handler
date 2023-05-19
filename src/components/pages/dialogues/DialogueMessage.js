@@ -1,22 +1,18 @@
 import React, { useMemo } from 'react';
-import withStyles from '@mui/styles/withStyles';
-import {
-  Card,
-  CardContent,
-  Typography,
-  Icon,
-  Grid,
-  Tooltip,
-  Zoom,
-} from '@mui/material';
-import clsx from 'clsx';
+import { makeStyles } from '@mui/styles';
+import { Card, CardContent, Typography, Icon, Grid } from '@mui/material';
 
-import { ConversationChoices, ConversationExtraParams } from './elements';
-import { DialogueMessageToolbar } from './elements';
+import {
+  ConversationChoices,
+  ConversationExtraParams,
+  DialogueMessageToolbar,
+  FloatingDialogue,
+} from './elements';
 import { speakerSchema } from '../../../globals';
 
 import { styles } from './styles/DialogueMessageStyle';
-import { cleanMessage } from './functions';
+
+const useStyles = makeStyles(styles);
 
 const DialogueMessage = ({
   handleEdit,
@@ -25,8 +21,9 @@ const DialogueMessage = ({
   handleAddBelow,
   handleSplitBelow,
   message,
-  classes,
 }) => {
+  const classes = useStyles();
+
   const { usedImagePath, speakerName } = useMemo(() => {
     let imageResult, nameResult;
 
@@ -47,23 +44,6 @@ const DialogueMessage = ({
       usedImagePath: imageResult,
       speakerName: nameResult,
     };
-  }, [message]);
-
-  const hasImage = useMemo(
-    () => usedImagePath && usedImagePath !== 'NONE',
-    [usedImagePath]
-  );
-
-  const messageTextOnly = useMemo(
-    () => cleanMessage(message.message),
-    [message.message]
-  );
-
-  const variant = useMemo(() => {
-    if (!message.ui_variant) {
-      return "default";
-    }
-    return message.ui_variant;
   }, [message]);
 
   return (
@@ -102,38 +82,12 @@ const DialogueMessage = ({
                 omitEdit={false}
               />
             </div>
-            <div className={classes.details}>
-              <Grid container justifyContent="center">
-                <div
-                  className={
-                    clsx(classes.content, variant !== 'default' ? classes.transparentContent : '')
-                  }
-                >
-                  {(speakerName && variant === 'default') && (
-                    <div className={classes.contentSpeakerName}>
-                      {speakerName}
-                    </div>
-                  )}
-                  <Tooltip TransitionComponent={Zoom} title={message.message}>
-                    <div
-                      className={clsx(
-                        classes.contentText,
-                        (hasImage && variant === 'default') ? '' : classes.contentTextNoImage
-                      )}
-                    >
-                      {messageTextOnly}
-                    </div>
-                  </Tooltip>
-                  {(hasImage && variant === 'default') && (
-                    <img
-                      alt="asdf"
-                      className={classes.contentImage}
-                      src={`/images/${usedImagePath}`}
-                    />
-                  )}
-                </div>
-              </Grid>
-            </div>
+            <FloatingDialogue
+              speakerName={speakerName}
+              messageFullText={message.message}
+              uiVariant={message.ui_variant}
+              usedImagePath={usedImagePath}
+            />
 
             {/* Extra Parameters */}
             <ConversationExtraParams message={message} />
@@ -159,4 +113,4 @@ const DialogueMessage = ({
   );
 };
 
-export default withStyles(styles)(DialogueMessage);
+export default DialogueMessage;

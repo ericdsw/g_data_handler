@@ -19,7 +19,7 @@ const StepMapEntityContainer = ({
   updateMapEntity,
   deleteMapEntity,
   stepMapEntities,
-  curMapName
+  curMapName,
 }) => {
   return (
     <StepMapEntity
@@ -31,15 +31,19 @@ const StepMapEntityContainer = ({
       handleEditParameter={(paramName, paramValue) => {
         updateOrAddMapEntityParam(currentMapEntityId, paramName, paramValue);
       }}
-      handleDeleteParameter={paramName => deleteMapEntityParam(currentMapEntityId, paramName)}
+      handleDeleteParameter={(paramName) =>
+        deleteMapEntityParam(currentMapEntityId, paramName)
+      }
       handleAddInteraction={(type, parameters) => {
         addNPCInteraction(currentMapEntityId, type, parameters);
       }}
-      handleUpdateEntity={(newName, params) => { updateMapEntity(currentMapEntityId, newName, params) }}
+      handleUpdateEntity={(newName, params) => {
+        updateMapEntity(currentMapEntityId, newName, params);
+      }}
       handleDeleteEntity={() => deleteMapEntity(currentMapEntityId)}
     />
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => ({
   stepMapEntities: state.storyline.stepMapEntities,

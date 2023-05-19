@@ -15,16 +15,18 @@ const CompleteConditionContainer = ({
   conditionId,
   deleteCondition,
   updateCondition,
-  completeConditions
+  completeConditions,
 }) => {
   return (
     <CompleteCondition
       completeCondition={completeConditions[conditionId]}
-      handleEditCondition={(name, data) => updateCondition(conditionId, name, data)}
+      handleEditCondition={(name, data) =>
+        updateCondition(conditionId, name, data)
+      }
       handleDeleteCondition={() => deleteCondition(conditionId)}
     />
   );
-}
+};
 
 const mapStateToProps = (state) => ({
   completeConditions: state.storyline.completeConditions,

@@ -11,16 +11,20 @@ const CutsceneEventContainer = ({
   eventNumber,
   editCutsceneEvent,
   deleteCutsceneEvent,
-  cutsceneEventData
+  cutsceneEventData,
 }) => {
   return (
     <CutsceneEvent
       cutsceneEventData={cutsceneEventData}
-      handleEditEvent={(newEventData) => { editCutsceneEvent(rowNumber, eventNumber, newEventData) }}
-      handleDeleteEvent={() => { deleteCutsceneEvent(rowNumber, eventNumber) }}
+      handleEditEvent={(newEventData) => {
+        editCutsceneEvent(rowNumber, eventNumber, newEventData);
+      }}
+      handleDeleteEvent={() => {
+        deleteCutsceneEvent(rowNumber, eventNumber);
+      }}
     />
-  )
-}
+  );
+};
 
 export default connect(null, {
   editCutsceneEvent,

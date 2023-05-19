@@ -1,14 +1,10 @@
 import React from 'react';
 
-import {
-  MenuItem,
-  Typography,
-  TextField
-} from '@mui/material';
+import { MenuItem, Typography, TextField } from '@mui/material';
 
 const OPTIONS = {
-  default: "Default",
-  battle: "Transparent",
+  default: 'Default',
+  battle: 'Transparent',
 };
 
 const DialogueUITypeDropDown = ({ value, onChange }) => (
@@ -18,10 +14,10 @@ const DialogueUITypeDropDown = ({ value, onChange }) => (
     fullWidth
     value={value}
     onChange={onChange}
-    variant='outlined'
-    margin='normal'
+    variant="outlined"
+    margin="normal"
   >
-    {Object.keys(OPTIONS).map(optionKey => (
+    {Object.keys(OPTIONS).map((optionKey) => (
       <MenuItem key={optionKey} value={optionKey}>
         <Typography variant="body1">{OPTIONS[optionKey]}</Typography>
       </MenuItem>
@@ -29,4 +25,4 @@ const DialogueUITypeDropDown = ({ value, onChange }) => (
   </TextField>
 );
 
-export default DialogueUITypeDropDown
+export default DialogueUITypeDropDown;

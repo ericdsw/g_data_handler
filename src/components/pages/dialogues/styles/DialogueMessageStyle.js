@@ -45,7 +45,7 @@ export const styles = (theme) => ({
     backgroundColor: 'transparent',
     border: 'none',
     color: 'white',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   contentText: {
     marginLeft: 8 * 2,

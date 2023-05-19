@@ -18,7 +18,7 @@ const CompletionBundleContainer = ({
   addStepCompleteCondition,
   updateBundle,
   deleteBundle,
-  completionBundles
+  completionBundles,
 }) => {
   return (
     <CompletionBundle
@@ -33,8 +33,8 @@ const CompletionBundleContainer = ({
         deleteBundle(currentCompletionBundleId);
       }}
     />
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => ({
   completionBundles: state.storyline.completionBundles,

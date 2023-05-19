@@ -110,7 +110,7 @@ const DialogueConversation = ({
                 <Checkbox
                   checked={conversationsToMerge.includes(conversation.id)}
                   value={conversation.id}
-                  onChange={e => handleToggleFromMerger(e.target.checked)}
+                  onChange={(e) => handleToggleFromMerger(e.target.checked)}
                   onClick={(e) => e.stopPropagation()}
                 />
               </Tooltip>

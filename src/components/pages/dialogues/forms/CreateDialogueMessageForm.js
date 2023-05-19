@@ -24,7 +24,7 @@ import {
   SpeakerNameSearchForm,
   SpeakerDropdown,
   DialogueUITypeDropDown,
-  InputDecorationToggle
+  InputDecorationToggle,
 } from '../elements';
 
 import CreateChoiceForm from './CreateChoiceForm';
@@ -47,7 +47,7 @@ const EMPTY_MESSAGE_DATA = {
   exit_sound: '',
   mute_enter_sound: false,
   mute_exit_sound: false,
-  ui_variant: 'default'
+  ui_variant: 'default',
 };
 
 function initialImagePreview(data) {
@@ -77,8 +77,8 @@ const CreateDialogueMessageForm = ({
 
   const [curMessageData, updateCurMessageData] = useState({
     ...EMPTY_MESSAGE_DATA,
-    ...messageData
-  })
+    ...messageData,
+  });
 
   /**
    * Submits the data
@@ -245,7 +245,7 @@ const CreateDialogueMessageForm = ({
         <Grid item xs={12} md={8}>
           <SpeakerDropdown
             value={curMessageData.speaker}
-            onChange={e => handleInputChange('speaker', e)}
+            onChange={(e) => handleInputChange('speaker', e)}
           />
           <TextField
             fullWidth
@@ -277,10 +277,12 @@ const CreateDialogueMessageForm = ({
                   endAdornment: (
                     <InputDecorationToggle
                       checked={curMessageData.mute_enter_sound}
-                      onClick={() => updateCurMessageData({
-                        ...curMessageData,
-                        mute_enter_sound: !curMessageData.mute_enter_sound
-                      })}
+                      onClick={() =>
+                        updateCurMessageData({
+                          ...curMessageData,
+                          mute_enter_sound: !curMessageData.mute_enter_sound,
+                        })
+                      }
                     />
                   ),
                 }}
@@ -299,10 +301,12 @@ const CreateDialogueMessageForm = ({
                   endAdornment: (
                     <InputDecorationToggle
                       checked={curMessageData.mute_exit_sound}
-                      onClick={() => updateCurMessageData({
-                        ...curMessageData,
-                        mute_exit_sound: !curMessageData.mute_exit_sound
-                      })}
+                      onClick={() =>
+                        updateCurMessageData({
+                          ...curMessageData,
+                          mute_exit_sound: !curMessageData.mute_exit_sound,
+                        })
+                      }
                     />
                   ),
                 }}
@@ -324,7 +328,7 @@ const CreateDialogueMessageForm = ({
             <Grid item xs={6}>
               <DialogueUITypeDropDown
                 value={curMessageData.ui_variant}
-                onChange={e => handleInputChange('ui_variant', e)}
+                onChange={(e) => handleInputChange('ui_variant', e)}
               />
             </Grid>
           </Grid>

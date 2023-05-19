@@ -12,19 +12,27 @@ const CutsceneRowContainer = ({
   rowNumber,
   addCutsceneRowAtPosition,
   deleteCutsceneRow,
-  addCutsceneEvent
+  addCutsceneEvent,
 }) => {
   return (
     <CutsceneRow
       rowData={rowData}
       rowNumber={rowNumber}
-      handleAddRowBelow={() => { addCutsceneRowAtPosition(rowNumber + 1) }}
-      handleAddRowAbove={() => { addCutsceneRowAtPosition(rowNumber) }}
-      handleDeleteRow={() => { deleteCutsceneRow(rowNumber) }}
-      handleAddEvent={(eventData) => { addCutsceneEvent(rowNumber, eventData) }}
+      handleAddRowBelow={() => {
+        addCutsceneRowAtPosition(rowNumber + 1);
+      }}
+      handleAddRowAbove={() => {
+        addCutsceneRowAtPosition(rowNumber);
+      }}
+      handleDeleteRow={() => {
+        deleteCutsceneRow(rowNumber);
+      }}
+      handleAddEvent={(eventData) => {
+        addCutsceneEvent(rowNumber, eventData);
+      }}
     />
-  )
-}
+  );
+};
 
 export default connect(null, {
   addCutsceneRowAtPosition,

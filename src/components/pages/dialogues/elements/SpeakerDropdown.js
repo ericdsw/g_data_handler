@@ -1,11 +1,7 @@
 import React from 'react';
-import {
-  TextField,
-  MenuItem
-} from '@mui/material'
+import { TextField, MenuItem } from '@mui/material';
 
 import { speakerSchema } from '../../../../globals';
-
 
 const parsedSpeakers = Object.keys(speakerSchema).map((speakerKey) => (
   <MenuItem key={speakerKey} value={speakerKey}>
@@ -26,10 +22,10 @@ const SpeakerDropdown = ({ value, onChange }) => (
     select
     fullWidth
     label="Speaker"
-    value={value} 
+    value={value}
     onChange={onChange}
-    variant='outlined'
-    margin='normal'
+    variant="outlined"
+    margin="normal"
   >
     {elements}
   </TextField>

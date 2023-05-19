@@ -129,10 +129,9 @@ class CreateEventForm extends React.Component {
 
     if (errorInputs.length > 0) {
       const errors = errorInputs.join(', ');
-      enqueueSnackbar(
-        `The following fields are required: ${errors}`,
-        { variant: 'error' }
-      );
+      enqueueSnackbar(`The following fields are required: ${errors}`, {
+        variant: 'error',
+      });
     } else {
       let cutsceneData = {
         type: this.state.currentEventType,

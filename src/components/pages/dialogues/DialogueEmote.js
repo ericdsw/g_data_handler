@@ -1,19 +1,21 @@
 import React, { useMemo } from 'react';
-import withStyles from '@mui/styles/withStyles';
+import { makeStyles } from '@mui/styles';
 import { Card, CardContent, Typography, Grid, CardHeader } from '@mui/material';
 
 import { DialogueMessageToolbar, ConversationCardTitle } from './elements';
 
 import { styles } from './styles/DialogueEmoteStyle';
 
+const useStyles = makeStyles(styles);
+
 const DialogueEmote = ({
   message,
-  classes,
   handleDelete,
   handleAddAbove,
   handleAddBelow,
   handleSplitBelow,
 }) => {
+  const classes = useStyles();
   const imagePath = useMemo(
     () => `/images/emotes/${message.message}.png`,
     [message.message]
@@ -80,4 +82,4 @@ const DialogueEmote = ({
   );
 };
 
-export default withStyles(styles)(DialogueEmote);
+export default DialogueEmote;
