@@ -1,81 +1,54 @@
-import React from 'react';
-import withStyles from '@mui/styles/withStyles';
+import React, { useState, useMemo, useCallback } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { TextField, Grid, Button } from '@mui/material';
 
-const styles = (theme) => ({});
+const CreateConversationForm = ({
+  conversationName,
+  creationHandler
+}) => {
 
-class CreateConversationForm extends React.Component {
-  state = {
-    conversationName: '',
-  };
+  const [curConversationName, updateCurConversationName] = useState(conversationName);
+  const isEdit = useMemo(() => !!(conversationName), [conversationName]);
+  const buttonText = useMemo(() => isEdit ? 'Edit Conversation' : 'Create Conversation', [isEdit]);
 
-  isEdit = false;
-
-  constructor(props) {
-    super(props);
-    if (props.conversationName) {
-      this.state = {
-        conversationName: props.conversationName,
-      };
-      this.isEdit = true;
-    }
-  }
-
-  submitData = (event) => {
+  const submitData = useCallback((event) => {
     event.preventDefault();
     event.stopPropagation();
-
-    if (this.state.conversationName === '') {
-      enqueueSnackbar('The conversation name is required', {
-        variant: 'error',
-      });
+    if (curConversationName === '') {
+      enqueueSnackbar('The conversation name is required', { variant: 'error' });
     } else {
-      this.props.creationHandler(this.state.conversationName);
+      creationHandler(curConversationName);
     }
-  };
+  }, [curConversationName, creationHandler]);
 
-  handleChange = (identifier) => (event) => {
-    this.setState({
-      [identifier]: event.target.value,
-    });
-  };
-
-  render() {
-    let buttonText = 'Create Conversation';
-    if (this.isEdit) {
-      buttonText = 'Edit Conversation';
-    }
-
-    return (
-      <form onSubmit={this.submitData}>
-        <Grid container>
-          <Grid item xs>
-            <TextField
-              id="conversationName"
-              label="Conversation Name"
-              value={this.state.conversationName}
-              onChange={this.handleChange('conversationName')}
-              autoFocus
-              fullWidth
-              variant="outlined"
-              margin="normal"
-            />
-          </Grid>
+  return (
+    <form onSubmit={submitData}>
+      <Grid container>
+        <Grid item xs>
+          <TextField
+            id="conversationName"
+            label="Conversation Name"
+            value={curConversationName}
+            onChange={e => updateCurConversationName(e.target.value)}
+            autoFocus
+            fullWidth
+            variant="outlined"
+            margin="normal"
+          />
         </Grid>
-        <Grid justifyContent="flex-end" container>
-          <Button
-            type="submit"
-            variant="contained"
-            style={{ marginTop: 16 }}
-            color="primary"
-          >
-            {buttonText}
-          </Button>
-        </Grid>
-      </form>
-    );
-  }
+      </Grid>
+      <Grid container justifyContent="flex-end">
+        <Button
+          type="submit"
+          variant="contained"
+          style={{ marginTop: 16 }}
+          color="primary"
+        >
+          {buttonText}
+        </Button>
+      </Grid>
+    </form>
+  );
 }
 
-export default withStyles(styles)(CreateConversationForm);
+export default CreateConversationForm;

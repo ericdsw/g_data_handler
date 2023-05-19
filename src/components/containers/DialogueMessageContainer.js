@@ -30,13 +30,14 @@ class DialogueMessageContainer extends React.Component {
     addMessageAtPosition(conversationId, offset, data);
   };
 
-  addBelow = (data) => {
+  addBelow = (data, additionalOffset) => {
     const { conversationId, messageId, conversations, addMessageAtPosition } =
       this.props;
     const currentConversation = conversations[conversationId];
     const offset = currentConversation.messages.indexOf(messageId);
 
-    addMessageAtPosition(conversationId, offset + 1, data);
+    addMessageAtPosition(conversationId, offset + 1 + additionalOffset, data);
+    console.log(additionalOffset);
   };
 
   deleteMessage = () => {

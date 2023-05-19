@@ -9,8 +9,8 @@ import {
   ListItemText,
 } from '@mui/material';
 
-import { useDialogueManager } from '../../../../hooks';
-import { GenericDialogue, ConfirmationDialogue } from '../../../elements';
+import { useDialogueManager } from '../../../../../hooks';
+import { GenericDialogue, ConfirmationDialogue } from '../../../../elements';
 
 import {
   CreateDialogueMessageForm,
@@ -19,7 +19,10 @@ import {
   GiveItemFromDialogueForm,
   GiveMoneyFromDialogueForm,
   PickItemFromDialogueForm,
-} from '../forms';
+  CreateEmoteForm,
+} from '../../forms';
+
+import { AddBelowMenuOptions } from './components';
 
 const DialogueMessageToolbar = ({
   message,
@@ -34,11 +37,19 @@ const DialogueMessageToolbar = ({
     'confirmDelete',
     'editMessage',
     'addEmote',
-    'splitConversation'
+    'splitConversation',
+
+    'addMessageBelow',
+    'addEmoteBelow',
+    'addSwarmBelow',
+    'giveMoneyBelow',
+    'giveItemBelow',
+    'selectItemBelow'
   );
 
   const [selectedOption, setSelectedOption] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
+  const [additionalBelowOffset, updateAdditionalBelowOffset] = useState(0);
 
   // Anchor Management
 
@@ -66,6 +77,24 @@ const DialogueMessageToolbar = ({
         case 'splitBelow':
           toggleDialogue('splitConversation', 'show');
           break;
+        case 'addMessageBelow':
+          toggleDialogue('addMessageBelow', 'show');
+          break;
+        case 'addEmoteBelow':
+          toggleDialogue('addEmoteBelow', 'show');
+          break;
+        case 'addSwarmBelow':
+          toggleDialogue('addSwarmBelow', 'show');
+          break;
+        case 'giveMoneyBelow':
+          toggleDialogue('giveMoneyBelow', 'show');
+          break;
+        case 'giveItemBelow':
+          toggleDialogue('giveItemBelow', 'show');
+          break;
+        case 'selectItemBelow':
+          toggleDialogue('selectItemBelow', 'show');
+          break;
         default:
           break;
       }
@@ -81,7 +110,7 @@ const DialogueMessageToolbar = ({
           handleAddAbove(data);
           break;
         case 'addBelow':
-          handleAddBelow(data);
+          handleAddBelow(data, additionalBelowOffset);
           break;
         case 'edit':
           handleEdit(data);
@@ -90,10 +119,13 @@ const DialogueMessageToolbar = ({
           break;
       }
     },
-    [handleAddAbove, handleAddBelow, handleEdit, selectedOption]
+    [handleAddAbove, handleAddBelow, handleEdit, selectedOption, additionalBelowOffset]
   );
 
-  const { typeString, editDialogue } = useMemo(() => {
+  const {
+    typeString,
+    editDialogue,
+  } = useMemo(() => {
     let typeString;
     let editDialogue;
 
@@ -104,16 +136,18 @@ const DialogueMessageToolbar = ({
           <GenericDialogue
             title="Edit Conversation"
             open={dialogues['editMessage']}
-            onClose={() => toggleDialogue('editMessage', 'hide')}
+            onClose={() => {
+              toggleDialogue('editMessage', 'hide');
+            }}
           >
             <CreateDialogueMessageForm
               isEdit={selectedOption === 'edit'}
               messageData={selectedOption === 'edit' ? message : {}}
               creationHandler={(data, createAndContinue) => {
+                handleDialogueFormSubmit(data, additionalBelowOffset);
                 if (!createAndContinue) {
                   toggleDialogue('editMessage', 'hide');
                 }
-                handleDialogueFormSubmit(data);
               }}
             />
           </GenericDialogue>
@@ -215,6 +249,7 @@ const DialogueMessageToolbar = ({
     message,
     selectedOption,
     toggleDialogue,
+    additionalBelowOffset
   ]);
 
   return (
@@ -261,6 +296,17 @@ const DialogueMessageToolbar = ({
           </ListItemIcon>
           <ListItemText primary="Split From This" />
         </MenuItem>
+        <Divider />
+          
+        <AddBelowMenuOptions
+          addMessageBelowSelected={e => handleMenuSelect(e, 'addMessageBelow')}
+          addEmoteBelowSelected={e => handleMenuSelect(e, 'addEmoteBelow')}
+          addSwarmBelowSelected={e => handleMenuSelect(e, 'addSwarmBelow')}
+          giveMoneyBelowSelected={e => handleMenuSelect(e, 'giveMoneyBelow')}
+          giveItemBelowSelected={e => handleMenuSelect(e, 'giveItemBelow')}
+          selectItemBelowSelected={e => handleMenuSelect(e, 'selectItemBelow')}
+        />
+
       </Menu>
 
       {/* Delete Dialogue */}
@@ -276,6 +322,118 @@ const DialogueMessageToolbar = ({
 
       {/* Edit Message Form */}
       {editDialogue}
+
+      {/* Add Message Below Form */}
+      <GenericDialogue
+        title="Add conversation below"
+        open={dialogues["addMessageBelow"]}
+        onClose={() => {
+          toggleDialogue('addMessageBelow', 'hide');
+          updateAdditionalBelowOffset(0)
+        }}
+      >
+        <CreateDialogueMessageForm
+          creationHandler={(data, createAndContinue) => {
+            handleAddBelow(data, additionalBelowOffset);
+            if (!createAndContinue) {
+              toggleDialogue('addMessageBelow', 'hide');
+              updateAdditionalBelowOffset(0)
+            } else {
+              updateAdditionalBelowOffset(additionalBelowOffset + 1);
+            }
+          }}
+        />
+      </GenericDialogue>
+
+      {/* Add emote below form */}
+      <GenericDialogue
+        title="Add emote below"
+        open={dialogues["addEmoteBelow"]}
+        onClose={() => {
+          toggleDialogue('addEmoteBelow', 'hide');
+          updateAdditionalBelowOffset(0);
+        }}
+      >
+        <CreateEmoteForm
+          creationHandler={data => {
+            handleAddBelow(data, additionalBelowOffset);
+            updateAdditionalBelowOffset(0);
+            toggleDialogue('addEmoteBelow', 'hide');
+          }}
+        />
+      </GenericDialogue>
+
+      {/* Add swarm below form */}
+      <GenericDialogue
+        title="Add swarm below"
+        open={dialogues["addSwarmBelow"]}
+        onClose={() => {
+          toggleDialogue('addSwarmBelow', 'hide');
+          updateAdditionalBelowOffset(0);
+        }}
+      >
+        <CreateSwarmForm
+          handleSubmit={data => {
+            handleAddBelow(data, additionalBelowOffset);
+            updateAdditionalBelowOffset(0);
+            toggleDialogue('addSwarmBelow', 'hide');
+          }}
+        />
+      </GenericDialogue>
+
+      {/* Give money below */}
+      <GenericDialogue
+        title="Give money below"
+        open={dialogues["giveMoneyBelow"]}
+        onClose={() => {
+          toggleDialogue('giveMoneyBelow', 'hide');
+          updateAdditionalBelowOffset(0);
+        }}
+      >
+        <GiveMoneyFromDialogueForm
+          onSubmit={data => {
+            handleAddBelow(data, additionalBelowOffset);
+            toggleDialogue('giveMoneyBelow', 'hide');
+            updateAdditionalBelowOffset(0);
+          }}
+        />
+      </GenericDialogue>
+
+      {/* Give item below */}
+      <GenericDialogue
+        title="Give item below"
+        open={dialogues["giveItemBelow"]}
+        onClose={() => {
+          toggleDialogue('giveItemBelow', 'hide');
+          updateAdditionalBelowOffset(0);
+        }}
+      >
+        <GiveItemFromDialogueForm
+          onSubmit={data => {
+            handleAddBelow(data, additionalBelowOffset);
+            toggleDialogue('giveItemBelow', 'hide');
+            updateAdditionalBelowOffset(0);
+          }}
+        />
+      </GenericDialogue>
+
+      {/* Pick item below */}
+      <GenericDialogue
+        title="Pick item below"
+        open={dialogues['selectItemBelow']}
+        onClose={() => {
+          toggleDialogue('selectItemBelow', 'hide');
+          updateAdditionalBelowOffset(0);
+        }}
+      >
+        <PickItemFromDialogueForm
+          onSubmit={data => {
+            handleAddBelow(data, additionalBelowOffset);
+            toggleDialogue('selectItemBelow', 'hide');
+            updateAdditionalBelowOffset(0);
+          }}
+        />
+      </GenericDialogue>
 
       {/* Split Conversation Form */}
       <GenericDialogue
