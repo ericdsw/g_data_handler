@@ -20,13 +20,14 @@ import { useDialogueManager } from '../../../hooks';
 import DialogueMessageContainer from '../../containers/DialogueMessageContainer';
 import { CreateConversationForm } from './forms';
 import {
-  CreateDialogueMessageForm,
+  // CreateDialogueMessageForm,
   CreateEmoteForm,
   CreateSwarmForm,
   GiveMoneyFromDialogueForm,
   GiveItemFromDialogueForm,
   PickItemFromDialogueForm,
 } from './forms';
+import { DialogueMessageDialogue } from './formDialogues';
 
 import { styles } from './styles/DialogueConversationStyle';
 
@@ -214,7 +215,19 @@ const DialogueConversation = ({
       </AccordionDetails>
 
       {/* Create Message Form */}
-      <GenericDialogue
+      <DialogueMessageDialogue
+        title="Create Conversation"
+        open={dialogues["addMessage"]}
+        onClose={() => toggleDialogue('addMessage', 'hide')}
+        creationHandler={(data, createAndContinue) => {
+          if (!createAndContinue) {
+            toggleDialogue('addMessage', 'hide');
+          }
+          handleAddToConversation(data);
+        }}
+        isEdit={false}
+      />
+      {/* <GenericDialogue
         title="Create Conversation"
         open={dialogues['addMessage']}
         onClose={() => toggleDialogue('addMessage', 'hide')}
@@ -228,7 +241,7 @@ const DialogueConversation = ({
           }}
           isEdit={false}
         />
-      </GenericDialogue>
+      </GenericDialogue> */}
 
       {/* Create Emote form */}
       <GenericDialogue

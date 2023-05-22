@@ -13,7 +13,6 @@ import { useDialogueManager } from '../../../../../hooks';
 import { GenericDialogue, ConfirmationDialogue } from '../../../../elements';
 
 import {
-  CreateDialogueMessageForm,
   CreateConversationForm,
   CreateSwarmForm,
   GiveItemFromDialogueForm,
@@ -21,6 +20,8 @@ import {
   PickItemFromDialogueForm,
   CreateEmoteForm,
 } from '../../forms';
+
+import { DialogueMessageDialogue } from '../../formDialogues';
 
 import { AddBelowMenuOptions } from './components';
 
@@ -133,24 +134,21 @@ const DialogueMessageToolbar = ({
       case 'message':
         typeString = 'Message';
         editDialogue = (
-          <GenericDialogue
+          <DialogueMessageDialogue
             title="Edit Conversation"
             open={dialogues['editMessage']}
             onClose={() => {
               toggleDialogue('editMessage', 'hide');
             }}
-          >
-            <CreateDialogueMessageForm
-              isEdit={selectedOption === 'edit'}
-              messageData={selectedOption === 'edit' ? message : {}}
-              creationHandler={(data, createAndContinue) => {
-                handleDialogueFormSubmit(data, additionalBelowOffset);
-                if (!createAndContinue) {
-                  toggleDialogue('editMessage', 'hide');
-                }
-              }}
-            />
-          </GenericDialogue>
+            isEdit={selectedOption === 'edit'}
+            messageData={selectedOption === 'edit' ? message : {}}
+            creationHandler={(data, createAndContinue) => {
+              handleDialogueFormSubmit(data, additionalBelowOffset);
+              if (!createAndContinue) {
+                toggleDialogue('editMessage', 'hide');
+              }
+            }}
+          />
         );
         break;
 
@@ -324,26 +322,23 @@ const DialogueMessageToolbar = ({
       {editDialogue}
 
       {/* Add Message Below Form */}
-      <GenericDialogue
+      <DialogueMessageDialogue
         title="Add conversation below"
         open={dialogues["addMessageBelow"]}
         onClose={() => {
           toggleDialogue('addMessageBelow', 'hide');
           updateAdditionalBelowOffset(0)
         }}
-      >
-        <CreateDialogueMessageForm
-          creationHandler={(data, createAndContinue) => {
-            handleAddBelow(data, additionalBelowOffset);
-            if (!createAndContinue) {
-              toggleDialogue('addMessageBelow', 'hide');
-              updateAdditionalBelowOffset(0)
-            } else {
-              updateAdditionalBelowOffset(additionalBelowOffset + 1);
-            }
-          }}
-        />
-      </GenericDialogue>
+        creationHandler={(data, createAndContinue) => {
+          handleAddBelow(data, additionalBelowOffset);
+          if (!createAndContinue) {
+            toggleDialogue('addMessageBelow', 'hide');
+            updateAdditionalBelowOffset(0)
+          } else {
+            updateAdditionalBelowOffset(additionalBelowOffset + 1);
+          }
+        }}
+      />
 
       {/* Add emote below form */}
       <GenericDialogue

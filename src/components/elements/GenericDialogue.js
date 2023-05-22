@@ -24,6 +24,7 @@ const GenericDialogue = ({
   children,
   maxWidth = 'md',
   helpComponent,
+  style = {},
 }) => {
   const classes = useStyles();
 
@@ -44,6 +45,8 @@ const GenericDialogue = ({
           onClose={onClose}
           fullWidth={true}
           maxWidth={maxWidth}
+          style={style}
+          disableScrollLock
         >
           <DialogTitle>
             {title}

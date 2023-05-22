@@ -129,7 +129,7 @@ const Dialogue = ({
           transform:
             conversationsToMerge.length <= 0 ? 'scale(0.0)' : 'scale(1.0)',
         }}
-        onClick={(e) => {
+        onClick={() => {
           if (conversationAmount > mergeAmount) {
             handleSelectAll();
           } else {

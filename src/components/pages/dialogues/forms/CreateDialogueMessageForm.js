@@ -62,6 +62,7 @@ const CreateDialogueMessageForm = ({
   creationHandler,
   isEdit = false,
   messageData = EMPTY_MESSAGE_DATA,
+  onMinimizeRequested
 }) => {
   const { enqueueSnackbar } = useSnackbar();
 
@@ -476,7 +477,18 @@ const CreateDialogueMessageForm = ({
           )}
         </Grid>
         <Grid item xs md={6}>
-          <Grid container justifyContent="flex-end">
+          <Grid container justifyContent="flex-end"> 
+            <Button
+              variant="contained"
+              style={{ marginTop: 8 }}
+              color='secondary'
+              onClick={onMinimizeRequested}
+            >
+              Minimize
+            </Button>
+            &nbsp;
+            &nbsp;
+            &nbsp;
             <Button
               type="submit"
               variant="contained"
@@ -484,7 +496,7 @@ const CreateDialogueMessageForm = ({
               color="primary"
             >
               {isEdit ? 'Edit' : 'Create'}
-            </Button>
+            </Button> 
           </Grid>
         </Grid>
       </Grid>
