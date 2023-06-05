@@ -200,6 +200,22 @@ const speakerSchema = {
     target_object: 'MCNPC',
     speakerImages: [],
   },
+
+  abigail: {
+    image: null,
+    name: 'SPEAKER_NAME_ABIGAIL',
+    voice_file: 'vampire_voice.wav',
+    target_object: 'AbigailNPC',
+    speakerImages: []
+  },
+
+  marco: {
+    image: null,
+    name: 'SPEAKER_NAME_MARCO',
+    voice_file: 'phoenix_voice.wav',
+    target_object:'MarcoNPC',
+    speakerImages: []
+  }
 };
 
 export default speakerSchema;

@@ -86,6 +86,9 @@ const speakerNames = {
   SPEAKER_NAME_RELMA: 'Relma',
   SPEAKER_NAME_DAD: 'Dad',
   SPEAKER_NAME_ALISON: 'Alison',
+
+  SPEAKER_NAME_ABIGAIL: 'Abigail',
+  SPEAKER_NAME_MARCO: 'Marco'
 };
 
 export default speakerNames;
