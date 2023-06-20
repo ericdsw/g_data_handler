@@ -865,6 +865,12 @@ const eventSchema = {
         default: '',
         tooltip: 'If defined, this player will be used.',
       },
+      show_disk_save_feedback: {
+        label: 'Show Disk Save Feedback',
+        type: 'boolean',
+        default: true,
+        tooltip: 'Whether the save icon will appear on the bottom of the screen'
+      }
     },
   },
 
