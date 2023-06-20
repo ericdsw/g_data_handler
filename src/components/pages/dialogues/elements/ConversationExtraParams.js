@@ -16,12 +16,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EXTRAS = ['location', 'voice_file', 'control_level', 'autopilot_offset'];
+const EXTRAS = {
+  location: {
+    label: 'Location'
+  },
+  voice_file: {
+    label: 'Voice File'
+  },
+  control_level: {
+    label: 'Control Level'
+  },
+  autopilot_offset: {
+    label: 'Autopilot Offset'
+  },
+  try_to_position_on_center: {
+    label: 'Try to position on Center'
+  }
+};
 
 const ConversationExtraParams = ({ message }) => {
   const classes = useStyles();
   const extraChips = useMemo(() => {
-    return EXTRAS.filter((extraProperty) =>
+    return Object.keys(EXTRAS).filter((extraProperty) =>
       message.hasOwnProperty(extraProperty)
     )
       .filter((extraProperty) => message[extraProperty] !== '')
@@ -29,7 +45,7 @@ const ConversationExtraParams = ({ message }) => {
         <Chip
           key={extraProperty}
           className={classes.chip}
-          label={`${extraProperty}: ${message[extraProperty]}`}
+          label={`${EXTRAS[extraProperty].label}: ${message[extraProperty]}`}
         />
       ));
   }, [classes.chip, message]);

@@ -48,6 +48,7 @@ const EMPTY_MESSAGE_DATA = {
   mute_enter_sound: false,
   mute_exit_sound: false,
   ui_variant: 'default',
+  try_to_position_on_center: false
 };
 
 function initialImagePreview(data) {
@@ -437,6 +438,19 @@ const CreateDialogueMessageForm = ({
           onChange={(e) => handleInputChange('autopilot_offset', e)}
           value={curMessageData.autopilot_offset}
         />
+        <br /><br />
+        <FormControlLabel
+          key="try_center"
+          label="Try to position on center"
+          control={
+            <Switch
+              checked={curMessageData.try_to_position_on_center}
+              value={curMessageData.try_to_position_on_center}
+              onChange={(e) => handleInputChange('try_to_position_on_center', e, true)}
+            />
+          }
+        />
+        <br /><br />
       </SimpleCollapse>
 
       {/* Choices */}
