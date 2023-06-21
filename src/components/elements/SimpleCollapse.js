@@ -7,7 +7,7 @@ const SimpleCollapse = ({ collapsedMessage, openedMessage, children }) => {
     return (
       <>
         {collapsed ? collapsedMessage : openedMessage}
-        <Icon>{collapsed ? 'expand_less' : 'expand_more'}</Icon>
+        <Icon>{collapsed ? 'expand_more' : 'expand_less'}</Icon>
       </>
     );
   }, [collapsedMessage, openedMessage, collapsed]);

@@ -84,14 +84,17 @@ const CutsceneEvent = ({
       const data = parseParameter(cutsceneEventData.parameters[paramName]);
       return (
         <TableRow key={index}>
-          <TableCell align="left" padding="none" size="small">
-            <b>{paramName}</b>
-          </TableCell>
-          <TableCell align="left">
-            <Tooltip title={data || ''} enterDelay={300}>
-              <Typography>{data}</Typography>
-            </Tooltip>
-          </TableCell>
+          <Tooltip arrow title={(data !== undefined && data !== '') ? data : 'N/A'} enterDelay={300}>
+            <TableCell align="left" padding="none" size="small" style={{ padding: 10 }}>
+              <Typography><b>{paramName}</b></Typography>
+              {(data !== undefined && data !== '') && (
+                <Typography variant="caption">{data}</Typography>
+              )}
+              {(data === undefined || data === '') && (
+                <Typography variant="caption" style={{ color: '#aaa' }}>N/A</Typography>
+              )}
+            </TableCell>
+          </Tooltip>
         </TableRow>
       );
     });
@@ -113,12 +116,16 @@ const CutsceneEvent = ({
               <Icon>{icon}</Icon>
             </Avatar>
           }
-          title={name}
+          title={<Typography>{name}</Typography>}
           subheader={
             <Tooltip title={eventDescription} enterDelay={300}>
-              <Typography>{eventDescription}</Typography>
+              <Typography variant="subtitle2">{eventDescription}</Typography>
             </Tooltip>
           }
+          style={{
+            minHeight: 100,
+            alignItems: 'flex-start'
+          }}
         />
         <CardActions className={classes.actions} disableSpacing>
           <IconButton
@@ -150,7 +157,7 @@ const CutsceneEvent = ({
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Table>
-              <TableBody>{listParams}</TableBody>
+              <TableBody style={{ wordWrap: 'break-word' }}>{listParams}</TableBody>
             </Table>
           </CardContent>
         </Collapse>

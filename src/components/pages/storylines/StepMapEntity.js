@@ -146,7 +146,9 @@ const StepMapEntity = ({
     <Card>
       <CardHeader
         title={
-          <Typography variant="subtitle1">{stepMapEntity.name}</Typography>
+          <Tooltip title={stepMapEntity.name} arrow>
+            <Typography variant="subtitle1">{stepMapEntity.name}</Typography>
+          </Tooltip>
         }
         subheader={
           <Typography variant="caption" className={classes.typeSubheader}>
@@ -163,14 +165,23 @@ const StepMapEntity = ({
             onClick={() => toggleParamsExpanded(!paramsExpanded)}
           >
             <Paper elevation={0} className={classes.descriptionElement}>
-              {paramsExpanded ? 'Hide' : 'Show'} parameters
+              <Typography variant="body2">
+                {paramsExpanded ? 'Hide' : 'Show'} parameters
+              </Typography>
             </Paper>
           </ButtonBase>
           <Collapse in={paramsExpanded} timeout="auto" unmountOnExit>
             {paramAmount <= 0 && (
-              <Typography variant="caption" align="center">
-                No parameters configured
-              </Typography>
+              <Grid
+                container
+                justifyContent="center"
+                alignItems="center"
+                className={classes.noParametersText}
+              >
+                <Typography variant="caption" align="center">
+                  No parameters configured
+                </Typography>
+              </Grid>
             )}
             <Paper square elevation={0}>
               <List component="nav">{paramList}</List>
@@ -182,7 +193,9 @@ const StepMapEntity = ({
             onClick={() => toggleDialogue('viewInteractions', 'show')}
           >
             <Paper elevation={0} className={classes.descriptionElement}>
-              Contains {inAmount} interaction{inAmount === 1 ? '' : 's'}
+              <Typography variant="body2">
+                Contains {inAmount} interaction{inAmount === 1 ? '' : 's'}
+              </Typography>
             </Paper>
           </ButtonBase>
         </React.Fragment>

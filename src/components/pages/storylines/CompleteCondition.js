@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { makeStyles } from '@mui/styles';
 import {
-  Paper,
   Typography,
   ButtonBase,
   Collapse,
@@ -9,7 +8,7 @@ import {
   ListItem,
   IconButton,
   Icon,
-  Divider,
+  Card
 } from '@mui/material';
 
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
@@ -49,11 +48,10 @@ const CompleteCondition = ({
   return (
     <div>
       <ButtonBase className={classes.summaryWrapper}>
-        <Paper
+        <Card
           square
-          elevation={0}
           className={classes.conditionContainer}
-          onClick={(e) => toggleExpand(!expanded)}
+          onClick={() => toggleExpand(!expanded)}
         >
           <Typography variant="caption">
             [unique name: {completeCondition.unique_name}]
@@ -62,11 +60,11 @@ const CompleteCondition = ({
           <Typography variant="caption" className={classes.interactionTypeText}>
             {createConditionDescription(completeCondition)}
           </Typography>
-        </Paper>
+        </Card>
       </ButtonBase>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <Divider />
-        <Paper square elevation={0} className={classes.conditionContainer}>
+        {/* <Divider /> */}
+        <Card square className={classes.conditionContainer}>
           <List component="nav">{paramList}</List>
           <Typography align="left">
             <IconButton
@@ -82,7 +80,7 @@ const CompleteCondition = ({
               <Icon>delete</Icon>
             </IconButton>
           </Typography>
-        </Paper>
+        </Card>
       </Collapse>
 
       <ConfirmationDialogue

@@ -1,29 +1,51 @@
 import { createTheme, adaptV4Theme } from '@mui/material/styles';
 
+
+const primaryColor = {
+  main: '#b65672',
+  light: '#e9ccd5',
+  dark: '#9e3c55',
+  contrastText: '#fff',
+}
+
+const secondaryColor = {
+  main: '#ccaa74',
+  light: '#f0e6d5',
+  dark: '#b99057',
+  contrastText: '#000',
+}
+
 const baseTheme = (mode) =>
   createTheme(
     adaptV4Theme({
       palette: {
         mode: mode,
         background: {
-          default: mode === 'dark' ? '#20171F' : '#fff',
+          default: mode === 'dark' ? '#20171F' : '#fafafa',
           paper: mode === 'dark' ? '#2b202a' : '#fefefe',
         },
         primary: {
-          main: '#d50744',
-          light: '#ff546f',
-          dark: '#9c001e',
-          contrastText: '#fff',
+          ...primaryColor,
         },
         secondary: {
-          main: '#bf9148',
-          light: '#f4c176',
-          dark: '#8c641b',
-          contrastText: '#000',
+          ...secondaryColor,
         },
         messageBackground: mode === 'dark' ? '#222' : '#eee',
       },
       overrides: {
+        MuiDrawer: {
+          paper: {
+            // backgroundColor: primaryColor.main,
+            // color: primaryColor.contrastText
+          },
+        },
+        MuiTableRow: {
+          root: {
+            "&:last-child td": {
+              borderBottom: 0
+            }
+          }
+        },
         MuiOutlinedInput: {
           root: {
             position: 'relative',

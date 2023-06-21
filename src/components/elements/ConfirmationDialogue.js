@@ -12,10 +12,10 @@ import { red, green } from '@mui/material/colors';
 
 const useStyles = makeStyles(() => ({
   cancelButton: {
-    color: red[500],
+    color: red[400],
   },
   confirmButton: {
-    color: green[500],
+    color: green[400],
   },
 }));
 

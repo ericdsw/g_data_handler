@@ -13,7 +13,7 @@ import { blue, green, yellow, amber, grey } from '@mui/material/colors';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import BrightnessHighIcon from '@mui/icons-material/BrightnessHigh';
 
-import { drawerWidth, applicationName } from '../../globals';
+import { applicationName } from '../../globals';
 import { useDialogueManager } from '../../hooks';
 import GenericDialogue from './GenericDialogue';
 
@@ -21,10 +21,8 @@ import { createInput } from '../../functions';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    marginLeft: drawerWidth,
-    [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-    },
+    zIndex: theme.zIndex.drawer + 1,
+    borderBottom: `3px solid ${theme.palette.primary.main}`
   },
   menuButton: {
     [theme.breakpoints.up('sm')]: {
@@ -69,9 +67,9 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
   return (
     <AppBar
       position="fixed"
-      color="primary"
+      // color="primary"
       className={classes.appBar}
-      enableColorOnDark
+      // enableColorOnDark
     >
       <Toolbar>
         <Grid container alignItems="center">

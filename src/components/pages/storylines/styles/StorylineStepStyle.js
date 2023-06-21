@@ -16,7 +16,7 @@ export const styles = (theme) => ({
     fontSize: '0.7em',
   },
   descriptionList: {
-    color: '#fff',
+    color: theme.palette.text.primary,
     lineHeight: '200%',
   },
   blueText: { color: blue[400] },

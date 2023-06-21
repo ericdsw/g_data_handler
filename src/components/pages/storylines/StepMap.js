@@ -9,6 +9,7 @@ import {
   Avatar,
   Typography,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import StepMapEntityContainer from '../../containers/StepMapEntityContainer';
 import { GenericDialogue, MenuIconButton } from '../../elements';
@@ -17,12 +18,16 @@ import CreateMapEntityForm from './forms/CreateMapEntityForm';
 
 const useStyles = makeStyles(() => ({
   mapCard: {
-    background: '#555',
+    background: props => props.cardBackground,
   },
 }));
 
 const StepMap = ({ stepMap, handleAddEntity }) => {
-  const classes = useStyles();
+
+  const { darkMode } = useSelector((state) => state.app);
+  const classes = useStyles({
+    cardBackground: darkMode ? '#463f47' : '#eee'
+  });
 
   const [curEntityType, setCurEntityType] = useState('');
 

@@ -10,7 +10,7 @@ import { CreateConversationForm } from '../forms';
 
 const useStyles = makeStyles((theme) => ({
   deleteButton: {
-    color: red[500],
+    color: red[400],
   },
   defaultButton: {
     color: theme.palette.primary.main,

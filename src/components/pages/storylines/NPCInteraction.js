@@ -12,6 +12,8 @@ import {
   Icon,
   IconButton,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
+
 import { ConfirmationDialogue, GenericDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
 import CreateNPCInteractionForm from './forms/CreateNPCInteractionForm';
@@ -19,12 +21,15 @@ import { interactionInputSchema } from '../../../globals';
 
 const useStyles = makeStyles(() => ({
   interactionCard: {
-    background: '#555',
+    background: props => props.cardBackground,
   },
 }));
 
 const NPCInteraction = ({ npcInteraction, handleEdit, handleDelete }) => {
-  const classes = useStyles();
+  const { darkMode } = useSelector((state) => state.app);
+  const classes = useStyles({
+    cardBackground: darkMode ? '#463f47' : '#fafafa'
+  });
 
   const paramKeys = useMemo(
     () => Object.keys(npcInteraction.parameters),
@@ -92,7 +97,7 @@ const NPCInteraction = ({ npcInteraction, handleEdit, handleDelete }) => {
                 </Typography>
               </TableCell>
               <TableCell>
-                <Typography>
+                <Typography variant="caption">
                   {getParameterDescription(npcInteraction.parameters[key])}
                 </Typography>
               </TableCell>

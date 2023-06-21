@@ -5,7 +5,7 @@ export const styles = (theme) => ({
     color: theme.palette.primary.main,
   },
   deleteButton: {
-    color: red[500],
+    color: red[400],
   },
   root: {
     ...theme.mixins.gutters(),

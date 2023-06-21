@@ -10,6 +10,7 @@ import {
   IconButton,
   Icon,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import CompleteConditionContainer from '../../containers/CompleteConditionContainer';
 import CompleteConditionForm from './forms/CompleteConditionForm';
@@ -32,7 +33,8 @@ const CompletionBundle = ({
   handleEditBundle,
   handleDeleteBundle,
 }) => {
-  const classes = useStyles();
+  const { darkMode } = useSelector((state) => state.app);
+  const classes = useStyles({ bundleCardBackground: darkMode ? '#463f47' : '#eee'});
 
   const [curCompletionType, setCurCompletionType] = useState('');
   const [dialogues, toggleDialogue] = useDialogueManager(

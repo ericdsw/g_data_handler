@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import {
-  Divider,
   Drawer,
   Hidden,
   List,
-  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
@@ -15,19 +14,15 @@ import routes from '../../router';
 import { drawerWidth } from '../../globals';
 
 const useStyles = makeStyles((theme) => ({
-  toolbar: theme.mixins.toolbar,
+  toolbar: {
+    ...theme.mixins.toolbar,
+    marginBottom: theme.spacing(1)
+  },
   root: {
     display: 'flex',
   },
   drawerPaper: {
     width: drawerWidth,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-  selectedLink: {
-    background: theme.palette.action.hover,
   },
 }));
 
@@ -38,11 +33,9 @@ const NavigationDrawer = ({ isOpen, handleCollapse }) => {
     () => (
       <div>
         <div className={classes.toolbar} />
-        <Divider />
         <List>
           {routes.map((route) => (
-            <ListItem
-              button
+            <ListItemButton
               component={NavLink}
               onClick={() => handleCollapse()}
               to={route.path}
@@ -50,7 +43,7 @@ const NavigationDrawer = ({ isOpen, handleCollapse }) => {
             >
               <ListItemIcon>{route.icon}</ListItemIcon>
               <ListItemText primary={route.text} />
-            </ListItem>
+            </ListItemButton>
           ))}
         </List>
       </div>
@@ -61,7 +54,7 @@ const NavigationDrawer = ({ isOpen, handleCollapse }) => {
   return (
     <nav className={classes.drawer}>
       <Hidden smUp implementation="css">
-        <Drawer
+        <Drawer 
           variant="temporary"
           anchor="left"
           open={isOpen}

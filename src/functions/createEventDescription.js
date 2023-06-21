@@ -100,11 +100,14 @@ export default function createEventDescription(type, parameters) {
     case 'sound':
       return `Play sound ${parameters.sound}`;
     case 'spawn_object':
-      return `${parameters.object} at position ${
-        typeof parameters.position === 'object'
-          ? JSON.stringify(parameters.position)
-          : parameters.position
-      }`;
+      if (parameters.position) {
+        return `${parameters.object} at position ${
+          typeof parameters.position === 'object'
+            ? JSON.stringify(parameters.position)
+            : parameters.position
+        }`;
+      }
+      return `${parameters.object} at fallback 0,0 position`;
     case 'toggle_hud':
       return `Visible: ${parameters.should_show ? 'true' : 'false'}`;
     case 'visible':

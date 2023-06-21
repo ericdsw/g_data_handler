@@ -20,7 +20,6 @@ import { useDialogueManager } from '../../../hooks';
 import DialogueMessageContainer from '../../containers/DialogueMessageContainer';
 import { CreateConversationForm } from './forms';
 import {
-  // CreateDialogueMessageForm,
   CreateEmoteForm,
   CreateSwarmForm,
   GiveMoneyFromDialogueForm,
@@ -227,21 +226,6 @@ const DialogueConversation = ({
         }}
         isEdit={false}
       />
-      {/* <GenericDialogue
-        title="Create Conversation"
-        open={dialogues['addMessage']}
-        onClose={() => toggleDialogue('addMessage', 'hide')}
-      >
-        <CreateDialogueMessageForm
-          creationHandler={(data, createAndContinue) => {
-            if (!createAndContinue) {
-              toggleDialogue('addMessage', 'hide');
-            }
-            handleAddToConversation(data);
-          }}
-          isEdit={false}
-        />
-      </GenericDialogue> */}
 
       {/* Create Emote form */}
       <GenericDialogue

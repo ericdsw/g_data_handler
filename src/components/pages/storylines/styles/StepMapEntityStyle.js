@@ -1,6 +1,6 @@
 import { blue, red } from '@mui/material/colors';
 
-export const styles = () => ({
+export const styles = (theme) => ({
   typeSubheader: {
     color: blue[400],
   },
@@ -20,13 +20,20 @@ export const styles = () => ({
   descriptionElement: {
     padding: 16,
     cursor: 'pointer',
-    color: '#fff',
     width: '100%',
     fontSize: 14,
     backgroundColor: 'transparent',
+    color: theme.palette.text.primary
   },
   redButton: {
     color: '#fff',
-    backgroundColor: red[500],
+    backgroundColor: red[400],
+  },
+  noParametersText: {
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.background.paper,
+    padding: 10,
+    paddingTop: 16,
+    paddingBottom: 0
   },
 });

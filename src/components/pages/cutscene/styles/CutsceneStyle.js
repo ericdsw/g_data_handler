@@ -11,10 +11,10 @@ export const styles = (theme) => ({
     },
   },
   deleteButton: {
-    color: red[500],
+    color: red[400],
   },
   defaultButton: {
-    color: blue[500],
+    color: blue[400],
   },
   emptyText: {
     padding: 32,

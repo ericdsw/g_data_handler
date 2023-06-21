@@ -1,6 +1,8 @@
 export const styles = () => ({
   bundleCard: {
-    background: '#555',
+    // background: '#463f47',
+    // background: theme.palette.background.paper,
+    background: props => props.bundleCardBackground,
     marginTop: 4,
   },
   descriptionText: {

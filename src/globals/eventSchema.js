@@ -939,8 +939,8 @@ const eventSchema = {
       position: {
         label: 'Object Position',
         type: 'position',
-        required: true,
-        tooltip: 'Where the object will spawn',
+        required: false,
+        tooltip: 'Where the object will spawn (leave it empty for 0,0)',
       },
       parent: {
         label: 'Parent Object',

@@ -12,7 +12,7 @@ export const styles = (theme) => ({
     },
   },
   deleteButton: {
-    color: red[500],
+    color: red[400],
   },
   defaultButton: {
     color: blue[500],
@@ -31,8 +31,8 @@ export const styles = (theme) => ({
     bottom: 16,
     margin: theme.spacing(1),
     transition: 'transform 0.2s ease',
-    backgroundColor: red[500],
-    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: red[400],
+    color: theme.palette.getContrastText(red[400]),
     width: 200,
     '&:hover': {
       backgroundColor: red[700],
