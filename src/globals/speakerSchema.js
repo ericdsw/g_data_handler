@@ -215,7 +215,8 @@ const speakerSchema = {
     voice_file: 'phoenix_voice.wav',
     target_object:'MarcoNPC',
     speakerImages: []
-  }
+  },
+
 };
 
 export default speakerSchema;
