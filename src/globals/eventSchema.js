@@ -1430,6 +1430,13 @@ const eventSchema = {
         default: false,
         tooltip: 'If true, the bgm will ignore saved offsets',
       },
+      max_loops: {
+        label: 'Max Loops',
+        type: 'number',
+        default: -1,
+        tooltip: 'How many loops before invalidating, leave it at -1 to make it loop as long as it can',
+        helperText: 'A value of -1 means infinite loops'
+      }
     },
   },
 
