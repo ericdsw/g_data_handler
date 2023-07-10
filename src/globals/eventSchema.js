@@ -1436,6 +1436,12 @@ const eventSchema = {
         default: -1,
         tooltip: 'How many loops before invalidating, leave it at -1 to make it loop as long as it can',
         helperText: 'A value of -1 means infinite loops'
+      },
+      silence_after_song_loops: {
+        label: 'Silence after song loops',
+        type: 'boolean',
+        default: false,
+        tooltip: 'If true, the original bgm will not be restored when loops end'
       }
     },
   },
