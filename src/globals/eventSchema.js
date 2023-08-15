@@ -1551,6 +1551,13 @@ const eventSchema = {
         type: 'string',
         placeholder: 'method_name',
       },
+      parameters: {
+        label: 'Method parameters',
+        required: false,
+        default: '',
+        placeholder: 'param1, param2, true(bool), 5(int), 4.0(float)',
+        tooltip: 'You can use parenthesis to specify a data type, otherwise it will default to strings. Accepts String, bool, int and float for now.'
+      }
     },
   },
 
@@ -1827,6 +1834,60 @@ const eventSchema = {
       ...defaultParameters,
     },
   },
+
+  give_key_access_item: {
+    name: 'Give Key Access Item',
+    icon: 'add_card',
+    additionalText: '',
+    defaultImportant: true,
+    parameters: {
+      ...defaultParameters,
+      key_access_item_id: {
+        label: 'Key Access Item Id',
+        type: 'text',
+        required: true,
+        placeholder: 'The ID identifying the key access item'
+      },
+      aux_message: {
+        label: 'Aux message',
+        type: 'text',
+        required: false
+      },
+      show_fanfare: {
+        label: 'Show Fanfare',
+        type: 'boolean',
+        default: true
+      },
+      target_item_owner: {
+        label: 'Target Item Owner',
+        type: 'String',
+        default: '',
+        placeholder: 'The character this item will be given to. Leave empty to give it to the current character.'
+      }
+    }
+  },
+
+  remove_key_access_item: {
+    name: 'Remove Key Access Item',
+    icon: 'credit_card_off',
+    additionalText: '',
+    defaultImportant: false,
+    parameters: {
+      ...defaultParameters,
+      key_access_item_id: {
+        label: 'Key Access Item Id',
+        type: 'text',
+        required: true,
+        placeholder: 'The ID identifying the key access item'
+      },
+      target_item_owner: {
+        label: 'Target Item Owner',
+        type: 'String',
+        default: '',
+        placeholder: 'The character this item will be removed from. Leave empty to give it to the current character.'
+      }
+    }
+  }
 };
 
 export default eventSchema;
