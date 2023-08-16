@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { Button, Divider, Paper, Grid, Typography } from '@mui/material';
 import DragAndDrop from './DragAndDrop';
@@ -17,11 +17,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NoDialogue = ({
+const DragJsonFileManager = ({
   buttonString,
   dragString,
   handleEmpty,
   handleUpdateFromFile,
+  additionalActions = []
 }) => {
   const classes = useStyles();
 
@@ -35,8 +36,25 @@ const NoDialogue = ({
     [toggleLoading, handleUpdateFromFile]
   );
 
+  const additionalButtons = useMemo(() => (
+    <>
+      {additionalActions.map(actionData => (
+        <Button
+          key={actionData.title}
+          variant="contained"
+          color="primary"
+          onClick={actionData.action}
+          className={classes.button}
+        >
+          {actionData.title}
+        </Button>
+      ))}
+    </>
+  ), [additionalActions, classes.button]);
+
   return (
     <div>
+
       <Button
         variant="contained"
         color="primary"
@@ -45,6 +63,9 @@ const NoDialogue = ({
       >
         {buttonString}
       </Button>
+
+      {additionalButtons}
+      
       <Divider />
       <DragAndDrop handleDrop={(files) => handleDrop(files)}>
         <Paper elevation={1} className={classes.dragCapturer}>
@@ -68,4 +89,4 @@ const NoDialogue = ({
   );
 };
 
-export default NoDialogue;
+export default DragJsonFileManager;

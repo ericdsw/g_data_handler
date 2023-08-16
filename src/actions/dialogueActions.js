@@ -72,6 +72,7 @@ export const addToConversationMerger =
 
 export const updateDialogue =
   (fileName, dialogueId, entities) => (dispatch) => {
+    console.log(dialogueId);
     dispatch({
       type: UPDATE_DIALOGUE,
       payload: { fileName, dialogueId, entities },

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
-import { Icon, Typography } from '@mui/material';
+// import { Icon, Typography } from '@mui/material';
 import { DragDropContext } from 'react-beautiful-dnd';
 
 import {
@@ -19,7 +19,7 @@ import {
   unselectAllConversations,
 } from '../../actions/dialogueActions';
 import { parseFile, downloadJSON } from '../../functions';
-import { DragJsonFileManager } from '../elements';
+import NoDialogue from '../pages/dialogues/elements/NoDialogue';
 import {
   transformIn,
   transformOut,
@@ -116,6 +116,34 @@ class DialogueContainer extends React.Component {
     }
 
     downloadJSON(fileName, transformOut(currentDialogue, allData));
+  };
+
+  importAndMerge = (dialoguesToMerge) => {
+
+    let compositeDialogue = {};
+    for (let i = 0; i < Object.keys(dialoguesToMerge).length; i++) {
+      const key = Object.keys(dialoguesToMerge)[i];
+      const usedJson = dialoguesToMerge[key];
+      compositeDialogue = {
+        ...compositeDialogue,
+        ...usedJson
+      };
+    }
+
+    const { result, entities } = transformIn(compositeDialogue);
+
+    // Inject type if not found
+    Object.keys(entities.messages).forEach((mId) => {
+      if (!entities.messages[mId].type) {
+        if (!entities.messages[mId].is_emote) {
+          entities.messages[mId].type = 'message';
+        } else {
+          entities.messages[mId].type = 'emote';
+        }
+      }
+    });
+
+    this.props.updateDialogue('Amalgamation.json', result, entities);
   };
 
   /**
@@ -220,18 +248,10 @@ class DialogueContainer extends React.Component {
       );
     } else {
       content = (
-        <DragJsonFileManager
-          buttonString="New Dialogue"
-          dragString={
-            <React.Fragment>
-              <Typography gutterBottom>
-                <Icon fontSize="large">question_answer</Icon>
-              </Typography>
-              Drag a <code>.json</code> here to edit an existing dialogue.
-            </React.Fragment>
-          }
-          handleEmpty={this.updateWithEmptyDialogue}
-          handleUpdateFromFile={this.updateDialogueFromFile}
+        <NoDialogue
+          handleEmptyDialogue={this.updateWithEmptyDialogue}
+          handleUpdateFromFile={this.handleUpdateFromFile}
+          handleMerge={(dialoguesToMerge) => this.importAndMerge(dialoguesToMerge)}
         />
       );
     }

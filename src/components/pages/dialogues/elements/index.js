@@ -10,3 +10,4 @@ export { default as SpeakerDropdown } from './SpeakerDropdown';
 export { default as DialogueUITypeDropDown } from './DialogueUITypeDropdown';
 export { default as InputDecorationToggle } from './InputDecorationToggle';
 export { default as FloatingDialogue } from './FloatingDialogue';
+export { default as DragAndMergeDialogue } from './DragAndMergeDialogue';

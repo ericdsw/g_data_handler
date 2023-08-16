@@ -67,9 +67,7 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
   return (
     <AppBar
       position="fixed"
-      // color="primary"
       className={classes.appBar}
-      // enableColorOnDark
     >
       <Toolbar>
         <Grid container alignItems="center">
