@@ -250,7 +250,7 @@ class DialogueContainer extends React.Component {
       content = (
         <NoDialogue
           handleEmptyDialogue={this.updateWithEmptyDialogue}
-          handleUpdateFromFile={this.handleUpdateFromFile}
+          handleUpdateFromFile={this.updateDialogueFromFile}
           handleMerge={(dialoguesToMerge) => this.importAndMerge(dialoguesToMerge)}
         />
       );
