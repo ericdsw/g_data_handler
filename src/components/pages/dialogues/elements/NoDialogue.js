@@ -1,10 +1,12 @@
 import React, { useState, useMemo, Fragment } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { Icon, Button, Divider, Paper, Grid, Typography, IconButton } from '@mui/material';
+import {v4 as uuid } from 'uuid';
 
 import { DragAndDrop, DragJsonFileManager, GenericDialogue } from '../../../elements';
 import { useDialogueManager } from '../../../../hooks';
 import { parseFile } from '../../../../functions';
+
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -31,25 +33,58 @@ const NoDialogue = ({
   const [dialoguesToMerge, updateDialoguesToMerge] = useState({});
 
   const classes = useStyles();
-  const [loading, toggleLoading] = useState(false);
 
   const processNewFile = async (newFiles) => {
 
     const newData = {};
 
+    // Import the data while making sure that the dragged files contain no repeated conversation names.
     for (let i = 0; i < newFiles.length; i++) {
       const newFile = newFiles[i];
       try {
         const json = await parseFile(newFile, 'application/json');
-        newData[newFile.name] = json
+        const treatedJson = {};
+        let existingKeys = [];
+        Object.keys(newData).forEach(newDataFileName => {
+          existingKeys += Object.keys(newData[newDataFileName])
+        });
+
+        Object.keys(json).forEach(conversationName => {
+          if (existingKeys.includes(conversationName)) {
+            treatedJson[`${conversationName}_${newFile.name.toUpperCase()}`] = json[conversationName];
+          } else {
+            treatedJson[`${conversationName}`] = json[conversationName];
+          }
+        });
+        newData[newFile.name] = treatedJson;
       } catch (e) {
         console.log(e)
       }
     }
 
+    // Make sure that no existing data contains repeated conversations.
+
+    let oldDataKeys = [];
+    Object.keys(dialoguesToMerge).forEach(fileName => {
+      const curFileConverations = Object.keys(dialoguesToMerge[fileName])
+      oldDataKeys += curFileConverations;
+    });
+
+    const parsedNewData = {};
+    Object.keys(newData).forEach(newFileName => {
+      parsedNewData[newFileName] = {}
+      Object.keys(newData[newFileName]).forEach(conversationName => {
+        if (oldDataKeys.includes(conversationName)) {
+          parsedNewData[newFileName][`${conversationName}_${uuid()}`] = newData[newFileName][conversationName];
+        } else {
+          parsedNewData[newFileName][conversationName] = newData[newFileName][conversationName];
+        }
+      })
+    });
+
     updateDialoguesToMerge({
       ...dialoguesToMerge,
-      ...newData
+      ...parsedNewData
     });
     
   }
@@ -101,12 +136,7 @@ const NoDialogue = ({
                 >
                   <Grid item xs>
                     <Typography color="textSecondary" align="center" variant="h4">
-                      {loading && <p>Loading...</p>}
-                      {!loading && (
-                        <p>
-                          Drag dialogue json files here to merge
-                        </p>
-                      )}
+                      <p>Drag dialogue json files here to merge</p>
                     </Typography>
                   </Grid>
                 </Grid>
@@ -129,7 +159,7 @@ const NoDialogue = ({
                           {dialogueKey}
                           <br />
                           <Typography variant="caption">
-                            {dialoguesToMerge[dialogueKey].length} conversations
+                            It has {Object.keys(dialoguesToMerge[dialogueKey]).length} conversations
                           </Typography>
                         </Typography>
                       </Grid>
