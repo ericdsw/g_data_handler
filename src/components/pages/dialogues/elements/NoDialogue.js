@@ -1,7 +1,6 @@
 import React, { useState, useMemo, Fragment } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { Icon, Button, Divider, Paper, Grid, Typography, IconButton } from '@mui/material';
-import {v4 as uuid } from 'uuid';
 
 import { DragAndDrop, DragJsonFileManager, GenericDialogue } from '../../../elements';
 import { useDialogueManager } from '../../../../hooks';
@@ -75,7 +74,7 @@ const NoDialogue = ({
       parsedNewData[newFileName] = {}
       Object.keys(newData[newFileName]).forEach(conversationName => {
         if (oldDataKeys.includes(conversationName)) {
-          parsedNewData[newFileName][`${conversationName}_${uuid()}`] = newData[newFileName][conversationName];
+          parsedNewData[newFileName][`${conversationName}_${newFileName}`] = newData[newFileName][conversationName];
         } else {
           parsedNewData[newFileName][conversationName] = newData[newFileName][conversationName];
         }
