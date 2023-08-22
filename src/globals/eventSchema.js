@@ -1563,7 +1563,7 @@ const eventSchema = {
 
   give_memory: {
     name: 'Give Memory',
-    icon: 'cloud_download',
+    icon: 'psychology',
     additionalText: 'Unlocks a new memory for the player',
     defaultImportant: true,
     parameters: {
@@ -1887,7 +1887,39 @@ const eventSchema = {
         placeholder: 'The character this item will be removed from. Leave empty to give it to the current character.'
       }
     }
-  }
+  },
+
+  add_memory_point: {
+    name: 'Add Memory Point',
+    icon: 'cloud_upload',
+    additionalText: 'Adds the provided amount of points to the player\'s baseline memory point amount',
+    defaultImportant: false,
+    parameters: {
+      ...defaultParameters,
+      amount: {
+        label: 'Amount',
+        type: 'number',
+        default: 1,
+        required: true
+      }
+    }
+  },
+
+  remove_memory_point: {
+    name: 'Remove Memory Point',
+    icon: 'cloud_download',
+    additionalText: 'Removes the provided amount of points from the player\'s baseline memory point amount (will clamp at 0)',
+    defaultImportant: false,
+    parameters: {
+      ...defaultParameters,
+      amount: {
+        label: 'Amount',
+        type: 'number',
+        default: 1,
+        required: true
+      }
+    }
+  },
 };
 
 export default eventSchema;
