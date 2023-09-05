@@ -216,7 +216,7 @@ const DialogueConversation = ({
       {/* Create Message Form */}
       <DialogueMessageDialogue
         title="Create Conversation"
-        open={dialogues["addMessage"]}
+        open={dialogues['addMessage']}
         onClose={() => toggleDialogue('addMessage', 'hide')}
         creationHandler={(data, createAndContinue) => {
           if (!createAndContinue) {

@@ -18,15 +18,14 @@ import CreateMapEntityForm from './forms/CreateMapEntityForm';
 
 const useStyles = makeStyles(() => ({
   mapCard: {
-    background: props => props.cardBackground,
+    background: (props) => props.cardBackground,
   },
 }));
 
 const StepMap = ({ stepMap, handleAddEntity }) => {
-
   const { darkMode } = useSelector((state) => state.app);
   const classes = useStyles({
-    cardBackground: darkMode ? '#463f47' : '#eee'
+    cardBackground: darkMode ? '#463f47' : '#eee',
   });
 
   const [curEntityType, setCurEntityType] = useState('');

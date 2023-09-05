@@ -1,11 +1,22 @@
 import React, { useState, useMemo, Fragment } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { Icon, Button, Divider, Paper, Grid, Typography, IconButton } from '@mui/material';
+import {
+  Icon,
+  Button,
+  Divider,
+  Paper,
+  Grid,
+  Typography,
+  IconButton,
+} from '@mui/material';
 
-import { DragAndDrop, DragJsonFileManager, GenericDialogue } from '../../../elements';
+import {
+  DragAndDrop,
+  DragJsonFileManager,
+  GenericDialogue,
+} from '../../../elements';
 import { useDialogueManager } from '../../../../hooks';
 import { parseFile } from '../../../../functions';
-
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -15,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   dragCapturer: {
     padding: 16,
     marginTop: 24,
-    minHeight: 332
+    minHeight: 332,
   },
   gridContainer: {
     minHeight: 300,
@@ -25,16 +36,14 @@ const useStyles = makeStyles((theme) => ({
 const NoDialogue = ({
   handleEmptyDialogue,
   handleUpdateFromFile,
-  handleMerge
+  handleMerge,
 }) => {
-
   const [dialogues, toggleDialogue] = useDialogueManager('mergeDialogue');
   const [dialoguesToMerge, updateDialoguesToMerge] = useState({});
 
   const classes = useStyles();
 
   const processNewFile = async (newFiles) => {
-
     const newData = {};
 
     // Import the data while making sure that the dragged files contain no repeated conversation names.
@@ -44,64 +53,72 @@ const NoDialogue = ({
         const json = await parseFile(newFile, 'application/json');
         const treatedJson = {};
         let existingKeys = [];
-        Object.keys(newData).forEach(newDataFileName => {
-          existingKeys += Object.keys(newData[newDataFileName])
+        Object.keys(newData).forEach((newDataFileName) => {
+          existingKeys += Object.keys(newData[newDataFileName]);
         });
 
-        Object.keys(json).forEach(conversationName => {
+        Object.keys(json).forEach((conversationName) => {
           if (existingKeys.includes(conversationName)) {
-            treatedJson[`${conversationName}_${newFile.name.toUpperCase()}`] = json[conversationName];
+            treatedJson[`${conversationName}_${newFile.name.toUpperCase()}`] =
+              json[conversationName];
           } else {
             treatedJson[`${conversationName}`] = json[conversationName];
           }
         });
         newData[newFile.name] = treatedJson;
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
 
     // Make sure that no existing data contains repeated conversations.
 
     let oldDataKeys = [];
-    Object.keys(dialoguesToMerge).forEach(fileName => {
-      const curFileConverations = Object.keys(dialoguesToMerge[fileName])
+    Object.keys(dialoguesToMerge).forEach((fileName) => {
+      const curFileConverations = Object.keys(dialoguesToMerge[fileName]);
       oldDataKeys += curFileConverations;
     });
 
     const parsedNewData = {};
-    Object.keys(newData).forEach(newFileName => {
-      parsedNewData[newFileName] = {}
-      Object.keys(newData[newFileName]).forEach(conversationName => {
+    Object.keys(newData).forEach((newFileName) => {
+      parsedNewData[newFileName] = {};
+      Object.keys(newData[newFileName]).forEach((conversationName) => {
         if (oldDataKeys.includes(conversationName)) {
-          parsedNewData[newFileName][`${conversationName}_${newFileName}`] = newData[newFileName][conversationName];
+          parsedNewData[newFileName][`${conversationName}_${newFileName}`] =
+            newData[newFileName][conversationName];
         } else {
-          parsedNewData[newFileName][conversationName] = newData[newFileName][conversationName];
+          parsedNewData[newFileName][conversationName] =
+            newData[newFileName][conversationName];
         }
-      })
+      });
     });
 
     updateDialoguesToMerge({
       ...dialoguesToMerge,
-      ...parsedNewData
+      ...parsedNewData,
     });
-    
-  }
+  };
 
-  const deleteFile = fileName => {
-    let newDialogues = {...dialoguesToMerge};
+  const deleteFile = (fileName) => {
+    let newDialogues = { ...dialoguesToMerge };
     delete newDialogues[fileName];
     updateDialoguesToMerge(newDialogues);
-  }
+  };
 
-  const hasDialoguesToMerge = useMemo(() => Object.keys(dialoguesToMerge).length > 0, [dialoguesToMerge])
+  const hasDialoguesToMerge = useMemo(
+    () => Object.keys(dialoguesToMerge).length > 0,
+    [dialoguesToMerge]
+  );
 
   return (
     <div>
       <DragJsonFileManager
         buttonString="New Dialogue"
         additionalActions={[
-          { title: "Import & Merge", action: () => toggleDialogue('mergeDialogue', 'show') }
+          {
+            title: 'Import & Merge',
+            action: () => toggleDialogue('mergeDialogue', 'show'),
+          },
         ]}
         dragString={
           <React.Fragment>
@@ -118,13 +135,12 @@ const NoDialogue = ({
       <GenericDialogue
         open={dialogues['mergeDialogue']}
         onClose={() => toggleDialogue('mergeDialogue', 'hide')}
-        maxWidth='sm'
+        maxWidth="sm"
       >
         <Typography variant="h5">
           Import & Merge
-          <DragAndDrop handleDrop={file => processNewFile(file)}>
+          <DragAndDrop handleDrop={(file) => processNewFile(file)}>
             <Paper elevation={1} className={classes.dragCapturer}>
-
               {!hasDialoguesToMerge && (
                 <Grid
                   container
@@ -134,18 +150,20 @@ const NoDialogue = ({
                   className={classes.gridContainer}
                 >
                   <Grid item xs>
-                    <Typography color="textSecondary" align="center" variant="h4">
+                    <Typography
+                      color="textSecondary"
+                      align="center"
+                      variant="h4"
+                    >
                       <p>Drag dialogue json files here to merge</p>
                     </Typography>
                   </Grid>
                 </Grid>
               )}
 
-              {hasDialoguesToMerge && (
+              {hasDialoguesToMerge &&
                 Object.keys(dialoguesToMerge).map((dialogueKey, index) => (
-                  <Fragment
-                    key={dialogueKey}
-                  >
+                  <Fragment key={dialogueKey}>
                     <Grid
                       container
                       alignItems="center"
@@ -158,14 +176,14 @@ const NoDialogue = ({
                           {dialogueKey}
                           <br />
                           <Typography variant="caption">
-                            It has {Object.keys(dialoguesToMerge[dialogueKey]).length} conversations
+                            It has{' '}
+                            {Object.keys(dialoguesToMerge[dialogueKey]).length}{' '}
+                            conversations
                           </Typography>
                         </Typography>
                       </Grid>
                       <Grid item xs={1} container justifyContent="flex-end">
-                        <IconButton
-                          onClick={() => deleteFile(dialogueKey)}
-                        >
+                        <IconButton onClick={() => deleteFile(dialogueKey)}>
                           <Icon>delete</Icon>
                         </IconButton>
                       </Grid>
@@ -174,9 +192,7 @@ const NoDialogue = ({
                       <Divider />
                     )}
                   </Fragment>
-                ))
-              )}
-
+                ))}
             </Paper>
           </DragAndDrop>
         </Typography>

@@ -120,13 +120,16 @@ const DialogueMessageToolbar = ({
           break;
       }
     },
-    [handleAddAbove, handleAddBelow, handleEdit, selectedOption, additionalBelowOffset]
+    [
+      handleAddAbove,
+      handleAddBelow,
+      handleEdit,
+      selectedOption,
+      additionalBelowOffset,
+    ]
   );
 
-  const {
-    typeString,
-    editDialogue,
-  } = useMemo(() => {
+  const { typeString, editDialogue } = useMemo(() => {
     let typeString;
     let editDialogue;
 
@@ -247,7 +250,7 @@ const DialogueMessageToolbar = ({
     message,
     selectedOption,
     toggleDialogue,
-    additionalBelowOffset
+    additionalBelowOffset,
   ]);
 
   return (
@@ -295,16 +298,19 @@ const DialogueMessageToolbar = ({
           <ListItemText primary="Split From This" />
         </MenuItem>
         <Divider />
-          
-        <AddBelowMenuOptions
-          addMessageBelowSelected={e => handleMenuSelect(e, 'addMessageBelow')}
-          addEmoteBelowSelected={e => handleMenuSelect(e, 'addEmoteBelow')}
-          addSwarmBelowSelected={e => handleMenuSelect(e, 'addSwarmBelow')}
-          giveMoneyBelowSelected={e => handleMenuSelect(e, 'giveMoneyBelow')}
-          giveItemBelowSelected={e => handleMenuSelect(e, 'giveItemBelow')}
-          selectItemBelowSelected={e => handleMenuSelect(e, 'selectItemBelow')}
-        />
 
+        <AddBelowMenuOptions
+          addMessageBelowSelected={(e) =>
+            handleMenuSelect(e, 'addMessageBelow')
+          }
+          addEmoteBelowSelected={(e) => handleMenuSelect(e, 'addEmoteBelow')}
+          addSwarmBelowSelected={(e) => handleMenuSelect(e, 'addSwarmBelow')}
+          giveMoneyBelowSelected={(e) => handleMenuSelect(e, 'giveMoneyBelow')}
+          giveItemBelowSelected={(e) => handleMenuSelect(e, 'giveItemBelow')}
+          selectItemBelowSelected={(e) =>
+            handleMenuSelect(e, 'selectItemBelow')
+          }
+        />
       </Menu>
 
       {/* Delete Dialogue */}
@@ -324,16 +330,16 @@ const DialogueMessageToolbar = ({
       {/* Add Message Below Form */}
       <DialogueMessageDialogue
         title="Add conversation below"
-        open={dialogues["addMessageBelow"]}
+        open={dialogues['addMessageBelow']}
         onClose={() => {
           toggleDialogue('addMessageBelow', 'hide');
-          updateAdditionalBelowOffset(0)
+          updateAdditionalBelowOffset(0);
         }}
         creationHandler={(data, createAndContinue) => {
           handleAddBelow(data, additionalBelowOffset);
           if (!createAndContinue) {
             toggleDialogue('addMessageBelow', 'hide');
-            updateAdditionalBelowOffset(0)
+            updateAdditionalBelowOffset(0);
           } else {
             updateAdditionalBelowOffset(additionalBelowOffset + 1);
           }
@@ -343,14 +349,14 @@ const DialogueMessageToolbar = ({
       {/* Add emote below form */}
       <GenericDialogue
         title="Add emote below"
-        open={dialogues["addEmoteBelow"]}
+        open={dialogues['addEmoteBelow']}
         onClose={() => {
           toggleDialogue('addEmoteBelow', 'hide');
           updateAdditionalBelowOffset(0);
         }}
       >
         <CreateEmoteForm
-          creationHandler={data => {
+          creationHandler={(data) => {
             handleAddBelow(data, additionalBelowOffset);
             updateAdditionalBelowOffset(0);
             toggleDialogue('addEmoteBelow', 'hide');
@@ -361,14 +367,14 @@ const DialogueMessageToolbar = ({
       {/* Add swarm below form */}
       <GenericDialogue
         title="Add swarm below"
-        open={dialogues["addSwarmBelow"]}
+        open={dialogues['addSwarmBelow']}
         onClose={() => {
           toggleDialogue('addSwarmBelow', 'hide');
           updateAdditionalBelowOffset(0);
         }}
       >
         <CreateSwarmForm
-          handleSubmit={data => {
+          handleSubmit={(data) => {
             handleAddBelow(data, additionalBelowOffset);
             updateAdditionalBelowOffset(0);
             toggleDialogue('addSwarmBelow', 'hide');
@@ -379,14 +385,14 @@ const DialogueMessageToolbar = ({
       {/* Give money below */}
       <GenericDialogue
         title="Give money below"
-        open={dialogues["giveMoneyBelow"]}
+        open={dialogues['giveMoneyBelow']}
         onClose={() => {
           toggleDialogue('giveMoneyBelow', 'hide');
           updateAdditionalBelowOffset(0);
         }}
       >
         <GiveMoneyFromDialogueForm
-          onSubmit={data => {
+          onSubmit={(data) => {
             handleAddBelow(data, additionalBelowOffset);
             toggleDialogue('giveMoneyBelow', 'hide');
             updateAdditionalBelowOffset(0);
@@ -397,14 +403,14 @@ const DialogueMessageToolbar = ({
       {/* Give item below */}
       <GenericDialogue
         title="Give item below"
-        open={dialogues["giveItemBelow"]}
+        open={dialogues['giveItemBelow']}
         onClose={() => {
           toggleDialogue('giveItemBelow', 'hide');
           updateAdditionalBelowOffset(0);
         }}
       >
         <GiveItemFromDialogueForm
-          onSubmit={data => {
+          onSubmit={(data) => {
             handleAddBelow(data, additionalBelowOffset);
             toggleDialogue('giveItemBelow', 'hide');
             updateAdditionalBelowOffset(0);
@@ -422,7 +428,7 @@ const DialogueMessageToolbar = ({
         }}
       >
         <PickItemFromDialogueForm
-          onSubmit={data => {
+          onSubmit={(data) => {
             handleAddBelow(data, additionalBelowOffset);
             toggleDialogue('selectItemBelow', 'hide');
             updateAdditionalBelowOffset(0);

@@ -7,7 +7,7 @@ const AddBelowMenuOptions = ({
   addSwarmBelowSelected,
   giveMoneyBelowSelected,
   giveItemBelowSelected,
-  selectItemBelowSelected
+  selectItemBelowSelected,
 }) => (
   <>
     <MenuItem onClick={addMessageBelowSelected}>

@@ -15,6 +15,7 @@ import {
   addStorylineStep,
   clearStoryline,
   updateAppliesToEndRun,
+  updateAppliedRunsString,
 } from '../../actions/storylineActions';
 
 class StorylineContainer extends React.Component {
@@ -27,8 +28,13 @@ class StorylineContainer extends React.Component {
   };
 
   export = () => {
-    const { currentStoryline, storylines, completeState, appliesToEndRun } =
-      this.props;
+    const {
+      currentStoryline,
+      storylines,
+      completeState,
+      appliesToEndRun,
+      appliedRunsString,
+    } = this.props;
 
     const output = denormalize(
       currentStoryline,
@@ -36,22 +42,22 @@ class StorylineContainer extends React.Component {
       completeState
     );
 
-    console.log(this.props);
-
     downloadJSON(storylines[currentStoryline].name, {
       ...output,
       applies_in_end_run: appliesToEndRun,
+      applied_runs: appliedRunsString,
     });
   };
 
   toggleAppliesToEndrun = (newValue) => {
-    const { updateAppliesToEndRun } = this.props;
-    updateAppliesToEndRun(newValue);
+    this.props.updateAppliesToEndRun(newValue);
+  };
+
+  updateAppliedRuns = (newValue) => {
+    this.props.updateAppliedRunsString(newValue);
   };
 
   updateStorylineFromFile = (targetFile) => {
-    const { updateStoryline } = this.props;
-
     parseFile(targetFile, 'application/json')
       .then((json) => {
         const normalizedData = normalize(json, StorylineSchema);
@@ -59,10 +65,15 @@ class StorylineContainer extends React.Component {
         if ('applies_in_end_run' in json) {
           appliesToEndRun = json.applies_in_end_run;
         }
-        updateStoryline(
+        let appliedRunsString = '';
+        if ('applied_runs' in json) {
+          appliedRunsString = json.applied_runs;
+        }
+        this.props.updateStoryline(
           normalizedData.result,
           normalizedData.entities,
-          appliesToEndRun
+          appliesToEndRun,
+          appliedRunsString
         );
       })
       .catch((error) => this.showError(error.message));
@@ -85,7 +96,7 @@ class StorylineContainer extends React.Component {
 
   // Render Logic
   render() {
-    const { currentStoryline, storylines, appliesToEndRun } = this.props;
+    const { currentStoryline, storylines, appliedRunsString } = this.props;
 
     let content;
     if (currentStoryline !== '') {
@@ -96,8 +107,8 @@ class StorylineContainer extends React.Component {
           handleAddStep={this.addStep}
           handleClear={this.clearStoryline}
           handleExport={this.export}
-          updateAppliesToEndRun={this.toggleAppliesToEndrun}
-          appliesToEndRun={appliesToEndRun}
+          appliedRunsString={appliedRunsString}
+          updateAppliedRunsString={this.updateAppliedRuns}
         />
       );
     } else {
@@ -125,6 +136,7 @@ const mapStateToProps = (state) => ({
   currentStoryline: state.storyline.currentStoryline,
   storylines: state.storyline.storylines,
   appliesToEndRun: state.storyline.appliesToEndRun,
+  appliedRunsString: state.storyline.appliedRunsString,
 
   /**
    * We need access to the complete state inside the storyline reducer, which is what
@@ -140,4 +152,5 @@ export default connect(mapStateToProps, {
   addStorylineStep,
   clearStoryline,
   updateAppliesToEndRun,
+  updateAppliedRunsString,
 })(StorylineContainer);

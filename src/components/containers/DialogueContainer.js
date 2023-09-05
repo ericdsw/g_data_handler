@@ -119,14 +119,13 @@ class DialogueContainer extends React.Component {
   };
 
   importAndMerge = (dialoguesToMerge) => {
-
     let compositeDialogue = {};
     for (let i = 0; i < Object.keys(dialoguesToMerge).length; i++) {
       const key = Object.keys(dialoguesToMerge)[i];
       const usedJson = dialoguesToMerge[key];
       compositeDialogue = {
         ...compositeDialogue,
-        ...usedJson
+        ...usedJson,
       };
     }
 
@@ -251,7 +250,9 @@ class DialogueContainer extends React.Component {
         <NoDialogue
           handleEmptyDialogue={this.updateWithEmptyDialogue}
           handleUpdateFromFile={this.updateDialogueFromFile}
-          handleMerge={(dialoguesToMerge) => this.importAndMerge(dialoguesToMerge)}
+          handleMerge={(dialoguesToMerge) =>
+            this.importAndMerge(dialoguesToMerge)
+          }
         />
       );
     }

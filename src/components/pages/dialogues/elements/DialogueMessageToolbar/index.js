@@ -1,3 +1,3 @@
-import DialogueMessageToolbar from "./DialogueMessageToolbar";
+import DialogueMessageToolbar from './DialogueMessageToolbar';
 
 export default DialogueMessageToolbar;

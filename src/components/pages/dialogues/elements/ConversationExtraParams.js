@@ -18,28 +18,27 @@ const useStyles = makeStyles((theme) => ({
 
 const EXTRAS = {
   location: {
-    label: 'Location'
+    label: 'Location',
   },
   voice_file: {
-    label: 'Voice File'
+    label: 'Voice File',
   },
   control_level: {
-    label: 'Control Level'
+    label: 'Control Level',
   },
   autopilot_offset: {
-    label: 'Autopilot Offset'
+    label: 'Autopilot Offset',
   },
   try_to_position_on_center: {
-    label: 'Try to position on Center'
-  }
+    label: 'Try to position on Center',
+  },
 };
 
 const ConversationExtraParams = ({ message }) => {
   const classes = useStyles();
   const extraChips = useMemo(() => {
-    return Object.keys(EXTRAS).filter((extraProperty) =>
-      message.hasOwnProperty(extraProperty)
-    )
+    return Object.keys(EXTRAS)
+      .filter((extraProperty) => message.hasOwnProperty(extraProperty))
       .filter((extraProperty) => message[extraProperty] !== '')
       .map((extraProperty) => (
         <Chip

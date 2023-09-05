@@ -869,8 +869,9 @@ const eventSchema = {
         label: 'Show Disk Save Feedback',
         type: 'boolean',
         default: true,
-        tooltip: 'Whether the save icon will appear on the bottom of the screen'
-      }
+        tooltip:
+          'Whether the save icon will appear on the bottom of the screen',
+      },
     },
   },
 
@@ -1434,15 +1435,17 @@ const eventSchema = {
         label: 'Max Loops',
         type: 'number',
         default: -1,
-        tooltip: 'How many loops before invalidating, leave it at -1 to make it loop as long as it can',
-        helperText: 'A value of -1 means infinite loops'
+        tooltip:
+          'How many loops before invalidating, leave it at -1 to make it loop as long as it can',
+        helperText: 'A value of -1 means infinite loops',
       },
       silence_after_song_loops: {
         label: 'Silence after song loops',
         type: 'boolean',
         default: false,
-        tooltip: 'If true, the original bgm will not be restored when loops end'
-      }
+        tooltip:
+          'If true, the original bgm will not be restored when loops end',
+      },
     },
   },
 
@@ -1556,8 +1559,9 @@ const eventSchema = {
         required: false,
         default: '',
         placeholder: 'param1, param2, true(bool), 5(int), 4.0(float)',
-        tooltip: 'You can use parenthesis to specify a data type, otherwise it will default to strings. Accepts String, bool, int and float for now.'
-      }
+        tooltip:
+          'You can use parenthesis to specify a data type, otherwise it will default to strings. Accepts String, bool, int and float for now.',
+      },
     },
   },
 
@@ -1846,25 +1850,26 @@ const eventSchema = {
         label: 'Key Access Item Id',
         type: 'text',
         required: true,
-        placeholder: 'The ID identifying the key access item'
+        placeholder: 'The ID identifying the key access item',
       },
       aux_message: {
         label: 'Aux message',
         type: 'text',
-        required: false
+        required: false,
       },
       show_fanfare: {
         label: 'Show Fanfare',
         type: 'boolean',
-        default: true
+        default: true,
       },
       target_item_owner: {
         label: 'Target Item Owner',
         type: 'String',
         default: '',
-        placeholder: 'The character this item will be given to. Leave empty to give it to the current character.'
-      }
-    }
+        placeholder:
+          'The character this item will be given to. Leave empty to give it to the current character.',
+      },
+    },
   },
 
   remove_key_access_item: {
@@ -1878,21 +1883,23 @@ const eventSchema = {
         label: 'Key Access Item Id',
         type: 'text',
         required: true,
-        placeholder: 'The ID identifying the key access item'
+        placeholder: 'The ID identifying the key access item',
       },
       target_item_owner: {
         label: 'Target Item Owner',
         type: 'String',
         default: '',
-        placeholder: 'The character this item will be removed from. Leave empty to give it to the current character.'
-      }
-    }
+        placeholder:
+          'The character this item will be removed from. Leave empty to give it to the current character.',
+      },
+    },
   },
 
   add_memory_point: {
     name: 'Add Memory Point',
     icon: 'cloud_upload',
-    additionalText: 'Adds the provided amount of points to the player\'s baseline memory point amount',
+    additionalText:
+      "Adds the provided amount of points to the player's baseline memory point amount",
     defaultImportant: false,
     parameters: {
       ...defaultParameters,
@@ -1900,15 +1907,16 @@ const eventSchema = {
         label: 'Amount',
         type: 'number',
         default: 1,
-        required: true
-      }
-    }
+        required: true,
+      },
+    },
   },
 
   remove_memory_point: {
     name: 'Remove Memory Point',
     icon: 'cloud_download',
-    additionalText: 'Removes the provided amount of points from the player\'s baseline memory point amount (will clamp at 0)',
+    additionalText:
+      "Removes the provided amount of points from the player's baseline memory point amount (will clamp at 0)",
     defaultImportant: false,
     parameters: {
       ...defaultParameters,
@@ -1916,9 +1924,9 @@ const eventSchema = {
         label: 'Amount',
         type: 'number',
         default: 1,
-        required: true
-      }
-    }
+        required: true,
+      },
+    },
   },
 };
 

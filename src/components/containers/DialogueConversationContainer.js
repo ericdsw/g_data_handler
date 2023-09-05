@@ -38,9 +38,7 @@ class DialogueConversationContainer extends React.Component {
     const currentConversation = conversations[conversationId];
 
     return (
-      <Draggable
-        draggableId={conversationId} index={this.props.index}
-      >
+      <Draggable draggableId={conversationId} index={this.props.index}>
         {(provided) => (
           <div {...provided.draggableProps} ref={provided.innerRef}>
             <DialogueConversation

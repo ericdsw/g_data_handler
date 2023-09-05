@@ -24,16 +24,19 @@ import {
   CLEAR_STORYLINE,
   DUPLICATE_CONFIGURATIONS,
   UPDATE_STORYLINE_APPLIES_TO_END_RUN,
+  UPDATE_APPLIED_RUNS_STRING,
 } from './types';
 
 export const updateStoryline =
-  (currentStoryline, data, appliesToEndRun) => (dispatch) => {
+  (currentStoryline, data, appliesToEndRun, appliedRunsString) =>
+  (dispatch) => {
     dispatch({
       type: UPDATE_STORYLINE,
       payload: {
         currentStoryline,
         data,
         appliesToEndRun,
+        appliedRunsString,
       },
     });
   };
@@ -216,6 +219,15 @@ export const updateAppliesToEndRun = (applies) => (dispatch) => {
     type: UPDATE_STORYLINE_APPLIES_TO_END_RUN,
     payload: {
       appliesToEndRun: applies,
+    },
+  });
+};
+
+export const updateAppliedRunsString = (appliedRunsString) => (dispatch) => {
+  dispatch({
+    type: UPDATE_APPLIED_RUNS_STRING,
+    payload: {
+      appliedRunsString,
     },
   });
 };

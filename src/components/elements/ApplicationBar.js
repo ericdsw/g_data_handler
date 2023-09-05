@@ -22,7 +22,7 @@ import { createInput } from '../../functions';
 const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    borderBottom: `3px solid ${theme.palette.primary.main}`
+    borderBottom: `3px solid ${theme.palette.primary.main}`,
   },
   menuButton: {
     [theme.breakpoints.up('sm')]: {
@@ -65,10 +65,7 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
   const [dialogues, toggleDialogue] = useDialogueManager('helpDialogue');
 
   return (
-    <AppBar
-      position="fixed"
-      className={classes.appBar}
-    >
+    <AppBar position="fixed" className={classes.appBar}>
       <Toolbar>
         <Grid container alignItems="center">
           <Grid item xs={8}>

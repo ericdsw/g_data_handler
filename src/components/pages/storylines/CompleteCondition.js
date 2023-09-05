@@ -8,7 +8,7 @@ import {
   ListItem,
   IconButton,
   Icon,
-  Card
+  Card,
 } from '@mui/material';
 
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';

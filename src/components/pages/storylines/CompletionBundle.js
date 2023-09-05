@@ -34,7 +34,9 @@ const CompletionBundle = ({
   handleDeleteBundle,
 }) => {
   const { darkMode } = useSelector((state) => state.app);
-  const classes = useStyles({ bundleCardBackground: darkMode ? '#463f47' : '#eee'});
+  const classes = useStyles({
+    bundleCardBackground: darkMode ? '#463f47' : '#eee',
+  });
 
   const [curCompletionType, setCurCompletionType] = useState('');
   const [dialogues, toggleDialogue] = useDialogueManager(

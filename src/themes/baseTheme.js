@@ -1,19 +1,18 @@
 import { createTheme, adaptV4Theme } from '@mui/material/styles';
 
-
 const primaryColor = {
   main: '#b65672',
   light: '#e9ccd5',
   dark: '#9e3c55',
   contrastText: '#fff',
-}
+};
 
 const secondaryColor = {
   main: '#ccaa74',
   light: '#f0e6d5',
   dark: '#b99057',
   contrastText: '#000',
-}
+};
 
 const baseTheme = (mode) =>
   createTheme(
@@ -41,10 +40,10 @@ const baseTheme = (mode) =>
         },
         MuiTableRow: {
           root: {
-            "&:last-child td": {
-              borderBottom: 0
-            }
-          }
+            '&:last-child td': {
+              borderBottom: 0,
+            },
+          },
         },
         MuiOutlinedInput: {
           root: {

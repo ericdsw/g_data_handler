@@ -23,7 +23,7 @@ export const styles = (theme) => ({
     width: '100%',
     fontSize: 14,
     backgroundColor: 'transparent',
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
   },
   redButton: {
     color: '#fff',
@@ -34,6 +34,6 @@ export const styles = (theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: 10,
     paddingTop: 16,
-    paddingBottom: 0
+    paddingBottom: 0,
   },
 });

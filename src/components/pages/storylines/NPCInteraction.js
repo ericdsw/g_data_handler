@@ -21,14 +21,14 @@ import { interactionInputSchema } from '../../../globals';
 
 const useStyles = makeStyles(() => ({
   interactionCard: {
-    background: props => props.cardBackground,
+    background: (props) => props.cardBackground,
   },
 }));
 
 const NPCInteraction = ({ npcInteraction, handleEdit, handleDelete }) => {
   const { darkMode } = useSelector((state) => state.app);
   const classes = useStyles({
-    cardBackground: darkMode ? '#463f47' : '#fafafa'
+    cardBackground: darkMode ? '#463f47' : '#fafafa',
   });
 
   const paramKeys = useMemo(

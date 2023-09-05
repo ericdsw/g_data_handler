@@ -29,11 +29,13 @@ import {
   CLEAR_STORYLINE,
   DUPLICATE_CONFIGURATIONS,
   UPDATE_STORYLINE_APPLIES_TO_END_RUN,
+  UPDATE_APPLIED_RUNS_STRING,
 } from '../actions/types';
 
 const initialState = {
   currentStoryline: '',
   appliesToEndRun: false,
+  appliedRunsString: '',
   storylines: {},
   storylineSteps: {},
   completionBundles: {},
@@ -72,12 +74,18 @@ const storylineReducer = createReducer(initialState, (builder) => {
     .addCase(CLEAR_STORYLINE, clearStoryline)
 
     .addCase(DUPLICATE_CONFIGURATIONS, duplicateConfigurations)
-    .addCase(UPDATE_STORYLINE_APPLIES_TO_END_RUN, updateAppliesToEndRun);
+    .addCase(UPDATE_STORYLINE_APPLIES_TO_END_RUN, updateAppliesToEndRun)
+    .addCase(UPDATE_APPLIED_RUNS_STRING, updateAppliedRuns);
 });
 
 function updateAppliesToEndRun(state, action) {
   const { appliesToEndRun } = action.payload;
   state.appliesToEndRun = appliesToEndRun;
+}
+
+function updateAppliedRuns(state, action) {
+  const { appliedRunsString } = action.payload;
+  state.appliedRunsString = appliedRunsString;
 }
 
 // ADDS
@@ -197,13 +205,14 @@ function addEntityToExistingMap(state, action) {
 // UPDATES
 
 function updateStoryline(state, action) {
-  const { currentStoryline, data, appliesToEndRun } = action.payload;
-  console.log(appliesToEndRun);
+  const { currentStoryline, data, appliesToEndRun, appliedRunsString } =
+    action.payload;
   return {
     ...state,
     currentStoryline,
     ...data,
     appliesToEndRun,
+    appliedRunsString,
   };
 }
 

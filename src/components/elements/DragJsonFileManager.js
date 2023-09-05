@@ -22,7 +22,7 @@ const DragJsonFileManager = ({
   dragString,
   handleEmpty,
   handleUpdateFromFile,
-  additionalActions = []
+  additionalActions = [],
 }) => {
   const classes = useStyles();
 
@@ -36,25 +36,27 @@ const DragJsonFileManager = ({
     [toggleLoading, handleUpdateFromFile]
   );
 
-  const additionalButtons = useMemo(() => (
-    <>
-      {additionalActions.map(actionData => (
-        <Button
-          key={actionData.title}
-          variant="contained"
-          color="primary"
-          onClick={actionData.action}
-          className={classes.button}
-        >
-          {actionData.title}
-        </Button>
-      ))}
-    </>
-  ), [additionalActions, classes.button]);
+  const additionalButtons = useMemo(
+    () => (
+      <>
+        {additionalActions.map((actionData) => (
+          <Button
+            key={actionData.title}
+            variant="contained"
+            color="primary"
+            onClick={actionData.action}
+            className={classes.button}
+          >
+            {actionData.title}
+          </Button>
+        ))}
+      </>
+    ),
+    [additionalActions, classes.button]
+  );
 
   return (
     <div>
-
       <Button
         variant="contained"
         color="primary"
@@ -65,7 +67,7 @@ const DragJsonFileManager = ({
       </Button>
 
       {additionalButtons}
-      
+
       <Divider />
       <DragAndDrop handleDrop={(files) => handleDrop(files)}>
         <Paper elevation={1} className={classes.dragCapturer}>

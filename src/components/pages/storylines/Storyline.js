@@ -1,14 +1,6 @@
 import React, { useMemo } from 'react';
 import { makeStyles } from '@mui/styles';
-import {
-  Grid,
-  Typography,
-  TextField,
-  Button,
-  FormControlLabel,
-  Switch,
-  Tooltip,
-} from '@mui/material';
+import { Grid, Typography, TextField, Button, Tooltip } from '@mui/material';
 
 import StorylineStepContainer from '../../containers/StorylineStepContainer';
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
@@ -25,8 +17,8 @@ const Storyline = ({
   handleAddStep,
   handleClear,
   handleExport,
-  appliesToEndRun,
-  updateAppliesToEndRun,
+  appliedRunsString,
+  updateAppliedRunsString,
 }) => {
   const classes = useStyles();
 
@@ -36,8 +28,6 @@ const Storyline = ({
   );
 
   const fileName = useMemo(() => `${storyline.name}.json`, [storyline.name]);
-
-  // const [appliesToEndRun, toggleAppliesToEndRun] = useState(false);
 
   /**
    * This useMemo hook is not detecting when the storyline's steps are deleted since
@@ -88,45 +78,47 @@ const Storyline = ({
           </Button>
         </Typography>
       </Grid>
-      <Grid item xs={12} lg={5}>
-        <TextField
-          id="storyline_name"
-          label="Storyline Name"
-          fullWidth
-          value={storyline.name}
-          variant="outlined"
-          margin="normal"
-          onChange={(e) => handleNameChange(e.target.value)}
-        />
-      </Grid>
-      <Grid item xs={12} lg={5}>
-        <TextField
-          id="file_name"
-          label="File Name"
-          fullWidth
-          value={fileName}
-          variant="outlined"
-          margin="normal"
-          disabled
-        />
-      </Grid>
-      <Grid item xs={12} lg={2}>
-        <Tooltip
-          enterDelay={300}
-          title="If true, will only apply to the end run."
-        >
-          <FormControlLabel
-            label="Applies to end run"
-            control={
-              <Switch
-                checked={appliesToEndRun}
-                onChange={(e) => {
-                  updateAppliesToEndRun(e.target.checked);
-                }}
-              />
-            }
+      <Grid item xs={12} container spacing={2} alignItems="flex-start">
+        <Grid item xs={12} lg={4}>
+          <TextField
+            id="storyline_name"
+            label="Storyline Name"
+            fullWidth
+            value={storyline.name}
+            variant="outlined"
+            margin="normal"
+            onChange={(e) => handleNameChange(e.target.value)}
           />
-        </Tooltip>
+        </Grid>
+        <Grid item xs={12} lg={4}>
+          <TextField
+            id="file_name"
+            label="File Name"
+            fullWidth
+            value={fileName}
+            variant="outlined"
+            margin="normal"
+            disabled
+          />
+        </Grid>
+        <Grid item xs={12} lg={4}>
+          <Tooltip
+            enterDelay={300}
+            title="Which runs the storyline will be limited to (separated by comma)"
+          >
+            <TextField
+              id="applied_runs"
+              label="Applied Runs"
+              fullWidth
+              value={appliedRunsString}
+              onChange={(e) => updateAppliedRunsString(e.target.value)}
+              variant="outlined"
+              margin="normal"
+              placeholder="Empty value means all runs"
+              helperText="Separate entries by comma (possible values: Default, Violent, End)"
+            />
+          </Tooltip>
+        </Grid>
       </Grid>
       {stepEntries}
 

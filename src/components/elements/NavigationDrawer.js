@@ -16,7 +16,7 @@ import { drawerWidth } from '../../globals';
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     ...theme.mixins.toolbar,
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
   root: {
     display: 'flex',
@@ -54,7 +54,7 @@ const NavigationDrawer = ({ isOpen, handleCollapse }) => {
   return (
     <nav className={classes.drawer}>
       <Hidden smUp implementation="css">
-        <Drawer 
+        <Drawer
           variant="temporary"
           anchor="left"
           open={isOpen}

@@ -84,14 +84,27 @@ const CutsceneEvent = ({
       const data = parseParameter(cutsceneEventData.parameters[paramName]);
       return (
         <TableRow key={index}>
-          <Tooltip arrow title={(data !== undefined && data !== '') ? data : 'N/A'} enterDelay={300}>
-            <TableCell align="left" padding="none" size="small" style={{ padding: 10 }}>
-              <Typography><b>{paramName}</b></Typography>
-              {(data !== undefined && data !== '') && (
+          <Tooltip
+            arrow
+            title={data !== undefined && data !== '' ? data : 'N/A'}
+            enterDelay={300}
+          >
+            <TableCell
+              align="left"
+              padding="none"
+              size="small"
+              style={{ padding: 10 }}
+            >
+              <Typography>
+                <b>{paramName}</b>
+              </Typography>
+              {data !== undefined && data !== '' && (
                 <Typography variant="caption">{data}</Typography>
               )}
               {(data === undefined || data === '') && (
-                <Typography variant="caption" style={{ color: '#aaa' }}>N/A</Typography>
+                <Typography variant="caption" style={{ color: '#aaa' }}>
+                  N/A
+                </Typography>
               )}
             </TableCell>
           </Tooltip>
@@ -124,7 +137,7 @@ const CutsceneEvent = ({
           }
           style={{
             minHeight: 100,
-            alignItems: 'flex-start'
+            alignItems: 'flex-start',
           }}
         />
         <CardActions className={classes.actions} disableSpacing>
@@ -157,7 +170,9 @@ const CutsceneEvent = ({
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Table>
-              <TableBody style={{ wordWrap: 'break-word' }}>{listParams}</TableBody>
+              <TableBody style={{ wordWrap: 'break-word' }}>
+                {listParams}
+              </TableBody>
             </Table>
           </CardContent>
         </Collapse>

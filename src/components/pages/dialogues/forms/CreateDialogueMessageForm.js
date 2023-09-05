@@ -48,7 +48,7 @@ const EMPTY_MESSAGE_DATA = {
   mute_enter_sound: false,
   mute_exit_sound: false,
   ui_variant: 'default',
-  try_to_position_on_center: false
+  try_to_position_on_center: false,
 };
 
 function initialImagePreview(data) {
@@ -63,7 +63,7 @@ const CreateDialogueMessageForm = ({
   creationHandler,
   isEdit = false,
   messageData = EMPTY_MESSAGE_DATA,
-  onMinimizeRequested
+  onMinimizeRequested,
 }) => {
   const { enqueueSnackbar } = useSnackbar();
 
@@ -438,7 +438,8 @@ const CreateDialogueMessageForm = ({
           onChange={(e) => handleInputChange('autopilot_offset', e)}
           value={curMessageData.autopilot_offset}
         />
-        <br /><br />
+        <br />
+        <br />
         <FormControlLabel
           key="try_center"
           label="Try to position on center"
@@ -446,11 +447,14 @@ const CreateDialogueMessageForm = ({
             <Switch
               checked={curMessageData.try_to_position_on_center}
               value={curMessageData.try_to_position_on_center}
-              onChange={(e) => handleInputChange('try_to_position_on_center', e, true)}
+              onChange={(e) =>
+                handleInputChange('try_to_position_on_center', e, true)
+              }
             />
           }
         />
-        <br /><br />
+        <br />
+        <br />
       </SimpleCollapse>
 
       {/* Choices */}
@@ -491,18 +495,16 @@ const CreateDialogueMessageForm = ({
           )}
         </Grid>
         <Grid item xs md={6}>
-          <Grid container justifyContent="flex-end"> 
+          <Grid container justifyContent="flex-end">
             <Button
               variant="contained"
               style={{ marginTop: 8 }}
-              color='secondary'
+              color="secondary"
               onClick={onMinimizeRequested}
             >
               Minimize
             </Button>
-            &nbsp;
-            &nbsp;
-            &nbsp;
+            &nbsp; &nbsp; &nbsp;
             <Button
               type="submit"
               variant="contained"
@@ -510,7 +512,7 @@ const CreateDialogueMessageForm = ({
               color="primary"
             >
               {isEdit ? 'Edit' : 'Create'}
-            </Button> 
+            </Button>
           </Grid>
         </Grid>
       </Grid>

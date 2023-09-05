@@ -73,7 +73,9 @@ const DialogueMessage = ({
               <DialogueMessageToolbar
                 message={message}
                 handleAddAbove={(data) => handleAddAbove(data)}
-                handleAddBelow={(data, additionalOffset) => handleAddBelow(data, additionalOffset)}
+                handleAddBelow={(data, additionalOffset) =>
+                  handleAddBelow(data, additionalOffset)
+                }
                 handleEdit={(data) => handleEdit(data)}
                 handleDelete={() => handleDelete()}
                 handleSplitBelow={(conversationName) =>
