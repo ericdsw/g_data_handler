@@ -341,7 +341,8 @@ function duplicateConfigurations(state, action) {
   state.storylineSteps[sourceStepId].configuration.forEach((curMapId) => {
     const curMap = state.stepMaps[curMapId];
 
-    let duplicateMap;
+    let targetStepMap;
+    let foundDuplicateMap = false;
 
     // Check if a map with that name already exist
     for (
@@ -352,19 +353,23 @@ function duplicateConfigurations(state, action) {
       const foundMap =
         state.stepMaps[state.storylineSteps[targetStepId].configuration[i]];
       if (foundMap.map_name === curMap.map_name) {
-        duplicateMap = JSON.parse(JSON.stringify(foundMap));
+        targetStepMap = JSON.parse(JSON.stringify(foundMap));
+        foundDuplicateMap = true;
         break;
       }
     }
 
-    if (!duplicateMap) {
-      duplicateMap = JSON.parse(JSON.stringify(curMap));
-      duplicateMap.id = uuidv4();
-      duplicateMap.entity_nodes = [];
+    if (!targetStepMap) {
+      targetStepMap = JSON.parse(JSON.stringify(curMap));
+      targetStepMap.id = uuidv4();
+      targetStepMap.entity_nodes = [];
     }
 
-    state.storylineSteps[targetStepId].configuration.push(duplicateMap.id);
-    state.stepMaps[duplicateMap.id] = duplicateMap;
+    // Only create a new map entry if it was not already present in that step.
+    if (!foundDuplicateMap) {
+      state.storylineSteps[targetStepId].configuration.push(targetStepMap.id);
+    }
+    state.stepMaps[targetStepMap.id] = targetStepMap;
 
     curMap.entity_nodes.forEach((curEntityNodeId) => {
       const curEntityNode = state.stepMapEntities[curEntityNodeId];
@@ -381,7 +386,7 @@ function duplicateConfigurations(state, action) {
         state.entityConfigurators[duplicateConf.id] = duplicateConf;
       });
 
-      duplicateMap.entity_nodes.push(duplicateEntity.id);
+      targetStepMap.entity_nodes.push(duplicateEntity.id);
       state.stepMapEntities[duplicateEntity.id] = duplicateEntity;
     });
   });
