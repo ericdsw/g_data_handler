@@ -28,6 +28,12 @@ const schema = {
       tooltip:
         'If defined, will be shown after either the default or the custom message',
     },
+    amount: {
+      label: 'Amount',
+      type: 'number',
+      default: 1,
+      tooltip: 'How many will be given'
+    },
     show_fanfare: {
       label: 'Show Fanfare',
       type: 'boolean',
@@ -46,6 +52,7 @@ const GiveItemFromDialogueForm = ({
     (data) => {
       const returnData = {
         ...data,
+        amount: data.amount || 1,
         type: 'give_item',
       };
       onSubmit(returnData);

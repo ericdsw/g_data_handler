@@ -106,6 +106,12 @@ const interactionInputSchema = {
         type: 'text',
         placeholder: 'Additional text to display after obtaining the item',
       },
+      amount: {
+        label: 'Amount',
+        type: 'number',
+        default: 1,
+        tooltip: 'How many items to give'
+      },
       dialogue_interaction_ref: {
         label: 'Dialogue Interaction Reference',
         type: 'text',

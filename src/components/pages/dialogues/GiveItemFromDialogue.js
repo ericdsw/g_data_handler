@@ -35,6 +35,13 @@ const GiveItemFromDialogue = ({
       : `Custom message: ${message.custom_message}`;
   }, [message.custom_message]);
 
+  const subHeaderMessage = useMemo(() => {
+    if (message.amount <= 1) {
+      return `Will give the item with the id ${message.item_id} to the player`;
+    }
+    return `Will give ${message.amount} instances of the item ${message.item_id} to the player`
+  }, [message.item_id, message.amount])
+
   return (
     <Card className={classes.container}>
       <CardHeader
@@ -45,7 +52,7 @@ const GiveItemFromDialogue = ({
             color="#2d81b5"
           />
         }
-        subheader={`Will give the item with the id ${message.item_id} to the player`}
+        subheader={subHeaderMessage}
         action={
           <DialogueMessageToolbar
             message={message}
@@ -81,7 +88,7 @@ const GiveItemFromDialogue = ({
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Typography variant="body1">
-                <b>Will skip fanfare &nbsp;&nbsp;ಥ_ಥ</b>
+                <b>Will skip fanfare &nbsp;(ಥ_ಥ)</b>
               </Typography>
             </Grid>
           </Grid>
