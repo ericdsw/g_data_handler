@@ -292,7 +292,7 @@ const DialogueConversation = ({
         title="Pick Item"
         open={dialogues['addPickItem']}
         onClose={() => toggleDialogue('addPickItem', 'hide')}
-        maxWidth="md"
+        maxWidth="lg"
       >
         <PickItemFromDialogueForm
           isEdit={false}

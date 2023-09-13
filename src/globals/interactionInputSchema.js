@@ -110,7 +110,7 @@ const interactionInputSchema = {
         label: 'Amount',
         type: 'number',
         default: 1,
-        tooltip: 'How many items to give'
+        tooltip: 'How many items to give',
       },
       dialogue_interaction_ref: {
         label: 'Dialogue Interaction Reference',
@@ -372,7 +372,9 @@ const interactionInputSchema = {
         label: 'Item Bundles',
         type: 'array',
         placeholder:
-          'Format: item_id:interaction:consumes (separated by comma)',
+          'Format: item_id:interaction:consumes:amount (separated by comma)',
+        helperText:
+          'The "consumes" property is either the string "true" or "false", amount should be a number.',
       },
       only_deliver: {
         label: 'Only deliver',

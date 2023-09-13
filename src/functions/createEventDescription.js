@@ -215,12 +215,12 @@ export default function createEventDescription(type, parameters) {
       return `Will remove any active flashback`;
     case 'lock_camera':
       return 'Will lock the camera at the current position';
-    
+
     case 'give_key_access_item':
       return `Gives the key access item ${parameters.key_access_item_id} to the player`;
     case 'remove_key_access_item':
       return `Removes the key access item ${parameters.key_access_Item_id} from the player`;
-    
+
     case 'add_memory_point':
       return `Will add ${parameters.amount} memory points to the player`;
     case 'remove_memory_point':

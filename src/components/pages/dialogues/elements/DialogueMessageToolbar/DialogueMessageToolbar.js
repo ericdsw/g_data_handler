@@ -227,6 +227,7 @@ const DialogueMessageToolbar = ({
             title="Edit pick item"
             open={dialogues['editMessage']}
             onClose={() => toggleDialogue('editMessage', 'hide')}
+            maxWidth="lg"
           >
             <PickItemFromDialogueForm
               buttonText="Edit"

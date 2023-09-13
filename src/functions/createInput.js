@@ -129,6 +129,7 @@ export default function createInput(
                         ? undefined
                         : 1,
                     marginRight: 16,
+                    ...(inputData.inputs[inputIdentifier].auxStyle || {}),
                   }}
                 >
                   {createInput(

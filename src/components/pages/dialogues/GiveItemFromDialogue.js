@@ -39,8 +39,8 @@ const GiveItemFromDialogue = ({
     if (message.amount <= 1) {
       return `Will give the item with the id ${message.item_id} to the player`;
     }
-    return `Will give ${message.amount} instances of the item ${message.item_id} to the player`
-  }, [message.item_id, message.amount])
+    return `Will give ${message.amount} instances of the item ${message.item_id} to the player`;
+  }, [message.item_id, message.amount]);
 
   return (
     <Card className={classes.container}>

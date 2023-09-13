@@ -643,8 +643,8 @@ const eventSchema = {
         label: 'Amount',
         type: 'number',
         default: '1',
-        tooltip: 'How many instances of this item will be given to the player'
-      }
+        tooltip: 'How many instances of this item will be given to the player',
+      },
     },
   },
 

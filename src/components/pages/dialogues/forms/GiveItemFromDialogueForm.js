@@ -32,7 +32,7 @@ const schema = {
       label: 'Amount',
       type: 'number',
       default: 1,
-      tooltip: 'How many will be given'
+      tooltip: 'How many will be given',
     },
     show_fanfare: {
       label: 'Show Fanfare',
