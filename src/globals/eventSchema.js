@@ -639,6 +639,12 @@ const eventSchema = {
         default: true,
         tooltip: 'Whether the got item fanfare will be displayed',
       },
+      amount: {
+        label: 'Amount',
+        type: 'number',
+        default: '1',
+        tooltip: 'How many instances of this item will be given to the player'
+      }
     },
   },
 

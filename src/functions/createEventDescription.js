@@ -52,7 +52,11 @@ export default function createEventDescription(type, parameters) {
         !parameters.custom_return_map ? 'false' : 'true'
       }`;
     case 'give_item':
-      return `Give the item ${parameters.item_id}`;
+      if (parameters.amount <= 1) {
+        return `Give the item ${parameters.item_id}`;
+      } else {
+        return `Give ${parameters.amount} instances of the item ${parameters.item_id}`;
+      }
     case 'next_run':
       return `Next run name: ${parameters.next_run_name}`;
     case 'level_up':
@@ -211,6 +215,17 @@ export default function createEventDescription(type, parameters) {
       return `Will remove any active flashback`;
     case 'lock_camera':
       return 'Will lock the camera at the current position';
+    
+    case 'give_key_access_item':
+      return `Gives the key access item ${parameters.key_access_item_id} to the player`;
+    case 'remove_key_access_item':
+      return `Removes the key access item ${parameters.key_access_Item_id} from the player`;
+    
+    case 'add_memory_point':
+      return `Will add ${parameters.amount} memory points to the player`;
+    case 'remove_memory_point':
+      return `Will remove ${parameters.amount} memory points from the player`;
+
     default:
       return '';
   }
