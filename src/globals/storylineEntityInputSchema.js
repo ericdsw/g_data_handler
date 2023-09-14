@@ -601,6 +601,209 @@ const storylineEntityInputSchema = {
     },
   },
 
+  configure_dialogue_area: {
+    name: 'Configure Dialogue Area',
+    additionalText: 'Configures an existing area inside the map to launch a dialogue.',
+    parameters: {
+      name: {
+        label: 'Area Name',
+        type: 'text',
+        required: true,
+        tooltip: 'Name of an existing area'
+      },
+      map_name: {
+        label: 'In Map',
+        type: 'text',
+        required: true,
+        tooltip: 'The map where the area must be located'
+      },
+      dialogue_file: {
+        label: 'Dialogue file',
+        type: 'text',
+        required: true,
+        tooltip: 'json file, starting from the dialogues resource folder',
+        placeholder: 'path/to/dialogue.json',
+      },
+      message: {
+        label: 'Message',
+        type: 'text',
+        required: true,
+        placeholder: 'message_name',
+        tooltip: 'Message inside the dialogue file that will be used',
+      },
+      required_items: {
+        label: 'Required Items',
+        type: 'array',
+        placeholder:
+          'Items required to trigger, separate each one with a comma',
+      },
+      loose_required_items: {
+        label: 'Required Items OR overwrite',
+        type: 'boolean',
+        default: false,
+        tooltip:
+          'If true, required items are treated as an OR comparison (by default, all must be present)',
+      },
+      excluding_items: {
+        label: 'Excluding Items',
+        type: 'array',
+        placeholder:
+          'Items that will prevent trigger, separate each one with a comma',
+      },
+      loose_excluding_items: {
+        label: 'Excluding Items OR overwrite',
+        type: 'boolean',
+        default: false,
+        tooltip:
+          'If true, excluding items are treated as an OR comparison (by default, all must be absent)',
+      },
+      missing_items: {
+        label: 'Misisng Items',
+        type: 'array',
+        placeholder: 'Will only trigger if these items are missing',
+      },
+      loose_missing_items: {
+        label: 'Missing Items OR overwrite',
+        type: 'boolean',
+        default: false,
+        tooltip:
+          'If true, missing items are treated as an OR comparison (by default, all must be absent)',
+      },
+      self_destruct: {
+        label: 'Self Destruct',
+        type: 'boolean',
+        default: true,
+        tooltip:
+          'If true, the area will be self-destructed when the player enters it',
+      },
+      do_not_re_create: {
+        label: 'Do not re-create',
+        type: 'boolean',
+        default: false,
+        tooltip:
+          'If true, the area will not be re-created upon re-entering the map',
+      },
+      reset_before_configuring: {
+        label: 'Reset Before Configuring',
+        type: 'boolean',
+        required: true,
+        default: true,
+        tooltip: 'If true, values will be set back to what the editor defines before applying new configurations',
+      }
+    }
+  },
+
+  configure_cutscene_area: {
+    name: 'Configure Cutscene Area',
+    additionalText: 'Configures an existing area inside the map to launch a cutscene.',
+    parameters: {
+      name: {
+        label: 'Area Name',
+        type: 'text',
+        required: true,
+        tooltip: 'Unique name to identify the area',
+      },
+      map_name: {
+        label: 'In Map',
+        type: 'text',
+        required: true,
+        tooltip: 'The name of the map where the area will spawn',
+      },
+      cutscene_file: {
+        label: 'Cutscene File',
+        type: 'text',
+        require: true,
+        placeholder: 'path/to/cutscene.json',
+        tooltip: 'json file, starting from the cutscenes resource folder',
+      },
+      required_items: {
+        label: 'Required Items',
+        type: 'array',
+        placeholder:
+          'Items required to trigger, separate each one with a comma',
+      },
+      loose_required_items: {
+        label: 'Required Items OR overwrite',
+        type: 'boolean',
+        default: false,
+        tooltip:
+          'If true, required items are treated as an OR comparison (by default, all must be present)',
+      },
+      excluding_items: {
+        label: 'Excluding Items',
+        type: 'array',
+        placeholder:
+          'Items that will prevent trigger, separate each one with a comma',
+      },
+      loose_excluding_items: {
+        label: 'Excluding Items OR overwrite',
+        type: 'boolean',
+        default: false,
+        tooltip:
+          'If true, excluding items are treated as an OR comparison (by default, all must be absent)',
+      },
+      missing_items: {
+        label: 'Missing Items',
+        type: 'array',
+        placeholder: 'Will only trigger if these items are missing',
+      },
+      loose_missing_items: {
+        label: 'Missing Items OR overwrite',
+        type: 'boolean',
+        default: false,
+        tooltip:
+          'If true, missing items are treated as an OR comparison (by default, all must be absent)',
+      },
+      self_destruct: {
+        label: 'Self Destruct',
+        type: 'boolean',
+        default: true,
+        tooltip:
+          'If true, the area will be self-destructed when the player enters it',
+      },
+      do_not_re_create: {
+        label: 'Do not re-create',
+        type: 'boolean',
+        default: false,
+        tooltip:
+          'If true, the area will not be re-created upon re-entering the map',
+      },
+      reset_before_configuring: {
+        label: 'Reset Before Configuring',
+        type: 'boolean',
+        required: true,
+        default: true,
+        tooltip: 'If true, values will be set back to what the editor defines before applying new configurations.'
+      }
+    }
+  },
+
+  configure_nothing_area: {
+    name: 'Configure Nothing Area',
+    additionalText: 'Configures an existing area inside the map to do "nothing".',
+    parameters: {
+      name: {
+        label: 'Area Name',
+        type: 'text',
+        required: true,
+        tooltip: 'Name of an existing area'
+      },
+      map_name: {
+        label: 'In Map',
+        type: 'text',
+        required: true,
+        tooltip: 'The map where the area must be located'
+      },
+      reset_before_configuring: {
+        label: 'Reset Before Configuring',
+        type: 'boolean',
+        required: true,
+        default: true,
+        tooltip: 'If true, values will be set back to what the editor defines before applying new configurations'
+      }
+    }
+  },
+
   remove_entity: {
     name: 'Remove Entity',
     parameters: {

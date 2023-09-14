@@ -10,6 +10,7 @@ import {
   Icon,
   Tooltip,
   IconButton,
+  Grid
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -74,9 +75,12 @@ export default function createInput(
     label += '*';
   }
 
+  let booleanFieldIsDirty = true;
+
   if (value === null || typeof value === 'undefined') {
     switch (inputData.type) {
       case 'boolean':
+        booleanFieldIsDirty = false;
         value = inputData.default;
         break;
       case 'number':
@@ -217,17 +221,32 @@ export default function createInput(
 
     case 'boolean':
       contentValue = (
-        <FormControlLabel
-          label={label}
-          control={
-            <Switch
-              onChange={handleChange(paramName)}
-              checked={value}
-              value={value}
-              disabled={disabled}
+        <Grid container alignItems="center">
+          <Grid item xs>
+            <FormControlLabel
+              label={label}
+              style={{ opacity: (booleanFieldIsDirty || inputData.required) ? 1.0 : 0.5 }}
+              control={
+                <Switch
+                  onChange={handleChange(paramName)}
+                  checked={value}
+                  value={value}
+                  disabled={disabled}
+                />
+              }
             />
-          }
-        />
+          </Grid>
+          {booleanFieldIsDirty && (
+            <IconButton
+              onClick={() => {
+                // Look away God
+                handleChange(paramName)({ target: { checked: undefined }})
+              }}
+            >
+              <Icon>restart_alt</Icon>
+            </IconButton>
+          )}
+        </Grid>
       );
       break;
 

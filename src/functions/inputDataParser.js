@@ -22,8 +22,16 @@ function cleanBeforeJsonParse(sourceString) {
 
 export const parseIn = (inputObject, inputSchema) => {
   for (const key in inputSchema) {
+
     // Skip invalid entries
-    if (!(key in inputSchema) || !(key in inputObject)) {
+    if (!(key in inputSchema)) {
+      continue;
+    }
+
+    if (
+      !(key in inputObject) &&
+      !(!inputObject[key] && typeof inputSchema[key].default !== 'undefined')
+    ) {
       continue;
     }
 
@@ -50,9 +58,18 @@ export const parseIn = (inputObject, inputSchema) => {
           inputObject[key] = value;
         }
         break;
+      case 'boolean':
+        if (
+          typeof inputObject[key] === 'undefined' &&
+          typeof inputSchema[key].default !== 'undefined' &&
+          inputSchema[key].required
+        ) {
+          inputObject[key] = inputSchema[key].default;
+        }
+        break;
       default:
         const defaultVal = inputSchema[key].default;
-        if (!inputObject[key] && typeof defaultValue !== 'undefined') {
+        if (!inputObject[key] && typeof defaultVal !== 'undefined' && defaultVal !== '') {
           inputObject[key] = defaultVal;
         }
         break;
@@ -104,8 +121,12 @@ export const parseOut = (outputObject, inputSchema) => {
         }
         break;
       case 'boolean':
-        const data = outputObject[key];
-        outputObject[key] = typeof data === 'undefined' ? false : data;
+        if (typeof outputObject[key] === 'undefined' && !inputSchema[key].required) {
+          delete outputObject[key]
+        } else {
+          const data = outputObject[key];
+          outputObject[key] = typeof data === 'undefined' ? false : data;
+        }
         break;
       default:
         break;
