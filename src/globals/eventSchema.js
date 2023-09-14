@@ -1934,6 +1934,30 @@ const eventSchema = {
       },
     },
   },
+
+  force_storyline_step: {
+    name: 'Force Storyline Step',
+    icon: 'move_down',
+    additionalText: 'Forces a storyline to configure itself for an specific step',
+    defaultImportant: false,
+    parameters: {
+      ...defaultParameters,
+      storyline_name: {
+        label: 'Storyline Name',
+        type: 'text',
+        required: true,
+        placeholder: 'FooStoryline',
+        tooltip: 'The storyline that will be configured'
+      },
+      step_name: {
+        label: 'Step Name',
+        type: 'text',
+        required: true,
+        placeholder: 'foo_step',
+        tooltip: 'The step that the storyline will be forced to'
+      }
+    }
+  }
 };
 
 export default eventSchema;
