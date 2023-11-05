@@ -56,7 +56,10 @@ const CutsceneToolbar = ({
           >
             View Jumps ({Object.keys(jumps).length})
           </Button>
-          <Button color="secondary" onClick={() => handleExport()}>
+          <Button
+            color="secondary"
+            onClick={() => handleExport()}
+          >
             Export
           </Button>
           <Button

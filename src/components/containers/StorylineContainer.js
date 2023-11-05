@@ -19,6 +19,31 @@ import {
 } from '../../actions/storylineActions';
 
 class StorylineContainer extends React.Component {
+  constructor() {
+    super();
+    window.exportStoryline = this.export;
+    window.printStoryline = () => {
+      const {
+        currentStoryline,
+        completeState,
+        appliesToEndRun,
+        appliedRunsString,
+      } = this.props;
+
+      const output = denormalize(
+        currentStoryline,
+        StorylineSchema,
+        completeState
+      );
+
+      console.log(JSON.stringify({
+        ...output,
+        applies_in_end_run: appliesToEndRun,
+        applied_runs: appliedRunsString,
+      }));
+    }
+  }
+
   clearStoryline = () => {
     this.props.clearStoryline();
   };

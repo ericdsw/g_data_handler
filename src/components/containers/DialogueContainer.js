@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
-// import { Icon, Typography } from '@mui/material';
 import { DragDropContext } from 'react-beautiful-dnd';
 
 import {
@@ -28,6 +27,15 @@ import Dialogue from '../pages/dialogues/Dialogue';
 import DialogueToolbar from '../pages/dialogues/elements/DialogueToolbar';
 
 class DialogueContainer extends React.Component {
+  constructor() {
+    super();
+    window.exportDialogue = this.export;
+    window.printDialogue = () => {
+      const { allData, currentDialogue } = this.props;
+      console.log(JSON.stringify(transformOut(currentDialogue, allData)));
+    }
+  }
+
   /**
    * Erases the current dialogue and restores the view to its default
    * state

@@ -21,6 +21,15 @@ import {
 } from '../../actions/cutsceneActions';
 
 class CutsceneContainer extends React.Component {
+
+  constructor() {
+    super();
+    window.exportCutscene = this.export;
+    window.printCutscene = () => {
+      console.log(JSON.stringify(this.generateJson()));
+    }
+  }
+  
   clearCutscene = () => {
     this.props.updateCutscene({
       cutscene: null,
@@ -81,8 +90,19 @@ class CutsceneContainer extends React.Component {
     this.props.deleteCutsceneJump(jumpName);
   };
 
+  generateJson = () => {
+    const { currentCutscene, currentCutsceneJumps, hideBars } =
+      this.props;
+    
+    return {
+      data: currentCutscene,
+      cutscene_jumps: currentCutsceneJumps,
+      hide_black_bars: hideBars
+    }
+  };
+
   export = () => {
-    const { fileName, currentCutscene, currentCutsceneJumps, hideBars } =
+    const { fileName, currentCutscene } =
       this.props;
 
     // Check that the cutscene is not empty
@@ -106,11 +126,7 @@ class CutsceneContainer extends React.Component {
     }
 
     // Perform download
-    downloadJSON(fileName, {
-      data: currentCutscene,
-      cutscene_jumps: currentCutsceneJumps,
-      hide_black_bars: hideBars,
-    });
+    downloadJSON(fileName, this.generateJson());
   };
 
   // Extra
