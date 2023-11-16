@@ -216,6 +216,14 @@ const speakerSchema = {
     target_object: 'MarcoNPC',
     speakerImages: [],
   },
+
+  all: {
+    image: null,
+    name: null,
+    voice_file: 'default_voice.wav',
+    target_object: 'NONE',
+    speakerImages: [],
+  }
 };
 
 export default speakerSchema;
