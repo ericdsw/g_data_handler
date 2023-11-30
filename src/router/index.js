@@ -2,6 +2,7 @@ import React from 'react';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import InfoIcon from '@mui/icons-material/Info';
 
 import {
@@ -10,6 +11,7 @@ import {
   StorylinePage,
   NotFound,
   AboutPage,
+  SaveFileFix,
 } from '../components/pages';
 
 export const fallbackRoute = {
@@ -37,6 +39,13 @@ const routes = [
     component: <StorylinePage />,
     icon: <BubbleChartIcon />,
     text: 'Storylines',
+  },
+  {
+    path: '/saveFileFix',
+    exact: true,
+    component: <SaveFileFix />,
+    icon: <AutoFixHighIcon />,
+    text: 'SaveFileFix',
   },
   {
     path: '/about',
