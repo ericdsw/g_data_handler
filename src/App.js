@@ -3,7 +3,6 @@ import makeStyles from '@mui/styles/makeStyles';
 import { NavigationDrawer, ApplicationBar } from './components/elements';
 import { drawerWidth } from './globals';
 
-// import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { SnackbarProvider } from 'notistack';

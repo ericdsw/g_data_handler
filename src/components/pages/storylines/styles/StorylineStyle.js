@@ -8,7 +8,7 @@ export const styles = (theme) => ({
     color: red[400],
   },
   root: {
-    ...theme.mixins.gutters(),
+    // ...theme.mixins.gutters(),
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
