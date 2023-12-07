@@ -103,6 +103,28 @@ const SaveFileFix = () => {
           }
         }
 
+        // Map Data
+        const prevMapData = sourceFileContent["map_data"]["Default"]
+        const prevMapNames = Object.keys(prevMapData);
+        for (let k = 0; k < prevMapNames.length; k++) {
+          const mapName = prevMapNames[k];
+          
+          if (! (mapName in result["map_data"][currentRunName])) {
+            result["map_data"][currentRunName][mapName] = {}
+          }
+
+          if (mapName.includes("Village")) {
+            const mapProperties = prevMapData[mapName];
+            const mapPropertyNames = Object.keys(mapProperties);
+            for (let u = 0; u < mapPropertyNames.length; u++) {
+              result["map_data"][currentRunName][mapName][mapPropertyNames[u]] = mapProperties[mapPropertyNames[u]]
+              console.log(`migrated map property ${mapPropertyNames[u]} on the map ${mapName} with value ${mapProperties[mapPropertyNames[u]]}`)
+            }
+          }
+        }
+
+        // NPC Data
+
       }
     }
 

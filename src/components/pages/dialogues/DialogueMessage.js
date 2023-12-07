@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { makeStyles } from '@mui/styles';
-import { Card, CardContent, Typography, Icon, Grid } from '@mui/material';
+import { Card, CardContent, Typography, Icon, Grid, Button } from '@mui/material';
 
 import {
   ConversationChoices,
@@ -84,12 +84,26 @@ const DialogueMessage = ({
                 omitEdit={false}
               />
             </div>
-            <FloatingDialogue
-              speakerName={speakerName}
-              messageFullText={message.message}
-              uiVariant={message.ui_variant}
-              usedImagePath={usedImagePath}
-            />
+            <Grid container>
+              <Grid item xs={2}>
+                <Card
+                  elevation={0}
+                  style={{
+                    padding: 12
+                  }}
+                >
+                  <Button size="sm">Small</Button>
+                </Card>
+              </Grid>
+              <Grid item xs={10}>
+                <FloatingDialogue
+                  speakerName={speakerName}
+                  messageFullText={message.message}
+                  uiVariant={message.ui_variant}
+                  usedImagePath={usedImagePath}
+                />
+              </Grid> 
+            </Grid>
 
             {/* Extra Parameters */}
             <ConversationExtraParams message={message} />
