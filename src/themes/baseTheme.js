@@ -30,13 +30,19 @@ const baseTheme = (mode) =>
       },
       messageBackground: mode === 'dark' ? '#222' : '#eee',
     },
-    overrides: {
-      MuiDrawer: {
-        paper: {
-          // backgroundColor: primaryColor.main,
-          // color: primaryColor.contrastText
-        },
+    components: {
+      MuiTextField: {
+        defaultProps: {
+          variant: 'outlined'
+        }
       },
+      MuiLink: {
+        defaultProps: {
+          underline: 'always'
+        }
+      }
+    },
+    overrides: {
       MuiTableRow: {
         root: {
           '&:last-child td': {
@@ -47,7 +53,7 @@ const baseTheme = (mode) =>
       MuiOutlinedInput: {
         root: {
           position: 'relative',
-          '& $notchedOutline': {
+          '& .MuiOutlinedInput-notchedOutline': {
             borderColor:
               mode === 'dark'
                 ? 'rgba(255, 255, 255, 0.23)'
@@ -64,7 +70,7 @@ const baseTheme = (mode) =>
                     : 'rgba(0,0,0,0.23)',
               },
             },
-          '&$focused $notchedOutline': {
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
             borderColor: '#d50744',
             borderWidth: 1,
           },
@@ -72,7 +78,7 @@ const baseTheme = (mode) =>
       },
       MuiFormLabel: {
         root: {
-          '&$focused': {
+          '&.Mui-focused': {
             color: '#d50744',
           },
         },

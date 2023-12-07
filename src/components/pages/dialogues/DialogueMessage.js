@@ -1,6 +1,9 @@
 import React, { useMemo } from 'react';
 import { makeStyles } from '@mui/styles';
-import { Card, CardContent, Typography, Icon, Grid, Button } from '@mui/material';
+import { Card, CardContent, Typography, Icon, Grid, Button, ButtonGroup } from '@mui/material';
+import { useDispatch } from 'react-redux';
+
+import { editConversationMessage } from '../../../actions/dialogueActions';
 
 import {
   ConversationChoices,
@@ -23,6 +26,21 @@ const DialogueMessage = ({
   message,
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const changeLocation = newLocation => {
+    dispatch(editConversationMessage(message.id, {
+      ...message,
+      location: newLocation
+    }))
+  }
+
+  const changeUiVariant = newUiVariant => {
+    dispatch(editConversationMessage(message.id, {
+      ...message,
+      ui_variant: newUiVariant
+    }))
+  }
 
   const { usedImagePath, speakerName } = useMemo(() => {
     let imageResult, nameResult;
@@ -85,17 +103,78 @@ const DialogueMessage = ({
               />
             </div>
             <Grid container>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Card
                   elevation={0}
                   style={{
-                    padding: 12
+                    padding: 12,
+                    minWidth: 250
                   }}
                 >
-                  <Button size="sm">Small</Button>
+                    <table>
+                      <tr>
+                        <td>
+                          Location: &nbsp;&nbsp;
+                        </td>
+                        <td>
+                          <ButtonGroup variant='outlined'>
+                            <Button
+                              sx={{ textTransform: 'none' }}
+                              size="small"
+                              variant={!(message.location) ? 'contained' : 'outlined'}
+                              onClick={() => changeLocation('')}
+                            >
+                              None
+                            </Button>
+                            <Button
+                              sx={{ textTransform: 'none' }}
+                              size="small"
+                              variant={(message.location === 'top' ? 'contained' : 'outlined')}
+                              onClick={() => changeLocation('top')}
+                            >
+                              Top
+                            </Button>
+                            <Button
+                              sx={{ textTransform: 'none' }}
+                              size="small"
+                              variant={(message.location === 'bottom' ? 'contained' : 'outlined')}
+                              onClick={() => changeLocation('bottom')}
+                            >
+                              Bottom
+                            </Button>
+                          </ButtonGroup>
+                        </td>
+                      </tr>
+                      <tr><div style={{ height: 5 }} /></tr>
+                      <tr>
+                        <td>
+                          Variant: &nbsp;&nbsp;
+                        </td>
+                        <td>
+                          <ButtonGroup variant='outlined'>
+                            <Button
+                              sx={{ textTransform: 'none' }}
+                              size="small"
+                              variant={(message.ui_variant === 'default' ? 'contained' : 'outlined')}
+                              onClick={() => changeUiVariant('default')}
+                            >
+                              Default
+                            </Button>
+                            <Button
+                              sx={{ textTransform: 'none' }}
+                              size="small"
+                              variant={(message.ui_variant === 'battle' ? 'contained' : 'outlined')}
+                              onClick={() => changeUiVariant('battle')}
+                            >
+                              Transparent
+                            </Button>
+                          </ButtonGroup>
+                        </td>
+                      </tr>
+                    </table>
                 </Card>
               </Grid>
-              <Grid item xs={10}>
+              <Grid item xs>
                 <FloatingDialogue
                   speakerName={speakerName}
                   messageFullText={message.message}

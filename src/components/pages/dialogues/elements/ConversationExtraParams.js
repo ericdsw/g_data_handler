@@ -5,7 +5,7 @@ import { Chip } from '@mui/material';
 const useStyles = makeStyles((theme) => ({
   chip: {
     marginRight: theme.spacing(1),
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginBottom: theme.spacing(1),
     },
   },

@@ -242,7 +242,7 @@ export default function createInput(
                 // Look away God
                 handleChange(paramName)({ target: { checked: undefined }})
               }}
-            >
+              size="large">
               <Icon>restart_alt</Icon>
             </IconButton>
           )}

@@ -183,7 +183,7 @@ const NoDialogue = ({
                         </Typography>
                       </Grid>
                       <Grid item xs={1} container justifyContent="flex-end">
-                        <IconButton onClick={() => deleteFile(dialogueKey)}>
+                        <IconButton onClick={() => deleteFile(dialogueKey)} size="large">
                           <Icon>delete</Icon>
                         </IconButton>
                       </Grid>

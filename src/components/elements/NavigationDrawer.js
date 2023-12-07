@@ -65,7 +65,7 @@ const NavigationDrawer = ({ isOpen, handleCollapse }) => {
         </Drawer>
       </Hidden>
 
-      <Hidden smDown implementation="css">
+      <Hidden mdDown implementation="css">
         <Drawer
           variant="permanent"
           open
