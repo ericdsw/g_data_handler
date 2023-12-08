@@ -8,6 +8,7 @@ import DragJsonFileManager from './DragJsonFileManager';
 import MenuIconButton from './MenuIconButton';
 import MenuButton from './MenuButton';
 import GenericForm from './GenericForm';
+import VisuallyHiddenInput from './VisuallyHiddenInput';
 
 export {
   NavigationDrawer,
@@ -20,4 +21,5 @@ export {
   MenuIconButton,
   MenuButton,
   GenericForm,
+  VisuallyHiddenInput
 };

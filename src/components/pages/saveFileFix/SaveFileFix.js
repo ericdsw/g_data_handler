@@ -1,20 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Grid, Paper } from '@mui/material';
-import { styled } from '@mui/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { downloadJSON } from '../../../functions';
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
-});
+import { downloadJSON } from '../../../functions';
+import { VisuallyHiddenInput  } from '../../elements';
 
 const SaveFileFix = () => {
 
@@ -40,7 +29,6 @@ const SaveFileFix = () => {
     }
 
     // Migrate player data
-
     if ("player_data" in result) {
       const defaultData = sourceFileContent["player_data"]["Default"];
       const otherRuns = Object.keys(result["player_data"]).filter(key => key !== "Default");
