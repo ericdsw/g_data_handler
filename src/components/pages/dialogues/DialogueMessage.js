@@ -106,10 +106,7 @@ const DialogueMessage = ({
               <Grid item xs={3}>
                 <Card
                   elevation={0}
-                  style={{
-                    padding: 12,
-                    minWidth: 250
-                  }}
+                  style={{ padding: 20 }}
                 >
                     <table>
                       <tr>
@@ -176,6 +173,7 @@ const DialogueMessage = ({
               </Grid>
               <Grid item xs>
                 <FloatingDialogue
+                  fullMessage={message}
                   speakerName={speakerName}
                   messageFullText={message.message}
                   uiVariant={message.ui_variant}

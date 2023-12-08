@@ -17,9 +17,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const EXTRAS = {
-  location: {
-    label: 'Location',
-  },
   voice_file: {
     label: 'Voice File',
   },

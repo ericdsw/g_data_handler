@@ -1,7 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { makeStyles } from '@mui/styles';
-import { Grid, Tooltip, Zoom } from '@mui/material';
+import { Grid, TextField, Tooltip, Zoom, Card } from '@mui/material';
+import { Unstable_Popup as BasePopup } from '@mui/base/Unstable_Popup';
+import { ClickAwayListener } from '@mui/base/ClickAwayListener';
 
+import { useDispatch } from 'react-redux';
+
+import { editConversationMessage } from '../../../../actions/dialogueActions';
 import { cleanMessage } from '../functions';
 
 const useStyles = makeStyles(() => ({
@@ -32,6 +37,7 @@ const useStyles = makeStyles(() => ({
     width: props.noImage ? 282 * 2 : 242 * 2,
     height: 47 * 2,
     lineHeight: '30px',
+    cursor: 'text'
   }),
   contentImage: {
     width: 'auto',
@@ -57,15 +63,34 @@ const useStyles = makeStyles(() => ({
 }));
 
 const FloatingDialogue = ({
+  fullMessage,
   speakerName,
   messageFullText,
   uiVariant,
   usedImagePath,
 }) => {
+
+  const dispatch = useDispatch();
+
   const isTransparent = useMemo(
     () => uiVariant && uiVariant !== 'default',
     [uiVariant]
   );
+
+  const [anchor, setAnchor] = useState(null);
+  const open = Boolean(anchor);
+  const id = open ? `simple-popper-${messageFullText}` : undefined;
+
+  const handleClick = e => {
+    setAnchor(anchor ? null : e.currentTarget)
+  }
+
+  const handlePopupTextChange = e => {
+    dispatch(editConversationMessage(fullMessage.id, {
+      ...fullMessage,
+      message: e.target.value
+    }));
+  }
 
   const hasSpeakerName = useMemo(
     () => speakerName && !isTransparent,
@@ -95,7 +120,12 @@ const FloatingDialogue = ({
             <div className={classes.contentSpeakerName}>{speakerName}</div>
           )}
           <Tooltip TransitionComponent={Zoom} title={messageFullText}>
-            <div className={classes.contentText}>{messageTextOnly}</div>
+            <div
+              className={classes.contentText}
+              onClick={handleClick}
+            >
+              {messageTextOnly}
+            </div>
           </Tooltip>
           {hasImage && (
             <img
@@ -106,6 +136,27 @@ const FloatingDialogue = ({
           )}
         </div>
       </Grid>
+      <BasePopup
+        id={id}
+        open={open}
+        anchor={anchor}
+        placement="top"
+        offset={20}
+      >
+        <ClickAwayListener onClickAway={() => setAnchor(null)}>
+          <Card>
+            <TextField
+              value={messageFullText}
+              onChange={handlePopupTextChange}
+              multiline
+              rows={3}
+              style={{
+                width: 310 * 2,
+              }}
+            />
+          </Card>
+        </ClickAwayListener>
+      </BasePopup>
     </div>
   );
 };
