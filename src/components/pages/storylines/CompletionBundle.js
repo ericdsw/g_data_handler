@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import CompleteConditionContainer from '../../containers/CompleteConditionContainer';
+import CompleteConditionContainer from './CompleteConditionContainer';
 import CompleteConditionForm from './forms/CompleteConditionForm';
 import CompletionBundleForm from './forms/CompletionBundleForm';
 import {

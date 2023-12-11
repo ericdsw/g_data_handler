@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import NPCInteraction from '../pages/storylines/NPCInteraction';
+import NPCInteraction from './NPCInteraction';
 import {
   updateNPCInteraction,
   deleteNPCInteraction,
-} from '../../actions/storylineActions';
+} from '../../../actions/storylineActions';
 
 const NPCInteractionContainer = ({
   currentInteractionId,

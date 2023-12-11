@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import StepMapEntity from '../pages/storylines/StepMapEntity';
+import StepMapEntity from './StepMapEntity';
 
 import {
   deleteMapEntity,
@@ -9,7 +9,7 @@ import {
   deleteMapEntityParam,
   addNPCInteraction,
   updateMapEntity,
-} from '../../actions/storylineActions';
+} from '../../../actions/storylineActions';
 
 const StepMapEntityContainer = ({
   currentMapEntityId,

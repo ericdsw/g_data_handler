@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import CompletionBundle from '../pages/storylines/CompletionBundle';
+import CompletionBundle from './CompletionBundle';
 
 import {
   addStepCompleteCondition,
   updateBundle,
   deleteBundle,
-} from '../../actions/storylineActions';
+} from '../../../actions/storylineActions';
 
 /**
  * Container that manages redux communication for the CompletionBundle

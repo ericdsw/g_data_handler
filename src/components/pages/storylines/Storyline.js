@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { makeStyles } from '@mui/styles';
 import { Grid, Typography, TextField, Button, Tooltip } from '@mui/material';
 
-import StorylineStepContainer from '../../containers/StorylineStepContainer';
+import StorylineStepContainer from './StorylineStepContainer';
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
 import StorylineStepForm from './forms/StorylineStepForm';

@@ -5,10 +5,10 @@ import {
   addMessageToConversation,
   editDialogueConversation,
   addToConversationMerger,
-} from '../../actions/dialogueActions';
+} from '../../../actions/dialogueActions';
 import { Draggable } from 'react-beautiful-dnd';
 
-import DialogueConversation from '../pages/dialogues/DialogueConversation';
+import DialogueConversation from './DialogueConversation';
 
 class DialogueConversationContainer extends React.Component {
   deleteConversation = () => {

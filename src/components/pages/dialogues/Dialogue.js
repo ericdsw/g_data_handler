@@ -5,7 +5,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
-import DialogueConversationContainer from '../../containers/DialogueConversationContainer';
+import DialogueConversationContainer from './DialogueConversationContainer';
 
 import { NoConversationsNotifier } from './elements';
 import { CreateConversationForm } from './forms';

@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import StepMapEntityContainer from '../../containers/StepMapEntityContainer';
+import StepMapEntityContainer from './StepMapEntityContainer';
 import { GenericDialogue, MenuIconButton } from '../../elements';
 import { storylineEntityInputSchema } from '../../../globals';
 import CreateMapEntityForm from './forms/CreateMapEntityForm';

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import StepMap from '../pages/storylines/StepMap';
+import StepMap from './StepMap';
 
-import { addEntityToExistingMap } from '../../actions/storylineActions';
+import { addEntityToExistingMap } from '../../../actions/storylineActions';
 
 const StepMapContainer = ({ currentMapId, maps, addEntityToExistingMap }) => {
   return (

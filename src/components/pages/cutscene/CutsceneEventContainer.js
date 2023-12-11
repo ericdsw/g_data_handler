@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import CutsceneEvent from '../pages/cutscene/CutsceneEvent';
+import CutsceneEvent from './CutsceneEvent';
 import {
   editCutsceneEvent,
   deleteCutsceneEvent,
-} from '../../actions/cutsceneActions';
+} from '../../../actions/cutsceneActions';
 
 const CutsceneEventContainer = ({
   rowNumber,

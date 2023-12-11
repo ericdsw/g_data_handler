@@ -17,7 +17,7 @@ import { Droppable } from 'react-beautiful-dnd';
 
 import { ConfirmationDialogue, GenericDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
-import DialogueMessageContainer from '../../containers/DialogueMessageContainer';
+import DialogueMessageContainer from './DialogueMessageContainer';
 import { CreateConversationForm } from './forms';
 import {
   CreateEmoteForm,

@@ -1,3 +1,1 @@
-import StorylinePage from './StorylinePage';
-
-export { StorylinePage };
+export { default as StorylineContainer } from './StorylineContainer';

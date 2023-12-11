@@ -4,10 +4,10 @@ import { enqueueSnackbar } from 'notistack';
 import { Typography, Icon } from '@mui/material';
 import { normalize, denormalize } from 'normalizr';
 
-import Storyline from '../pages/storylines/Storyline';
-import { DragJsonFileManager } from '../elements';
-import { downloadJSON, parseFile } from '../../functions';
-import StorylineSchema from '../../models/schemas/StorylineSchema';
+import Storyline from './Storyline';
+import { DragJsonFileManager } from '../../elements';
+import { downloadJSON, parseFile } from '../../../functions';
+import StorylineSchema from '../../../models/schemas/StorylineSchema';
 import {
   updateStoryline,
   updateWithEmptyStoryline,
@@ -16,7 +16,7 @@ import {
   clearStoryline,
   updateAppliesToEndRun,
   updateAppliedRunsString,
-} from '../../actions/storylineActions';
+} from '../../../actions/storylineActions';
 
 class StorylineContainer extends React.Component {
   constructor() {

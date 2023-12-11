@@ -16,15 +16,15 @@ import {
   deleteConversationsToMerge,
   selectAllConversations,
   unselectAllConversations,
-} from '../../actions/dialogueActions';
-import { parseFile, downloadJSON } from '../../functions';
-import NoDialogue from '../pages/dialogues/elements/NoDialogue';
+} from '../../../actions/dialogueActions';
+import { parseFile, downloadJSON } from '../../../functions';
+import NoDialogue from './elements/NoDialogue';
 import {
   transformIn,
   transformOut,
-} from '../../models/transformers/DialogueTransformer';
-import Dialogue from '../pages/dialogues/Dialogue';
-import DialogueToolbar from '../pages/dialogues/elements/DialogueToolbar';
+} from '../../../models/transformers/DialogueTransformer';
+import Dialogue from './Dialogue';
+import DialogueToolbar from './elements/DialogueToolbar';
 
 class DialogueContainer extends React.Component {
   constructor() {

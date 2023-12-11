@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import StorylineStep from '../pages/storylines/StorylineStep';
+import StorylineStep from './StorylineStep';
 
 import {
   updateStepName,
@@ -8,7 +8,7 @@ import {
   addStepCompletionBundle,
   deleteStep,
   duplicateConfigurations,
-} from '../../actions/storylineActions';
+} from '../../../actions/storylineActions';
 
 class StorylineStepContainer extends React.Component {
   addEntityWithMap = (mapName, entityData) => {

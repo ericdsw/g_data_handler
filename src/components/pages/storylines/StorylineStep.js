@@ -15,8 +15,8 @@ import {
   Tooltip,
 } from '@mui/material';
 
-import StepMapContainer from '../../containers/StepMapContainer';
-import CompletionBundleContainer from '../../containers/CompletionBundleContainer';
+import StepMapContainer from './StepMapContainer';
+import CompletionBundleContainer from './CompletionBundleContainer';
 
 import {
   GenericDialogue,

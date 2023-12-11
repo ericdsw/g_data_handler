@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from '@mui/material';
 
-import CutsceneRowContainer from '../../containers/CutsceneRowContainer';
+import CutsceneRowContainer from './CutsceneRowContainer';
 
 import { styles } from './styles/CutsceneStyle';
 

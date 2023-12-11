@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import {
   updateCondition,
   deleteCondition,
-} from '../../actions/storylineActions';
-import CompleteCondition from '../pages/storylines/CompleteCondition';
+} from '../../../actions/storylineActions';
+import CompleteCondition from './CompleteCondition';
 
 /**
  * Container that handles redux communication for the CompleteCondition

@@ -6,9 +6,9 @@ import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import InfoIcon from '@mui/icons-material/Info';
 
 import {
-  CutscenePage,
-  DialoguePage,
-  StorylinePage,
+  CutsceneContainer,
+  DialogueContainer,
+  StorylineContainer,
   NotFound,
   AboutPage,
   SaveFileFix,
@@ -22,21 +22,21 @@ const routes = [
   {
     path: '/',
     exact: true,
-    component: <CutscenePage />,
+    component: <CutsceneContainer />,
     icon: <SubscriptionsIcon />,
     text: 'Cutscenes',
   },
   {
     path: '/dialogues',
     exact: true,
-    component: <DialoguePage />,
+    component: <DialogueContainer />,
     icon: <QuestionAnswerIcon />,
     text: 'Dialogues',
   },
   {
     path: '/storylines',
     exact: true,
-    component: <StorylinePage />,
+    component: <StorylineContainer />,
     icon: <BubbleChartIcon />,
     text: 'Storylines',
   },

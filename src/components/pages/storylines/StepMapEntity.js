@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 
 import { interactionInputSchema } from '../../../globals';
-import NPCInteractionContainer from '../../containers/NPCInteractionContainer';
+import NPCInteractionContainer from './NPCInteractionContainer';
 import StepMapEntityParameterList from './elements/StepMapEntityParameterList';
 import CreateNPCInteractionForm from './forms/CreateNPCInteractionForm';
 import {

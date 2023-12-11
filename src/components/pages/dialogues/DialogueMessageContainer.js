@@ -5,15 +5,15 @@ import {
   deleteConversationMessage,
   addMessageAtPosition,
   splitConversation,
-} from '../../actions/dialogueActions';
+} from '../../../actions/dialogueActions';
 import { Draggable } from 'react-beautiful-dnd';
 
-import DialogueMessage from '../pages/dialogues/DialogueMessage';
-import DialogueEmote from '../pages/dialogues/DialogueEmote';
-import MessageSwarm from '../pages/dialogues/MessageSwarm';
-import GiveMoneyFromDialogue from '../pages/dialogues/GiveMoneyFromDialogue';
-import GiveItemFromDialogue from '../pages/dialogues/GiveItemFromDialogue';
-import PickItem from '../pages/dialogues/PickItem';
+import DialogueMessage from './DialogueMessage';
+import DialogueEmote from './DialogueEmote';
+import MessageSwarm from './MessageSwarm';
+import GiveMoneyFromDialogue from './GiveMoneyFromDialogue';
+import GiveItemFromDialogue from './GiveItemFromDialogue';
+import PickItem from './PickItem';
 
 class DialogueMessageContainer extends React.Component {
   editMessage = (data) => {

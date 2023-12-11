@@ -7,19 +7,16 @@ import {
   IconButton,
   Grid,
   Icon,
-  Button,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import BrightnessHighIcon from '@mui/icons-material/BrightnessHigh';
-import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
 
 import { applicationName } from '../../globals';
 import { useDialogueManager } from '../../hooks';
 import GenericDialogue from './GenericDialogue';
 
 import HelpContent from './HelpContent';
-import VisuallyHiddenInput from './VisuallyHiddenInput';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -61,10 +58,6 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
           </Grid>
           <Grid item xs={4}>
             <Grid container justifyContent="flex-end">
-              {/* <Button component="label" variant="contained" startIcon={<SnippetFolderIcon />}>
-                Select Working Folder
-                <VisuallyHiddenInput type="file" webkitdirectory directory />
-              </Button> */}
               <IconButton
                 className={classes.buttons}
                 onClick={() => handleDarkModeToggle()}

@@ -4,7 +4,7 @@ import { Paper, Grid, Typography } from '@mui/material';
 
 import { CutsceneRowToolbar } from './elements';
 import { CreateEventForm } from './forms';
-import CutsceneEventContainer from '../../containers/CutsceneEventContainer';
+import CutsceneEventContainer from './CutsceneEventContainer';
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
 

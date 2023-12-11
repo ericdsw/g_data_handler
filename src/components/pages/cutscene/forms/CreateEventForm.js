@@ -209,14 +209,13 @@ class CreateEventForm extends React.Component {
                   margin="normal"
                   inputProps={{
                     ...params.inputProps,
-                    autocomplete: 'new-password',
+                    autoComplete: 'new-password',
                   }}
                 />
               )}
             />
           </Grid>
         </Grid>
-
         <Grid container>{fields}</Grid>
         <Grid container>
           <Grid item xs={12}>
