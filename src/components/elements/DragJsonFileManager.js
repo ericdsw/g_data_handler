@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   dragCapturer: {
     padding: 16,
     marginTop: 24,
+    cursor: 'pointer'
   },
   gridContainer: {
     minHeight: 300,
@@ -69,7 +70,7 @@ const DragJsonFileManager = ({
       {additionalButtons}
 
       <Divider />
-      <DragAndDrop handleDrop={(files) => handleDrop(files)}>
+      <DragAndDrop handleDrop={handleDrop}>
         <Paper elevation={1} className={classes.dragCapturer}>
           <Grid
             container

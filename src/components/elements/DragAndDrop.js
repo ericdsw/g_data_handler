@@ -1,7 +1,8 @@
-import React from 'react';
-import withStyles from '@mui/styles/withStyles';
+import React, { useCallback } from 'react';
+import { makeStyles } from '@mui/styles';
+import { useDropzone } from 'react-dropzone';
 
-const styles = (theme) => ({
+const useStyles = makeStyles(() => ({
   dragWrapper: {
     position: 'relative',
   },
@@ -22,82 +23,35 @@ const styles = (theme) => ({
     left: 0,
     textAlign: 'center',
     color: 'grey',
-    fontSize: 36,
+    fontSize: 24,
   },
-});
+}));
 
-class DragAndDrop extends React.Component {
-  dropRef = React.createRef();
-  dragCounter = 0;
-  state = {
-    dragging: false,
-  };
+const DragAndDrop = ({ children, handleDrop }) => {
+  
+  const classes = useStyles();
+  const onDrop = useCallback((acceptedFiles) => {
+    handleDrop(acceptedFiles);
+  }, [handleDrop]);
 
-  componentDidMount() {
-    let div = this.dropRef.current;
-    div.addEventListener('dragenter', this.handleDragIn);
-    div.addEventListener('dragleave', this.handleDragOut);
-    div.addEventListener('dragover', this.handleDrag);
-    div.addEventListener('drop', this.handleDrop);
-  }
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop})
 
-  componentWillUnmount() {
-    let div = this.dropRef.current;
-    div.removeEventListener('dragenter', this.handleDragIn);
-    div.removeEventListener('dragleave', this.handleDragOut);
-    div.removeEventListener('dragover', this.handleDrag);
-    div.removeEventListener('drop', this.handleDrop);
-  }
-
-  handleDrag = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-  };
-
-  handleDragIn = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    this.dragCounter++;
-    if (event.dataTransfer.items && event.dataTransfer.items.length > 0) {
-      this.setState({ dragging: true });
-    }
-  };
-
-  handleDragOut = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    this.dragCounter--;
-    if (this.dragCounter > 0) {
-      return;
-    }
-    this.setState({ dragging: false });
-  };
-
-  handleDrop = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    this.setState({ dragging: false });
-    if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
-      this.props.handleDrop(event.dataTransfer.files);
-      this.dragCounter = 0;
-    }
-  };
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <div ref={this.dropRef} className={classes.dragWrapper}>
-        {this.state.dragging && (
-          <div className={classes.dragOverlay}>
-            <div className={classes.dragOverlayContent}>
-              <div>Drop here :)</div>
-            </div>
+  return (
+    <div
+      className={classes.dragWrapper}
+      {...getRootProps()}
+    >
+      <input {...getInputProps()} />
+      {isDragActive && (
+        <div className={classes.dragOverlay}>
+          <div className={classes.dragOverlayContent}>
+            <div>Drop here :)</div>
           </div>
-        )}
-        {this.props.children}
-      </div>
-    );
-  }
+        </div>
+      )}
+      {children}
+    </div>
+  );
 }
 
-export default withStyles(styles)(DragAndDrop);
+export default DragAndDrop;

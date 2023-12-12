@@ -167,11 +167,18 @@ class CreateEventForm extends React.Component {
     for (const paramName in this.formFields) {
       const currentParamData = this.formFields[paramName];
 
+      if (currentParamData.skipRender) {
+        continue;
+      }
+
       const constructedFormField = createInput(
         paramName,
         currentParamData,
         this.state.resultData[paramName],
-        this.handleInputChange
+        this.handleInputChange,
+        false,
+        {},
+        this.state.resultData
       );
 
       fields.push(

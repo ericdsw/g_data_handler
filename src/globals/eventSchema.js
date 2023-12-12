@@ -550,6 +550,7 @@ const eventSchema = {
         tooltip:
           'The file that contains the target conversation (from the Dialogues resource folder)',
         placeholder: 'path/to/dialogue.json',
+        skipRender: true
       },
       name: {
         label: 'Conversation Name',
@@ -557,7 +558,31 @@ const eventSchema = {
         required: true,
         tooltip: 'The conversation name inside the file',
         placecholder: 'conversation_name',
+        skipRender: true
       },
+      dialogueDataBundle: {
+        type: 'dialogueJson',
+        fileValueKey: 'file',
+        conversationNameKey: 'name',
+        multiple: false,
+        inputs: {
+          file: {
+            label: 'JSON file',
+            type: 'text',
+            required: true,
+            tooltip:
+              'The file that contains the target conversation (from the Dialogues resource folder)',
+            placeholder: 'path/to/dialogue.json',
+          },
+          name: {
+            label: 'Conversation Name',
+            type: 'text',
+            required: true,
+            tooltip: 'The conversation name inside the file',
+            placecholder: 'conversation_name',
+          }
+        },
+      }
     },
   },
 

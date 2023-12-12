@@ -69,8 +69,11 @@ const GenericForm = ({
 
   return (
     <form onSubmit={onSubmit}>
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={1} alignItems="center">
         {Object.keys(parameters).map((inputName, index) => {
+          if (parameters[inputName].skipRender) {
+            return <></>;
+          }
           const usedWeight = parameters[inputName].weight || 12;
           return (
             <Grid key={inputName} item xs={usedWeight}>
@@ -80,7 +83,8 @@ const GenericForm = ({
                 formData[inputName],
                 handleInputChange,
                 disabledInputs.includes(inputName),
-                index === 0 ? { autoFocus: true } : {}
+                index === 0 ? { autoFocus: true } : {},
+                formData // <-- Forgib
               )}
             </Grid>
           );

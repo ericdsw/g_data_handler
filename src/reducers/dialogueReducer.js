@@ -23,6 +23,9 @@ import {
   DELETE_CONVERSATIONS_TO_MERGE,
   SELECT_ALL_CONVERSATIONS,
   UNSELECT_ALL_CONVERSATIONS,
+  ADD_PRE_UPLOADED_FILE,
+  UPDATE_PRE_UPLOADED_FILE_NAME,
+  CLEAR_PRE_UPLOADED_FILES
 } from '../actions/types';
 
 const initialState = {
@@ -32,6 +35,7 @@ const initialState = {
   dialogues: {},
   conversations: {},
   messages: {},
+  preUploadedFiles: {}
 };
 
 const dialogueReducer = createReducer(initialState, (builder) => {
@@ -59,8 +63,32 @@ const dialogueReducer = createReducer(initialState, (builder) => {
     .addCase(DELETE_CONVERSATIONS_TO_MERGE, deleteAllConversationsToMerge)
     .addCase(CONFIRM_CONVERSATION_MERGE, confirmConversationMerge)
     .addCase(SELECT_ALL_CONVERSATIONS, selectAllConversations)
-    .addCase(UNSELECT_ALL_CONVERSATIONS, unselectAllConversations);
+    .addCase(UNSELECT_ALL_CONVERSATIONS, unselectAllConversations)
+    
+    .addCase(ADD_PRE_UPLOADED_FILE, addPreUploadedFile)
+    .addCase(UPDATE_PRE_UPLOADED_FILE_NAME, updatePreUploadedFile)
+    .addCase(CLEAR_PRE_UPLOADED_FILES, clearPreUploadedFiles)
 });
+
+
+function clearPreUploadedFiles(state, action) {
+  state.preUploadedFiles = {}
+}
+
+
+function updatePreUploadedFile(state, action) {
+  const { fileId, newFileName } = action.payload;
+  state.preUploadedFiles[fileId].fileName = newFileName;
+}
+
+
+function addPreUploadedFile(state, action) {
+  const { fileName, conversationKeys, fileId } = action.payload;
+  state.preUploadedFiles[fileId] = {
+    fileName,
+    conversationKeys
+  };
+}
 
 // Create
 

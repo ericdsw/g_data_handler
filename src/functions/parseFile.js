@@ -3,6 +3,7 @@
  * and provides it as the result of the promise
  */
 export default function parseFile(file, acceptedType) {
+
   const fileReader = new FileReader();
 
   const fileParsePromise = new Promise((resolve, reject) => {

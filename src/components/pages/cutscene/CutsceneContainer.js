@@ -36,7 +36,7 @@ const CutsceneContainer = () => {
   /**
    * Snackbar related
    */
-  const enqueueSnackbar = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const showError = useCallback((errorMessage) => {
     enqueueSnackbar(errorMessage, { variant: 'error' });
   }, [enqueueSnackbar]);

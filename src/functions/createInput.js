@@ -15,6 +15,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import AddNewMultiInputRow from '../components/elements/AddNewMultiInputRow';
+import CompositeDialogueFileInput from '../components/elements/CompositeDialogueFileInput';
 
 const nodeTargetDescription = (
   <ul>
@@ -68,7 +69,8 @@ export default function createInput(
   value,
   handleChange,
   disabled = false,
-  extraParams = {}
+  extraParams = {},
+  completeFormValues = {}
 ) {
   let label = inputData.label;
   if (inputData.required) {
@@ -268,6 +270,27 @@ export default function createInput(
           {...extraParams}
         />
       );
+      break;
+  
+    case 'dialogueJson':
+
+      const fileInputData = inputData.inputs[inputData.fileValueKey];
+      const conversationInputData = inputData.inputs[inputData.conversationNameKey];
+
+      const fileInputValue = completeFormValues[inputData.fileValueKey];
+      const conversationInputValue = completeFormValues[inputData.conversationNameKey];
+
+      contentValue = (
+        <CompositeDialogueFileInput
+          fileLabel={fileInputData.label}
+          conversationNameLabel={conversationInputData.label}
+          fileValue={fileInputValue}
+          conversationNameValue={conversationInputValue}
+          fileOnChange={handleChange(inputData.fileValueKey)}
+          conversationNameOnChange={handleChange(inputData.conversationNameKey)}
+          multiple={inputData.multiple}
+        />
+      )
       break;
 
     case 'dropdown':

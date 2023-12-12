@@ -50,12 +50,35 @@ const interactionInputSchema = {
         type: 'text',
         required: true,
         placeholder: 'json file, starting from the dialogues resource folder',
+        skipRender: true,
       },
       dialogues: {
         label: 'Dialogues',
         type: 'array',
         required: true,
         placeholder: 'Separate each one with a comma',
+        skipRender: true,
+      },
+      dialogueDataBundle: {
+        type: 'dialogueJson',
+        fileValueKey: 'dialogue_file',
+        conversationNameKey: 'dialogues',
+        multiple: true,
+        inputs: {
+          dialogue_file: {
+            label: 'Dialogue File',
+            type: 'text',
+            required: true,
+            placeholder: 'json file, starting from the dialogues resource folder',
+          },
+          dialogues: {
+            label: 'Dialogues',
+            type: 'array',
+            required: true,
+            tooltip: 'separate each one with a comma',
+            placecholder: 'foo, foo2',
+          }
+        }
       },
       required_memory: {
         label: 'Required Memory',
@@ -213,12 +236,35 @@ const interactionInputSchema = {
         type: 'text',
         required: true,
         placeholder: 'json file, starting from the dialogues resource folder',
+        skipRender: true
       },
       dialogues: {
         label: 'Dialogues',
         type: 'array',
         required: true,
         placeholder: 'separate each one with a comma',
+        skipRender: true
+      },
+      dialogueDataBundle: {
+        type: 'dialogueJson',
+        fileValueKey: 'dialogue_file',
+        conversationNameKey: 'dialogues',
+        multiple: true,
+        inputs: {
+          dialogue_file: {
+            label: 'Dialogue File',
+            type: 'text',
+            required: true,
+            placeholder: 'json file, starting from the dialogues resource folder',
+          },
+          dialogues: {
+            label: 'Dialogues',
+            type: 'array',
+            required: true,
+            tooltip: 'separate each one with a comma',
+            placecholder: 'foo, foo2',
+          }
+        }
       },
       required_items: {
         label: 'Required Items',
