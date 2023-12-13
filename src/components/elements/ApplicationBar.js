@@ -17,6 +17,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import BrightnessHighIcon from '@mui/icons-material/BrightnessHigh';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
+import AllInboxIcon from '@mui/icons-material/AllInbox';
 
 import { applicationName } from '../../globals';
 import { useDialogueManager } from '../../hooks';
@@ -24,6 +25,7 @@ import GenericDialogue from './GenericDialogue';
 
 import HelpContent from './HelpContent';
 import PreloadedDialoguesContent from './PreloadedDialoguesContent';
+import PreLoadedCutscenesContent from './PreLoadedCutscenesContent';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -41,18 +43,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const selectLoadedFileData = state => state.dialogue.preUploadedFiles;
-const selectData = createSelector([selectLoadedFileData], preUploadedFiles => ({
-  preUploadedFiles
-}));
+const selectLoadedCutsceneFileData = state => state.cutscene.preloadedCutsceneFileNames;
+
+const selectData = createSelector(
+  [selectLoadedFileData, selectLoadedCutsceneFileData],
+  (preUploadedFiles, preUploadedCutsceneFiles)=> ({
+    preUploadedFiles,
+    preUploadedCutsceneFiles
+  })
+);
 
 const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
 
-  const { preUploadedFiles } = useSelector(state => selectData(state));
+  const {
+    preUploadedFiles,
+    preUploadedCutsceneFiles
+  } = useSelector(state => selectData(state));
 
   const classes = useStyles();
-  const [dialogues, toggleDialogue] = useDialogueManager('helpDialogue', 'preloadedDialoguesDialogue');
+  const [dialogues, toggleDialogue] = useDialogueManager(
+    'helpDialogue',
+    'preloadedDialoguesDialogue',
+    'preloadedCutscenesDialogue'
+  );
 
   const fileAmount = useMemo(() => Object.keys(preUploadedFiles).length, [preUploadedFiles])
+  const cutsceneFileAmount = useMemo(() => preUploadedCutsceneFiles.length, [preUploadedCutsceneFiles]);
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
@@ -74,6 +90,22 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
           </Grid>
           <Grid item xs={4}>
             <Grid container justifyContent="flex-end">
+              <Tooltip title="Cutscene file names">
+                <IconButton
+                  className={classes.buttons}
+                  size="large"
+                  onClick={() => toggleDialogue('preloadedCutscenesDialogue', 'show')}
+                >
+                  {cutsceneFileAmount > 0 && (
+                    <Badge badgeContent={cutsceneFileAmount} color="primary">
+                      <AllInboxIcon />
+                    </Badge>
+                  )}
+                  {cutsceneFileAmount <= 0 && (
+                    <AllInboxIcon />
+                  )}
+                </IconButton>
+              </Tooltip>
               <Tooltip title="Preloaded Dialogues">
                 <IconButton
                   className={classes.buttons}
@@ -129,6 +161,15 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
       >
         <PreloadedDialoguesContent />
       </GenericDialogue>
+
+      <GenericDialogue
+        open={dialogues['preloadedCutscenesDialogue']}
+        onClose={() => toggleDialogue('preloadedCutscenesDialogue', 'hide')}
+        maxWidth='md'
+      >
+        <PreLoadedCutscenesContent />
+      </GenericDialogue>
+
     </AppBar>
   );
 };

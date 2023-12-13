@@ -45,8 +45,6 @@ const useStyles = makeStyles(styles);
 
 const CutsceneEvent = ({
   cutsceneEventData,
-  rowNumber,
-  eventNumber,
   handleEditEvent,
   handleDeleteEvent,
 }) => {
@@ -198,7 +196,7 @@ const CutsceneEvent = ({
         isOpen={dialogues['confirmDelete']}
         handleClose={() => toggleDialogue('confirmDelete', 'hide')}
         handleConfirm={() => {
-          handleDeleteEvent(rowNumber, eventNumber);
+          handleDeleteEvent(cutsceneEventData.id);
           toggleDialogue('confirmDelete', 'hide');
         }}
       />

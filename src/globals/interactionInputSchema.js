@@ -14,7 +14,7 @@ const interactionInputSchema = {
       },
       cutscene_file: {
         label: 'Cutscene File',
-        type: 'text',
+        type: 'dialogueFile',
         required: true,
         placeholder: 'json file, starting from the cutscenes resource folder',
       },
@@ -158,7 +158,7 @@ const interactionInputSchema = {
       },
       cutscene_file: {
         label: 'Cutscene File',
-        type: 'text',
+        type: 'dialogueFile',
         required: true,
         placeholder: 'json file, starting from the cutscenes resource folder',
       },

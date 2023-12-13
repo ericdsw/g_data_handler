@@ -16,6 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import AddNewMultiInputRow from '../components/elements/AddNewMultiInputRow';
 import CompositeDialogueFileInput from '../components/elements/CompositeDialogueFileInput';
+import CutsceneFileSearcher from '../components/elements/CutsceneFileSearcher';
 
 const nodeTargetDescription = (
   <ul>
@@ -326,6 +327,16 @@ export default function createInput(
         </TextField>
       );
       break;
+    
+    case 'dialogueFile':
+      contentValue = (
+        <CutsceneFileSearcher
+          label={label}
+          onChange={handleChange(paramName)}
+          value={value}
+        />
+      );
+      break;
 
     case 'positionArray':
     case 'position':
@@ -384,6 +395,7 @@ export default function createInput(
           {...extraParams}
         />
       );
+   
   }
 
   let returnValue;

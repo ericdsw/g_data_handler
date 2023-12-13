@@ -1,5 +1,7 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+import { createSelector } from '@reduxjs/toolkit';
+
 import CutsceneRow from './CutsceneRow';
 import {
   addCutsceneRowAtPosition,
@@ -7,35 +9,46 @@ import {
   addCutsceneEvent,
 } from '../../../actions/cutsceneActions';
 
+const selectCutsceneRows = state => state.cutscene.cutsceneRows;
+const memoizedSelectCutsceneRowData = createSelector([selectCutsceneRows], cutsceneRowData => ({
+  cutsceneRowData
+}))
+
 const CutsceneRowContainer = ({
-  rowData,
+  rowId,
   rowNumber,
-  addCutsceneRowAtPosition,
-  deleteCutsceneRow,
-  addCutsceneEvent,
 }) => {
+
+  const dispatch = useDispatch();
+  const { cutsceneRowData } = useSelector(state => memoizedSelectCutsceneRowData(state));
+  const rowData = useMemo(() => cutsceneRowData[rowId], [rowId, cutsceneRowData]);
+
+  const handleAddRowBelow = useCallback(() => {
+    dispatch(addCutsceneRowAtPosition(rowNumber + 1))
+  }, [dispatch, rowNumber]);
+
+  const handleAddRowAbove = useCallback(() => {
+    dispatch(addCutsceneRowAtPosition(rowNumber))
+  }, [dispatch, rowNumber]);
+
+  const handleDeleteRow = useCallback(() => {
+    dispatch(deleteCutsceneRow(rowId));
+  }, [dispatch, rowId]);
+
+  const handleAddEvent = useCallback((eventData) => {
+    dispatch(addCutsceneEvent(rowId, eventData))
+  }, [dispatch, rowId]);
+
   return (
     <CutsceneRow
       rowData={rowData}
       rowNumber={rowNumber}
-      handleAddRowBelow={() => {
-        addCutsceneRowAtPosition(rowNumber + 1);
-      }}
-      handleAddRowAbove={() => {
-        addCutsceneRowAtPosition(rowNumber);
-      }}
-      handleDeleteRow={() => {
-        deleteCutsceneRow(rowNumber);
-      }}
-      handleAddEvent={(eventData) => {
-        addCutsceneEvent(rowNumber, eventData);
-      }}
+      handleAddRowBelow={handleAddRowBelow}
+      handleAddRowAbove={handleAddRowAbove}
+      handleDeleteRow={handleDeleteRow}
+      handleAddEvent={handleAddEvent}
     />
   );
 };
 
-export default connect(null, {
-  addCutsceneRowAtPosition,
-  deleteCutsceneRow,
-  addCutsceneEvent,
-})(CutsceneRowContainer);
+export default CutsceneRowContainer;

@@ -19,17 +19,40 @@ import {
   addCutsceneJump,
   deleteCutsceneJump,
   updateCutsceneHideBars,
+  updateWithEmptyCutscene,
+  deleteCutscene
 } from '../../../actions/cutsceneActions';
 
-const selectCurrentCutscene = state => state.cutscene.currentCutscene;
-const selectCurrentCutsceneJumps = state => state.cutscene.currentCutsceneJumps;
+import { transformIn, transformOut } from '../../../models/transformers/CutsceneTransformer';
+
+const selectCutsceneId = state => state.cutscene.currentCutsceneId;
+const selectCutscenes = state => state.cutscene.cutscenes;
 const selectFileName = state => state.cutscene.fileName;
 const selectHideBars = state => state.cutscene.hideBars;
-const selectCutsceneContainerData = createSelector([
-  selectCurrentCutscene, selectCurrentCutsceneJumps, selectFileName, selectHideBars
-], (currentCutscene, currentCutsceneJumps, fileName, hideBars) => ({
-  currentCutscene, currentCutsceneJumps, fileName, hideBars
-}));
+const selectJumps = state => state.cutscene.currentCutsceneJumps;
+const selectCutsceneRows = state => state.cutscene.cutsceneRows;
+const selectCutsceneEvents = state => state.cutscene.cutsceneEvents;
+
+const memoizedSelectCutsceneData = createSelector(
+  [
+    selectCutsceneId,
+    selectCutscenes,
+    selectFileName,
+    selectHideBars,
+    selectJumps,
+    selectCutsceneRows,
+    selectCutsceneEvents
+  ],
+  (currentCutsceneId, cutscenes, fileName, hideBars, currentCutsceneJumps, cutsceneRows, cutsceneEvents) => ({
+    currentCutsceneId,
+    currentCutscene: cutscenes[currentCutsceneId],
+    fileName,
+    hideBars,
+    currentCutsceneJumps,
+    cutsceneRows,
+    cutsceneEvents,
+  })
+)
 
 const CutsceneContainer = () => {
 
@@ -46,34 +69,64 @@ const CutsceneContainer = () => {
    */
   const dispatch = useDispatch();
   const {
+    currentCutsceneId,
     currentCutscene,
     currentCutsceneJumps,
     fileName,
-    hideBars
-  } = useSelector(state => selectCutsceneContainerData(state));
+    hideBars,
+    cutsceneRows,
+    cutsceneEvents
+  } = useSelector(state => memoizedSelectCutsceneData(state));
 
   /**
    * Memoized reference to the generated JSON
    */
   const generatedJson = useMemo(() => ({
-    data: currentCutscene,
+    data: transformOut(currentCutsceneId, {
+      cutscenes: {
+        [currentCutsceneId]: currentCutscene
+      },
+      cutsceneRows,
+      cutsceneEvents,
+    }),
     cutscene_jumps: currentCutsceneJumps,
     hide_black_bars: hideBars
-  }), [currentCutscene, currentCutsceneJumps, hideBars]);
+  }), [
+    currentCutscene,
+    currentCutsceneJumps,
+    hideBars,
+    currentCutsceneId,
+    cutsceneEvents,
+    cutsceneRows
+  ]);
+
+  /**
+   * In case some fucky wucky happens, I'll just bind these two methods directly
+   * to the window object so they can be invoked by the browser's console.
+   */
+  useEffect(() => {
+    window.exportCutscene = () => {
+      downloadJSON(fileName, generatedJson)
+    };
+    window.printCutscene = () => {
+      console.log(JSON.stringify(generatedJson))
+    }
+  }, [generatedJson, fileName]);
 
   /**
    * Generates the exported file
    */
   const exportFile = useCallback(() => {
     // Check that the cutscene is not empty
-    if (currentCutscene.length <= 0) {
+    if (currentCutscene.cutsceneRows.length <= 0) {
       showError('Cannot export an empty cutscene');
       return;
     }
 
     // Check that no rows are empty
     let emptyRows = 0;
-    currentCutscene.forEach((row) => {
+
+    generatedJson.data.forEach((row) => {
       if (row.length <= 0) {
         emptyRows += 1;
       }
@@ -87,52 +140,39 @@ const CutsceneContainer = () => {
 
     // Perform download
     downloadJSON(fileName, generatedJson);
-  }, [currentCutscene, fileName, generatedJson, showError]);
-
-  useEffect(() => {
-    window.exportCutscene = exportFile;
-    window.printCutscene = () => {
-      console.log(JSON.stringify(generatedJson))
-    }
-  }, [generatedJson, exportFile]);
+  }, [currentCutscene, fileName, generatedJson, showError]); 
 
   const clearCutscene = () => {
-    dispatch(updateCutscene({
-      cutscene: null,
-      fileName: '',
-      jumps: {},
-      hideBars: false,
-    }))
+    dispatch(deleteCutscene());
   };
 
-  const updateWithEmptyCutscene = () => {
-    dispatch(updateCutscene({
-      cutscene: [],
-      jumps: {},
-      fileName: 'cutscene_file_name.json',
-      hideBars: false,
-    }));
+  const updateEmpty = () => {
+    dispatch(updateWithEmptyCutscene());
   };
 
-  const updateCutsceneFromFile = (targetFile) => {
-    parseFile(targetFile, 'application/json')
-      .then((json) => {
-        let jumps = {};
-        let hideBars = false;
-        if (json['cutscene_jumps']) {
-          jumps = json['cutscene_jumps'];
-        }
-        if (json['hide_black_bars']) {
-          hideBars = json['hide_black_bars'];
-        }
-        dispatch(updateCutscene({
-          cutscene: fillCutsceneWithDefaults(json['data']),
-          jumps: jumps,
+  const updateCutsceneFromFile = async targetFile => {
+
+    try {
+      const json = await parseFile(targetFile, 'application/json');
+      const jumps = json['cutscene_jumps'] || {};
+      const hideBars = json['hide_bars'] || false;
+
+      const fixedCutscene = fillCutsceneWithDefaults(json.data);
+
+      const { result, entities } = transformIn(fixedCutscene);
+
+      dispatch(
+        updateCutscene({
+          currentCutsceneId: result,
+          jumps,
           fileName: targetFile.name,
           hideBars: hideBars,
-        }));
-      })
-      .catch((error) => showError(error.message));
+          ...entities
+        })
+      );
+    } catch (e) {
+      showError(e.message);
+    }
   };
 
   const updateHideBars = (shouldHide) => {
@@ -155,7 +195,7 @@ const CutsceneContainer = () => {
     dispatch(deleteCutsceneJump(jumpName));
   }; 
 
-  if (currentCutscene !== null) {
+  if (currentCutsceneId !== '') {
     return (
       <>
         <CutsceneToolbar
@@ -167,9 +207,8 @@ const CutsceneContainer = () => {
           handleClearCutscene={clearCutscene}
         />
         <Cutscene
+          cutscene={currentCutscene}
           fileName={fileName}
-          cutsceneRows={currentCutscene}
-          jumps={currentCutsceneJumps}
           hideBars={hideBars}
           handleFileNameChange={changeFileName}
           handleAddRow={addRow}
@@ -182,14 +221,14 @@ const CutsceneContainer = () => {
     <DragJsonFileManager
       buttonString="New Cutscene"
       dragString={
-        <React.Fragment>
+        <>
           <Typography gutterBottom>
             <Icon fontSize="large">subscriptions</Icon>
           </Typography>
           Drag a <code>.json</code> here to edit an existing cutscene.
-        </React.Fragment>
+        </>
       }
-      handleEmpty={updateWithEmptyCutscene}
+      handleEmpty={updateEmpty}
       handleUpdateFromFile={updateCutsceneFromFile}
     />
   );

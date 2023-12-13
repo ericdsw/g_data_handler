@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { Paper, Grid, Typography } from '@mui/material';
 
@@ -27,6 +27,8 @@ const CutsceneRow = ({
     'createEvent'
   );
 
+  const cutsceneEventIds = useMemo(() => rowData.cutsceneEvents, [rowData]);
+
   return (
     <Grid item xs={12}>
       <Paper className={classes.cutsceneRow} elevation={1}>
@@ -50,12 +52,10 @@ const CutsceneRow = ({
           </Grid>
         </Grid>
         <Grid container direction="row" justifyContent="center" spacing={2}>
-          {rowData.map((cutsceneData, index) => (
+          {cutsceneEventIds.map((eventId, index) => (
             <CutsceneEventContainer
-              key={index}
-              rowNumber={rowNumber}
-              eventNumber={index}
-              cutsceneEventData={cutsceneData}
+              key={eventId}
+              eventId={eventId}
             />
           ))}
         </Grid>

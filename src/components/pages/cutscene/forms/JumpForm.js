@@ -11,7 +11,7 @@ const schema = {
     },
     jump_file: {
       label: 'Target Cutscene File',
-      type: 'string',
+      type: 'dialogueFile',
       required: true,
       tooltip: 'The cutscene that will be fired with this jump',
     },

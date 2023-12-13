@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import {
   Grid,
@@ -8,6 +8,7 @@ import {
   FormControlLabel,
   Switch,
   Tooltip,
+  Paper,
 } from '@mui/material';
 
 import CutsceneRowContainer from './CutsceneRowContainer';
@@ -17,7 +18,7 @@ import { styles } from './styles/CutsceneStyle';
 const useStyles = makeStyles(styles);
 
 const Cutscene = ({
-  cutsceneRows,
+  cutscene,
   fileName,
   hideBars,
   handleFileNameChange,
@@ -26,8 +27,11 @@ const Cutscene = ({
 }) => {
   const classes = useStyles();
 
+  const cutsceneRows = useMemo(() => cutscene.cutsceneRows, [cutscene])
+
   return (
     <Grid className={classes.root} container spacing={2} alignItems="center">
+
       <Grid item xs={12} md={10}>
         <TextField
           id="file_name"
@@ -39,6 +43,7 @@ const Cutscene = ({
           onChange={(e) => handleFileNameChange(e.target.value)}
         />
       </Grid>
+
       <Grid item xs={12} md={2}>
         <Tooltip title="If true, top and bottom black bars will not show">
           <FormControlLabel
@@ -55,29 +60,41 @@ const Cutscene = ({
           />
         </Tooltip>
       </Grid>
-      {cutsceneRows.length === 0 && (
-        <Typography
-          variant="h5"
-          color="textSecondary"
-          align="center"
-          className={classes.emptyText}
-        >
-          The cutscene is empty
-        </Typography>
-      )}
-      {cutsceneRows.map((cutsceneRow, index) => (
-        <CutsceneRowContainer
-          key={index}
-          rowNumber={index}
-          rowData={cutsceneRow}
-        />
-      ))}
-      <Grid item xs={12}>
-        <Grid container justifyContent="center">
-          <Button color="primary" onClick={() => handleAddRow()}>
-            Add Row
-          </Button>
+
+      <Grid item xs={12} container spacing={2}>
+
+        {/* Event List */}
+        <Grid item xs={12}>
+          {cutsceneRows.length === 0 && (
+            <Paper>
+              <Typography
+                variant="h5"
+                color="textSecondary"
+                align="center"
+                className={classes.emptyText}
+              >
+                The cutscene is empty
+              </Typography>
+            </Paper>
+          )}
+          {cutsceneRows.map((cutsceneRowId, index) => (
+            <CutsceneRowContainer
+              key={cutsceneRowId}
+              rowId={cutsceneRowId}
+              rowNumber={index}
+            />
+          ))}
         </Grid>
+
+        {/* Add new row button */}
+        <Grid item xs={12}>
+          <Grid container justifyContent="center">
+            <Button color="primary" onClick={() => handleAddRow()}>
+              Add Row
+            </Button>
+          </Grid>
+        </Grid>
+
       </Grid>
     </Grid>
   );

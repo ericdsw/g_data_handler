@@ -10,7 +10,28 @@ import {
   UPDATE_CUTSCENE_HIDE_BARS,
   ADD_CUTSCENE_JUMP,
   DELETE_CUTSCENE_JUMP,
+  UPDATE_WITH_EMPTY_CUTSCENE,
+  DELETE_CUTSCENE,
+  ADD_PRE_LOADED_CUTSCENE_NAMES,
+  DELETE_PRELOADED_CUTSCENE_NAMES
 } from './types';
+
+
+export const addPreLoadedCutscenes = preLoadedCutsceneNames => dispatch => {
+  dispatch({
+    type: ADD_PRE_LOADED_CUTSCENE_NAMES,
+    payload: { preLoadedCutsceneNames }
+  })
+}
+
+export const deletePreLoadedCutscenes = () => dispatch => {
+  dispatch({
+    type: DELETE_PRELOADED_CUTSCENE_NAMES,
+    payload: {}
+  })
+}
+
+// Cutscenes
 
 export const updateCutscene = (cutsceneData) => (dispatch) => {
   dispatch({
@@ -18,6 +39,22 @@ export const updateCutscene = (cutsceneData) => (dispatch) => {
     payload: cutsceneData,
   });
 };
+
+export const updateWithEmptyCutscene = () => dispatch => {
+  dispatch({
+    type: UPDATE_WITH_EMPTY_CUTSCENE,
+    payload: {}
+  })
+}
+
+export const deleteCutscene = () => dispatch => {
+  dispatch({
+    type: DELETE_CUTSCENE,
+    payload: {}
+  })
+}
+
+// Cutscene Rows
 
 export const addCutsceneRow = () => (dispatch) => {
   dispatch({
@@ -32,45 +69,47 @@ export const addCutsceneRowAtPosition = (position) => (dispatch) => {
   });
 };
 
-export const deleteCutsceneRow = (rowOffset) => (dispatch) => {
+export const deleteCutsceneRow = (rowId) => (dispatch) => {
   dispatch({
     type: DELETE_CUTSCENE_ROW,
-    payload: rowOffset,
+    payload: { rowId },
   });
 };
 
+// Cutscene Event
+
 export const addCutsceneEvent =
-  (rowOffset, cutsceneEventData) => (dispatch) => {
+  (rowId, cutsceneEventData) => (dispatch) => {
     dispatch({
       type: ADD_CUTSCENE_EVENT,
       payload: {
-        rowOffset,
+        rowId,
         cutsceneEventData,
       },
     });
   };
 
-export const deleteCutsceneEvent = (rowOffset, eventOffset) => (dispatch) => {
+export const deleteCutsceneEvent = (eventId) => (dispatch) => {
   dispatch({
     type: DELETE_CUTSCENE_EVENT,
     payload: {
-      rowOffset,
-      eventOffset,
+      eventId
     },
   });
 };
 
 export const editCutsceneEvent =
-  (rowOffset, eventOffset, data) => (dispatch) => {
+  (eventId, data) => (dispatch) => {
     dispatch({
       type: EDIT_CUTSCENE_EVENT,
       payload: {
-        rowOffset,
-        eventOffset,
+        eventId,
         data,
       },
     });
   };
+
+// Extra
 
 export const updateCutsceneFileName = (newFileName) => (dispatch) => {
   dispatch({

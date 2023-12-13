@@ -1,4 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
+import { deleteReference } from './reducerActions';
 
 import {
   UPDATE_CUTSCENE,
@@ -8,17 +10,33 @@ import {
   ADD_CUTSCENE_EVENT,
   DELETE_CUTSCENE_EVENT,
   EDIT_CUTSCENE_EVENT,
+
   UPDATE_CUTSCENE_FILE_NAME,
   UPDATE_CUTSCENE_HIDE_BARS,
   ADD_CUTSCENE_JUMP,
   DELETE_CUTSCENE_JUMP,
+
+  UPDATE_WITH_EMPTY_CUTSCENE,
+  DELETE_CUTSCENE,
+
+  ADD_PRE_LOADED_CUTSCENE_NAMES,
+  DELETE_PRELOADED_CUTSCENE_NAMES
 } from '../actions/types';
 
 const initialState = {
-  currentCutscene: null,
+
+  currentCutsceneId: '',
+
+  cutscenes: {},
+  cutsceneRows: {},
+  cutsceneEvents: {},
+
   currentCutsceneJumps: {},
+
   fileName: '',
   hideBars: false,
+
+  preloadedCutsceneFileNames: []
 };
 
 const cutsceneReducer = createReducer(initialState, (builder) => {
@@ -33,43 +51,131 @@ const cutsceneReducer = createReducer(initialState, (builder) => {
     .addCase(UPDATE_CUTSCENE_FILE_NAME, updateCutsceneFileName)
     .addCase(UPDATE_CUTSCENE_HIDE_BARS, updateCutsceneHideBars)
     .addCase(ADD_CUTSCENE_JUMP, addCutsceneJump)
-    .addCase(DELETE_CUTSCENE_JUMP, deleteCutsceneJump);
+    .addCase(DELETE_CUTSCENE_JUMP, deleteCutsceneJump)
+    .addCase(UPDATE_WITH_EMPTY_CUTSCENE, updateWithEmptyCutscene)
+    .addCase(DELETE_CUTSCENE, deleteCutscene)
+    .addCase(ADD_PRE_LOADED_CUTSCENE_NAMES, addPreLoadedCutscenes)
+    .addCase(DELETE_PRELOADED_CUTSCENE_NAMES, deletePreLoadedCutscenes)
 });
 
-function updateCutscene(state, action) {
-  const { cutscene, jumps, fileName, hideBars } = action.payload;
-  state.currentCutscene = cutscene;
-  state.currentCutsceneJumps = jumps;
-  state.fileName = fileName;
-  state.hideBars = hideBars;
+
+function addPreLoadedCutscenes(state, action) {
+  const { preLoadedCutsceneNames } = action.payload;
+  state.preloadedCutsceneFileNames = preLoadedCutsceneNames;
 }
 
-function addCutsceneRow(state, action) {
-  state.currentCutscene = [...state.currentCutscene, []];
+function deletePreLoadedCutscenes(state, action) {
+  state.preloadedCutsceneFileNames = [];
 }
+
+function updateCutscene(state, action) {
+  const {
+    currentCutsceneId,
+    cutscenes,
+    cutsceneRows,
+    cutsceneEvents,
+    jumps,
+    fileName,
+    hideBars
+  } = action.payload;
+
+  state.currentCutsceneId = currentCutsceneId;
+  state.cutscenes = cutscenes;
+  state.cutsceneRows = cutsceneRows;
+  state.cutsceneEvents = cutsceneEvents;
+  state.currentCutsceneJumps = jumps
+  state.fileName = fileName;
+  state.hideBars = hideBars
+}
+
+function updateWithEmptyCutscene(state, action) {
+  const cutsceneId = uuidv4();
+  state.currentCutsceneId = cutsceneId;
+  state.cutscenes[cutsceneId] = {
+    id: cutsceneId,
+    cutsceneRows: []
+  }
+  state.cutsceneRows = {};
+  state.cutsceneEvents = {};
+  state.currentCutsceneJumps = {};
+  state.fileName = 'cutscene_file_name.json';
+  state.hideBars = false;
+}
+
+function deleteCutscene(state, action) {
+  state.currentCutsceneId = '';
+  state.cutscenes = {};
+  state.cutsceneRows = {};
+  state.cutsceneEvents = {};
+  state.currentCutsceneJumps = {};
+  state.fileName = '';
+  state.hideBars = false;
+}
+
+// function addCutsceneRow(state, action) {
+//   state.currentCutscene = [...state.currentCutscene, []];
+// }
+
+function addCutsceneRow(state, action) {
+  const rowId = uuidv4();
+  state.cutsceneRows[rowId] = {
+    id: rowId,
+    cutsceneEvents: []
+  }
+  state.cutscenes[state.currentCutsceneId].cutsceneRows.push(rowId)
+}
+
+// function addCutsceneRowAtPosition(state, action) {
+//   const { position } = action.payload;
+//   state.currentCutscene.splice(position, 0, []);
+// }
 
 function addCutsceneRowAtPosition(state, action) {
   const { position } = action.payload;
-  state.currentCutscene.splice(position, 0, []);
+  const rowId = uuidv4();
+  state.cutsceneRows[rowId] = {
+    id: rowId,
+    cutsceneEvents: []
+  }
+  state.cutscenes[state.currentCutsceneId].cutsceneRows.splice(position, 0, rowId)
 }
 
+// function deleteCutsceneRow(state, action) {
+//   state.currentCutscene.splice(action.payload, 1);
+// }
+
 function deleteCutsceneRow(state, action) {
-  state.currentCutscene.splice(action.payload, 1);
+  const { rowId } = action.payload;
+  const rowEvents = state.cutsceneRows[rowId].cutsceneEvents;
+  rowEvents.forEach(eventId => {
+    delete state.cutsceneEvents[eventId];
+  });
+  delete state.cutsceneRows[rowId];
+  deleteReference(state.cutscenes, 'cutsceneRows', rowId);
 }
 
 function addCutsceneEvent(state, action) {
-  const { rowOffset, cutsceneEventData } = action.payload;
-  state.currentCutscene[rowOffset].push(cutsceneEventData);
+  const { rowId, cutsceneEventData } = action.payload;
+  const eventId = uuidv4();
+  state.cutsceneRows[rowId].cutsceneEvents.push(eventId);
+  state.cutsceneEvents[eventId] = {
+    id: eventId,
+    ...cutsceneEventData
+  }
 }
 
 function deleteCutsceneEvent(state, action) {
-  const { rowOffset, eventOffset } = action.payload;
-  state.currentCutscene[rowOffset].splice(eventOffset, 1);
+  const { eventId } = action.payload;
+  delete state.cutsceneEvents[eventId];
+  deleteReference(state.cutsceneRows, 'cutsceneEvents', eventId);
 }
 
 function editCutsceneEvent(state, action) {
-  const { rowOffset, eventOffset, data } = action.payload;
-  state.currentCutscene[rowOffset].splice(eventOffset, 1, data);
+  const { eventId, data } = action.payload;
+  state.cutsceneEvents[eventId] = {
+    id: eventId,
+    ...data
+  }
 }
 
 function updateCutsceneFileName(state, action) {
