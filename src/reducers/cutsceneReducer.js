@@ -20,7 +20,11 @@ import {
   DELETE_CUTSCENE,
 
   ADD_PRE_LOADED_CUTSCENE_NAMES,
-  DELETE_PRELOADED_CUTSCENE_NAMES
+  DELETE_PRELOADED_CUTSCENE_NAMES,
+  REORDER_CUTSCENE_ROWS,
+
+  REORDER_CUTSCENE_EVENT,
+  MOVE_CUTSCENE_EVENT
 } from '../actions/types';
 
 const initialState = {
@@ -56,8 +60,50 @@ const cutsceneReducer = createReducer(initialState, (builder) => {
     .addCase(DELETE_CUTSCENE, deleteCutscene)
     .addCase(ADD_PRE_LOADED_CUTSCENE_NAMES, addPreLoadedCutscenes)
     .addCase(DELETE_PRELOADED_CUTSCENE_NAMES, deletePreLoadedCutscenes)
+    .addCase(REORDER_CUTSCENE_ROWS, reorderCutsceneRows)
+    .addCase(REORDER_CUTSCENE_EVENT, reorderCutsceneEvent)
+    .addCase(MOVE_CUTSCENE_EVENT, moveCutsceneEvent)
 });
 
+function reorderCutsceneRows(state, action) {
+
+  const { sourcePosition, destinationPosition, rowId } = action.payload;
+  const cutsceneId = state.currentCutsceneId;
+
+  state.cutscenes[cutsceneId].cutsceneRows.splice(sourcePosition, 1);
+  state.cutscenes[cutsceneId].cutsceneRows.splice(
+    destinationPosition,
+    0,
+    rowId
+  );
+}
+
+function reorderCutsceneEvent(state, action) {
+  const { sourcePosition, destinationPosition, rowId, eventId } = action.payload;
+  state.cutsceneRows[rowId].cutsceneEvents.splice(sourcePosition, 1);
+  state.cutsceneRows[rowId].cutsceneEvents.splice(
+    destinationPosition,
+    0,
+    eventId
+  );
+}
+
+function moveCutsceneEvent(state, action) {
+  const {
+    sourcePosition,
+    destinationPosition,
+    sourceRowId,
+    destinationRowId,
+    eventId
+  } = action.payload;
+
+  state.cutsceneRows[sourceRowId].cutsceneEvents.splice(sourcePosition, 1);
+  state.cutsceneRows[destinationRowId].cutsceneEvents.splice(
+    destinationPosition,
+    0,
+    eventId
+  );
+}
 
 function addPreLoadedCutscenes(state, action) {
   const { preLoadedCutsceneNames } = action.payload;

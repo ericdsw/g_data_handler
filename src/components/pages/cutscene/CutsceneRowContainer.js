@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { createSelector } from '@reduxjs/toolkit';
+import { Draggable } from 'react-beautiful-dnd';
 
 import CutsceneRow from './CutsceneRow';
 import {
@@ -40,14 +41,23 @@ const CutsceneRowContainer = ({
   }, [dispatch, rowId]);
 
   return (
-    <CutsceneRow
-      rowData={rowData}
-      rowNumber={rowNumber}
-      handleAddRowBelow={handleAddRowBelow}
-      handleAddRowAbove={handleAddRowAbove}
-      handleDeleteRow={handleDeleteRow}
-      handleAddEvent={handleAddEvent}
-    />
+    <Draggable draggableId={rowId} index={rowNumber}>
+      {provided => {
+        return (
+          <div {...provided.draggableProps} ref={provided.innerRef}>
+            <CutsceneRow
+              rowData={rowData}
+              rowNumber={rowNumber}
+              handleAddRowBelow={handleAddRowBelow}
+              handleAddRowAbove={handleAddRowAbove}
+              handleDeleteRow={handleDeleteRow}
+              handleAddEvent={handleAddEvent}
+              dragHandleProps={provided.dragHandleProps}
+            />
+          </div>
+        )
+      }} 
+    </Draggable>
   );
 };
 

@@ -13,9 +13,38 @@ import {
   UPDATE_WITH_EMPTY_CUTSCENE,
   DELETE_CUTSCENE,
   ADD_PRE_LOADED_CUTSCENE_NAMES,
-  DELETE_PRELOADED_CUTSCENE_NAMES
+  DELETE_PRELOADED_CUTSCENE_NAMES,
+  REORDER_CUTSCENE_ROWS,
+  REORDER_CUTSCENE_EVENT,
+  MOVE_CUTSCENE_EVENT
 } from './types';
 
+export const moveCutsceneEvent = (sourcePosition, destinationPosition, sourceRowId, destinationRowId, eventId) => dispatch => {
+  dispatch({
+    type: MOVE_CUTSCENE_EVENT,
+    payload: {
+      sourcePosition,
+      destinationPosition,
+      sourceRowId,
+      destinationRowId,
+      eventId
+    }
+  })
+}
+
+export const reorderCutsceneEvent = (sourcePosition, destinationPosition, rowId, eventId) => dispatch => {
+  dispatch({
+    type: REORDER_CUTSCENE_EVENT,
+    payload: { sourcePosition, destinationPosition, rowId, eventId }
+  })
+}
+
+export const reorderCutsceneRows = (sourcePosition, destinationPosition, rowId) => dispatch => {
+  dispatch({
+    type: REORDER_CUTSCENE_ROWS,
+    payload: { sourcePosition, destinationPosition, rowId }
+  })
+}
 
 export const addPreLoadedCutscenes = preLoadedCutsceneNames => dispatch => {
   dispatch({

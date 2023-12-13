@@ -1,10 +1,18 @@
 export const styles = (theme) => ({
-  cutsceneRow: {
-    margin: `${theme.spacing(1)} auto`,
-    padding: 8,
-    [theme.breakpoints.up('sm')]: {
-      padding: 16,
-    },
-    paddingBottom: 24,
+  mockContainer: {
+    paddingBottom: theme.spacing(1),
+    paddingTop: theme.spacing(1)
   },
+  cutsceneRow: {
+    padding: theme.spacing(1),
+    paddingBottom: theme.spacing(3),
+  },
+  dragHandleElement: {
+    width: 40,
+    height: 40,
+    color: theme.palette.getContrastText(theme.palette.messageBackground),
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });

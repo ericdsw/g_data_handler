@@ -47,6 +47,7 @@ const CutsceneEvent = ({
   cutsceneEventData,
   handleEditEvent,
   handleDeleteEvent,
+  eventIndex
 }) => {
   const classes = useStyles();
 
@@ -113,68 +114,70 @@ const CutsceneEvent = ({
 
   return (
     <Grid item>
-      <Card className={classes.eventCard} elevation={2}>
-        <CardHeader
-          avatar={
-            <Avatar
-              aria-label="Type"
-              className={
-                typeof important !== 'undefined' && !important
-                  ? classes.avatarNonImportant
-                  : classes.avatar
-              }
+      <div style={{ padding: 8 }}>
+        <Card className={classes.eventCard} elevation={2}>
+          <CardHeader
+            avatar={
+              <Avatar
+                aria-label="Type"
+                className={
+                  typeof important !== 'undefined' && !important
+                    ? classes.avatarNonImportant
+                    : classes.avatar
+                }
+              >
+                <Icon>{icon}</Icon>
+              </Avatar>
+            }
+            title={<Typography>{name}</Typography>}
+            subheader={
+              <Tooltip title={eventDescription} enterDelay={300}>
+                <Typography variant="subtitle2">{eventDescription}</Typography>
+              </Tooltip>
+            }
+            style={{
+              minHeight: 100,
+              alignItems: 'flex-start',
+            }}
+          />
+          <CardActions className={classes.actions} disableSpacing>
+            <IconButton
+              aria-label="Edit"
+              onClick={() => toggleDialogue('editEvent', 'show')}
+              size="large"
             >
-              <Icon>{icon}</Icon>
-            </Avatar>
-          }
-          title={<Typography>{name}</Typography>}
-          subheader={
-            <Tooltip title={eventDescription} enterDelay={300}>
-              <Typography variant="subtitle2">{eventDescription}</Typography>
-            </Tooltip>
-          }
-          style={{
-            minHeight: 100,
-            alignItems: 'flex-start',
-          }}
-        />
-        <CardActions className={classes.actions} disableSpacing>
-          <IconButton
-            aria-label="Edit"
-            onClick={() => toggleDialogue('editEvent', 'show')}
-            size="large"
-          >
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            aria-label="Delete"
-            onClick={() => toggleDialogue('confirmDelete', 'show')}
-            size="large"
-          >
-            <DeleteIcon />
-          </IconButton>
-          <IconButton
-            className={classnames(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={() => toggleExpand(!expanded)}
-            aria-expanded={expanded}
-            aria-label="More Info"
-            size="large"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Table>
-              <TableBody style={{ wordWrap: 'break-word' }}>
-                {listParams}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Collapse>
-      </Card>
+              <EditIcon />
+            </IconButton>
+            <IconButton
+              aria-label="Delete"
+              onClick={() => toggleDialogue('confirmDelete', 'show')}
+              size="large"
+            >
+              <DeleteIcon />
+            </IconButton>
+            <IconButton
+              className={classnames(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={() => toggleExpand(!expanded)}
+              aria-expanded={expanded}
+              aria-label="More Info"
+              size="large"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Table>
+                <TableBody style={{ wordWrap: 'break-word' }}>
+                  {listParams}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Collapse>
+        </Card>
+      </div>
 
       <GenericDialogue
         title="Edit Cutscene Event"

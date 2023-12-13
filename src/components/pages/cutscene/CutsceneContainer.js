@@ -20,7 +20,10 @@ import {
   deleteCutsceneJump,
   updateCutsceneHideBars,
   updateWithEmptyCutscene,
-  deleteCutscene
+  deleteCutscene,
+  reorderCutsceneRows,
+  reorderCutsceneEvent,
+  moveCutsceneEvent
 } from '../../../actions/cutsceneActions';
 
 import { transformIn, transformOut } from '../../../models/transformers/CutsceneTransformer';
@@ -195,6 +198,57 @@ const CutsceneContainer = () => {
     dispatch(deleteCutsceneJump(jumpName));
   }; 
 
+  const onDragEnd = result => {
+    const { source, destination, draggableId, type } = result;
+    // If no destination is defined or no movement needs to be made, skip
+    if (
+      !destination ||
+      (destination.droppableId === source.droppableId &&
+        destination.index === source.index)
+    ) {
+      return;
+    }
+    
+    switch (type) {
+
+      case 'cutsceneRow':
+        dispatch(
+          reorderCutsceneRows(
+            source.index,
+            destination.index,
+            draggableId
+          )
+        )
+        break;
+
+      case 'cutsceneEvent':
+        if (source.droppableId === destination.droppableId) {
+          dispatch(
+            reorderCutsceneEvent(
+              source.index,
+              destination.index,
+              source.droppableId,
+              draggableId
+            )
+          )
+        } else {
+          dispatch(
+            moveCutsceneEvent(
+              source.index,
+              destination.index,
+              source.droppableId,
+              destination.droppableId,
+              draggableId
+            )
+          )
+        }
+        break;
+
+      default:
+        break;
+    }
+  }
+
   if (currentCutsceneId !== '') {
     return (
       <>
@@ -213,6 +267,7 @@ const CutsceneContainer = () => {
           handleFileNameChange={changeFileName}
           handleAddRow={addRow}
           handleShouldHideBars={updateHideBars}
+          handleDragEnd={onDragEnd}
         />
       </>
     )

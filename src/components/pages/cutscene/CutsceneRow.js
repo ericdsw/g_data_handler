@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { Paper, Grid, Typography } from '@mui/material';
+import { Paper, Grid, Typography, Icon } from '@mui/material';
+import { Droppable } from 'react-beautiful-dnd';
 
 import { CutsceneRowToolbar } from './elements';
 import { CreateEventForm } from './forms';
@@ -19,6 +20,7 @@ const CutsceneRow = ({
   handleAddRowAbove,
   handleDeleteRow,
   handleAddEvent,
+  ...props
 }) => {
   const classes = useStyles();
 
@@ -31,35 +33,61 @@ const CutsceneRow = ({
 
   return (
     <Grid item xs={12}>
-      <Paper className={classes.cutsceneRow} elevation={1}>
-        <Grid container alignItems="center">
-          <Grid item xs={4}>
-            <Typography variant="h6" gutterBottom align="left">
-              &nbsp;{rowNumber}
-            </Typography>
+      <div className={classes.mockContainer}>
+        <Paper className={classes.cutsceneRow} elevation={1}>
+          <Grid container alignItems="center">
+            <Grid item>
+              <div className={classes.dragHandleElement} {...props.dragHandleProps}>
+                <Icon>drag_handle</Icon>
+              </div>
+            </Grid>
+            <Grid item xs>
+              <Typography variant="caption">Event Row: {rowNumber}</Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <CutsceneRowToolbar
+                addAboveClick={() => handleAddRowAbove()}
+                addBelowClick={() => handleAddRowBelow()}
+                addEventClick={() => {
+                  toggleDialogue('createEvent', 'show');
+                }}
+                deleteRowClick={() => {
+                  toggleDialogue('confirmDelete', 'show');
+                }}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={8}>
-            <CutsceneRowToolbar
-              addAboveClick={() => handleAddRowAbove()}
-              addBelowClick={() => handleAddRowBelow()}
-              addEventClick={() => {
-                toggleDialogue('createEvent', 'show');
-              }}
-              deleteRowClick={() => {
-                toggleDialogue('confirmDelete', 'show');
-              }}
-            />
+          <Grid container direction="row" justifyContent="center" spacing={2}>
+            <Droppable
+              droppableId={rowData.id}
+              type="cutsceneEvent"
+              direction='horizontal'
+            >
+              {provided => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  style={{ 
+                    display: 'flex',
+                    marginTop: cutsceneEventIds.length <= 0 ? 0 : 16,
+                    flexWrap: 'wrap',
+                    justifyContent: 'center'
+                  }}
+                >
+                  {cutsceneEventIds.map((eventId, index) => (
+                    <CutsceneEventContainer
+                      key={eventId}
+                      eventId={eventId}
+                      eventIndex={index}
+                    />
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )} 
+            </Droppable>
           </Grid>
-        </Grid>
-        <Grid container direction="row" justifyContent="center" spacing={2}>
-          {cutsceneEventIds.map((eventId, index) => (
-            <CutsceneEventContainer
-              key={eventId}
-              eventId={eventId}
-            />
-          ))}
-        </Grid>
-      </Paper>
+        </Paper>
+      </div>
 
       <GenericDialogue
         title="Create Cutscene Event"

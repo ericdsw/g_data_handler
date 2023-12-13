@@ -13,10 +13,10 @@ const CutsceneRowToolbar = ({
   deleteRowClick,
 }) => {
   return (
-    <Typography variant="h6" gutterBottom align="right">
+    <Typography variant="h6" align="right">
       <Tooltip title="Add row above" enterDelay={200}>
         <IconButton
-          onClick={() => addAboveClick()}
+          onClick={addAboveClick}
           aria-label="add-row-above"
           size="large"
         >
@@ -25,7 +25,7 @@ const CutsceneRowToolbar = ({
       </Tooltip>
       <Tooltip title="Add row below" enterDelay={200}>
         <IconButton
-          onClick={() => addBelowClick()}
+          onClick={addBelowClick}
           aria-label="add-row-below"
           size="large"
         >
@@ -34,7 +34,7 @@ const CutsceneRowToolbar = ({
       </Tooltip>
       <Tooltip title="Add Cutscene Event" enterDelay={200}>
         <IconButton
-          onClick={() => addEventClick()}
+          onClick={addEventClick}
           aria-label="add"
           size="large"
         >
@@ -43,7 +43,7 @@ const CutsceneRowToolbar = ({
       </Tooltip>
       <Tooltip title="Delete Row" enterDelay={200}>
         <IconButton
-          onClick={() => deleteRowClick()}
+          onClick={deleteRowClick}
           aria-label="delete"
           size="large"
         >

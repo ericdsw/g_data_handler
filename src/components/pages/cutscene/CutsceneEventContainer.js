@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
+import { Draggable } from 'react-beautiful-dnd';
 
 import CutsceneEvent from './CutsceneEvent';
 import {
@@ -16,6 +17,7 @@ const memoizedSelectCutsceneEventData = createSelector([selectCutsceneEvents], c
 
 const CutsceneEventContainer = ({
   eventId,
+  eventIndex
 }) => {
 
   const dispatch = useDispatch()
@@ -32,11 +34,25 @@ const CutsceneEventContainer = ({
   }, [eventId, dispatch])
 
   return (
-    <CutsceneEvent
-      cutsceneEventData={cutsceneEventData}
-      handleEditEvent={handleEditEvent}
-      handleDeleteEvent={handleDeleteEvent}
-    />
+    <Draggable
+      draggableId={eventId}
+      index={eventIndex}
+    >
+      {(provided) => (
+        <div
+          {...provided.dragHandleProps}
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+        >
+          <CutsceneEvent
+            cutsceneEventData={cutsceneEventData}
+            handleEditEvent={handleEditEvent}
+            handleDeleteEvent={handleDeleteEvent}
+            eventIndex={eventIndex}
+          />
+        </div>
+      )}
+    </Draggable>
   );
 };
 
