@@ -16,6 +16,7 @@ import {
   clearStoryline,
   updateAppliesToEndRun,
   updateAppliedRunsString,
+  reorderStep
 } from '../../../actions/storylineActions';
 
 class StorylineContainer extends React.Component {
@@ -119,6 +120,22 @@ class StorylineContainer extends React.Component {
     enqueueSnackbar(errorMessage, { variant: 'error' });
   };
 
+  onDragEnd = result => {
+    const { source, destination, draggableId, type } = result;
+
+    if (
+      !destination ||
+      (destination.droppableId === source.droppableId &&
+        destination.index === source.index)
+    ) {
+      return;
+    }
+
+    if (type === 'storylineStep') {
+      this.props.reorderStep(source.index, destination.index, draggableId);
+    }
+  }
+
   // Render Logic
   render() {
     const { currentStoryline, storylines, appliedRunsString } = this.props;
@@ -134,6 +151,7 @@ class StorylineContainer extends React.Component {
           handleExport={this.export}
           appliedRunsString={appliedRunsString}
           updateAppliedRunsString={this.updateAppliedRuns}
+          handleDragEnd={this.onDragEnd}
         />
       );
     } else {
@@ -178,4 +196,5 @@ export default connect(mapStateToProps, {
   clearStoryline,
   updateAppliesToEndRun,
   updateAppliedRunsString,
+  reorderStep
 })(StorylineContainer);

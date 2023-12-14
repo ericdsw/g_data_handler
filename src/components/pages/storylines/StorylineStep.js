@@ -45,6 +45,7 @@ const StorylineStep = ({
   handleAddCompletionBundle,
   handleDeleteStep,
   handleDuplicateConfigs,
+  draggableProps
 }) => {
   const classes = useStyles();
 
@@ -213,212 +214,226 @@ const StorylineStep = ({
   );
 
   return (
-    <Card>
-      <CardHeader
-        title={
-          <React.Fragment>
+    <div style={{ paddingTop: 8, paddingBottom: 8 }}>
+
+      <Card elevation={1}>
+        <CardHeader
+          avatar={
+            <div 
+              {...draggableProps}
+              style={{
+                width: 30,
+                height: 30,
+                display: 'flex', alignItems: 'center', justifyContent: 'center'
+              }}
+            >
+              <Icon>drag_handle</Icon>
+            </div>
+          }
+          title={
             <Typography variant="h6">
               {storylineStep.name} &nbsp;
               <small className={classes.headerSmall}>{fString}</small>
             </Typography>
-          </React.Fragment>
-        }
-        subheader={subHeader}
-      />
-
-      <Divider />
-
-      <CardContent>
-        <Grid container spacing={2}>
-          {storylineStep.configuration.length <= 0 &&
-            storylineStep.completion <= 0 && (
-              <Grid item xs={12}>
-                <Typography variant="body1" align="center">
-                  <i>Empty step, will end storyline</i>
-                </Typography>
-              </Grid>
-            )}
-          {(storylineStep.configuration.length > 0 ||
-            storylineStep.completion.length > 0) && (
-            <React.Fragment>
-              <Grid item xs={12} md={6}>
-                {storylineStep.configuration.length > 0 && (
-                  <ul className={classes.descriptionList}>
-                    {configDescriptionText}
-                  </ul>
-                )}
-                {storylineStep.configuration.length <= 0 && (
-                  <Typography variant="body2">
-                    <br />
-                    <i>No entities defined for this step</i>
-                  </Typography>
-                )}
-              </Grid>
-              <Grid item xs={12} md={6}>
-                {storylineStep.completion.length > 0 && (
-                  <ul className={classes.descriptionList}>
-                    {completionDescriptionText}
-                  </ul>
-                )}
-                {storylineStep.completion.length <= 0 && (
-                  <Typography variant="body2">
-                    <br />
-                    <i>
-                      No completion bundles configured,&nbsp; the storyline will
-                      finish here
-                    </i>
-                  </Typography>
-                )}
-              </Grid>
-            </React.Fragment>
-          )}
-        </Grid>
-      </CardContent>
-
-      <Divider />
-
-      <CardActions disableSpacing>
-        <Tooltip title="Edit step name">
-          <IconButton
-            onClick={() => toggleDialogue('editName', 'show')}
-            size="large"
-          >
-            <Icon>edit</Icon>
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Delete step">
-          <IconButton
-            onClick={() => toggleDialogue('confirmDelete', 'show')}
-            size="large"
-          >
-            <Icon>delete</Icon>
-          </IconButton>
-        </Tooltip>
-        <Typography variant="h5">&nbsp;-&nbsp;</Typography>
-        <MenuIconButton
-          elementId={`create_entity_menu_${storylineStep.id}`}
-          icon="add_to_photos"
-          tooltip="Create Entity"
-          contentDictionary={eTypeOptions}
-          handleClick={(key) => setCurEntityType(key)}
+          }
+          subheader={subHeader}
         />
 
-        <Tooltip title="Add condition bundle">
-          <IconButton
-            onClick={() => {
-              toggleDialogue('createConditionBundle', 'show');
-            }}
-            size="large"
-          >
-            <Icon>add_alert</Icon>
-          </IconButton>
-        </Tooltip>
-        <IconButton
-          className={classnames(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={() => toggleExpanded(!expanded)}
-          size="large"
-        >
-          <Icon>expand_more</Icon>
-        </IconButton>
-      </CardActions>
+        <Divider />
 
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Grid container spacing={2}>
-            <Grid item xs={12} lg={8}>
-              <Typography variant="h5" align="center" gutterBottom>
-                Configurations &nbsp;
-                <MenuButton
-                  elementId={`duplicate-c-${storylineStep.id}`}
-                  contentDictionary={duplicateOptions}
-                  tooltip="Copy all of this step's configuratons to another step"
-                  buttonText="Duplicate in Step"
-                  handleClick={(key) => {
-                    duplicateConfigurationInStep(key);
-                  }}
-                />
-              </Typography>
-              <Grid container spacing={2}>
-                {mapConfData}
-              </Grid>
-            </Grid>
-            <Grid item xs={12} lg={4}>
-              <Typography variant="h5" align="center" gutterBottom>
-                Conditions
-              </Typography>
-              <Grid container spacing={2}>
-                {completionData}
-              </Grid>
-            </Grid>
+            {storylineStep.configuration.length <= 0 &&
+              storylineStep.completion <= 0 && (
+                <Grid item xs={12}>
+                  <Typography variant="body1" align="center">
+                    <i>Empty step, will end storyline</i>
+                  </Typography>
+                </Grid>
+              )}
+            {(storylineStep.configuration.length > 0 ||
+              storylineStep.completion.length > 0) && (
+              <React.Fragment>
+                <Grid item xs={12} md={6}>
+                  {storylineStep.configuration.length > 0 && (
+                    <ul className={classes.descriptionList}>
+                      {configDescriptionText}
+                    </ul>
+                  )}
+                  {storylineStep.configuration.length <= 0 && (
+                    <Typography variant="body2">
+                      <br />
+                      <i>No entities defined for this step</i>
+                    </Typography>
+                  )}
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  {storylineStep.completion.length > 0 && (
+                    <ul className={classes.descriptionList}>
+                      {completionDescriptionText}
+                    </ul>
+                  )}
+                  {storylineStep.completion.length <= 0 && (
+                    <Typography variant="body2">
+                      <br />
+                      <i>
+                        No completion bundles configured,&nbsp; the storyline will
+                        finish here
+                      </i>
+                    </Typography>
+                  )}
+                </Grid>
+              </React.Fragment>
+            )}
           </Grid>
         </CardContent>
-      </Collapse>
 
-      {/* Add Entity Form */}
-      <GenericDialogue
-        title={
-          curEntityType !== ''
-            ? storylineEntityInputSchema[curEntityType].name
-            : 'Add Entity'
-        }
-        open={curEntityType !== ''}
-        onClose={() => setCurEntityType('')}
-        maxWidth="sm"
-      >
-        <CreateMapEntityForm
-          curType={curEntityType}
-          handleSubmit={(name, mapName, parameters) => {
-            createNewEntity(name, mapName, parameters);
-            setCurEntityType('');
+        <Divider />
+
+        <CardActions disableSpacing>
+          <Tooltip title="Edit step name">
+            <IconButton
+              onClick={() => toggleDialogue('editName', 'show')}
+              size="large"
+            >
+              <Icon>edit</Icon>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete step">
+            <IconButton
+              onClick={() => toggleDialogue('confirmDelete', 'show')}
+              size="large"
+            >
+              <Icon>delete</Icon>
+            </IconButton>
+          </Tooltip>
+          <Typography variant="h5">&nbsp;-&nbsp;</Typography>
+          <MenuIconButton
+            elementId={`create_entity_menu_${storylineStep.id}`}
+            icon="add_to_photos"
+            tooltip="Create Entity"
+            contentDictionary={eTypeOptions}
+            handleClick={(key) => setCurEntityType(key)}
+          />
+
+          <Tooltip title="Add condition bundle">
+            <IconButton
+              onClick={() => {
+                toggleDialogue('createConditionBundle', 'show');
+              }}
+              size="large"
+            >
+              <Icon>add_alert</Icon>
+            </IconButton>
+          </Tooltip>
+          <IconButton
+            className={classnames(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={() => toggleExpanded(!expanded)}
+            size="large"
+          >
+            <Icon>expand_more</Icon>
+          </IconButton>
+        </CardActions>
+
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Grid container spacing={2}>
+              <Grid item xs={12} lg={8}>
+                <Typography variant="h5" align="center" gutterBottom>
+                  Configurations &nbsp;
+                  <MenuButton
+                    elementId={`duplicate-c-${storylineStep.id}`}
+                    contentDictionary={duplicateOptions}
+                    tooltip="Copy all of this step's configuratons to another step"
+                    buttonText="Duplicate in Step"
+                    handleClick={(key) => {
+                      duplicateConfigurationInStep(key);
+                    }}
+                  />
+                </Typography>
+                <Grid container spacing={2}>
+                  {mapConfData}
+                </Grid>
+              </Grid>
+              <Grid item xs={12} lg={4}>
+                <Typography variant="h5" align="center" gutterBottom>
+                  Conditions
+                </Typography>
+                <Grid container spacing={2}>
+                  {completionData}
+                </Grid>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Collapse>
+
+        {/* Add Entity Form */}
+        <GenericDialogue
+          title={
+            curEntityType !== ''
+              ? storylineEntityInputSchema[curEntityType].name
+              : 'Add Entity'
+          }
+          open={curEntityType !== ''}
+          onClose={() => setCurEntityType('')}
+          maxWidth="sm"
+        >
+          <CreateMapEntityForm
+            curType={curEntityType}
+            handleSubmit={(name, mapName, parameters) => {
+              createNewEntity(name, mapName, parameters);
+              setCurEntityType('');
+            }}
+          />
+        </GenericDialogue>
+
+        {/* Condition Bundle Creation Form */}
+        <GenericDialogue
+          title="Add Condition Bundle"
+          open={dialogues['createConditionBundle']}
+          onClose={() => toggleDialogue('createConditionBundle', 'hide')}
+          maxWidth="sm"
+        >
+          <CompletionBundleForm
+            handleSubmit={(data) => {
+              toggleDialogue('createConditionBundle', 'hide');
+              handleAddCompletionBundle(data);
+            }}
+          />
+        </GenericDialogue>
+
+        {/* Edit Step Name */}
+        <GenericDialogue
+          title="Edit step name"
+          maxWidth="sm"
+          open={dialogues['editName']}
+          onClose={() => toggleDialogue('editName', 'hide')}
+        >
+          <StorylineStepForm
+            stepName={storylineStep.name}
+            buttonText="Update"
+            handleSubmit={(newName) => {
+              toggleDialogue('editName', 'hide');
+              handleUpdateStepName(newName);
+            }}
+          />
+        </GenericDialogue>
+
+        {/* Delete Confirmation */}
+        <ConfirmationDialogue
+          message={`Delete the step ${storylineStep.name}?`}
+          isOpen={dialogues['confirmDelete']}
+          handleClose={() => toggleDialogue('confirmDelete', 'hide')}
+          handleConfirm={() => {
+            toggleDialogue('confirmDelete', 'hide');
+            handleDeleteStep();
           }}
         />
-      </GenericDialogue>
+      </Card>
 
-      {/* Condition Bundle Creation Form */}
-      <GenericDialogue
-        title="Add Condition Bundle"
-        open={dialogues['createConditionBundle']}
-        onClose={() => toggleDialogue('createConditionBundle', 'hide')}
-        maxWidth="sm"
-      >
-        <CompletionBundleForm
-          handleSubmit={(data) => {
-            toggleDialogue('createConditionBundle', 'hide');
-            handleAddCompletionBundle(data);
-          }}
-        />
-      </GenericDialogue>
-
-      {/* Edit Step Name */}
-      <GenericDialogue
-        title="Edit step name"
-        maxWidth="sm"
-        open={dialogues['editName']}
-        onClose={() => toggleDialogue('editName', 'hide')}
-      >
-        <StorylineStepForm
-          stepName={storylineStep.name}
-          buttonText="Update"
-          handleSubmit={(newName) => {
-            toggleDialogue('editName', 'hide');
-            handleUpdateStepName(newName);
-          }}
-        />
-      </GenericDialogue>
-
-      {/* Delete Confirmation */}
-      <ConfirmationDialogue
-        message={`Delete the step ${storylineStep.name}?`}
-        isOpen={dialogues['confirmDelete']}
-        handleClose={() => toggleDialogue('confirmDelete', 'hide')}
-        handleConfirm={() => {
-          toggleDialogue('confirmDelete', 'hide');
-          handleDeleteStep();
-        }}
-      />
-    </Card>
+    </div>
   );
 };
 

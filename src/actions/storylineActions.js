@@ -25,7 +25,19 @@ import {
   DUPLICATE_CONFIGURATIONS,
   UPDATE_STORYLINE_APPLIES_TO_END_RUN,
   UPDATE_APPLIED_RUNS_STRING,
+  RE_ORDER_STEP
 } from './types';
+
+export const reorderStep = (sourcePosition, destinationPosition, stepId) => dispatch => {
+  dispatch({
+    type: RE_ORDER_STEP,
+    payload: {
+      sourcePosition,
+      destinationPosition,
+      stepId
+    }
+  })
+}
 
 export const updateStoryline =
   (currentStoryline, data, appliesToEndRun, appliedRunsString) =>

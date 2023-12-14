@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Draggable } from 'react-beautiful-dnd';
+
 import StorylineStep from './StorylineStep';
 
 import {
@@ -72,18 +74,25 @@ class StorylineStepContainer extends React.Component {
     });
 
     return (
-      <StorylineStep
-        storylineStep={currentStep}
-        stepOffset={stepOffset}
-        allSteps={steps}
-        configDescription={confDescription}
-        completionDescription={completionDesc}
-        handleAddMapConfiguration={this.addEntityWithMap}
-        handleAddCompletionBundle={this.addStepCompletionBundle}
-        handleUpdateStepName={this.updateStepName}
-        handleDeleteStep={this.deleteStep}
-        handleDuplicateConfigs={this.duplicateConfigurations}
-      />
+      <Draggable draggableId={currentStepId} index={stepOffset}>
+        {provided => (
+          <div {...provided.draggableProps} ref={provided.innerRef}>
+            <StorylineStep
+              storylineStep={currentStep}
+              stepOffset={stepOffset}
+              allSteps={steps}
+              configDescription={confDescription}
+              completionDescription={completionDesc}
+              handleAddMapConfiguration={this.addEntityWithMap}
+              handleAddCompletionBundle={this.addStepCompletionBundle}
+              handleUpdateStepName={this.updateStepName}
+              handleDeleteStep={this.deleteStep}
+              handleDuplicateConfigs={this.duplicateConfigurations}
+              draggableProps={provided.dragHandleProps}
+            />
+          </div>
+        )}
+      </Draggable>
     );
   }
 }

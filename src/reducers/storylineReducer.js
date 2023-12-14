@@ -30,6 +30,7 @@ import {
   DUPLICATE_CONFIGURATIONS,
   UPDATE_STORYLINE_APPLIES_TO_END_RUN,
   UPDATE_APPLIED_RUNS_STRING,
+  RE_ORDER_STEP
 } from '../actions/types';
 
 const initialState = {
@@ -75,8 +76,18 @@ const storylineReducer = createReducer(initialState, (builder) => {
 
     .addCase(DUPLICATE_CONFIGURATIONS, duplicateConfigurations)
     .addCase(UPDATE_STORYLINE_APPLIES_TO_END_RUN, updateAppliesToEndRun)
-    .addCase(UPDATE_APPLIED_RUNS_STRING, updateAppliedRuns);
+    .addCase(UPDATE_APPLIED_RUNS_STRING, updateAppliedRuns)
+    .addCase(RE_ORDER_STEP, reorderStep)
 });
+
+function reorderStep(state, action) {
+  const { sourcePosition, destinationPosition, stepId } = action.payload
+  const storylineId = state.currentStoryline;
+  state.storylines[storylineId].steps.splice(sourcePosition, 1);
+  state.storylines[storylineId].steps.splice(
+    destinationPosition, 0, stepId
+  )
+}
 
 function updateAppliesToEndRun(state, action) {
   const { appliesToEndRun } = action.payload;
