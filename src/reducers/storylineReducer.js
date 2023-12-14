@@ -31,7 +31,8 @@ import {
   UPDATE_STORYLINE_APPLIES_TO_END_RUN,
   UPDATE_APPLIED_RUNS_STRING,
   RE_ORDER_STEP,
-  DUPLICATE_ENTITY_IN_MAPS
+  DUPLICATE_ENTITY_IN_MAPS,
+  UPDATE_MAP_NAME
 } from '../actions/types';
 
 const initialState = {
@@ -66,6 +67,7 @@ const storylineReducer = createReducer(initialState, (builder) => {
     .addCase(UPDATE_MAP_ENTITY, updateMapEntity)
     .addCase(UPDATE_BUNDLE, updateBundle)
     .addCase(UPDATE_INTERACTION, updateInteraction)
+    .addCase(UPDATE_MAP_NAME, updateMapName)
 
     .addCase(DELETE_MAP_ENTITY_PARAM, deleteMapEntityParam)
     .addCase(DELETE_NPC_INTERACTION, deleteNPCInteraction)
@@ -81,6 +83,12 @@ const storylineReducer = createReducer(initialState, (builder) => {
     .addCase(RE_ORDER_STEP, reorderStep)
     .addCase(DUPLICATE_ENTITY_IN_MAPS, duplicateEntityInMaps)
 });
+
+
+function updateMapName(state, action) {
+  const { mapId, newName } = action.payload;
+  state.stepMaps[mapId].map_name = newName;
+}
 
 function duplicateEntityInMaps(state, action) {
 
