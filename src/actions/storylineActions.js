@@ -25,7 +25,8 @@ import {
   DUPLICATE_CONFIGURATIONS,
   UPDATE_STORYLINE_APPLIES_TO_END_RUN,
   UPDATE_APPLIED_RUNS_STRING,
-  RE_ORDER_STEP
+  RE_ORDER_STEP,
+  DUPLICATE_ENTITY_IN_MAPS
 } from './types';
 
 export const reorderStep = (sourcePosition, destinationPosition, stepId) => dispatch => {
@@ -35,6 +36,16 @@ export const reorderStep = (sourcePosition, destinationPosition, stepId) => disp
       sourcePosition,
       destinationPosition,
       stepId
+    }
+  })
+}
+
+export const duplicateEntityInMaps = (entityId, mapIds) => dispatch => {
+  dispatch({
+    type: DUPLICATE_ENTITY_IN_MAPS,
+    payload: {
+      entityId,
+      mapIds
     }
   })
 }

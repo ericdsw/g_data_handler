@@ -30,7 +30,8 @@ import {
   DUPLICATE_CONFIGURATIONS,
   UPDATE_STORYLINE_APPLIES_TO_END_RUN,
   UPDATE_APPLIED_RUNS_STRING,
-  RE_ORDER_STEP
+  RE_ORDER_STEP,
+  DUPLICATE_ENTITY_IN_MAPS
 } from '../actions/types';
 
 const initialState = {
@@ -78,7 +79,40 @@ const storylineReducer = createReducer(initialState, (builder) => {
     .addCase(UPDATE_STORYLINE_APPLIES_TO_END_RUN, updateAppliesToEndRun)
     .addCase(UPDATE_APPLIED_RUNS_STRING, updateAppliedRuns)
     .addCase(RE_ORDER_STEP, reorderStep)
+    .addCase(DUPLICATE_ENTITY_IN_MAPS, duplicateEntityInMaps)
 });
+
+function duplicateEntityInMaps(state, action) {
+
+  const { entityId, mapIds } = action.payload;
+  const entityToDuplicate = state.stepMapEntities[entityId]
+
+  mapIds.forEach(mapId => {
+
+    var newEntityId = uuidv4();
+    var newConfigIds = []
+
+    entityToDuplicate.configurator_data.forEach(configKey => {
+      var configuratorData = state.entityConfigurators[configKey]
+      var newConfiguratorId = uuidv4();
+      var newConfiguratorData = {
+        ...configuratorData,
+        id: newConfiguratorId
+      }
+      state.entityConfigurators[newConfiguratorId] = newConfiguratorData;
+      newConfigIds.push(newConfiguratorId);
+    })
+
+    var newEntity = {
+      ...entityToDuplicate,
+      id: newEntityId,
+      configurator_data: newConfigIds 
+    }
+
+    state.stepMaps[mapId].entity_nodes.push(newEntityId);
+    state.stepMapEntities[newEntityId] = newEntity
+  });
+}
 
 function reorderStep(state, action) {
   const { sourcePosition, destinationPosition, stepId } = action.payload

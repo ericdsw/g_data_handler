@@ -16,6 +16,7 @@ import {
   ListItem,
   Collapse,
 } from '@mui/material';
+import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate';
 
 import { interactionInputSchema } from '../../../globals';
 import NPCInteractionContainer from './NPCInteractionContainer';
@@ -29,6 +30,7 @@ import {
 import { useDialogueManager } from '../../../hooks';
 import CreateMapEntityForm from './forms/CreateMapEntityForm';
 import ItemDependentInteractionInstructions from './elements/ItemDependentInteractionInstructions';
+import DuplicateMapEntityForm from './forms/DuplicateMapEntityForm';
 
 import { styles } from './styles/StepMapEntityStyle';
 
@@ -43,6 +45,7 @@ const StepMapEntity = ({
   handleAddInteraction,
   handleUpdateEntity,
   handleDeleteEntity,
+  handleDuplicateInMaps
 }) => {
   const classes = useStyles();
 
@@ -52,7 +55,8 @@ const StepMapEntity = ({
     'confirmDelete',
     'editEntity',
     'confirmParameterDelete',
-    'addInteraction'
+    'addInteraction',
+    'duplicate'
   );
   const [curInteractionType, setCurInteractionType] = useState('');
   const [paramsExpanded, toggleParamsExpanded] = useState(false);
@@ -226,6 +230,14 @@ const StepMapEntity = ({
             <Icon fontSize="small">delete</Icon>
           </IconButton>
         </Tooltip>
+        <Tooltip title="duplicate in another map/step">
+          <IconButton
+            size="large"
+            onClick={() => toggleDialogue('duplicate', 'show')}
+          >
+            <ControlPointDuplicateIcon />
+          </IconButton>
+        </Tooltip>
       </CardActions>
 
       <GenericDialogue
@@ -321,6 +333,20 @@ const StepMapEntity = ({
           handleSubmit={(data) => {
             handleAddInteraction(curInteractionType, data);
             setCurInteractionType('');
+          }}
+        />
+      </GenericDialogue>
+
+      <GenericDialogue
+        title="Duplicate in map or step"
+        open={dialogues['duplicate']}
+        onClose={() => toggleDialogue('duplicate', 'hide')}
+      >
+        <DuplicateMapEntityForm
+          entityToDuplicate={stepMapEntity.id}
+          onDuplicateAccepted={(entityToDuplicate, selectedMaps) => {
+            toggleDialogue('duplicate', 'hide');
+            handleDuplicateInMaps(entityToDuplicate, selectedMaps);
           }}
         />
       </GenericDialogue>
