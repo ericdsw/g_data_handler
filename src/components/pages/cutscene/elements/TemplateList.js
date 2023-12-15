@@ -9,7 +9,7 @@ import { useSnackbar } from 'notistack';
 import TemplateCard from './TemplateCard';
 import { DragAndDrop } from '../../../elements';
 
-import { createTemplate, createTemplateWithData } from '../../../../actions/cutsceneActions';
+import { createTemplate, createTemplateWithData, moveEventBetweenTemplates, reorderEventInTemplate, reorderTemplate } from '../../../../actions/cutsceneActions';
 import { downloadJSON, parseFile } from '../../../../functions';
 
 const selectTemplateIds = state => state.cutscene.templateIds;
@@ -52,7 +52,44 @@ const TemplateList = ({
   }
 
   const handleDragEnd = result => {
+    const { source, destination, draggableId, type } = result;
+    if (
+      !destination ||
+      (destination.droppableId === source.droppableId &&
+        destination.index === source.index)
+    ) {
+      return;
+    }
 
+    switch (type) {
+      case 'templateRow':
+        dispatch(reorderTemplate(source.index, destination.index, draggableId));
+        break;
+      case 'cutsceneTemplate':
+        if (source.droppableId === destination.droppableId) {
+          dispatch(
+            reorderEventInTemplate(
+              source.index,
+              destination.index,
+              source.droppableId,
+              draggableId
+            )
+          );
+        } else {
+          dispatch(
+            moveEventBetweenTemplates(
+              source.index,
+              destination.index,
+              source.droppableId,
+              destination.droppableId,
+              draggableId
+            )
+          );
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   const handleDrop = async (files) => {

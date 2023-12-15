@@ -22,8 +22,32 @@ import {
   UPDATE_TEMPLATE_NAME,
   DELETE_TEMPLATE_NAME,
   INJECT_TEMPLATE,
-  CREATE_TEMPLATE_WITH_DATA
+  CREATE_TEMPLATE_WITH_DATA,
+  REORDER_TEMPLATE,
+  REORDER_EVENT_IN_TEMPLATE,
+  MOVE_EVENT_BETWEEN_TEMPLATES,
 } from './types';
+
+export const reorderTemplate = (sourcePosition, destinationPosition, templateId) => dispatch => {
+  dispatch({
+    type: REORDER_TEMPLATE,
+    payload: { sourcePosition, destinationPosition, templateId }
+  });
+}
+
+export const moveEventBetweenTemplates = (sourcePosition, destinationPosition, templateId, newTemplateId, eventId) => dispatch => {
+  dispatch({
+    type: MOVE_EVENT_BETWEEN_TEMPLATES,
+    payload: { sourcePosition, destinationPosition, templateId, newTemplateId, eventId }
+  })
+}
+
+export const reorderEventInTemplate = (sourcePosition, destinationPosition, templateId, eventId) => dispatch => {
+  dispatch({
+    type: REORDER_EVENT_IN_TEMPLATE,
+    payload: { sourcePosition, destinationPosition, templateId, eventId }
+  });
+}
 
 export const createTemplateWithData = (templateName, eventDataList) => dispatch => {
   dispatch({

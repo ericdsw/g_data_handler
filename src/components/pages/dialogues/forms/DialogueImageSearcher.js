@@ -127,7 +127,6 @@ class DialogueImageSearcher extends React.Component {
         >
           {searchContent}
         </Grid>
-
         <Menu
           id="image-menu"
           anchorEl={anchorEl}

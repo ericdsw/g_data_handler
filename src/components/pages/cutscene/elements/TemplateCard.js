@@ -4,6 +4,7 @@ import { DragHandle } from '@material-ui/icons';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import AddIcon from '@mui/icons-material/Add';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import { useDispatch } from 'react-redux';
@@ -12,23 +13,26 @@ import CutsceneEventContainer from '../CutsceneEventContainer';
 import { ConfirmationDialogue, GenericDialogue } from '../../../elements';
 import { useDialogueManager } from '../../../../hooks';
 import UpdateTemplateNameForm from '../forms/UpdateTemplateNameForm';
+import { CreateEventForm } from '../forms';
 
 import {
   updateTemplateName,
-  deleteTemplate
+  deleteTemplate,
+  addExistingEventToTemplate
 } from '../../../../actions/cutsceneActions';
 
 const TemplateCard = ({
   templateData,
   index,
   onExportRequested,
+  onAddEventToCardRequested,
   showInjectButton = false,
   onInjectRequested = null,
 }) => {
 
   const dispatch = useDispatch();
 
-  const [dialogues, toggleDialogue] = useDialogueManager('edit', 'confirmDelete');
+  const [dialogues, toggleDialogue] = useDialogueManager('edit', 'confirmDelete', 'addEvent');
 
   const onInjectButtonClick = () => {
     if (onInjectButtonClick) {
@@ -71,6 +75,11 @@ const TemplateCard = ({
                         <FileDownloadIcon />
                       </IconButton>
                     </Tooltip>
+                    <Tooltip title="Add cutscene event">
+                      <IconButton onClick={() => toggleDialogue('addEvent', 'show')}>
+                        <AddIcon />
+                      </IconButton>
+                    </Tooltip>
                     <Tooltip title="Edit template name">
                       <IconButton
                         onClick={() => toggleDialogue('edit', 'show')}
@@ -110,6 +119,7 @@ const TemplateCard = ({
                         style={{
                           display: 'flex',
                           flexWrap: 'wrap',
+                          minHeight: 1
                         }}
                       >
                         <Grid container>
@@ -118,6 +128,7 @@ const TemplateCard = ({
                               key={eventId}
                               eventId={eventId}
                               eventIndex={index}
+                              compact
                             />
                           ))}
                           {provided.placeholder}
@@ -125,6 +136,7 @@ const TemplateCard = ({
                       </div>
                     )}
                   </Droppable>
+
                 </Grid>
               </Card>
             </div>
@@ -143,6 +155,20 @@ const TemplateCard = ({
           handleSubmit={result => {
             toggleDialogue('edit', 'hide');
             dispatch(updateTemplateName(templateData.id, result.template_name));
+          }}
+        />
+      </GenericDialogue>
+
+      <GenericDialogue
+        title="Add event to template"
+        open={dialogues['addEvent']}
+        maxWidth="sm"
+        onClose={() => toggleDialogue('addEvent', 'hide')}
+      >
+        <CreateEventForm
+          creationHandler={(eventData) => {
+            toggleDialogue('addEvent', 'hide');
+            dispatch(addExistingEventToTemplate(templateData.id, eventData));
           }}
         />
       </GenericDialogue>

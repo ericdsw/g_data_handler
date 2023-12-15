@@ -31,7 +31,10 @@ import {
   UPDATE_TEMPLATE_NAME,
   DELETE_TEMPLATE_NAME,
   INJECT_TEMPLATE,
-  CREATE_TEMPLATE_WITH_DATA
+  CREATE_TEMPLATE_WITH_DATA,
+  REORDER_TEMPLATE,
+  REORDER_EVENT_IN_TEMPLATE,
+  MOVE_EVENT_BETWEEN_TEMPLATES
 } from '../actions/types';
 
 const initialState = {
@@ -79,7 +82,28 @@ const cutsceneReducer = createReducer(initialState, (builder) => {
     .addCase(DELETE_TEMPLATE_NAME, deleteTemplate)
     .addCase(INJECT_TEMPLATE, injectTemplate)
     .addCase(CREATE_TEMPLATE_WITH_DATA, createTemplateWithData)
+    .addCase(REORDER_TEMPLATE, reorderTemplate)
+    .addCase(REORDER_EVENT_IN_TEMPLATE, reorderEventInTemplate)
+    .addCase(MOVE_EVENT_BETWEEN_TEMPLATES, moveEventBetweenTemplates)
 });
+
+function reorderTemplate(state, action) {
+  const { sourcePosition, destinationPosition, templateId } = action.payload;
+  state.templateIds.splice(sourcePosition, 1)
+  state.templateIds.splice(destinationPosition, 0, templateId);
+}
+
+function reorderEventInTemplate(state, action) {
+  const { sourcePosition, destinationPosition, templateId, eventId } = action.payload;
+  state.eventTemplates[templateId].templateEvents.splice(sourcePosition, 1);
+  state.eventTemplates[templateId].templateEvents.splice(destinationPosition, 0, eventId);
+}
+
+function moveEventBetweenTemplates(state, action) {
+  const { sourcePosition, destinationPosition, templateId, newTemplateId, eventId } = action.payload;
+  state.eventTemplates[templateId].templateEvents.splice(sourcePosition, 1);
+  state.eventTemplates[newTemplateId].templateEvents.splice(destinationPosition, 0, eventId);
+}
 
 function createTemplateWithData(state, action) {
 

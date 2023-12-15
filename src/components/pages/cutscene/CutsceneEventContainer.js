@@ -18,7 +18,8 @@ const memoizedSelectCutsceneEventData = createSelector([selectCutsceneEvents], c
 
 const CutsceneEventContainer = ({
   eventId,
-  eventIndex
+  eventIndex,
+  compact = false
 }) => {
 
   const dispatch = useDispatch()
@@ -55,6 +56,7 @@ const CutsceneEventContainer = ({
             handleDeleteEvent={handleDeleteEvent}
             handleAddToTemplate={handleAddToTemplate}
             eventIndex={eventIndex}
+            compact={compact}
           />
         </div>
       )}
