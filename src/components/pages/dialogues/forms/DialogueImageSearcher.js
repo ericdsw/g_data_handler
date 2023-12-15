@@ -1,5 +1,4 @@
-import React from 'react';
-import withStyles from '@mui/styles/withStyles';
+import React, { useMemo, useState, useCallback } from 'react';
 import {
   MenuItem,
   Grid,
@@ -9,6 +8,7 @@ import {
   Avatar,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import makeStyles from '@mui/styles/makeStyles';
 
 import speakerSchema from '../../../../globals/speakerSchema';
 
@@ -19,7 +19,7 @@ const ITEM_HEIGHT = 48;
 const PAPER_PROPS = {
   style: {
     maxHeight: ITEM_HEIGHT * 4.5,
-    width: 200,
+    width: 300,
   },
 };
 
@@ -45,115 +45,229 @@ const styles = () => ({
   },
 });
 
-class DialogueImageSearcher extends React.Component {
-  state = {
-    anchorEl: null,
-  };
+const useStyles = makeStyles(styles);
 
-  handleSearchImageShow = (event) => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
+const DialogueImageSearcher = ({
+  updateImage,
+  image,
+  selectedSpeaker
+}) => {
 
-  handleSearchImageClose = () => {
-    this.setState({ anchorEl: null });
-  };
+  const classes = useStyles();
 
-  handleUpdateImage = (image) => () => {
-    const { updateImage } = this.props;
-    updateImage(image);
-    this.setState({ anchorEl: null });
-  };
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
-  render() {
-    const { classes, image, selectedSpeaker } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
+  const handleSearchImageShow = useCallback(event => {
+    setAnchorEl(event.currentTarget);
+  }, [setAnchorEl]);
 
-    let searchContent;
-    const speakerImages = [];
+  const handleSearchImageClose = () => {
+    setAnchorEl(null);
+  }
 
-    // First, add the ones from the speaker
+  const handleUpdateImage = image => () => {
+    updateImage(image)
+    setAnchorEl(null);
+  }
+
+  const speakerImages = useMemo(() => {
+    const result = [];
     if (selectedSpeaker) {
-      speakerImages.push(...speakerSchema[selectedSpeaker].speakerImages);
+      result.push(...speakerSchema[selectedSpeaker].speakerImages);
     }
-
     Object.keys(speakerSchema)
       .filter((speakerKey) => speakerKey !== selectedSpeaker)
       .forEach((speakerKey) => {
         const currentSpeaker = speakerSchema[speakerKey];
-        speakerImages.push(...currentSpeaker.speakerImages);
+        result.push(...currentSpeaker.speakerImages);
       });
 
+    return result
+  }, [selectedSpeaker]);
+
+  const searchContent = useMemo(() => {
     if (!image || !speakerImages.includes(image)) {
-      searchContent = (
+      return (
         <IconButton
           aria-label="Select Image"
           aria-owns={open ? 'image-menu' : undefined}
           aria-haspopup="true"
-          onClick={this.handleSearchImageShow}
+          onClick={handleSearchImageShow}
           size="large"
         >
           <SearchIcon />
         </IconButton>
       );
-    } else {
-      searchContent = (
-        <div
-          className={classes.largeAvatar}
-          style={{
-            backgroundImage: `url(images/${image})`,
-          }}
-          aria-owns={open ? 'image-menu' : undefined}
-          aria-haspopup="true"
-          onClick={this.handleSearchImageShow}
-          alt="Speaker"
-          imgProps={{
-            style: {
-              width: LARGE_AVATAR_SIZE,
-              height: LARGE_AVATAR_SIZE,
-            },
-          }}
-        />
-      );
     }
-
     return (
-      <React.Fragment>
-        <Grid
-          container
-          justifyContent="center"
-          alignItems="center"
-          className={classes.imagePreview}
-        >
-          {searchContent}
-        </Grid>
-        <Menu
-          id="image-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={this.handleSearchImageClose}
-          PaperProps={PAPER_PROPS}
-        >
-          {speakerImages.map((image) => (
-            <MenuItem key={image} onClick={this.handleUpdateImage(image)}>
-              <Avatar
-                className={classes.smallAvatar}
-                src={`images/${image}`}
-                alt="Speaker"
-                imgProps={{
-                  style: {
-                    width: SMALL_AVATAR_SIZE,
-                    height: 'auto',
-                  },
-                }}
-              />
-              <Typography variant="body2">{image}</Typography>
-            </MenuItem>
-          ))}
-        </Menu>
-      </React.Fragment>
-    );
-  }
-}
+      <div
+        className={classes.largeAvatar}
+        style={{
+          backgroundImage: `url(images/${image})`,
+        }}
+        aria-owns={open ? 'image-menu' : undefined}
+        aria-haspopup="true"
+        onClick={handleSearchImageShow}
+        alt="Speaker"
+        imgProps={{
+          style: {
+            width: LARGE_AVATAR_SIZE,
+            height: LARGE_AVATAR_SIZE,
+          },
+        }}
+      />
+    )
+  }, [image, speakerImages, open, handleSearchImageShow, classes]); 
 
-export default withStyles(styles)(DialogueImageSearcher);
+  return (
+    <>
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        className={classes.imagePreview}
+      >
+        {searchContent}
+      </Grid>
+      <Menu
+        id="image-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleSearchImageClose}
+        PaperProps={PAPER_PROPS}
+      >
+        {speakerImages.map((image) => (
+          <MenuItem key={image} onClick={handleUpdateImage(image)}>
+            <Avatar
+              className={classes.smallAvatar}
+              src={`images/${image}`}
+              alt="Speaker"
+              imgProps={{
+                style: {
+                  width: SMALL_AVATAR_SIZE,
+                  height: 'auto',
+                },
+              }}
+            />
+            <Typography variant="body2">{image}</Typography>
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
+  );
+}
+export default DialogueImageSearcher;
+
+// class DialogueImageSearcher extends React.Component {
+//   state = {
+//     anchorEl: null,
+//   };
+
+//   handleSearchImageShow = (event) => {
+//     this.setState({ anchorEl: event.currentTarget });
+//   };
+
+//   handleSearchImageClose = () => {
+//     this.setState({ anchorEl: null });
+//   };
+
+//   handleUpdateImage = (image) => () => {
+//     const { updateImage } = this.props;
+//     updateImage(image);
+//     this.setState({ anchorEl: null });
+//   };
+
+//   render() {
+//     const { classes, image, selectedSpeaker } = this.props;
+//     const { anchorEl } = this.state;
+//     const open = Boolean(anchorEl);
+
+//     let searchContent;
+//     const speakerImages = [];
+
+//     // First, add the ones from the speaker
+//     if (selectedSpeaker) {
+//       speakerImages.push(...speakerSchema[selectedSpeaker].speakerImages);
+//     }
+
+//     Object.keys(speakerSchema)
+//       .filter((speakerKey) => speakerKey !== selectedSpeaker)
+//       .forEach((speakerKey) => {
+//         const currentSpeaker = speakerSchema[speakerKey];
+//         speakerImages.push(...currentSpeaker.speakerImages);
+//       });
+
+//     if (!image || !speakerImages.includes(image)) {
+//       searchContent = (
+//         <IconButton
+//           aria-label="Select Image"
+//           aria-owns={open ? 'image-menu' : undefined}
+//           aria-haspopup="true"
+//           onClick={this.handleSearchImageShow}
+//           size="large"
+//         >
+//           <SearchIcon />
+//         </IconButton>
+//       );
+//     } else {
+//       searchContent = (
+//         <div
+//           className={classes.largeAvatar}
+//           style={{
+//             backgroundImage: `url(images/${image})`,
+//           }}
+//           aria-owns={open ? 'image-menu' : undefined}
+//           aria-haspopup="true"
+//           onClick={this.handleSearchImageShow}
+//           alt="Speaker"
+//           imgProps={{
+//             style: {
+//               width: LARGE_AVATAR_SIZE,
+//               height: LARGE_AVATAR_SIZE,
+//             },
+//           }}
+//         />
+//       );
+//     }
+
+//     return (
+//       <React.Fragment>
+//         <Grid
+//           container
+//           justifyContent="center"
+//           alignItems="center"
+//           className={classes.imagePreview}
+//         >
+//           {searchContent}
+//         </Grid>
+//         <Menu
+//           id="image-menu"
+//           anchorEl={anchorEl}
+//           open={open}
+//           onClose={this.handleSearchImageClose}
+//           PaperProps={PAPER_PROPS}
+//         >
+//           {speakerImages.map((image) => (
+//             <MenuItem key={image} onClick={this.handleUpdateImage(image)}>
+//               <Avatar
+//                 className={classes.smallAvatar}
+//                 src={`images/${image}`}
+//                 alt="Speaker"
+//                 imgProps={{
+//                   style: {
+//                     width: SMALL_AVATAR_SIZE,
+//                     height: 'auto',
+//                   },
+//                 }}
+//               />
+//               <Typography variant="body2">{image}</Typography>
+//             </MenuItem>
+//           ))}
+//         </Menu>
+//       </React.Fragment>
+//     );
+//   }
+// }
+
+// export default withStyles(styles)(DialogueImageSearcher);
