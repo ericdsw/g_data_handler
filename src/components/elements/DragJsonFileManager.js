@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   dragCapturer: {
     padding: 16,
     marginTop: 24,
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   gridContainer: {
     minHeight: 300,

@@ -51,7 +51,7 @@ const CutsceneEvent = ({
   handleDeleteEvent,
   handleAddToTemplate,
   compact = false,
-  eventIndex
+  eventIndex,
 }) => {
   const classes = useStyles({ compact });
 
@@ -132,16 +132,22 @@ const CutsceneEvent = ({
                 }
                 sx={{
                   width: compact ? 36 : 40,
-                  height: compact ? 36 : 40
+                  height: compact ? 36 : 40,
                 }}
               >
                 <Icon>{icon}</Icon>
               </Avatar>
             }
-            title={<Typography variant={compact ? 'body2' : 'body1'}>{name}</Typography>}
+            title={
+              <Typography variant={compact ? 'body2' : 'body1'}>
+                {name}
+              </Typography>
+            }
             subheader={
               <Tooltip title={eventDescription} enterDelay={300}>
-                <Typography variant={compact ? "caption" : "subtitle2"}>{eventDescription}</Typography>
+                <Typography variant={compact ? 'caption' : 'subtitle2'}>
+                  {eventDescription}
+                </Typography>
               </Tooltip>
             }
             style={{
@@ -150,7 +156,6 @@ const CutsceneEvent = ({
             }}
           />
           <CardActions className={classes.actions} disableSpacing>
-
             {/* Edit button */}
             <Tooltip title="Edit Event">
               <IconButton
@@ -158,7 +163,7 @@ const CutsceneEvent = ({
                 onClick={() => toggleDialogue('editEvent', 'show')}
                 size={compact ? 'small' : 'large'}
               >
-                <EditIcon fontSize={compact ? 'small' : 'inherit' } />
+                <EditIcon fontSize={compact ? 'small' : 'inherit'} />
               </IconButton>
             </Tooltip>
 
@@ -169,7 +174,7 @@ const CutsceneEvent = ({
                 onClick={() => toggleDialogue('confirmDelete', 'show')}
                 size={compact ? 'small' : 'large'}
               >
-                <DeleteIcon fontSize={compact ? 'small' : 'inherit' }/>
+                <DeleteIcon fontSize={compact ? 'small' : 'inherit'} />
               </IconButton>
             </Tooltip>
 
@@ -179,7 +184,9 @@ const CutsceneEvent = ({
                 size={compact ? 'small' : 'large'}
                 onClick={() => toggleDialogue('addToTemplate', 'show')}
               >
-                <CollectionsBookmarkIcon fontSize={compact ? 'small' : 'inherit' }/>
+                <CollectionsBookmarkIcon
+                  fontSize={compact ? 'small' : 'inherit'}
+                />
               </IconButton>
             </Tooltip>
 
@@ -193,7 +200,7 @@ const CutsceneEvent = ({
               aria-label="More Info"
               size={compact ? 'small' : 'large'}
             >
-              <ExpandMoreIcon fontSize={compact ? 'small' : 'inherit' }/>
+              <ExpandMoreIcon fontSize={compact ? 'small' : 'inherit'} />
             </IconButton>
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
@@ -226,7 +233,7 @@ const CutsceneEvent = ({
       <GenericDialogue
         title="Add event to template"
         open={dialogues['addToTemplate']}
-        maxWidth='sm'
+        maxWidth="sm"
         onClose={() => toggleDialogue('addToTemplate', 'hide')}
       >
         <AddEventToTemplateForm

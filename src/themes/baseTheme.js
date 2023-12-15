@@ -33,14 +33,14 @@ const baseTheme = (mode) =>
     components: {
       MuiTextField: {
         defaultProps: {
-          variant: 'outlined'
-        }
+          variant: 'outlined',
+        },
       },
       MuiLink: {
         defaultProps: {
-          underline: 'always'
-        }
-      }
+          underline: 'always',
+        },
+      },
     },
     overrides: {
       MuiTableRow: {
@@ -59,17 +59,16 @@ const baseTheme = (mode) =>
                 ? 'rgba(255, 255, 255, 0.23)'
                 : 'rgba(0,0,0,0.23)',
           },
-          '&:hover:not($disabled):not($focused):not($error) $notchedOutline':
-            {
-              borderColor: '#bf9148',
-              // Reset on touch devices, it doesn't add specificity
-              '@media (hover: none)': {
-                borderColor:
-                  mode === 'dark'
-                    ? 'rgba(255, 255, 255, 0.23)'
-                    : 'rgba(0,0,0,0.23)',
-              },
+          '&:hover:not($disabled):not($focused):not($error) $notchedOutline': {
+            borderColor: '#bf9148',
+            // Reset on touch devices, it doesn't add specificity
+            '@media (hover: none)': {
+              borderColor:
+                mode === 'dark'
+                  ? 'rgba(255, 255, 255, 0.23)'
+                  : 'rgba(0,0,0,0.23)',
             },
+          },
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
             borderColor: '#d50744',
             borderWidth: 1,

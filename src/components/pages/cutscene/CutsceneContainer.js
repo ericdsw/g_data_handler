@@ -27,19 +27,22 @@ import {
   deleteCutscene,
   reorderCutsceneRows,
   reorderCutsceneEvent,
-  moveCutsceneEvent
+  moveCutsceneEvent,
 } from '../../../actions/cutsceneActions';
 
-import { transformIn, transformOut } from '../../../models/transformers/CutsceneTransformer';
+import {
+  transformIn,
+  transformOut,
+} from '../../../models/transformers/CutsceneTransformer';
 import { useDialogueManager } from '../../../hooks';
 
-const selectCutsceneId = state => state.cutscene.currentCutsceneId;
-const selectCutscenes = state => state.cutscene.cutscenes;
-const selectFileName = state => state.cutscene.fileName;
-const selectHideBars = state => state.cutscene.hideBars;
-const selectJumps = state => state.cutscene.currentCutsceneJumps;
-const selectCutsceneRows = state => state.cutscene.cutsceneRows;
-const selectCutsceneEvents = state => state.cutscene.cutsceneEvents;
+const selectCutsceneId = (state) => state.cutscene.currentCutsceneId;
+const selectCutscenes = (state) => state.cutscene.cutscenes;
+const selectFileName = (state) => state.cutscene.fileName;
+const selectHideBars = (state) => state.cutscene.hideBars;
+const selectJumps = (state) => state.cutscene.currentCutsceneJumps;
+const selectCutsceneRows = (state) => state.cutscene.cutsceneRows;
+const selectCutsceneEvents = (state) => state.cutscene.cutsceneEvents;
 
 const memoizedSelectCutsceneData = createSelector(
   [
@@ -49,9 +52,17 @@ const memoizedSelectCutsceneData = createSelector(
     selectHideBars,
     selectJumps,
     selectCutsceneRows,
-    selectCutsceneEvents
+    selectCutsceneEvents,
   ],
-  (currentCutsceneId, cutscenes, fileName, hideBars, currentCutsceneJumps, cutsceneRows, cutsceneEvents) => ({
+  (
+    currentCutsceneId,
+    cutscenes,
+    fileName,
+    hideBars,
+    currentCutsceneJumps,
+    cutsceneRows,
+    cutsceneEvents
+  ) => ({
     currentCutsceneId,
     currentCutscene: cutscenes[currentCutsceneId],
     fileName,
@@ -60,19 +71,21 @@ const memoizedSelectCutsceneData = createSelector(
     cutsceneRows,
     cutsceneEvents,
   })
-)
+);
 
 const CutsceneContainer = () => {
-
   const [dialogues, toggleDialogue] = useDialogueManager('templates');
 
   /**
    * Snackbar related
    */
   const { enqueueSnackbar } = useSnackbar();
-  const showError = useCallback((errorMessage) => {
-    enqueueSnackbar(errorMessage, { variant: 'error' });
-  }, [enqueueSnackbar]);
+  const showError = useCallback(
+    (errorMessage) => {
+      enqueueSnackbar(errorMessage, { variant: 'error' });
+    },
+    [enqueueSnackbar]
+  );
 
   /**
    * Redux communication
@@ -85,30 +98,33 @@ const CutsceneContainer = () => {
     fileName,
     hideBars,
     cutsceneRows,
-    cutsceneEvents
-  } = useSelector(state => memoizedSelectCutsceneData(state));
+    cutsceneEvents,
+  } = useSelector((state) => memoizedSelectCutsceneData(state));
 
   /**
    * Memoized reference to the generated JSON
    */
-  const generatedJson = useMemo(() => ({
-    data: transformOut(currentCutsceneId, {
-      cutscenes: {
-        [currentCutsceneId]: currentCutscene
-      },
-      cutsceneRows,
-      cutsceneEvents,
+  const generatedJson = useMemo(
+    () => ({
+      data: transformOut(currentCutsceneId, {
+        cutscenes: {
+          [currentCutsceneId]: currentCutscene,
+        },
+        cutsceneRows,
+        cutsceneEvents,
+      }),
+      cutscene_jumps: currentCutsceneJumps,
+      hide_black_bars: hideBars,
     }),
-    cutscene_jumps: currentCutsceneJumps,
-    hide_black_bars: hideBars
-  }), [
-    currentCutscene,
-    currentCutsceneJumps,
-    hideBars,
-    currentCutsceneId,
-    cutsceneEvents,
-    cutsceneRows
-  ]);
+    [
+      currentCutscene,
+      currentCutsceneJumps,
+      hideBars,
+      currentCutsceneId,
+      cutsceneEvents,
+      cutsceneRows,
+    ]
+  );
 
   /**
    * In case some fucky wucky happens, I'll just bind these two methods directly
@@ -116,11 +132,11 @@ const CutsceneContainer = () => {
    */
   useEffect(() => {
     window.exportCutscene = () => {
-      downloadJSON(fileName, generatedJson)
+      downloadJSON(fileName, generatedJson);
     };
     window.printCutscene = () => {
-      console.log(JSON.stringify(generatedJson))
-    }
+      console.log(JSON.stringify(generatedJson));
+    };
   }, [generatedJson, fileName]);
 
   /**
@@ -142,15 +158,13 @@ const CutsceneContainer = () => {
       }
     });
     if (emptyRows > 0) {
-      showError(
-        `${emptyRows} row${emptyRows > 1 ? 's are' : ' is'} empty`
-      );
+      showError(`${emptyRows} row${emptyRows > 1 ? 's are' : ' is'} empty`);
       return;
     }
 
     // Perform download
     downloadJSON(fileName, generatedJson);
-  }, [currentCutscene, fileName, generatedJson, showError]); 
+  }, [currentCutscene, fileName, generatedJson, showError]);
 
   const clearCutscene = () => {
     dispatch(deleteCutscene());
@@ -160,8 +174,7 @@ const CutsceneContainer = () => {
     dispatch(updateWithEmptyCutscene());
   };
 
-  const updateCutsceneFromFile = async targetFile => {
-
+  const updateCutsceneFromFile = async (targetFile) => {
     try {
       const json = await parseFile(targetFile, 'application/json');
       const jumps = json['cutscene_jumps'] || {};
@@ -177,7 +190,7 @@ const CutsceneContainer = () => {
           jumps,
           fileName: targetFile.name,
           hideBars: hideBars,
-          ...entities
+          ...entities,
         })
       );
     } catch (e) {
@@ -203,9 +216,9 @@ const CutsceneContainer = () => {
 
   const deleteJump = (jumpName) => {
     dispatch(deleteCutsceneJump(jumpName));
-  }; 
+  };
 
-  const onDragEnd = result => {
+  const onDragEnd = (result) => {
     const { source, destination, draggableId, type } = result;
     // If no destination is defined or no movement needs to be made, skip
     if (
@@ -215,17 +228,12 @@ const CutsceneContainer = () => {
     ) {
       return;
     }
-    
-    switch (type) {
 
+    switch (type) {
       case 'cutsceneRow':
         dispatch(
-          reorderCutsceneRows(
-            source.index,
-            destination.index,
-            draggableId
-          )
-        )
+          reorderCutsceneRows(source.index, destination.index, draggableId)
+        );
         break;
 
       case 'cutsceneEvent':
@@ -237,7 +245,7 @@ const CutsceneContainer = () => {
               source.droppableId,
               draggableId
             )
-          )
+          );
         } else {
           dispatch(
             moveCutsceneEvent(
@@ -247,14 +255,14 @@ const CutsceneContainer = () => {
               destination.droppableId,
               draggableId
             )
-          )
+          );
         }
         break;
 
       default:
         break;
     }
-  }
+  };
 
   let content;
 
@@ -279,7 +287,7 @@ const CutsceneContainer = () => {
           handleDragEnd={onDragEnd}
         />
       </>
-    )
+    );
   } else {
     content = (
       <DragJsonFileManager
@@ -304,24 +312,22 @@ const CutsceneContainer = () => {
       <Fab
         variant="extended"
         style={{ position: 'fixed', bottom: 32, right: 32 }}
-        color='primary'
+        color="primary"
         onClick={() => toggleDialogue('templates', 'show')}
       >
-        <LibraryBooksIcon />&nbsp;
-        Templates
+        <LibraryBooksIcon />
+        &nbsp; Templates
       </Fab>
 
       <GenericDialogue
         open={dialogues['templates']}
         onClose={() => toggleDialogue('templates', 'hide')}
-        maxWidth='lg'
+        maxWidth="lg"
       >
         <TemplateList />
       </GenericDialogue>
     </>
-  )
-
-}
+  );
+};
 
 export default CutsceneContainer;
-

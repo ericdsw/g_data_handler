@@ -27,39 +27,40 @@ import {
   UPDATE_APPLIED_RUNS_STRING,
   RE_ORDER_STEP,
   DUPLICATE_ENTITY_IN_MAPS,
-  UPDATE_MAP_NAME
+  UPDATE_MAP_NAME,
 } from './types';
 
-export const updateMapName = (mapId, newName) => dispatch => {
+export const updateMapName = (mapId, newName) => (dispatch) => {
   dispatch({
     type: UPDATE_MAP_NAME,
     payload: {
       mapId,
-      newName
-    }
-  })
-}
+      newName,
+    },
+  });
+};
 
-export const reorderStep = (sourcePosition, destinationPosition, stepId) => dispatch => {
-  dispatch({
-    type: RE_ORDER_STEP,
-    payload: {
-      sourcePosition,
-      destinationPosition,
-      stepId
-    }
-  })
-}
+export const reorderStep =
+  (sourcePosition, destinationPosition, stepId) => (dispatch) => {
+    dispatch({
+      type: RE_ORDER_STEP,
+      payload: {
+        sourcePosition,
+        destinationPosition,
+        stepId,
+      },
+    });
+  };
 
-export const duplicateEntityInMaps = (entityId, mapIds) => dispatch => {
+export const duplicateEntityInMaps = (entityId, mapIds) => (dispatch) => {
   dispatch({
     type: DUPLICATE_ENTITY_IN_MAPS,
     payload: {
       entityId,
-      mapIds
-    }
-  })
-}
+      mapIds,
+    },
+  });
+};
 
 export const updateStoryline =
   (currentStoryline, data, appliesToEndRun, appliedRunsString) =>

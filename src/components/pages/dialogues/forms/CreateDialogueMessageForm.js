@@ -259,7 +259,10 @@ const CreateDialogueMessageForm = ({
             margin="normal"
             InputProps={{
               endAdornment: (
-                <IconButton onClick={() => toggleSpeakerNameSearchOpen(true)} size="large">
+                <IconButton
+                  onClick={() => toggleSpeakerNameSearchOpen(true)}
+                  size="large"
+                >
                   <Icon>search</Icon>
                 </IconButton>
               ),

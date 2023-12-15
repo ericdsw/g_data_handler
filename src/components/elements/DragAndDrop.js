@@ -28,19 +28,18 @@ const useStyles = makeStyles(() => ({
 }));
 
 const DragAndDrop = ({ children, handleDrop }) => {
-  
   const classes = useStyles();
-  const onDrop = useCallback((acceptedFiles) => {
-    handleDrop(acceptedFiles);
-  }, [handleDrop]);
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      handleDrop(acceptedFiles);
+    },
+    [handleDrop]
+  );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop})
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div
-      className={classes.dragWrapper}
-      {...getRootProps()}
-    >
+    <div className={classes.dragWrapper} {...getRootProps()}>
       <input {...getInputProps()} />
       {isDragActive && (
         <div className={classes.dragOverlay}>
@@ -52,6 +51,6 @@ const DragAndDrop = ({ children, handleDrop }) => {
       {children}
     </div>
   );
-}
+};
 
 export default DragAndDrop;

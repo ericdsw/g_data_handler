@@ -45,7 +45,7 @@ const StorylineStep = ({
   handleAddCompletionBundle,
   handleDeleteStep,
   handleDuplicateConfigs,
-  draggableProps
+  draggableProps,
 }) => {
   const classes = useStyles();
 
@@ -215,16 +215,17 @@ const StorylineStep = ({
 
   return (
     <div style={{ paddingTop: 8, paddingBottom: 8 }}>
-
       <Card elevation={1}>
         <CardHeader
           avatar={
-            <div 
+            <div
               {...draggableProps}
               style={{
                 width: 30,
                 height: 30,
-                display: 'flex', alignItems: 'center', justifyContent: 'center'
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
               <Icon>drag_handle</Icon>
@@ -277,8 +278,8 @@ const StorylineStep = ({
                     <Typography variant="body2">
                       <br />
                       <i>
-                        No completion bundles configured,&nbsp; the storyline will
-                        finish here
+                        No completion bundles configured,&nbsp; the storyline
+                        will finish here
                       </i>
                     </Typography>
                   )}
@@ -432,7 +433,6 @@ const StorylineStep = ({
           }}
         />
       </Card>
-
     </div>
   );
 };

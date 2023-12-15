@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import { Draggable } from 'react-beautiful-dnd';
 
@@ -11,43 +11,53 @@ import {
   injectTemplate,
 } from '../../../actions/cutsceneActions';
 
-const selectCutsceneRows = state => state.cutscene.cutsceneRows;
-const memoizedSelectCutsceneRowData = createSelector([selectCutsceneRows], cutsceneRowData => ({
-  cutsceneRowData
-}))
+const selectCutsceneRows = (state) => state.cutscene.cutsceneRows;
+const memoizedSelectCutsceneRowData = createSelector(
+  [selectCutsceneRows],
+  (cutsceneRowData) => ({
+    cutsceneRowData,
+  })
+);
 
-const CutsceneRowContainer = ({
-  rowId,
-  rowNumber,
-}) => {
-
+const CutsceneRowContainer = ({ rowId, rowNumber }) => {
   const dispatch = useDispatch();
-  const { cutsceneRowData } = useSelector(state => memoizedSelectCutsceneRowData(state));
-  const rowData = useMemo(() => cutsceneRowData[rowId], [rowId, cutsceneRowData]);
+  const { cutsceneRowData } = useSelector((state) =>
+    memoizedSelectCutsceneRowData(state)
+  );
+  const rowData = useMemo(
+    () => cutsceneRowData[rowId],
+    [rowId, cutsceneRowData]
+  );
 
   const handleAddRowBelow = useCallback(() => {
-    dispatch(addCutsceneRowAtPosition(rowNumber + 1))
+    dispatch(addCutsceneRowAtPosition(rowNumber + 1));
   }, [dispatch, rowNumber]);
 
   const handleAddRowAbove = useCallback(() => {
-    dispatch(addCutsceneRowAtPosition(rowNumber))
+    dispatch(addCutsceneRowAtPosition(rowNumber));
   }, [dispatch, rowNumber]);
 
   const handleDeleteRow = useCallback(() => {
     dispatch(deleteCutsceneRow(rowId));
   }, [dispatch, rowId]);
 
-  const handleAddEvent = useCallback((eventData) => {
-    dispatch(addCutsceneEvent(rowId, eventData))
-  }, [dispatch, rowId]);
+  const handleAddEvent = useCallback(
+    (eventData) => {
+      dispatch(addCutsceneEvent(rowId, eventData));
+    },
+    [dispatch, rowId]
+  );
 
-  const handleInjectTemplate = useCallback(templateId => {
-    dispatch(injectTemplate(rowId, templateId));
-  }, [dispatch, rowId]);
+  const handleInjectTemplate = useCallback(
+    (templateId) => {
+      dispatch(injectTemplate(rowId, templateId));
+    },
+    [dispatch, rowId]
+  );
 
   return (
     <Draggable draggableId={rowId} index={rowNumber}>
-      {provided => {
+      {(provided) => {
         return (
           <div {...provided.draggableProps} ref={provided.innerRef}>
             <CutsceneRow
@@ -61,8 +71,8 @@ const CutsceneRowContainer = ({
               handleInjectTemplate={handleInjectTemplate}
             />
           </div>
-        )
-      }} 
+        );
+      }}
     </Draggable>
   );
 };

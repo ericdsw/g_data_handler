@@ -6,44 +6,40 @@ import { blue, green } from '@mui/material/colors';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-const selectStepMapEntities = state => state.storyline.stepMapEntities;
-const selectStorylineSteps = state => state.storyline.storylineSteps;
-const selectStepMaps = state => state.storyline.stepMaps; 
+const selectStepMapEntities = (state) => state.storyline.stepMapEntities;
+const selectStorylineSteps = (state) => state.storyline.storylineSteps;
+const selectStepMaps = (state) => state.storyline.stepMaps;
 
 const memoizedSelector = createSelector(
   [selectStepMapEntities, selectStorylineSteps, selectStepMaps],
   (stepMapEntities, storylineSteps, stepMaps) => ({
     stepMapEntities,
     storylineSteps,
-    stepMaps
+    stepMaps,
   })
 );
 
-
-const DuplicateMapEntityForm = ({
-  entityToDuplicate,
-  onDuplicateAccepted
-}) => {
-
-  const {
-    stepMapEntities,
-    storylineSteps,
-    stepMaps
-  } = useSelector(state => memoizedSelector(state));
+const DuplicateMapEntityForm = ({ entityToDuplicate, onDuplicateAccepted }) => {
+  const { stepMapEntities, storylineSteps, stepMaps } = useSelector((state) =>
+    memoizedSelector(state)
+  );
 
   const [selectedMaps, setSelectedMaps] = useState([]);
 
-  const currentEntity = useMemo(() => stepMapEntities[entityToDuplicate], [stepMapEntities, entityToDuplicate]);
+  const currentEntity = useMemo(
+    () => stepMapEntities[entityToDuplicate],
+    [stepMapEntities, entityToDuplicate]
+  );
 
-  const toggleSelectedMap = mapId => {
+  const toggleSelectedMap = (mapId) => {
     if (!selectedMaps.includes(mapId)) {
-      setSelectedMaps([...selectedMaps, mapId])
+      setSelectedMaps([...selectedMaps, mapId]);
     } else {
-      const newMaps = [...selectedMaps]
+      const newMaps = [...selectedMaps];
       newMaps.splice(newMaps.indexOf(mapId), 1);
       setSelectedMaps(newMaps);
     }
-  }
+  };
 
   const entityType = useMemo(() => {
     switch (currentEntity.type) {
@@ -70,44 +66,52 @@ const DuplicateMapEntityForm = ({
     <Grid container>
       <Grid item>
         <Card elevation={1} style={{ padding: 16, minWidth: 180, height: 80 }}>
-          <Typography variant="body1">
-            {currentEntity.name}
-          </Typography>
+          <Typography variant="body1">{currentEntity.name}</Typography>
           <Typography variant="caption" style={{ color: blue[400] }}>
             {entityType}
           </Typography>
         </Card>
         <div style={{ padding: 8 }}>
           <Typography variant="body2">
-            Will duplicate in {selectedMaps.length} {selectedMaps.length === 1 ? 'map' : 'maps'}
+            Will duplicate in {selectedMaps.length}{' '}
+            {selectedMaps.length === 1 ? 'map' : 'maps'}
           </Typography>
         </div>
 
         <Button
           fullWidth
-          variant='contained'
+          variant="contained"
           onClick={() => {
-            onDuplicateAccepted(entityToDuplicate, selectedMaps)
+            onDuplicateAccepted(entityToDuplicate, selectedMaps);
           }}
         >
           Duplicate
         </Button>
       </Grid>
       <Grid item>
-        <div style={{ height: 80, width: 40, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div
+          style={{
+            height: 80,
+            width: 40,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
           <DoubleArrowIcon />
         </div>
       </Grid>
       <Grid item xs>
-        {Object.keys(storylineSteps).map(stepId => (
+        {Object.keys(storylineSteps).map((stepId) => (
           <Card key={stepId} style={{ padding: 16, marginBottom: 16 }}>
-            <Typography variant="h6" gutterBottom>{storylineSteps[stepId].name}</Typography>
-            {storylineSteps[stepId].configuration.map(mapId => {
-
+            <Typography variant="h6" gutterBottom>
+              {storylineSteps[stepId].name}
+            </Typography>
+            {storylineSteps[stepId].configuration.map((mapId) => {
               const currentMap = stepMaps[mapId];
 
               if (currentMap.entity_nodes.includes(entityToDuplicate)) {
-                return <></>
+                return <></>;
               }
               const isSelected = selectedMaps.includes(mapId);
 
@@ -124,29 +128,37 @@ const DuplicateMapEntityForm = ({
                     margin: 8,
                     cursor: 'pointer',
                     position: 'relative',
-                    overflow: 'visible'
+                    overflow: 'visible',
                   }}
                 >
                   <Typography variant="body2" gutterBottom>
                     <b>{currentMap.map_name}</b>
                   </Typography>
                   <Typography variant="caption">
-                    Contains {currentMap.entity_nodes.length} {stepMaps[mapId].entity_nodes.length === 1 ? 'interaction' : 'interactions'}
+                    Contains {currentMap.entity_nodes.length}{' '}
+                    {stepMaps[mapId].entity_nodes.length === 1
+                      ? 'interaction'
+                      : 'interactions'}
                   </Typography>
                   {isSelected && (
                     <CheckCircleOutlineIcon
-                      style={{ position: 'absolute', bottom: -10, right: -10, color: green[400] }}
-                      fontSize='large'
+                      style={{
+                        position: 'absolute',
+                        bottom: -10,
+                        right: -10,
+                        color: green[400],
+                      }}
+                      fontSize="large"
                     />
                   )}
                 </Card>
-              )
+              );
             })}
           </Card>
         ))}
       </Grid>
     </Grid>
   );
-}
+};
 
 export default DuplicateMapEntityForm;

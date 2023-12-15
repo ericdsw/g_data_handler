@@ -33,7 +33,7 @@ class DialogueContainer extends React.Component {
     window.printDialogue = () => {
       const { allData, currentDialogue } = this.props;
       console.log(JSON.stringify(transformOut(currentDialogue, allData)));
-    }
+    };
   }
 
   /**

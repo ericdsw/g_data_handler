@@ -22,7 +22,6 @@ function cleanBeforeJsonParse(sourceString) {
 
 export const parseIn = (inputObject, inputSchema) => {
   for (const key in inputSchema) {
-
     // Skip invalid entries
     if (!(key in inputSchema)) {
       continue;
@@ -69,7 +68,11 @@ export const parseIn = (inputObject, inputSchema) => {
         break;
       default:
         const defaultVal = inputSchema[key].default;
-        if (!inputObject[key] && typeof defaultVal !== 'undefined' && defaultVal !== '') {
+        if (
+          !inputObject[key] &&
+          typeof defaultVal !== 'undefined' &&
+          defaultVal !== ''
+        ) {
           inputObject[key] = defaultVal;
         }
         break;
@@ -121,8 +124,11 @@ export const parseOut = (outputObject, inputSchema) => {
         }
         break;
       case 'boolean':
-        if (typeof outputObject[key] === 'undefined' && !inputSchema[key].required) {
-          delete outputObject[key]
+        if (
+          typeof outputObject[key] === 'undefined' &&
+          !inputSchema[key].required
+        ) {
+          delete outputObject[key];
         } else {
           const data = outputObject[key];
           outputObject[key] = typeof data === 'undefined' ? false : data;

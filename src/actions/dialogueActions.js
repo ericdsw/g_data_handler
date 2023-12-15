@@ -21,34 +21,37 @@ import {
   UNSELECT_ALL_CONVERSATIONS,
   ADD_PRE_UPLOADED_FILE,
   UPDATE_PRE_UPLOADED_FILE_NAME,
-  CLEAR_PRE_UPLOADED_FILES
+  CLEAR_PRE_UPLOADED_FILES,
 } from './types';
 
-export const clearPreUploadedFiles = () => dispatch => {
+export const clearPreUploadedFiles = () => (dispatch) => {
   dispatch({
     type: CLEAR_PRE_UPLOADED_FILES,
-    payload: {}
-  })
-}
+    payload: {},
+  });
+};
 
-export const addPreUploadedFile = (fileName, conversationKeys, fileId) => dispatch => {
-  dispatch({
-    type: ADD_PRE_UPLOADED_FILE,
-    payload: {
-      fileName, conversationKeys, fileId
-    }
-  })
-}
+export const addPreUploadedFile =
+  (fileName, conversationKeys, fileId) => (dispatch) => {
+    dispatch({
+      type: ADD_PRE_UPLOADED_FILE,
+      payload: {
+        fileName,
+        conversationKeys,
+        fileId,
+      },
+    });
+  };
 
-export const updatePreUploadedFile = (fileId, newFileName) => dispatch => {
+export const updatePreUploadedFile = (fileId, newFileName) => (dispatch) => {
   dispatch({
     type: UPDATE_PRE_UPLOADED_FILE_NAME,
     payload: {
-      fileId, newFileName
-    }
-  })
-}
-
+      fileId,
+      newFileName,
+    },
+  });
+};
 
 // Create
 

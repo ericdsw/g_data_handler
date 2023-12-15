@@ -41,7 +41,10 @@ const CutsceneRow = ({
         <Paper className={classes.cutsceneRow} elevation={1}>
           <Grid container alignItems="center">
             <Grid item>
-              <div className={classes.dragHandleElement} {...props.dragHandleProps}>
+              <div
+                className={classes.dragHandleElement}
+                {...props.dragHandleProps}
+              >
                 <Icon>drag_handle</Icon>
               </div>
             </Grid>
@@ -68,17 +71,17 @@ const CutsceneRow = ({
             <Droppable
               droppableId={rowData.id}
               type="cutsceneEvent"
-              direction='horizontal'
+              direction="horizontal"
             >
-              {provided => (
+              {(provided) => (
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  style={{ 
+                  style={{
                     display: 'flex',
                     marginTop: cutsceneEventIds.length <= 0 ? 0 : 16,
                     flexWrap: 'wrap',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
                   }}
                 >
                   {cutsceneEventIds.map((eventId, index) => (
@@ -90,7 +93,7 @@ const CutsceneRow = ({
                   ))}
                   {provided.placeholder}
                 </div>
-              )} 
+              )}
             </Droppable>
           </Grid>
         </Paper>
@@ -112,13 +115,13 @@ const CutsceneRow = ({
 
       <GenericDialogue
         title="Insert template to row"
-        open={dialogues["insertTemplate"]}
-        maxWidth='lg'
+        open={dialogues['insertTemplate']}
+        maxWidth="lg"
         onClose={() => toggleDialogue('insertTemplate', 'hide')}
       >
         <TemplateList
           showInject
-          onInjectRequested={templateId => {
+          onInjectRequested={(templateId) => {
             toggleDialogue('insertTemplate', 'hide');
             handleInjectTemplate(templateId);
           }}

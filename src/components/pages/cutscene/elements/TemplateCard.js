@@ -1,5 +1,12 @@
 import React from 'react';
-import { Button, Card, Grid, IconButton, Tooltip, Typography } from '@mui/material';
+import {
+  Button,
+  Card,
+  Grid,
+  IconButton,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { DragHandle } from '@material-ui/icons';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -18,7 +25,7 @@ import { CreateEventForm } from '../forms';
 import {
   updateTemplateName,
   deleteTemplate,
-  addExistingEventToTemplate
+  addExistingEventToTemplate,
 } from '../../../../actions/cutsceneActions';
 
 const TemplateCard = ({
@@ -29,34 +36,30 @@ const TemplateCard = ({
   showInjectButton = false,
   onInjectRequested = null,
 }) => {
-
   const dispatch = useDispatch();
 
-  const [dialogues, toggleDialogue] = useDialogueManager('edit', 'confirmDelete', 'addEvent');
+  const [dialogues, toggleDialogue] = useDialogueManager(
+    'edit',
+    'confirmDelete',
+    'addEvent'
+  );
 
   const onInjectButtonClick = () => {
     if (onInjectButtonClick) {
       onInjectRequested(templateData.id);
     }
-  }
+  };
 
   const onExportButtonClick = () => {
     onExportRequested(templateData.id);
-  }
+  };
 
   return (
     <>
-      <Draggable
-        draggableId={templateData.id}
-        index={index}
-      >
-        {provided => (
-          <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-          >
+      <Draggable draggableId={templateData.id} index={index}>
+        {(provided) => (
+          <div ref={provided.innerRef} {...provided.draggableProps}>
             <div style={{ paddingBottom: 8 }}>
-
               <Card style={{ padding: 16 }}>
                 <Grid container spacing={2} alignItems="center">
                   <Grid item {...provided.dragHandleProps}>
@@ -69,14 +72,14 @@ const TemplateCard = ({
                   </Grid>
                   <Grid item>
                     <Tooltip title="Export single template">
-                      <IconButton
-                        onClick={onExportButtonClick}
-                      >
+                      <IconButton onClick={onExportButtonClick}>
                         <FileDownloadIcon />
                       </IconButton>
                     </Tooltip>
                     <Tooltip title="Add cutscene event">
-                      <IconButton onClick={() => toggleDialogue('addEvent', 'show')}>
+                      <IconButton
+                        onClick={() => toggleDialogue('addEvent', 'show')}
+                      >
                         <AddIcon />
                       </IconButton>
                     </Tooltip>
@@ -97,10 +100,7 @@ const TemplateCard = ({
                   </Grid>
                   {showInjectButton && (
                     <Grid item>
-                      <Button
-                        variant="contained"
-                        onClick={onInjectButtonClick}
-                      >
+                      <Button variant="contained" onClick={onInjectButtonClick}>
                         Inject
                       </Button>
                     </Grid>
@@ -112,14 +112,14 @@ const TemplateCard = ({
                     type="cutsceneTemplate"
                     direction="horizontal"
                   >
-                    {provided => (
+                    {(provided) => (
                       <div
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                         style={{
                           display: 'flex',
                           flexWrap: 'wrap',
-                          minHeight: 1
+                          minHeight: 1,
                         }}
                       >
                         <Grid container>
@@ -136,7 +136,6 @@ const TemplateCard = ({
                       </div>
                     )}
                   </Droppable>
-
                 </Grid>
               </Card>
             </div>
@@ -148,11 +147,11 @@ const TemplateCard = ({
         title="Edit Template Name"
         open={dialogues['edit']}
         onClose={() => toggleDialogue('edit', 'hide')}
-        maxWidth='sm'
+        maxWidth="sm"
       >
         <UpdateTemplateNameForm
           data={{ template_name: templateData.name }}
-          handleSubmit={result => {
+          handleSubmit={(result) => {
             toggleDialogue('edit', 'hide');
             dispatch(updateTemplateName(templateData.id, result.template_name));
           }}
@@ -182,9 +181,8 @@ const TemplateCard = ({
           dispatch(deleteTemplate(templateData.id));
         }}
       />
-
     </>
   );
-}
+};
 
-export default TemplateCard
+export default TemplateCard;

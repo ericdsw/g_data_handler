@@ -32,7 +32,7 @@ import {
   UPDATE_APPLIED_RUNS_STRING,
   RE_ORDER_STEP,
   DUPLICATE_ENTITY_IN_MAPS,
-  UPDATE_MAP_NAME
+  UPDATE_MAP_NAME,
 } from '../actions/types';
 
 const initialState = {
@@ -81,9 +81,8 @@ const storylineReducer = createReducer(initialState, (builder) => {
     .addCase(UPDATE_STORYLINE_APPLIES_TO_END_RUN, updateAppliesToEndRun)
     .addCase(UPDATE_APPLIED_RUNS_STRING, updateAppliedRuns)
     .addCase(RE_ORDER_STEP, reorderStep)
-    .addCase(DUPLICATE_ENTITY_IN_MAPS, duplicateEntityInMaps)
+    .addCase(DUPLICATE_ENTITY_IN_MAPS, duplicateEntityInMaps);
 });
-
 
 function updateMapName(state, action) {
   const { mapId, newName } = action.payload;
@@ -91,44 +90,40 @@ function updateMapName(state, action) {
 }
 
 function duplicateEntityInMaps(state, action) {
-
   const { entityId, mapIds } = action.payload;
-  const entityToDuplicate = state.stepMapEntities[entityId]
+  const entityToDuplicate = state.stepMapEntities[entityId];
 
-  mapIds.forEach(mapId => {
-
+  mapIds.forEach((mapId) => {
     var newEntityId = uuidv4();
-    var newConfigIds = []
+    var newConfigIds = [];
 
-    entityToDuplicate.configurator_data.forEach(configKey => {
-      var configuratorData = state.entityConfigurators[configKey]
+    entityToDuplicate.configurator_data.forEach((configKey) => {
+      var configuratorData = state.entityConfigurators[configKey];
       var newConfiguratorId = uuidv4();
       var newConfiguratorData = {
         ...configuratorData,
-        id: newConfiguratorId
-      }
+        id: newConfiguratorId,
+      };
       state.entityConfigurators[newConfiguratorId] = newConfiguratorData;
       newConfigIds.push(newConfiguratorId);
-    })
+    });
 
     var newEntity = {
       ...entityToDuplicate,
       id: newEntityId,
-      configurator_data: newConfigIds 
-    }
+      configurator_data: newConfigIds,
+    };
 
     state.stepMaps[mapId].entity_nodes.push(newEntityId);
-    state.stepMapEntities[newEntityId] = newEntity
+    state.stepMapEntities[newEntityId] = newEntity;
   });
 }
 
 function reorderStep(state, action) {
-  const { sourcePosition, destinationPosition, stepId } = action.payload
+  const { sourcePosition, destinationPosition, stepId } = action.payload;
   const storylineId = state.currentStoryline;
   state.storylines[storylineId].steps.splice(sourcePosition, 1);
-  state.storylines[storylineId].steps.splice(
-    destinationPosition, 0, stepId
-  )
+  state.storylines[storylineId].steps.splice(destinationPosition, 0, stepId);
 }
 
 function updateAppliesToEndRun(state, action) {

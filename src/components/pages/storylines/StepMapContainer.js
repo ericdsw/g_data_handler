@@ -5,14 +5,14 @@ import StepMap from './StepMap';
 
 import {
   addEntityToExistingMap,
-  updateMapName
+  updateMapName,
 } from '../../../actions/storylineActions';
 
 const StepMapContainer = ({
   currentMapId,
   maps,
   addEntityToExistingMap,
-  updateMapName
+  updateMapName,
 }) => {
   return (
     <StepMap
@@ -29,5 +29,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   addEntityToExistingMap,
-  updateMapName
+  updateMapName,
 })(StepMapContainer);

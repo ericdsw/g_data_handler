@@ -1,7 +1,7 @@
 export const styles = (theme) => ({
   mockContainer: {
     paddingBottom: theme.spacing(1),
-    paddingTop: theme.spacing(1)
+    paddingTop: theme.spacing(1),
   },
   cutsceneRow: {
     padding: theme.spacing(1),
@@ -14,5 +14,5 @@ export const styles = (theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
 });

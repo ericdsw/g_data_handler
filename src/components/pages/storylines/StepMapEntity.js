@@ -45,7 +45,7 @@ const StepMapEntity = ({
   handleAddInteraction,
   handleUpdateEntity,
   handleDeleteEntity,
-  handleDuplicateInMaps
+  handleDuplicateInMaps,
 }) => {
   const classes = useStyles();
 

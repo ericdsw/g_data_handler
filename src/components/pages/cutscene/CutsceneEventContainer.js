@@ -7,43 +7,49 @@ import CutsceneEvent from './CutsceneEvent';
 import {
   editCutsceneEvent,
   deleteCutsceneEvent,
-  addExistingEventToTemplate
+  addExistingEventToTemplate,
 } from '../../../actions/cutsceneActions';
 
-const selectCutsceneEvents = state => state.cutscene.cutsceneEvents;
+const selectCutsceneEvents = (state) => state.cutscene.cutsceneEvents;
 
-const memoizedSelectCutsceneEventData = createSelector([selectCutsceneEvents], cutsceneEvents => ({
-  cutsceneEvents
-}))
+const memoizedSelectCutsceneEventData = createSelector(
+  [selectCutsceneEvents],
+  (cutsceneEvents) => ({
+    cutsceneEvents,
+  })
+);
 
-const CutsceneEventContainer = ({
-  eventId,
-  eventIndex,
-  compact = false
-}) => {
+const CutsceneEventContainer = ({ eventId, eventIndex, compact = false }) => {
+  const dispatch = useDispatch();
+  const { cutsceneEvents } = useSelector((state) =>
+    memoizedSelectCutsceneEventData(state)
+  );
 
-  const dispatch = useDispatch()
-  const { cutsceneEvents } = useSelector(state => memoizedSelectCutsceneEventData(state));
+  const cutsceneEventData = useMemo(
+    () => cutsceneEvents[eventId],
+    [cutsceneEvents, eventId]
+  );
 
-  const cutsceneEventData = useMemo(() => cutsceneEvents[eventId], [cutsceneEvents, eventId])
-
-  const handleEditEvent = useCallback(newEventData => {
-    dispatch(editCutsceneEvent(eventId, newEventData));
-  }, [eventId, dispatch]);
+  const handleEditEvent = useCallback(
+    (newEventData) => {
+      dispatch(editCutsceneEvent(eventId, newEventData));
+    },
+    [eventId, dispatch]
+  );
 
   const handleDeleteEvent = useCallback(() => {
     dispatch(deleteCutsceneEvent(eventId));
   }, [eventId, dispatch]);
 
-  const handleAddToTemplate = useCallback(templateId => {
-    dispatch(addExistingEventToTemplate(templateId, cutsceneEventData));
-  }, [cutsceneEventData, dispatch]);
+  const handleAddToTemplate = useCallback(
+    (templateId) => {
+      dispatch(addExistingEventToTemplate(templateId, cutsceneEventData));
+    },
+    [cutsceneEventData, dispatch]
+  );
 
   return (
-    <Draggable
-      draggableId={eventId}
-      index={eventIndex}
-    >
+    <Draggable draggableId={eventId} index={eventIndex}>
       {(provided) => (
         <div
           {...provided.dragHandleProps}

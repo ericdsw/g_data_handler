@@ -28,110 +28,133 @@ import {
   MOVE_EVENT_BETWEEN_TEMPLATES,
 } from './types';
 
-export const reorderTemplate = (sourcePosition, destinationPosition, templateId) => dispatch => {
-  dispatch({
-    type: REORDER_TEMPLATE,
-    payload: { sourcePosition, destinationPosition, templateId }
-  });
-}
+export const reorderTemplate =
+  (sourcePosition, destinationPosition, templateId) => (dispatch) => {
+    dispatch({
+      type: REORDER_TEMPLATE,
+      payload: { sourcePosition, destinationPosition, templateId },
+    });
+  };
 
-export const moveEventBetweenTemplates = (sourcePosition, destinationPosition, templateId, newTemplateId, eventId) => dispatch => {
-  dispatch({
-    type: MOVE_EVENT_BETWEEN_TEMPLATES,
-    payload: { sourcePosition, destinationPosition, templateId, newTemplateId, eventId }
-  })
-}
+export const moveEventBetweenTemplates =
+  (sourcePosition, destinationPosition, templateId, newTemplateId, eventId) =>
+  (dispatch) => {
+    dispatch({
+      type: MOVE_EVENT_BETWEEN_TEMPLATES,
+      payload: {
+        sourcePosition,
+        destinationPosition,
+        templateId,
+        newTemplateId,
+        eventId,
+      },
+    });
+  };
 
-export const reorderEventInTemplate = (sourcePosition, destinationPosition, templateId, eventId) => dispatch => {
-  dispatch({
-    type: REORDER_EVENT_IN_TEMPLATE,
-    payload: { sourcePosition, destinationPosition, templateId, eventId }
-  });
-}
+export const reorderEventInTemplate =
+  (sourcePosition, destinationPosition, templateId, eventId) => (dispatch) => {
+    dispatch({
+      type: REORDER_EVENT_IN_TEMPLATE,
+      payload: { sourcePosition, destinationPosition, templateId, eventId },
+    });
+  };
 
-export const createTemplateWithData = (templateName, eventDataList) => dispatch => {
-  dispatch({
-    type: CREATE_TEMPLATE_WITH_DATA,
-    payload: { templateName, eventDataList }
-  });
-}
+export const createTemplateWithData =
+  (templateName, eventDataList) => (dispatch) => {
+    dispatch({
+      type: CREATE_TEMPLATE_WITH_DATA,
+      payload: { templateName, eventDataList },
+    });
+  };
 
-export const injectTemplate = (rowId, templateId) => dispatch => {
+export const injectTemplate = (rowId, templateId) => (dispatch) => {
   dispatch({
     type: INJECT_TEMPLATE,
-    payload: { rowId, templateId }
+    payload: { rowId, templateId },
   });
-}
+};
 
-export const deleteTemplate = templateId => dispatch => {
+export const deleteTemplate = (templateId) => (dispatch) => {
   dispatch({
     type: DELETE_TEMPLATE_NAME,
-    payload: { templateId }
-  })
-}
+    payload: { templateId },
+  });
+};
 
-export const updateTemplateName = (templateId, newTemplateName) => dispatch => {
-  dispatch({
-    type: UPDATE_TEMPLATE_NAME,
-    payload: { templateId, newTemplateName }
-  })
-}
+export const updateTemplateName =
+  (templateId, newTemplateName) => (dispatch) => {
+    dispatch({
+      type: UPDATE_TEMPLATE_NAME,
+      payload: { templateId, newTemplateName },
+    });
+  };
 
-export const createTemplate = templateName => dispatch => {
+export const createTemplate = (templateName) => (dispatch) => {
   dispatch({
     type: CREATE_TEMPLATE,
-    payload: { templateName }
-  })
-}
+    payload: { templateName },
+  });
+};
 
-export const addExistingEventToTemplate = (templateId, eventData) => dispatch => {
-  console.log(templateId);
-  dispatch({
-    type: ADD_EXISTING_EVENT_TO_TEMPLATE,
-    payload: { templateId, eventData }
-  })
-}
+export const addExistingEventToTemplate =
+  (templateId, eventData) => (dispatch) => {
+    console.log(templateId);
+    dispatch({
+      type: ADD_EXISTING_EVENT_TO_TEMPLATE,
+      payload: { templateId, eventData },
+    });
+  };
 
-export const moveCutsceneEvent = (sourcePosition, destinationPosition, sourceRowId, destinationRowId, eventId) => dispatch => {
-  dispatch({
-    type: MOVE_CUTSCENE_EVENT,
-    payload: {
-      sourcePosition,
-      destinationPosition,
-      sourceRowId,
-      destinationRowId,
-      eventId
-    }
-  })
-}
+export const moveCutsceneEvent =
+  (
+    sourcePosition,
+    destinationPosition,
+    sourceRowId,
+    destinationRowId,
+    eventId
+  ) =>
+  (dispatch) => {
+    dispatch({
+      type: MOVE_CUTSCENE_EVENT,
+      payload: {
+        sourcePosition,
+        destinationPosition,
+        sourceRowId,
+        destinationRowId,
+        eventId,
+      },
+    });
+  };
 
-export const reorderCutsceneEvent = (sourcePosition, destinationPosition, rowId, eventId) => dispatch => {
-  dispatch({
-    type: REORDER_CUTSCENE_EVENT,
-    payload: { sourcePosition, destinationPosition, rowId, eventId }
-  })
-}
+export const reorderCutsceneEvent =
+  (sourcePosition, destinationPosition, rowId, eventId) => (dispatch) => {
+    dispatch({
+      type: REORDER_CUTSCENE_EVENT,
+      payload: { sourcePosition, destinationPosition, rowId, eventId },
+    });
+  };
 
-export const reorderCutsceneRows = (sourcePosition, destinationPosition, rowId) => dispatch => {
-  dispatch({
-    type: REORDER_CUTSCENE_ROWS,
-    payload: { sourcePosition, destinationPosition, rowId }
-  })
-}
+export const reorderCutsceneRows =
+  (sourcePosition, destinationPosition, rowId) => (dispatch) => {
+    dispatch({
+      type: REORDER_CUTSCENE_ROWS,
+      payload: { sourcePosition, destinationPosition, rowId },
+    });
+  };
 
-export const addPreLoadedCutscenes = preLoadedCutsceneNames => dispatch => {
+export const addPreLoadedCutscenes = (preLoadedCutsceneNames) => (dispatch) => {
   dispatch({
     type: ADD_PRE_LOADED_CUTSCENE_NAMES,
-    payload: { preLoadedCutsceneNames }
-  })
-}
+    payload: { preLoadedCutsceneNames },
+  });
+};
 
-export const deletePreLoadedCutscenes = () => dispatch => {
+export const deletePreLoadedCutscenes = () => (dispatch) => {
   dispatch({
     type: DELETE_PRELOADED_CUTSCENE_NAMES,
-    payload: {}
-  })
-}
+    payload: {},
+  });
+};
 
 // Cutscenes
 
@@ -142,19 +165,19 @@ export const updateCutscene = (cutsceneData) => (dispatch) => {
   });
 };
 
-export const updateWithEmptyCutscene = () => dispatch => {
+export const updateWithEmptyCutscene = () => (dispatch) => {
   dispatch({
     type: UPDATE_WITH_EMPTY_CUTSCENE,
-    payload: {}
-  })
-}
+    payload: {},
+  });
+};
 
-export const deleteCutscene = () => dispatch => {
+export const deleteCutscene = () => (dispatch) => {
   dispatch({
     type: DELETE_CUTSCENE,
-    payload: {}
-  })
-}
+    payload: {},
+  });
+};
 
 // Cutscene Rows
 
@@ -180,36 +203,34 @@ export const deleteCutsceneRow = (rowId) => (dispatch) => {
 
 // Cutscene Event
 
-export const addCutsceneEvent =
-  (rowId, cutsceneEventData) => (dispatch) => {
-    dispatch({
-      type: ADD_CUTSCENE_EVENT,
-      payload: {
-        rowId,
-        cutsceneEventData,
-      },
-    });
-  };
+export const addCutsceneEvent = (rowId, cutsceneEventData) => (dispatch) => {
+  dispatch({
+    type: ADD_CUTSCENE_EVENT,
+    payload: {
+      rowId,
+      cutsceneEventData,
+    },
+  });
+};
 
 export const deleteCutsceneEvent = (eventId) => (dispatch) => {
   dispatch({
     type: DELETE_CUTSCENE_EVENT,
     payload: {
-      eventId
+      eventId,
     },
   });
 };
 
-export const editCutsceneEvent =
-  (eventId, data) => (dispatch) => {
-    dispatch({
-      type: EDIT_CUTSCENE_EVENT,
-      payload: {
-        eventId,
-        data,
-      },
-    });
-  };
+export const editCutsceneEvent = (eventId, data) => (dispatch) => {
+  dispatch({
+    type: EDIT_CUTSCENE_EVENT,
+    payload: {
+      eventId,
+      data,
+    },
+  });
+};
 
 // Extra
 

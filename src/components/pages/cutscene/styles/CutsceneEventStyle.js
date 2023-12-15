@@ -2,7 +2,7 @@ import { grey } from '@mui/material/colors';
 
 export const styles = (theme) => ({
   eventCard: {
-    width: props => props.compact ? 200 : 320,
+    width: (props) => (props.compact ? 200 : 320),
     border: `1px solid ${theme.palette.background.default}`,
   },
   actions: {

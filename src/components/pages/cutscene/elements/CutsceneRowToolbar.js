@@ -12,7 +12,7 @@ const CutsceneRowToolbar = ({
   addBelowClick,
   addEventClick,
   deleteRowClick,
-  insertTemplateClick
+  insertTemplateClick,
 }) => {
   return (
     <Typography variant="h6" align="right">
@@ -36,31 +36,19 @@ const CutsceneRowToolbar = ({
       </Tooltip>
 
       <Tooltip title="Add Cutscene Event" enterDelay={200}>
-        <IconButton
-          onClick={addEventClick}
-          aria-label="add"
-          size="large"
-        >
+        <IconButton onClick={addEventClick} aria-label="add" size="large">
           <AddIcon />
         </IconButton>
       </Tooltip>
 
       <Tooltip title="Add Template" enterDelay={200}>
-        <IconButton
-          onClick={insertTemplateClick}
-          aria-label="add"
-          size="large"
-        >
+        <IconButton onClick={insertTemplateClick} aria-label="add" size="large">
           <LibraryAddIcon />
         </IconButton>
       </Tooltip>
 
       <Tooltip title="Delete Row" enterDelay={200}>
-        <IconButton
-          onClick={deleteRowClick}
-          aria-label="delete"
-          size="large"
-        >
+        <IconButton onClick={deleteRowClick} aria-label="delete" size="large">
           <DeleteIcon />
         </IconButton>
       </Tooltip>

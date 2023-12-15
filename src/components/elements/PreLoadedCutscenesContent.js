@@ -17,23 +17,30 @@ import VisuallyHiddenInput from './VisuallyHiddenInput';
 
 import { addPreLoadedCutscenes } from '../../actions/cutsceneActions';
 
-
-const selectLoadedCutsceneFileData = state => state.cutscene.preloadedCutsceneFileNames;
-const memoizedSelector = createSelector([selectLoadedCutsceneFileData], (loadedCutsceneFileData => ({
-  loadedCutsceneFileData
-})));
-
+const selectLoadedCutsceneFileData = (state) =>
+  state.cutscene.preloadedCutsceneFileNames;
+const memoizedSelector = createSelector(
+  [selectLoadedCutsceneFileData],
+  (loadedCutsceneFileData) => ({
+    loadedCutsceneFileData,
+  })
+);
 
 const PreLoadedCutscenesContent = () => {
-
   const dispatch = useDispatch();
-  const { loadedCutsceneFileData } = useSelector(state => memoizedSelector(state));
+  const { loadedCutsceneFileData } = useSelector((state) =>
+    memoizedSelector(state)
+  );
 
-  const handleFileUpload = e => {
-    const jsonFiles = [...e.target.files].filter(file => file.type === 'application/json');
-    const paths = jsonFiles.map(file => file.webkitRelativePath.replace(/^Cutscenes\//, ''));
+  const handleFileUpload = (e) => {
+    const jsonFiles = [...e.target.files].filter(
+      (file) => file.type === 'application/json'
+    );
+    const paths = jsonFiles.map((file) =>
+      file.webkitRelativePath.replace(/^Cutscenes\//, '')
+    );
     dispatch(addPreLoadedCutscenes(paths));
-  }
+  };
 
   return (
     <>
@@ -61,7 +68,9 @@ const PreLoadedCutscenesContent = () => {
 
         {loadedCutsceneFileData.length <= 0 && (
           <div style={{ padding: 12 }}>
-            <Typography variant="body1" textAlign="center">No files loaded</Typography>
+            <Typography variant="body1" textAlign="center">
+              No files loaded
+            </Typography>
           </div>
         )}
 
@@ -73,7 +82,7 @@ const PreLoadedCutscenesContent = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {loadedCutsceneFileData.map(fileName => (
+              {loadedCutsceneFileData.map((fileName) => (
                 <TableRow key={fileName}>
                   <TableCell>{fileName}</TableCell>
                 </TableRow>
@@ -81,10 +90,9 @@ const PreLoadedCutscenesContent = () => {
             </TableBody>
           </Table>
         )}
-
       </div>
     </>
-  )
+  );
 };
 
 export default PreLoadedCutscenesContent;

@@ -21,5 +21,5 @@ export {
   MenuIconButton,
   MenuButton,
   GenericForm,
-  VisuallyHiddenInput
+  VisuallyHiddenInput,
 };

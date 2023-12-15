@@ -75,7 +75,7 @@ class StorylineStepContainer extends React.Component {
 
     return (
       <Draggable draggableId={currentStepId} index={stepOffset}>
-        {provided => (
+        {(provided) => (
           <div {...provided.draggableProps} ref={provided.innerRef}>
             <StorylineStep
               storylineStep={currentStep}

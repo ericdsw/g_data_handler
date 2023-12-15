@@ -42,23 +42,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const selectLoadedFileData = state => state.dialogue.preUploadedFiles;
-const selectLoadedCutsceneFileData = state => state.cutscene.preloadedCutsceneFileNames;
+const selectLoadedFileData = (state) => state.dialogue.preUploadedFiles;
+const selectLoadedCutsceneFileData = (state) =>
+  state.cutscene.preloadedCutsceneFileNames;
 
 const selectData = createSelector(
   [selectLoadedFileData, selectLoadedCutsceneFileData],
-  (preUploadedFiles, preUploadedCutsceneFiles)=> ({
+  (preUploadedFiles, preUploadedCutsceneFiles) => ({
     preUploadedFiles,
-    preUploadedCutsceneFiles
+    preUploadedCutsceneFiles,
   })
 );
 
 const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
-
-  const {
-    preUploadedFiles,
-    preUploadedCutsceneFiles
-  } = useSelector(state => selectData(state));
+  const { preUploadedFiles, preUploadedCutsceneFiles } = useSelector((state) =>
+    selectData(state)
+  );
 
   const classes = useStyles();
   const [dialogues, toggleDialogue] = useDialogueManager(
@@ -67,8 +66,14 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
     'preloadedCutscenesDialogue'
   );
 
-  const fileAmount = useMemo(() => Object.keys(preUploadedFiles).length, [preUploadedFiles])
-  const cutsceneFileAmount = useMemo(() => preUploadedCutsceneFiles.length, [preUploadedCutsceneFiles]);
+  const fileAmount = useMemo(
+    () => Object.keys(preUploadedFiles).length,
+    [preUploadedFiles]
+  );
+  const cutsceneFileAmount = useMemo(
+    () => preUploadedCutsceneFiles.length,
+    [preUploadedCutsceneFiles]
+  );
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
@@ -94,32 +99,32 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
                 <IconButton
                   className={classes.buttons}
                   size="large"
-                  onClick={() => toggleDialogue('preloadedCutscenesDialogue', 'show')}
+                  onClick={() =>
+                    toggleDialogue('preloadedCutscenesDialogue', 'show')
+                  }
                 >
                   {cutsceneFileAmount > 0 && (
                     <Badge badgeContent={cutsceneFileAmount} color="primary">
                       <AllInboxIcon />
                     </Badge>
                   )}
-                  {cutsceneFileAmount <= 0 && (
-                    <AllInboxIcon />
-                  )}
+                  {cutsceneFileAmount <= 0 && <AllInboxIcon />}
                 </IconButton>
               </Tooltip>
               <Tooltip title="Preloaded Dialogues">
                 <IconButton
                   className={classes.buttons}
                   size="large"
-                  onClick={() => toggleDialogue('preloadedDialoguesDialogue', 'show')}
+                  onClick={() =>
+                    toggleDialogue('preloadedDialoguesDialogue', 'show')
+                  }
                 >
                   {fileAmount > 0 && (
                     <Badge badgeContent={fileAmount} color="primary">
                       <Inventory2Icon />
                     </Badge>
                   )}
-                  {fileAmount <= 0 && (
-                    <Inventory2Icon />
-                  )}
+                  {fileAmount <= 0 && <Inventory2Icon />}
                 </IconButton>
               </Tooltip>
               <Tooltip title="mode">
@@ -157,7 +162,7 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
       <GenericDialogue
         open={dialogues['preloadedDialoguesDialogue']}
         onClose={() => toggleDialogue('preloadedDialoguesDialogue', 'hide')}
-        maxWidth='md'
+        maxWidth="md"
       >
         <PreloadedDialoguesContent />
       </GenericDialogue>
@@ -165,11 +170,10 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
       <GenericDialogue
         open={dialogues['preloadedCutscenesDialogue']}
         onClose={() => toggleDialogue('preloadedCutscenesDialogue', 'hide')}
-        maxWidth='md'
+        maxWidth="md"
       >
         <PreLoadedCutscenesContent />
       </GenericDialogue>
-
     </AppBar>
   );
 };

@@ -20,7 +20,7 @@ const Storyline = ({
   handleExport,
   appliedRunsString,
   updateAppliedRunsString,
-  handleDragEnd
+  handleDragEnd,
 }) => {
   const classes = useStyles();
 
@@ -56,7 +56,6 @@ const Storyline = ({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-
       <Grid className={classes.root} container spacing={2} alignItems="center">
         <Grid item xs={8}>
           <Typography variant="h4" gutterBottom>
@@ -126,8 +125,8 @@ const Storyline = ({
         </Grid>
 
         <Grid item xs={12}>
-          <Droppable droppableId={storyline.id} type='storylineStep'>
-            {provided => (
+          <Droppable droppableId={storyline.id} type="storylineStep">
+            {(provided) => (
               <div ref={provided.innerRef} {...provided.droppableProps}>
                 {stepEntries}
                 {provided.placeholder}

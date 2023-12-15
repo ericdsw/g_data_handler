@@ -223,7 +223,7 @@ const speakerSchema = {
     voice_file: 'default_voice.wav',
     target_object: 'NONE',
     speakerImages: [],
-  }
+  },
 };
 
 export default speakerSchema;

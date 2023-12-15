@@ -9,10 +9,13 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 
 import StyledPopper from './StyledPopper';
 
-const selectLoadedFileData = state => state.dialogue.preUploadedFiles;
-const selectData = createSelector([selectLoadedFileData], preUploadedFiles => ({
-  preUploadedFiles
-}));
+const selectLoadedFileData = (state) => state.dialogue.preUploadedFiles;
+const selectData = createSelector(
+  [selectLoadedFileData],
+  (preUploadedFiles) => ({
+    preUploadedFiles,
+  })
+);
 
 const CompositeDialogueFileInput = ({
   fileLabel = 'JSON file',
@@ -21,20 +24,22 @@ const CompositeDialogueFileInput = ({
   conversationNameValue,
   fileOnChange,
   conversationNameOnChange,
-  multiple = false
+  multiple = false,
 }) => {
+  const { preUploadedFiles } = useSelector((state) => selectData(state));
 
-  const { preUploadedFiles } = useSelector(state => selectData(state));
-
-  const getIdForFileName = useCallback(newFileName => {
-    const fileIds = Object.keys(preUploadedFiles);
-    for (let i = 0; i < fileIds.length; i++) {
-      if (preUploadedFiles[fileIds[i]].fileName === newFileName) {
-        return fileIds[i];
+  const getIdForFileName = useCallback(
+    (newFileName) => {
+      const fileIds = Object.keys(preUploadedFiles);
+      for (let i = 0; i < fileIds.length; i++) {
+        if (preUploadedFiles[fileIds[i]].fileName === newFileName) {
+          return fileIds[i];
+        }
       }
-    }
-    return '';
-  }, [preUploadedFiles]); 
+      return '';
+    },
+    [preUploadedFiles]
+  );
 
   const [usedFileId, updateUsedFileId] = useState(getIdForFileName(fileValue));
   const [convPopupAnchorEl, setConvPopupAnchorEl] = useState(null);
@@ -43,41 +48,43 @@ const CompositeDialogueFileInput = ({
   const convPopupOpen = Boolean(convPopupAnchorEl);
   const id = convPopupOpen ? `composite-dialogue-file-input-popper` : undefined;
 
-  const handleConvPopupClick = e => {
+  const handleConvPopupClick = (e) => {
     setConvPopupAnchorEl(e.currentTarget);
-  }
+  };
 
   const handleClose = () => {
     setConvPopupAnchorEl(null);
-    setConvPopupSearchVal([])
-  }
+    setConvPopupSearchVal([]);
+  };
 
   const updateWithPopupSearchVal = (newValue) => {
-    conversationNameOnChange({ "target": { "value": newValue.join(",") }})
-  }
+    conversationNameOnChange({ target: { value: newValue.join(',') } });
+  };
 
   /**
    * Used for the file name autocomplete
    */
   const fileNames = useMemo(() => {
     const result = [];
-    Object.keys(preUploadedFiles).forEach(fileId => {
+    Object.keys(preUploadedFiles).forEach((fileId) => {
       result.push(preUploadedFiles[fileId].fileName);
-    })
+    });
     return result;
   }, [preUploadedFiles]);
 
-  const refreshIdForFileName = useCallback(newFileName => {
-    fileOnChange({ target: { value: newFileName }});
-    const fileIds = Object.keys(preUploadedFiles);
-    for (let i = 0; i < fileIds.length; i++) {
-      if (preUploadedFiles[fileIds[i]].fileName === newFileName) {
-        updateUsedFileId(fileIds[i]);
-        break;
+  const refreshIdForFileName = useCallback(
+    (newFileName) => {
+      fileOnChange({ target: { value: newFileName } });
+      const fileIds = Object.keys(preUploadedFiles);
+      for (let i = 0; i < fileIds.length; i++) {
+        if (preUploadedFiles[fileIds[i]].fileName === newFileName) {
+          updateUsedFileId(fileIds[i]);
+          break;
+        }
       }
-    }
-
-  }, [fileOnChange, preUploadedFiles]); 
+    },
+    [fileOnChange, preUploadedFiles]
+  );
 
   /**
    * Used for the conversation autocomplete
@@ -106,12 +113,9 @@ const CompositeDialogueFileInput = ({
               }}
               options={fileNames}
               disableClearable
-              getOptionLabel={option => option}
-              renderInput={params => (
-                <TextField
-                  {...params}
-                  label={fileLabel}
-                />
+              getOptionLabel={(option) => option}
+              renderInput={(params) => (
+                <TextField {...params} label={fileLabel} />
               )}
             />
           </Grid>
@@ -123,9 +127,13 @@ const CompositeDialogueFileInput = ({
                   label={conversationNameLabel}
                   value={conversationNameValue}
                   onChange={conversationNameOnChange}
-                  helperText={usedFileId ? `Loading from: ${preUploadedFiles[usedFileId].fileName}` : ''}
+                  helperText={
+                    usedFileId
+                      ? `Loading from: ${preUploadedFiles[usedFileId].fileName}`
+                      : ''
+                  }
                   InputLabelProps={{
-                    shrink: conversationNameValue
+                    shrink: conversationNameValue,
                   }}
                 />
               )}
@@ -135,29 +143,35 @@ const CompositeDialogueFileInput = ({
                   fullWidth
                   value={conversationNameValue || null}
                   onChange={(_, val) => {
-                    conversationNameOnChange({ target: { value: val }})
+                    conversationNameOnChange({ target: { value: val } });
                   }}
                   onInputChange={(_, val) => {
-                    conversationNameOnChange({ target: { value: val }})
+                    conversationNameOnChange({ target: { value: val } });
                   }}
                   options={conversationNames}
                   disableClearable
-                  getOptionLabel={option => option}
-                  renderInput={params => (
+                  getOptionLabel={(option) => option}
+                  renderInput={(params) => (
                     <TextField
                       {...params}
                       label={conversationNameLabel}
-                      helperText={usedFileId ? `Loading conversations from: ${preUploadedFiles[usedFileId].fileName}` : ''}
+                      helperText={
+                        usedFileId
+                          ? `Loading conversations from: ${preUploadedFiles[usedFileId].fileName}`
+                          : ''
+                      }
                     />
                   )}
                 />
               )}
-            </Grid> 
+            </Grid>
             {multiple && (
               <Grid item>
                 <IconButton
-                  aria-describedby={id} type='button' onClick={handleConvPopupClick}
-                  size='large'
+                  aria-describedby={id}
+                  type="button"
+                  onClick={handleConvPopupClick}
+                  size="large"
                 >
                   <ContentPasteSearchIcon size="large" />
                 </IconButton>
@@ -177,7 +191,7 @@ const CompositeDialogueFileInput = ({
                   disableCloseOnSelect
                   options={conversationNames}
                   disableClearable
-                  getOptionLabel={option => String(option)}
+                  getOptionLabel={(option) => String(option)}
                   renderTags={() => null}
                   value={convPopupSearchVal || null}
                   onChange={(e, newVal, reason) => {
@@ -189,19 +203,17 @@ const CompositeDialogueFileInput = ({
                       return;
                     }
 
-                    const usedNewVal = (typeof newVal !== 'string') ? newVal : [newVal];
+                    const usedNewVal =
+                      typeof newVal !== 'string' ? newVal : [newVal];
                     setConvPopupSearchVal(usedNewVal);
 
                     if (!multiple) {
                       updateWithPopupSearchVal(usedNewVal);
-                      handleClose()
+                      handleClose();
                     }
                   }}
-                  renderInput={params => (
-                    <TextField
-                      {...params}
-                      label={conversationNameLabel}
-                    />
+                  renderInput={(params) => (
+                    <TextField {...params} label={conversationNameLabel} />
                   )}
                 />
               </Grid>
@@ -221,6 +233,6 @@ const CompositeDialogueFileInput = ({
       </StyledPopper>
     </Grid>
   );
-}
+};
 
 export default CompositeDialogueFileInput;

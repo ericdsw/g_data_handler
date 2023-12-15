@@ -27,11 +27,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const StepMap = ({
-  stepMap,
-  handleAddEntity,
-  handleUpdateName
-}) => {
+const StepMap = ({ stepMap, handleAddEntity, handleUpdateName }) => {
   const { darkMode } = useSelector((state) => state.app);
   const classes = useStyles({
     cardBackground: darkMode ? '#463f47' : '#eee',
@@ -91,10 +87,8 @@ const StepMap = ({
         action={
           <>
             <Tooltip title="Edit map name">
-              <IconButton
-                onClick={() => toggleDialogue('editName', 'show')}
-              >
-                <Icon fontSize='large'>edit</Icon>
+              <IconButton onClick={() => toggleDialogue('editName', 'show')}>
+                <Icon fontSize="large">edit</Icon>
               </IconButton>
             </Tooltip>
             <MenuIconButton
@@ -116,15 +110,15 @@ const StepMap = ({
       {/* Edit Name Form */}
       <GenericDialogue
         title="Edit Map Name"
-        open={dialogues["editName"]}
-        maxWidth='sm'
+        open={dialogues['editName']}
+        maxWidth="sm"
         onClose={() => toggleDialogue('editName', 'hide')}
       >
         <EditStepMapNameForm
           data={{ map_name: stepMap.map_name }}
-          handleSubmit={newData => {
+          handleSubmit={(newData) => {
             toggleDialogue('editName', 'hide');
-            handleUpdateName(newData.map_name)
+            handleUpdateName(newData.map_name);
           }}
         />
       </GenericDialogue>
@@ -150,7 +144,6 @@ const StepMap = ({
           }}
         />
       </GenericDialogue>
-
     </Card>
   );
 };

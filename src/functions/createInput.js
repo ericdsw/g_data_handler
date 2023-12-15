@@ -10,7 +10,7 @@ import {
   Icon,
   Tooltip,
   IconButton,
-  Grid
+  Grid,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -228,7 +228,9 @@ export default function createInput(
           <Grid item xs>
             <FormControlLabel
               label={label}
-              style={{ opacity: (booleanFieldIsDirty || inputData.required) ? 1.0 : 0.5 }}
+              style={{
+                opacity: booleanFieldIsDirty || inputData.required ? 1.0 : 0.5,
+              }}
               control={
                 <Switch
                   onChange={handleChange(paramName)}
@@ -243,9 +245,10 @@ export default function createInput(
             <IconButton
               onClick={() => {
                 // Look away God
-                handleChange(paramName)({ target: { checked: undefined }})
+                handleChange(paramName)({ target: { checked: undefined } });
               }}
-              size="large">
+              size="large"
+            >
               <Icon>restart_alt</Icon>
             </IconButton>
           )}
@@ -272,14 +275,15 @@ export default function createInput(
         />
       );
       break;
-  
-    case 'dialogueJson':
 
+    case 'dialogueJson':
       const fileInputData = inputData.inputs[inputData.fileValueKey];
-      const conversationInputData = inputData.inputs[inputData.conversationNameKey];
+      const conversationInputData =
+        inputData.inputs[inputData.conversationNameKey];
 
       const fileInputValue = completeFormValues[inputData.fileValueKey];
-      const conversationInputValue = completeFormValues[inputData.conversationNameKey];
+      const conversationInputValue =
+        completeFormValues[inputData.conversationNameKey];
 
       contentValue = (
         <CompositeDialogueFileInput
@@ -291,7 +295,7 @@ export default function createInput(
           conversationNameOnChange={handleChange(inputData.conversationNameKey)}
           multiple={inputData.multiple}
         />
-      )
+      );
       break;
 
     case 'dropdown':
@@ -327,7 +331,7 @@ export default function createInput(
         </TextField>
       );
       break;
-    
+
     case 'dialogueFile':
       contentValue = (
         <CutsceneFileSearcher
@@ -395,7 +399,6 @@ export default function createInput(
           {...extraParams}
         />
       );
-   
   }
 
   let returnValue;

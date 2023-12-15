@@ -1,29 +1,29 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { createSelector } from "@reduxjs/toolkit";
-import { Autocomplete, Button, Grid, TextField } from "@mui/material";
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { createSelector } from '@reduxjs/toolkit';
+import { Autocomplete, Button, Grid, TextField } from '@mui/material';
 
-const selectTemplates = state => state.cutscene.eventTemplates;
-const selectTemplateIds = state => state.cutscene.templateIds;
+const selectTemplates = (state) => state.cutscene.eventTemplates;
+const selectTemplateIds = (state) => state.cutscene.templateIds;
 const memoizedSelector = createSelector(
   [selectTemplates, selectTemplateIds],
   (templates, templateIds) => ({
-    templates, templateIds
+    templates,
+    templateIds,
   })
 );
 
-const AddEventToTemplateForm = ({
-  onAddEvent
-}) => {
-
-  const { templates, templateIds } = useSelector(state => memoizedSelector(state));
+const AddEventToTemplateForm = ({ onAddEvent }) => {
+  const { templates, templateIds } = useSelector((state) =>
+    memoizedSelector(state)
+  );
   const [selectedTemplate, setSelectedTemplate] = useState('');
 
-  const submitForm = e => {
+  const submitForm = (e) => {
     e.preventDefault();
     e.stopPropagation();
     onAddEvent(selectedTemplate);
-  }
+  };
 
   return (
     <form onSubmit={submitForm} style={{ paddingTop: 8, paddingBottom: 8 }}>
@@ -33,25 +33,20 @@ const AddEventToTemplateForm = ({
             fullWidth
             value={selectedTemplate}
             onChange={(_, val) => {
-              setSelectedTemplate(val)
+              setSelectedTemplate(val);
             }}
             onInputChange={(_, val) => {
               setSelectedTemplate(val);
             }}
             options={templateIds}
             disableClearable
-            getOptionLabel={option => {
+            getOptionLabel={(option) => {
               if (!option || !Object.keys(templates).includes(option)) {
-                return "---"
+                return '---';
               }
-              return templates[option].name
+              return templates[option].name;
             }}
-            renderInput={params => (
-              <TextField
-                {...params}
-                label="Template"
-              />
-            )}
+            renderInput={(params) => <TextField {...params} label="Template" />}
           />
         </Grid>
         <Grid item xs={12}>
@@ -64,6 +59,6 @@ const AddEventToTemplateForm = ({
       </Grid>
     </form>
   );
-}
+};
 
 export default AddEventToTemplateForm;

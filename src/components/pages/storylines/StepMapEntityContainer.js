@@ -9,7 +9,7 @@ import {
   deleteMapEntityParam,
   addNPCInteraction,
   updateMapEntity,
-  duplicateEntityInMaps
+  duplicateEntityInMaps,
 } from '../../../actions/storylineActions';
 
 const StepMapEntityContainer = ({
@@ -58,5 +58,5 @@ export default connect(mapStateToProps, {
   deleteMapEntityParam,
   addNPCInteraction,
   updateMapEntity,
-  duplicateEntityInMaps
+  duplicateEntityInMaps,
 })(StepMapEntityContainer);

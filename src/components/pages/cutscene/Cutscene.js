@@ -25,7 +25,7 @@ const Cutscene = ({
   handleFileNameChange,
   handleAddRow,
   handleShouldHideBars,
-  handleDragEnd
+  handleDragEnd,
 }) => {
   const classes = useStyles();
 
@@ -34,7 +34,6 @@ const Cutscene = ({
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <Grid className={classes.root} container spacing={2} alignItems="center">
-
         <Grid item xs={12} md={10}>
           <TextField
             id="file_name"
@@ -65,11 +64,10 @@ const Cutscene = ({
         </Grid>
 
         <Grid item xs={12} container spacing={2}>
-
           {/* Event List */}
           <Grid item xs={12}>
             <Droppable droppableId={cutscene.id} type="cutsceneRow">
-              {provided => (
+              {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
                   {cutsceneRows.length === 0 && (
                     <Paper>
@@ -103,10 +101,8 @@ const Cutscene = ({
               </Button>
             </Grid>
           </Grid>
-
         </Grid>
-      </Grid> 
-
+      </Grid>
     </DragDropContext>
   );
 };

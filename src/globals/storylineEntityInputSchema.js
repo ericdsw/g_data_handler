@@ -603,19 +603,20 @@ const storylineEntityInputSchema = {
 
   configure_dialogue_area: {
     name: 'Configure Dialogue Area',
-    additionalText: 'Configures an existing area inside the map to launch a dialogue.',
+    additionalText:
+      'Configures an existing area inside the map to launch a dialogue.',
     parameters: {
       name: {
         label: 'Area Name',
         type: 'text',
         required: true,
-        tooltip: 'Name of an existing area'
+        tooltip: 'Name of an existing area',
       },
       map_name: {
         label: 'In Map',
         type: 'text',
         required: true,
-        tooltip: 'The map where the area must be located'
+        tooltip: 'The map where the area must be located',
       },
       dialogue_file: {
         label: 'Dialogue file',
@@ -688,14 +689,16 @@ const storylineEntityInputSchema = {
         type: 'boolean',
         required: true,
         default: true,
-        tooltip: 'If true, values will be set back to what the editor defines before applying new configurations',
-      }
-    }
+        tooltip:
+          'If true, values will be set back to what the editor defines before applying new configurations',
+      },
+    },
   },
 
   configure_cutscene_area: {
     name: 'Configure Cutscene Area',
-    additionalText: 'Configures an existing area inside the map to launch a cutscene.',
+    additionalText:
+      'Configures an existing area inside the map to launch a cutscene.',
     parameters: {
       name: {
         label: 'Area Name',
@@ -773,35 +776,38 @@ const storylineEntityInputSchema = {
         type: 'boolean',
         required: true,
         default: true,
-        tooltip: 'If true, values will be set back to what the editor defines before applying new configurations.'
-      }
-    }
+        tooltip:
+          'If true, values will be set back to what the editor defines before applying new configurations.',
+      },
+    },
   },
 
   configure_nothing_area: {
     name: 'Configure Nothing Area',
-    additionalText: 'Configures an existing area inside the map to do "nothing".',
+    additionalText:
+      'Configures an existing area inside the map to do "nothing".',
     parameters: {
       name: {
         label: 'Area Name',
         type: 'text',
         required: true,
-        tooltip: 'Name of an existing area'
+        tooltip: 'Name of an existing area',
       },
       map_name: {
         label: 'In Map',
         type: 'text',
         required: true,
-        tooltip: 'The map where the area must be located'
+        tooltip: 'The map where the area must be located',
       },
       reset_before_configuring: {
         label: 'Reset Before Configuring',
         type: 'boolean',
         required: true,
         default: true,
-        tooltip: 'If true, values will be set back to what the editor defines before applying new configurations'
-      }
-    }
+        tooltip:
+          'If true, values will be set back to what the editor defines before applying new configurations',
+      },
+    },
   },
 
   remove_entity: {

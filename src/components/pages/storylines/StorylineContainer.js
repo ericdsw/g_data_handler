@@ -16,7 +16,7 @@ import {
   clearStoryline,
   updateAppliesToEndRun,
   updateAppliedRunsString,
-  reorderStep
+  reorderStep,
 } from '../../../actions/storylineActions';
 
 class StorylineContainer extends React.Component {
@@ -37,12 +37,14 @@ class StorylineContainer extends React.Component {
         completeState
       );
 
-      console.log(JSON.stringify({
-        ...output,
-        applies_in_end_run: appliesToEndRun,
-        applied_runs: appliedRunsString,
-      }));
-    }
+      console.log(
+        JSON.stringify({
+          ...output,
+          applies_in_end_run: appliesToEndRun,
+          applied_runs: appliedRunsString,
+        })
+      );
+    };
   }
 
   clearStoryline = () => {
@@ -86,13 +88,12 @@ class StorylineContainer extends React.Component {
   updateStorylineFromFile = (targetFile) => {
     parseFile(targetFile, 'application/json')
       .then((json) => {
-
         if (
-          !Object.keys(json).includes("id") ||
-          !Object.keys(json).includes("name")
+          !Object.keys(json).includes('id') ||
+          !Object.keys(json).includes('name')
         ) {
-          this.showError("Invalid storyline file provided");
-          return
+          this.showError('Invalid storyline file provided');
+          return;
         }
 
         const normalizedData = normalize(json, StorylineSchema);
@@ -129,7 +130,7 @@ class StorylineContainer extends React.Component {
     enqueueSnackbar(errorMessage, { variant: 'error' });
   };
 
-  onDragEnd = result => {
+  onDragEnd = (result) => {
     const { source, destination, draggableId, type } = result;
 
     if (
@@ -143,7 +144,7 @@ class StorylineContainer extends React.Component {
     if (type === 'storylineStep') {
       this.props.reorderStep(source.index, destination.index, draggableId);
     }
-  }
+  };
 
   // Render Logic
   render() {
@@ -205,5 +206,5 @@ export default connect(mapStateToProps, {
   clearStoryline,
   updateAppliesToEndRun,
   updateAppliedRunsString,
-  reorderStep
+  reorderStep,
 })(StorylineContainer);

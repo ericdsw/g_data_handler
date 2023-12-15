@@ -7,25 +7,22 @@ const schema = {
       label: 'Map Name',
       type: 'string',
       required: true,
-      tooltip: 'The map name'
-    }
-  }
-}
+      tooltip: 'The map name',
+    },
+  },
+};
 
 const defaultData = {
-  map_name: ''
-}
+  map_name: '',
+};
 
-const EditStepMapNameForm = ({
-  data = defaultData,
-  handleSubmit
-}) => (
+const EditStepMapNameForm = ({ data = defaultData, handleSubmit }) => (
   <GenericForm
     initialDataSet={data}
     schema={schema}
     handleSubmit={handleSubmit}
-    buttonText='Edit Map Name'
+    buttonText="Edit Map Name"
   />
 );
 
-export default EditStepMapNameForm
+export default EditStepMapNameForm;

@@ -17,40 +17,47 @@ import { v4 as uuidv4 } from 'uuid';
 import VisuallyHiddenInput from './VisuallyHiddenInput';
 import { parseFile } from '../../functions';
 
-import { addPreUploadedFile, clearPreUploadedFiles } from '../../actions/dialogueActions';
+import {
+  addPreUploadedFile,
+  clearPreUploadedFiles,
+} from '../../actions/dialogueActions';
 
-
-const selectLoadedFileData = state => state.dialogue.preUploadedFiles;
-const selectData = createSelector([selectLoadedFileData], preUploadedFiles => ({
-  preUploadedFiles
-}));
-
+const selectLoadedFileData = (state) => state.dialogue.preUploadedFiles;
+const selectData = createSelector(
+  [selectLoadedFileData],
+  (preUploadedFiles) => ({
+    preUploadedFiles,
+  })
+);
 
 const PreloadedDialoguesContent = () => {
-
   const dispatch = useDispatch();
-  const { preUploadedFiles } = useSelector(state => selectData(state));
+  const { preUploadedFiles } = useSelector((state) => selectData(state));
 
-  const dialoguesAmount = useMemo(() => Object.keys(preUploadedFiles).length, [preUploadedFiles]);
+  const dialoguesAmount = useMemo(
+    () => Object.keys(preUploadedFiles).length,
+    [preUploadedFiles]
+  );
   const conversationsAmount = useMemo(() => {
     let result = 0;
-    Object.keys(preUploadedFiles).forEach(fileKey => {
-      result += Object.keys(preUploadedFiles[fileKey].conversationKeys).length
+    Object.keys(preUploadedFiles).forEach((fileKey) => {
+      result += Object.keys(preUploadedFiles[fileKey].conversationKeys).length;
     });
     return result;
-  }, [preUploadedFiles])
+  }, [preUploadedFiles]);
 
   const [loading, toggleLoading] = useState(false);
 
   const handleFolderUpload = async (e) => {
-
     toggleLoading(true);
     dispatch(clearPreUploadedFiles());
 
-    const jsonFiles = [...e.target.files].filter(file => file.type === "application/json")
+    const jsonFiles = [...e.target.files].filter(
+      (file) => file.type === 'application/json'
+    );
     for (let i = 0; i < jsonFiles.length; i++) {
       try {
-        const result = await parseFile(jsonFiles[i], 'application/json')
+        const result = await parseFile(jsonFiles[i], 'application/json');
         dispatch(
           addPreUploadedFile(
             jsonFiles[i].webkitRelativePath.replace(/^Dialogues\//, ''),
@@ -59,18 +66,18 @@ const PreloadedDialoguesContent = () => {
           )
         );
       } catch (e) {
-        console.log(`Error loading file: ${e}`)
+        console.log(`Error loading file: ${e}`);
       }
     }
     toggleLoading(false);
-  }
+  };
 
   return (
     <>
       <div style={{ padding: 8 }}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs>
-            <Button variant='contained' component="label">
+            <Button variant="contained" component="label">
               Import Dialogues Folder
               <VisuallyHiddenInput
                 type="file"
@@ -80,10 +87,13 @@ const PreloadedDialoguesContent = () => {
               />
             </Button>
           </Grid>
-          {(dialoguesAmount > 0 && !loading) && (
+          {dialoguesAmount > 0 && !loading && (
             <Grid item>
               <Typography variant="body2">
-                <b>Loaded {dialoguesAmount} dialogues, {conversationsAmount} conversations</b>
+                <b>
+                  Loaded {dialoguesAmount} dialogues, {conversationsAmount}{' '}
+                  conversations
+                </b>
               </Typography>
             </Grid>
           )}
@@ -92,15 +102,19 @@ const PreloadedDialoguesContent = () => {
 
       {loading && (
         <div style={{ padding: 12 }}>
-          <Typography variant="body1" textAlign="center">Loading...</Typography>
+          <Typography variant="body1" textAlign="center">
+            Loading...
+          </Typography>
         </div>
       )}
-      {(!loading && Object.keys(preUploadedFiles).length <= 0) && (
+      {!loading && Object.keys(preUploadedFiles).length <= 0 && (
         <div style={{ padding: 12 }}>
-          <Typography variant="body1" textAlign="center">No files loaded</Typography>
+          <Typography variant="body1" textAlign="center">
+            No files loaded
+          </Typography>
         </div>
       )}
-      {(!loading && Object.keys(preUploadedFiles).length > 0) && (
+      {!loading && Object.keys(preUploadedFiles).length > 0 && (
         <Table>
           <TableHead>
             <TableRow>
@@ -110,10 +124,12 @@ const PreloadedDialoguesContent = () => {
           </TableHead>
 
           <TableBody>
-            {Object.keys(preUploadedFiles).map(fileId => (
+            {Object.keys(preUploadedFiles).map((fileId) => (
               <TableRow key={fileId}>
                 <TableCell>{preUploadedFiles[fileId].fileName}</TableCell>
-                <TableCell>{preUploadedFiles[fileId].conversationKeys.length}</TableCell>
+                <TableCell>
+                  {preUploadedFiles[fileId].conversationKeys.length}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -121,7 +137,6 @@ const PreloadedDialoguesContent = () => {
       )}
     </>
   );
-
-}
+};
 
 export default PreloadedDialoguesContent;

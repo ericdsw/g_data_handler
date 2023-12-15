@@ -37,7 +37,7 @@ const useStyles = makeStyles(() => ({
     width: props.noImage ? 282 * 2 : 242 * 2,
     height: 47 * 2,
     lineHeight: '30px',
-    cursor: 'text'
+    cursor: 'text',
   }),
   contentImage: {
     width: 'auto',
@@ -69,7 +69,6 @@ const FloatingDialogue = ({
   uiVariant,
   usedImagePath,
 }) => {
-
   const dispatch = useDispatch();
 
   const isTransparent = useMemo(
@@ -81,16 +80,18 @@ const FloatingDialogue = ({
   const open = Boolean(anchor);
   const id = open ? `simple-popper-${messageFullText}` : undefined;
 
-  const handleClick = e => {
-    setAnchor(anchor ? null : e.currentTarget)
-  }
+  const handleClick = (e) => {
+    setAnchor(anchor ? null : e.currentTarget);
+  };
 
-  const handlePopupTextChange = e => {
-    dispatch(editConversationMessage(fullMessage.id, {
-      ...fullMessage,
-      message: e.target.value
-    }));
-  }
+  const handlePopupTextChange = (e) => {
+    dispatch(
+      editConversationMessage(fullMessage.id, {
+        ...fullMessage,
+        message: e.target.value,
+      })
+    );
+  };
 
   const hasSpeakerName = useMemo(
     () => speakerName && !isTransparent,
@@ -120,10 +121,7 @@ const FloatingDialogue = ({
             <div className={classes.contentSpeakerName}>{speakerName}</div>
           )}
           <Tooltip TransitionComponent={Zoom} title={messageFullText}>
-            <div
-              className={classes.contentText}
-              onClick={handleClick}
-            >
+            <div className={classes.contentText} onClick={handleClick}>
               {messageTextOnly}
             </div>
           </Tooltip>

@@ -225,9 +225,9 @@ export default function createEventDescription(type, parameters) {
       return `Will add ${parameters.amount} memory points to the player`;
     case 'remove_memory_point':
       return `Will remove ${parameters.amount} memory points from the player`;
-    
+
     case 'force_storyline_step':
-      return `Will force the storyline ${parameters.storyline_name} to the step ${parameters.step_name}`
+      return `Will force the storyline ${parameters.storyline_name} to the step ${parameters.step_name}`;
 
     default:
       return '';

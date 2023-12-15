@@ -550,7 +550,7 @@ const eventSchema = {
         tooltip:
           'The file that contains the target conversation (from the Dialogues resource folder)',
         placeholder: 'path/to/dialogue.json',
-        skipRender: true
+        skipRender: true,
       },
       name: {
         label: 'Conversation Name',
@@ -558,7 +558,7 @@ const eventSchema = {
         required: true,
         tooltip: 'The conversation name inside the file',
         placecholder: 'conversation_name',
-        skipRender: true
+        skipRender: true,
       },
       dialogueDataBundle: {
         type: 'dialogueJson',
@@ -580,9 +580,9 @@ const eventSchema = {
             required: true,
             tooltip: 'The conversation name inside the file',
             placecholder: 'conversation_name',
-          }
+          },
         },
-      }
+      },
     },
   },
 
@@ -1963,7 +1963,8 @@ const eventSchema = {
   force_storyline_step: {
     name: 'Force Storyline Step',
     icon: 'move_down',
-    additionalText: 'Forces a storyline to configure itself for an specific step',
+    additionalText:
+      'Forces a storyline to configure itself for an specific step',
     defaultImportant: false,
     parameters: {
       ...defaultParameters,
@@ -1972,17 +1973,17 @@ const eventSchema = {
         type: 'text',
         required: true,
         placeholder: 'FooStoryline',
-        tooltip: 'The storyline that will be configured'
+        tooltip: 'The storyline that will be configured',
       },
       step_name: {
         label: 'Step Name',
         type: 'text',
         required: true,
         placeholder: 'foo_step',
-        tooltip: 'The step that the storyline will be forced to'
-      }
-    }
-  }
+        tooltip: 'The step that the storyline will be forced to',
+      },
+    },
+  },
 };
 
 export default eventSchema;
