@@ -21,6 +21,7 @@ import classnames from 'classnames';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 
 import { useDialogueManager } from '../../../hooks';
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
@@ -29,6 +30,7 @@ import { eventSchema } from '../../../globals';
 import { createEventDescription } from '../../../functions';
 
 import { styles } from './styles/CutsceneEventStyle';
+import AddEventToTemplateForm from './forms/AddEventToTemplateForm';
 
 function parseParameter(parameter) {
   switch (typeof parameter) {
@@ -47,13 +49,15 @@ const CutsceneEvent = ({
   cutsceneEventData,
   handleEditEvent,
   handleDeleteEvent,
+  handleAddToTemplate,
   eventIndex
 }) => {
   const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(
     'editEvent',
-    'confirmDelete'
+    'confirmDelete',
+    'addToTemplate'
   );
 
   const [expanded, toggleExpand] = useState(false);
@@ -141,20 +145,40 @@ const CutsceneEvent = ({
             }}
           />
           <CardActions className={classes.actions} disableSpacing>
-            <IconButton
-              aria-label="Edit"
-              onClick={() => toggleDialogue('editEvent', 'show')}
-              size="large"
-            >
-              <EditIcon />
-            </IconButton>
-            <IconButton
-              aria-label="Delete"
-              onClick={() => toggleDialogue('confirmDelete', 'show')}
-              size="large"
-            >
-              <DeleteIcon />
-            </IconButton>
+
+            {/* Edit button */}
+            <Tooltip title="Edit Event">
+              <IconButton
+                aria-label="Edit"
+                onClick={() => toggleDialogue('editEvent', 'show')}
+                size="large"
+              >
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+
+            {/* Delete Button */}
+            <Tooltip title="Delete Event">
+              <IconButton
+                aria-label="Delete"
+                onClick={() => toggleDialogue('confirmDelete', 'show')}
+                size="large"
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+
+            {/* Add To template button */}
+            <Tooltip title="Add Event to Template">
+              <IconButton
+                size="large"
+                onClick={() => toggleDialogue('addToTemplate', 'show')}
+              >
+                <CollectionsBookmarkIcon />
+              </IconButton>
+            </Tooltip>
+
+            {/* Expand Icon */}
             <IconButton
               className={classnames(classes.expand, {
                 [classes.expandOpen]: expanded,
@@ -190,6 +214,21 @@ const CutsceneEvent = ({
           creationHandler={(cutsceneData) => {
             handleEditEvent(cutsceneData);
             toggleDialogue('editEvent', 'hide');
+          }}
+        />
+      </GenericDialogue>
+
+      <GenericDialogue
+        title="Add event to template"
+        open={dialogues['addToTemplate']}
+        maxWidth='sm'
+        onClose={() => toggleDialogue('addToTemplate', 'hide')}
+      >
+        <AddEventToTemplateForm
+          eventId={cutsceneEventData.id}
+          onAddEvent={(selectedTemplate) => {
+            toggleDialogue('addToTemplate', 'hide');
+            handleAddToTemplate(selectedTemplate);
           }}
         />
       </GenericDialogue>

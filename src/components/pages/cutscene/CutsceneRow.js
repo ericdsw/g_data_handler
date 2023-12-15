@@ -11,6 +11,8 @@ import { useDialogueManager } from '../../../hooks';
 
 import { styles } from './styles/CutsceneRowStyle';
 
+import TemplateList from './elements/TemplateList';
+
 const useStyles = makeStyles(styles);
 
 const CutsceneRow = ({
@@ -20,13 +22,15 @@ const CutsceneRow = ({
   handleAddRowAbove,
   handleDeleteRow,
   handleAddEvent,
+  handleInjectTemplate,
   ...props
 }) => {
   const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(
     'confirmDelete',
-    'createEvent'
+    'createEvent',
+    'insertTemplate'
   );
 
   const cutsceneEventIds = useMemo(() => rowData.cutsceneEvents, [rowData]);
@@ -46,13 +50,16 @@ const CutsceneRow = ({
             </Grid>
             <Grid item xs={8}>
               <CutsceneRowToolbar
-                addAboveClick={() => handleAddRowAbove()}
-                addBelowClick={() => handleAddRowBelow()}
+                addAboveClick={handleAddRowAbove}
+                addBelowClick={handleAddRowBelow}
                 addEventClick={() => {
                   toggleDialogue('createEvent', 'show');
                 }}
                 deleteRowClick={() => {
                   toggleDialogue('confirmDelete', 'show');
+                }}
+                insertTemplateClick={() => {
+                  toggleDialogue('insertTemplate', 'show');
                 }}
               />
             </Grid>
@@ -99,6 +106,21 @@ const CutsceneRow = ({
           creationHandler={(eventData) => {
             handleAddEvent(eventData);
             toggleDialogue('createEvent', 'hide');
+          }}
+        />
+      </GenericDialogue>
+
+      <GenericDialogue
+        title="Insert template to row"
+        open={dialogues["insertTemplate"]}
+        maxWidth='lg'
+        onClose={() => toggleDialogue('insertTemplate', 'hide')}
+      >
+        <TemplateList
+          showInject
+          onInjectRequested={templateId => {
+            toggleDialogue('insertTemplate', 'hide');
+            handleInjectTemplate(templateId);
           }}
         />
       </GenericDialogue>

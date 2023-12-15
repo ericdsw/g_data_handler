@@ -86,6 +86,15 @@ class StorylineContainer extends React.Component {
   updateStorylineFromFile = (targetFile) => {
     parseFile(targetFile, 'application/json')
       .then((json) => {
+
+        if (
+          !Object.keys(json).includes("id") ||
+          !Object.keys(json).includes("name")
+        ) {
+          this.showError("Invalid storyline file provided");
+          return
+        }
+
         const normalizedData = normalize(json, StorylineSchema);
         let appliesToEndRun = false;
         if ('applies_in_end_run' in json) {

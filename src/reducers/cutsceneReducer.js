@@ -24,7 +24,14 @@ import {
   REORDER_CUTSCENE_ROWS,
 
   REORDER_CUTSCENE_EVENT,
-  MOVE_CUTSCENE_EVENT
+  MOVE_CUTSCENE_EVENT,
+
+  CREATE_TEMPLATE,
+  ADD_EXISTING_EVENT_TO_TEMPLATE,
+  UPDATE_TEMPLATE_NAME,
+  DELETE_TEMPLATE_NAME,
+  INJECT_TEMPLATE,
+  CREATE_TEMPLATE_WITH_DATA
 } from '../actions/types';
 
 const initialState = {
@@ -40,7 +47,10 @@ const initialState = {
   fileName: '',
   hideBars: false,
 
-  preloadedCutsceneFileNames: []
+  preloadedCutsceneFileNames: [],
+
+  templateIds: [],
+  eventTemplates: {},
 };
 
 const cutsceneReducer = createReducer(initialState, (builder) => {
@@ -63,7 +73,87 @@ const cutsceneReducer = createReducer(initialState, (builder) => {
     .addCase(REORDER_CUTSCENE_ROWS, reorderCutsceneRows)
     .addCase(REORDER_CUTSCENE_EVENT, reorderCutsceneEvent)
     .addCase(MOVE_CUTSCENE_EVENT, moveCutsceneEvent)
+    .addCase(CREATE_TEMPLATE, createTemplate)
+    .addCase(ADD_EXISTING_EVENT_TO_TEMPLATE, addExistingEventToTemplate)
+    .addCase(UPDATE_TEMPLATE_NAME, updateTemplateName)
+    .addCase(DELETE_TEMPLATE_NAME, deleteTemplate)
+    .addCase(INJECT_TEMPLATE, injectTemplate)
+    .addCase(CREATE_TEMPLATE_WITH_DATA, createTemplateWithData)
 });
+
+function createTemplateWithData(state, action) {
+
+  const { templateName, eventDataList } = action.payload;
+
+  const templateId = uuidv4();
+  state.eventTemplates[templateId] = {
+    id: templateId,
+    name: templateName,
+    templateEvents: []
+  }
+  state.templateIds.push(templateId);
+
+  eventDataList.forEach(eventData => {
+    const eventId = uuidv4();
+    const cutsceneEvent = {
+      ...eventData,
+      id: eventId
+    };
+    state.eventTemplates[templateId].templateEvents.push(eventId);
+    state.cutsceneEvents[eventId] = cutsceneEvent
+  });
+
+}
+
+function injectTemplate(state, action) {
+  const { rowId, templateId } = action.payload;
+  state.eventTemplates[templateId].templateEvents.forEach(eventId => {
+    const newEventId = uuidv4();
+    const newEvent = {
+      ...state.cutsceneEvents[eventId],
+      id: newEventId
+    }
+    state.cutsceneEvents[newEventId] = newEvent;
+    state.cutsceneRows[rowId].cutsceneEvents.push(newEventId)
+  })
+}
+
+function updateTemplateName(state, action) {
+  const { templateId, newTemplateName } = action.payload;
+  state.eventTemplates[templateId].name = newTemplateName
+}
+
+function deleteTemplate(state, action) {
+  const { templateId } = action.payload;
+  state.eventTemplates[templateId].templateEvents.forEach(eventId => {
+    delete state.cutsceneEvents[eventId];
+  });
+  delete state.eventTemplates[templateId];
+  state.templateIds.splice(state.templateIds.indexOf(templateId), 1);
+}
+
+function createTemplate(state, action) {
+  const { templateName } = action.payload;
+  const templateId = uuidv4();
+  state.eventTemplates[templateId] = {
+    id: templateId,
+    name: templateName,
+    templateEvents: []
+  }
+  state.templateIds.push(templateId);
+}
+
+function addExistingEventToTemplate(state, action) {
+  const { eventData, templateId } = action.payload;
+  const newId = uuidv4();
+  const newEvent = {
+    ...eventData,
+    id: newId
+  };
+
+  state.eventTemplates[templateId].templateEvents.push(newId);
+  state.cutsceneEvents[newId] = newEvent;
+}
 
 function reorderCutsceneRows(state, action) {
 
@@ -135,6 +225,15 @@ function updateCutscene(state, action) {
 }
 
 function updateWithEmptyCutscene(state, action) {
+
+  let custsceneRelatedEvents = [];
+  Object.keys(state.cutsceneRows).forEach(rowId => {
+    custsceneRelatedEvents = [
+      ...custsceneRelatedEvents,
+      ...state.cutsceneRows[rowId].cutsceneEvents
+    ]
+  });
+
   const cutsceneId = uuidv4();
   state.currentCutsceneId = cutsceneId;
   state.cutscenes[cutsceneId] = {
@@ -142,25 +241,36 @@ function updateWithEmptyCutscene(state, action) {
     cutsceneRows: []
   }
   state.cutsceneRows = {};
-  state.cutsceneEvents = {};
   state.currentCutsceneJumps = {};
   state.fileName = 'cutscene_file_name.json';
   state.hideBars = false;
+
+  custsceneRelatedEvents.forEach(cutsceneId => {
+    delete state.cutsceneEvents[cutsceneId];
+  });
 }
 
 function deleteCutscene(state, action) {
+
+  let custsceneRelatedEvents = [];
+  Object.keys(state.cutsceneRows).forEach(rowId => {
+    custsceneRelatedEvents = [
+      ...custsceneRelatedEvents,
+      ...state.cutsceneRows[rowId].cutsceneEvents
+    ]
+  });
+
   state.currentCutsceneId = '';
   state.cutscenes = {};
   state.cutsceneRows = {};
-  state.cutsceneEvents = {};
   state.currentCutsceneJumps = {};
   state.fileName = '';
   state.hideBars = false;
-}
 
-// function addCutsceneRow(state, action) {
-//   state.currentCutscene = [...state.currentCutscene, []];
-// }
+  custsceneRelatedEvents.forEach(cutsceneId => {
+    delete state.cutsceneEvents[cutsceneId];
+  });
+}
 
 function addCutsceneRow(state, action) {
   const rowId = uuidv4();
@@ -171,11 +281,6 @@ function addCutsceneRow(state, action) {
   state.cutscenes[state.currentCutsceneId].cutsceneRows.push(rowId)
 }
 
-// function addCutsceneRowAtPosition(state, action) {
-//   const { position } = action.payload;
-//   state.currentCutscene.splice(position, 0, []);
-// }
-
 function addCutsceneRowAtPosition(state, action) {
   const { position } = action.payload;
   const rowId = uuidv4();
@@ -185,10 +290,6 @@ function addCutsceneRowAtPosition(state, action) {
   }
   state.cutscenes[state.currentCutsceneId].cutsceneRows.splice(position, 0, rowId)
 }
-
-// function deleteCutsceneRow(state, action) {
-//   state.currentCutscene.splice(action.payload, 1);
-// }
 
 function deleteCutsceneRow(state, action) {
   const { rowId } = action.payload;

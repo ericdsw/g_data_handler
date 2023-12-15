@@ -7,6 +7,7 @@ import CutsceneEvent from './CutsceneEvent';
 import {
   editCutsceneEvent,
   deleteCutsceneEvent,
+  addExistingEventToTemplate
 } from '../../../actions/cutsceneActions';
 
 const selectCutsceneEvents = state => state.cutscene.cutsceneEvents;
@@ -31,7 +32,11 @@ const CutsceneEventContainer = ({
 
   const handleDeleteEvent = useCallback(() => {
     dispatch(deleteCutsceneEvent(eventId));
-  }, [eventId, dispatch])
+  }, [eventId, dispatch]);
+
+  const handleAddToTemplate = useCallback(templateId => {
+    dispatch(addExistingEventToTemplate(templateId, cutsceneEventData));
+  }, [cutsceneEventData, dispatch]);
 
   return (
     <Draggable
@@ -48,6 +53,7 @@ const CutsceneEventContainer = ({
             cutsceneEventData={cutsceneEventData}
             handleEditEvent={handleEditEvent}
             handleDeleteEvent={handleDeleteEvent}
+            handleAddToTemplate={handleAddToTemplate}
             eventIndex={eventIndex}
           />
         </div>

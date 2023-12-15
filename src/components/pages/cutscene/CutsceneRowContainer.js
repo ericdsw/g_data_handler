@@ -8,6 +8,7 @@ import {
   addCutsceneRowAtPosition,
   deleteCutsceneRow,
   addCutsceneEvent,
+  injectTemplate,
 } from '../../../actions/cutsceneActions';
 
 const selectCutsceneRows = state => state.cutscene.cutsceneRows;
@@ -40,6 +41,10 @@ const CutsceneRowContainer = ({
     dispatch(addCutsceneEvent(rowId, eventData))
   }, [dispatch, rowId]);
 
+  const handleInjectTemplate = useCallback(templateId => {
+    dispatch(injectTemplate(rowId, templateId));
+  }, [dispatch, rowId]);
+
   return (
     <Draggable draggableId={rowId} index={rowNumber}>
       {provided => {
@@ -53,6 +58,7 @@ const CutsceneRowContainer = ({
               handleDeleteRow={handleDeleteRow}
               handleAddEvent={handleAddEvent}
               dragHandleProps={provided.dragHandleProps}
+              handleInjectTemplate={handleInjectTemplate}
             />
           </div>
         )

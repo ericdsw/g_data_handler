@@ -2,7 +2,11 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import { useSnackbar } from 'notistack';
-import { Icon, Typography } from '@mui/material';
+import { Icon, Typography, Fab } from '@mui/material';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+
+import { GenericDialogue } from '../../elements';
+import TemplateList from './elements/TemplateList';
 
 import Cutscene from './Cutscene';
 import CutsceneToolbar from './CutsceneToolbar';
@@ -27,6 +31,7 @@ import {
 } from '../../../actions/cutsceneActions';
 
 import { transformIn, transformOut } from '../../../models/transformers/CutsceneTransformer';
+import { useDialogueManager } from '../../../hooks';
 
 const selectCutsceneId = state => state.cutscene.currentCutsceneId;
 const selectCutscenes = state => state.cutscene.cutscenes;
@@ -58,6 +63,8 @@ const memoizedSelectCutsceneData = createSelector(
 )
 
 const CutsceneContainer = () => {
+
+  const [dialogues, toggleDialogue] = useDialogueManager('templates');
 
   /**
    * Snackbar related
@@ -249,8 +256,10 @@ const CutsceneContainer = () => {
     }
   }
 
+  let content;
+
   if (currentCutsceneId !== '') {
-    return (
+    content = (
       <>
         <CutsceneToolbar
           jumps={currentCutsceneJumps}
@@ -271,22 +280,46 @@ const CutsceneContainer = () => {
         />
       </>
     )
+  } else {
+    content = (
+      <DragJsonFileManager
+        buttonString="New Cutscene"
+        dragString={
+          <>
+            <Typography gutterBottom>
+              <Icon fontSize="large">subscriptions</Icon>
+            </Typography>
+            Drag a <code>.json</code> here to edit an existing cutscene.
+          </>
+        }
+        handleEmpty={updateEmpty}
+        handleUpdateFromFile={updateCutsceneFromFile}
+      />
+    );
   }
+
   return (
-    <DragJsonFileManager
-      buttonString="New Cutscene"
-      dragString={
-        <>
-          <Typography gutterBottom>
-            <Icon fontSize="large">subscriptions</Icon>
-          </Typography>
-          Drag a <code>.json</code> here to edit an existing cutscene.
-        </>
-      }
-      handleEmpty={updateEmpty}
-      handleUpdateFromFile={updateCutsceneFromFile}
-    />
-  );
+    <>
+      {content}
+      <Fab
+        variant="extended"
+        style={{ position: 'fixed', bottom: 32, right: 32 }}
+        color='primary'
+        onClick={() => toggleDialogue('templates', 'show')}
+      >
+        <LibraryBooksIcon />&nbsp;
+        Templates
+      </Fab>
+
+      <GenericDialogue
+        open={dialogues['templates']}
+        onClose={() => toggleDialogue('templates', 'hide')}
+        maxWidth='lg'
+      >
+        <TemplateList />
+      </GenericDialogue>
+    </>
+  )
 
 }
 

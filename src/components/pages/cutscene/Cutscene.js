@@ -29,7 +29,7 @@ const Cutscene = ({
 }) => {
   const classes = useStyles();
 
-  const cutsceneRows = useMemo(() => cutscene.cutsceneRows, [cutscene])
+  const cutsceneRows = useMemo(() => cutscene.cutsceneRows, [cutscene]);
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
@@ -105,7 +105,8 @@ const Cutscene = ({
           </Grid>
 
         </Grid>
-      </Grid>
+      </Grid> 
+
     </DragDropContext>
   );
 };

@@ -16,8 +16,57 @@ import {
   DELETE_PRELOADED_CUTSCENE_NAMES,
   REORDER_CUTSCENE_ROWS,
   REORDER_CUTSCENE_EVENT,
-  MOVE_CUTSCENE_EVENT
+  MOVE_CUTSCENE_EVENT,
+  CREATE_TEMPLATE,
+  ADD_EXISTING_EVENT_TO_TEMPLATE,
+  UPDATE_TEMPLATE_NAME,
+  DELETE_TEMPLATE_NAME,
+  INJECT_TEMPLATE,
+  CREATE_TEMPLATE_WITH_DATA
 } from './types';
+
+export const createTemplateWithData = (templateName, eventDataList) => dispatch => {
+  dispatch({
+    type: CREATE_TEMPLATE_WITH_DATA,
+    payload: { templateName, eventDataList }
+  });
+}
+
+export const injectTemplate = (rowId, templateId) => dispatch => {
+  dispatch({
+    type: INJECT_TEMPLATE,
+    payload: { rowId, templateId }
+  });
+}
+
+export const deleteTemplate = templateId => dispatch => {
+  dispatch({
+    type: DELETE_TEMPLATE_NAME,
+    payload: { templateId }
+  })
+}
+
+export const updateTemplateName = (templateId, newTemplateName) => dispatch => {
+  dispatch({
+    type: UPDATE_TEMPLATE_NAME,
+    payload: { templateId, newTemplateName }
+  })
+}
+
+export const createTemplate = templateName => dispatch => {
+  dispatch({
+    type: CREATE_TEMPLATE,
+    payload: { templateName }
+  })
+}
+
+export const addExistingEventToTemplate = (templateId, eventData) => dispatch => {
+  console.log(templateId);
+  dispatch({
+    type: ADD_EXISTING_EVENT_TO_TEMPLATE,
+    payload: { templateId, eventData }
+  })
+}
 
 export const moveCutsceneEvent = (sourcePosition, destinationPosition, sourceRowId, destinationRowId, eventId) => dispatch => {
   dispatch({

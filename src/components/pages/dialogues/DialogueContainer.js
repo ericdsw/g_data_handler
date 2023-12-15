@@ -76,7 +76,7 @@ class DialogueContainer extends React.Component {
         // Update the dialogue
         updateDialogue(targetFile.name, result, entities);
       })
-      .catch((error) => this.showError(error.message));
+      .catch((error) => this.showError('Error parsing file'));
   };
 
   /**

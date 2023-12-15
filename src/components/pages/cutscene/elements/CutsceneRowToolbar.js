@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography, IconButton, Tooltip } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 
 import VerticalAlignBottomIcon from '@mui/icons-material/VerticalAlignBottom';
 import VerticalAlignTopIcon from '@mui/icons-material/VerticalAlignTop';
@@ -11,6 +12,7 @@ const CutsceneRowToolbar = ({
   addBelowClick,
   addEventClick,
   deleteRowClick,
+  insertTemplateClick
 }) => {
   return (
     <Typography variant="h6" align="right">
@@ -32,6 +34,7 @@ const CutsceneRowToolbar = ({
           <VerticalAlignBottomIcon />
         </IconButton>
       </Tooltip>
+
       <Tooltip title="Add Cutscene Event" enterDelay={200}>
         <IconButton
           onClick={addEventClick}
@@ -41,6 +44,17 @@ const CutsceneRowToolbar = ({
           <AddIcon />
         </IconButton>
       </Tooltip>
+
+      <Tooltip title="Add Template" enterDelay={200}>
+        <IconButton
+          onClick={insertTemplateClick}
+          aria-label="add"
+          size="large"
+        >
+          <LibraryAddIcon />
+        </IconButton>
+      </Tooltip>
+
       <Tooltip title="Delete Row" enterDelay={200}>
         <IconButton
           onClick={deleteRowClick}
