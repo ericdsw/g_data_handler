@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useSnackbar } from 'notistack';
+import { useDispatch } from 'react-redux';
 
 import {
   TextField,
@@ -26,9 +27,12 @@ import {
   DialogueUITypeDropDown,
   InputDecorationToggle,
 } from '../elements';
+import TargetObjectField from '../../../elements/TargetObjectField';
 
 import CreateChoiceForm from './CreateChoiceForm';
 import DialogueImageSearcher from './DialogueImageSearcher';
+
+import { addSavedTargetObject } from '../../../../actions/dialogueActions';
 
 const EMPTY_MESSAGE_DATA = {
   speaker: '',
@@ -65,6 +69,9 @@ const CreateDialogueMessageForm = ({
   messageData = EMPTY_MESSAGE_DATA,
   onMinimizeRequested,
 }) => {
+
+  const dispatch = useDispatch();
+
   const { enqueueSnackbar } = useSnackbar();
 
   const [speakerNameSearchOpen, toggleSpeakerNameSearchOpen] = useState(false);
@@ -118,6 +125,9 @@ const CreateDialogueMessageForm = ({
       });
 
       creationHandler(returningMessageData, createAndContinue);
+      if (curMessageData.target_object) {
+        dispatch(addSavedTargetObject(curMessageData.target_object));
+      }
 
       if (freshStart) {
         updateCurMessageData(EMPTY_MESSAGE_DATA);
@@ -134,6 +144,7 @@ const CreateDialogueMessageForm = ({
       creationHandler,
       createAndContinue,
       freshStart,
+      dispatch
     ]
   );
 
@@ -319,18 +330,14 @@ const CreateDialogueMessageForm = ({
             </Grid>
           </Grid>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
+            <Grid item xs={8}>
+              <TargetObjectField
                 label="Target Object"
-                onChange={(e) => handleInputChange('target_object', e)}
                 value={curMessageData.target_object}
-                variant="outlined"
-                margin="normal"
-                placeholder="Object that the dialogue will attach to (node name only)"
+                onChange={e => handleInputChange('target_object', e)}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <DialogueUITypeDropDown
                 value={curMessageData.ui_variant}
                 onChange={(e) => handleInputChange('ui_variant', e)}

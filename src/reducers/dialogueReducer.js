@@ -26,6 +26,9 @@ import {
   ADD_PRE_UPLOADED_FILE,
   UPDATE_PRE_UPLOADED_FILE_NAME,
   CLEAR_PRE_UPLOADED_FILES,
+  ADD_SAVED_TARGET_OBJECT,
+  REMOVE_SAVED_TARGET_OBJECT,
+  REMOVE_ALL_SAVED_TARGET_OBJECTS
 } from '../actions/types';
 
 const initialState = {
@@ -36,6 +39,7 @@ const initialState = {
   conversations: {},
   messages: {},
   preUploadedFiles: {},
+  savedTargetObjects: []
 };
 
 const dialogueReducer = createReducer(initialState, (builder) => {
@@ -67,8 +71,28 @@ const dialogueReducer = createReducer(initialState, (builder) => {
 
     .addCase(ADD_PRE_UPLOADED_FILE, addPreUploadedFile)
     .addCase(UPDATE_PRE_UPLOADED_FILE_NAME, updatePreUploadedFile)
-    .addCase(CLEAR_PRE_UPLOADED_FILES, clearPreUploadedFiles);
+    .addCase(CLEAR_PRE_UPLOADED_FILES, clearPreUploadedFiles)
+
+    .addCase(ADD_SAVED_TARGET_OBJECT, addSavedTargetObject)
+    .addCase(REMOVE_SAVED_TARGET_OBJECT, removeSavedTargetObject)
+    .addCase(REMOVE_ALL_SAVED_TARGET_OBJECTS, removeAllSavedTargetObjects)
 });
+
+function addSavedTargetObject(state, action) {
+  const { targetObject } = action.payload;
+  if (!state.savedTargetObjects.includes(targetObject)) {
+    state.savedTargetObjects.push(targetObject);
+  }
+}
+
+function removeSavedTargetObject(state, action) {
+  const { targetObject } = action.payload;
+  state.savedTargetObjects.splice(state.savedTargetObjects.indexOf(targetObject), 1);
+}
+
+function removeAllSavedTargetObjects(state, action) {
+  state.savedTargetObjects = [];
+}
 
 function clearPreUploadedFiles(state, action) {
   state.preUploadedFiles = {};

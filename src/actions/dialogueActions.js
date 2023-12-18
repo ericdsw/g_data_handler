@@ -22,7 +22,31 @@ import {
   ADD_PRE_UPLOADED_FILE,
   UPDATE_PRE_UPLOADED_FILE_NAME,
   CLEAR_PRE_UPLOADED_FILES,
+  ADD_SAVED_TARGET_OBJECT,
+  REMOVE_SAVED_TARGET_OBJECT,
+  REMOVE_ALL_SAVED_TARGET_OBJECTS
 } from './types';
+
+export const addSavedTargetObject = targetObject => dispatch => {
+  dispatch({
+    type: ADD_SAVED_TARGET_OBJECT,
+    payload: { targetObject }
+  });
+}
+
+export const removeSavedTargetObject = targetObject => dispatch => {
+  dispatch({
+    type: REMOVE_SAVED_TARGET_OBJECT,
+    payload: { targetObject }
+  });
+}
+
+export const removeAllSavedTargetObjects = () => dispatch => {
+  dispatch({
+    type: REMOVE_ALL_SAVED_TARGET_OBJECTS,
+    payload: {}
+  })
+}
 
 export const clearPreUploadedFiles = () => (dispatch) => {
   dispatch({
