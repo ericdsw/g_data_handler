@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -8,10 +8,9 @@ import {
   IconButton,
   TextField,
   Grid,
-  Tooltip,
   InputAdornment,
 } from '@mui/material';
-import { Delete, Edit, Check, Close, Warning } from '@material-ui/icons';
+import { Delete, Edit, Check, Close } from '@material-ui/icons';
 
 import { useDialogueManager } from '../../hooks';
 import ConfirmationDialogue from './ConfirmationDialogue';
@@ -19,7 +18,6 @@ import {
   deletePreUploadedFileName,
   updatePreUploadedFile
 } from '../../actions/dialogueActions';
-import { yellow } from '@mui/material/colors';
 
 const PreloadedDialoguesContentRow = ({
   id,
@@ -51,22 +49,11 @@ const PreloadedDialoguesContentRow = ({
     dispatch(updatePreUploadedFile(id, editValue));
   }
 
-  const showWarning = useMemo(() => {
-    return !fileName.startsWith("Dialogues/");
-  }, [fileName]);
-
   return (
     <TableRow>
       <TableCell>
         {!inEditMode && (
           <Grid container>
-            {showWarning && (
-              <Tooltip 
-                title="Warning, make sure the file name includes the full path from the Dialogues folder (that info can't be extracted from imported single files)"
-              >
-                <Warning style={{ color: yellow[500], fontSize: 20 }}/>&nbsp;&nbsp;
-              </Tooltip>
-            )}
             <Typography variant="body1">
               {fileName}
             </Typography>
