@@ -24,8 +24,16 @@ import {
   CLEAR_PRE_UPLOADED_FILES,
   ADD_SAVED_TARGET_OBJECT,
   REMOVE_SAVED_TARGET_OBJECT,
-  REMOVE_ALL_SAVED_TARGET_OBJECTS
+  REMOVE_ALL_SAVED_TARGET_OBJECTS,
+  DELETE_PRE_UPLOADED_FILE_NAME
 } from './types';
+
+export const deletePreUploadedFileName = fileId => dispatch => {
+  dispatch({
+    type: DELETE_PRE_UPLOADED_FILE_NAME,
+    payload: { fileId }
+  })
+}
 
 export const addSavedTargetObject = targetObject => dispatch => {
   dispatch({

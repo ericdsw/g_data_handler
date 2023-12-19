@@ -28,7 +28,8 @@ import {
   CLEAR_PRE_UPLOADED_FILES,
   ADD_SAVED_TARGET_OBJECT,
   REMOVE_SAVED_TARGET_OBJECT,
-  REMOVE_ALL_SAVED_TARGET_OBJECTS
+  REMOVE_ALL_SAVED_TARGET_OBJECTS,
+  DELETE_PRE_UPLOADED_FILE_NAME,
 } from '../actions/types';
 
 const initialState = {
@@ -76,7 +77,13 @@ const dialogueReducer = createReducer(initialState, (builder) => {
     .addCase(ADD_SAVED_TARGET_OBJECT, addSavedTargetObject)
     .addCase(REMOVE_SAVED_TARGET_OBJECT, removeSavedTargetObject)
     .addCase(REMOVE_ALL_SAVED_TARGET_OBJECTS, removeAllSavedTargetObjects)
+    .addCase(DELETE_PRE_UPLOADED_FILE_NAME, deletePreUploadedFileName)
 });
+
+function deletePreUploadedFileName(state, action) {
+  const { fileId } = action.payload;
+  delete state.preUploadedFiles[fileId];
+}
 
 function addSavedTargetObject(state, action) {
   const { targetObject } = action.payload;

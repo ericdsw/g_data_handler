@@ -21,6 +21,7 @@ import {
   addPreUploadedFile,
   clearPreUploadedFiles,
 } from '../../actions/dialogueActions';
+import PreloadedDialoguesContentRow from './PreloadedDialoguesContentRow';
 
 const selectLoadedFileData = (state) => state.dialogue.preUploadedFiles;
 const selectData = createSelector(
@@ -72,6 +73,20 @@ const PreloadedDialoguesContent = () => {
     toggleLoading(false);
   };
 
+  const handleSingleFileUpload = async (e) => {
+    toggleLoading(true);
+    try {
+      const file = e.target.files[0]
+      const result = await parseFile(file, 'application/json');
+      dispatch(
+        addPreUploadedFile(file.name, Object.keys(result), uuidv4())
+      );
+    } catch (e) {
+      console.log(`Error uploading file: ${e}`);
+    }
+    toggleLoading(false);
+  }
+
   return (
     <>
       <div style={{ padding: 8 }}>
@@ -86,13 +101,21 @@ const PreloadedDialoguesContent = () => {
                 onChange={handleFolderUpload}
               />
             </Button>
+            &nbsp;&nbsp;&nbsp;
+            <Button variant="contained" component="label">
+              Import single file
+              <VisuallyHiddenInput
+                type="file"
+                onChange={handleSingleFileUpload}
+              />
+            </Button>
           </Grid>
           {dialoguesAmount > 0 && !loading && (
             <Grid item>
               <Typography variant="body2">
                 <b>
-                  Loaded {dialoguesAmount} dialogues, {conversationsAmount}{' '}
-                  conversations
+                  Loaded {dialoguesAmount} {dialoguesAmount === 1 ? 'dialogue' : 'dialogues'}, {conversationsAmount}{' '}
+                  {conversationsAmount === 1 ? 'conversation' : 'conversations'}
                 </b>
               </Typography>
             </Grid>
@@ -118,19 +141,23 @@ const PreloadedDialoguesContent = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>File Name</TableCell>
-              <TableCell>Number of conversations</TableCell>
+              <TableCell>
+                <Typography variant="h6">File Name</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="h6">Number of conversations</Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {Object.keys(preUploadedFiles).map((fileId) => (
-              <TableRow key={fileId}>
-                <TableCell>{preUploadedFiles[fileId].fileName}</TableCell>
-                <TableCell>
-                  {preUploadedFiles[fileId].conversationKeys.length}
-                </TableCell>
-              </TableRow>
+              <PreloadedDialoguesContentRow
+                key={fileId}
+                id={fileId}
+                fileName={preUploadedFiles[fileId].fileName}
+                conversationAmount={preUploadedFiles[fileId].conversationKeys.length}
+              />
             ))}
           </TableBody>
         </Table>
