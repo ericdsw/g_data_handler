@@ -17,6 +17,7 @@ import {
 } from '../../../elements';
 import { useDialogueManager } from '../../../../hooks';
 import { parseFile } from '../../../../functions';
+import { QuestionAnswer } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -123,7 +124,7 @@ const NoDialogue = ({
         dragString={
           <React.Fragment>
             <Typography gutterBottom>
-              <Icon fontSize="large">question_answer</Icon>
+              <QuestionAnswer fontSize="large" />
             </Typography>
             Drag a <code>.json</code> here to edit an existing dialogue.
           </React.Fragment>

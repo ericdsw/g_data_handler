@@ -1,5 +1,7 @@
 import React from 'react';
-import { MenuItem, ListItemIcon, Icon, ListItemText } from '@mui/material';
+import { MenuItem, ListItemIcon, ListItemText } from '@mui/material';
+import { AddComment, EmojiEmotions, Forum, LocalGroceryStore } from '@material-ui/icons';
+import { Grading, Paid } from '@mui/icons-material';
 
 const AddBelowMenuOptions = ({
   addMessageBelowSelected,
@@ -12,37 +14,37 @@ const AddBelowMenuOptions = ({
   <>
     <MenuItem onClick={addMessageBelowSelected}>
       <ListItemIcon>
-        <Icon>add_comment</Icon>
+        <AddComment />
       </ListItemIcon>
       <ListItemText primary="Add message below" />
     </MenuItem>
     <MenuItem onClick={addEmoteBelowSelected}>
       <ListItemIcon>
-        <Icon>emoji_emotions</Icon>
+        <EmojiEmotions />
       </ListItemIcon>
       <ListItemText primary="Add emote below" />
     </MenuItem>
     <MenuItem onClick={addSwarmBelowSelected}>
       <ListItemIcon>
-        <Icon>forum</Icon>
+        <Forum />
       </ListItemIcon>
       <ListItemText primary="Add swarm below" />
     </MenuItem>
     <MenuItem onClick={giveMoneyBelowSelected}>
       <ListItemIcon>
-        <Icon>paid</Icon>
+        <Paid />
       </ListItemIcon>
       <ListItemText primary="Give money below" />
     </MenuItem>
     <MenuItem onClick={giveItemBelowSelected}>
       <ListItemIcon>
-        <Icon>local_grocery_store</Icon>
+        <LocalGroceryStore />
       </ListItemIcon>
       <ListItemText primary="Give item below" />
     </MenuItem>
     <MenuItem onClick={selectItemBelowSelected}>
       <ListItemIcon>
-        <Icon>grading</Icon>
+        <Grading />
       </ListItemIcon>
       <ListItemText primary="Select item below" />
     </MenuItem>

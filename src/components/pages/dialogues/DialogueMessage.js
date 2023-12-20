@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   Typography,
-  Icon,
   Grid,
   Button,
   ButtonGroup,
@@ -22,6 +21,7 @@ import {
 import { speakerSchema } from '../../../globals';
 
 import { styles } from './styles/DialogueMessageStyle';
+import { DirectionsWalk } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
@@ -220,7 +220,7 @@ const DialogueMessage = ({
                 className={classes.targetObject}
                 align="right"
               >
-                <Icon>directions_walk</Icon>
+                <DirectionsWalk />
                 {message.target_object}
               </Typography>
             )}

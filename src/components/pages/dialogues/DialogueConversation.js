@@ -8,7 +8,6 @@ import {
   Grid,
   Button,
   IconButton,
-  Icon,
   Tooltip,
   Checkbox,
 } from '@mui/material';
@@ -29,6 +28,7 @@ import {
 import { DialogueMessageDialogue } from './formDialogues';
 
 import { styles } from './styles/DialogueConversationStyle';
+import { Delete, DragHandle, Edit } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
@@ -89,7 +89,7 @@ const DialogueConversation = ({
                   className={classes.dragHandleElement}
                   {...props.dragHandleProps}
                 >
-                  <Icon>drag_handle</Icon>
+                  <DragHandle />
                 </div>
               </Grid>
               <Grid item xs>
@@ -117,12 +117,12 @@ const DialogueConversation = ({
               </Tooltip>
               <Tooltip title="Edit Conversation Name" enterDelay={200}>
                 <IconButton onClick={(e) => onEditClick(e)} size="large">
-                  <Icon>edit</Icon>
+                  <Edit />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Delete Conversation" enterDelay={200}>
                 <IconButton onClick={(e) => onDeleteClick(e)} size="large">
-                  <Icon>delete</Icon>
+                  <Delete />
                 </IconButton>
               </Tooltip>
             </Grid>

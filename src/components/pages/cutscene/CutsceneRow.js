@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { Paper, Grid, Typography, Icon } from '@mui/material';
+import { Paper, Grid, Typography } from '@mui/material';
 import { Droppable } from 'react-beautiful-dnd';
 
 import { CutsceneRowToolbar } from './elements';
@@ -12,6 +12,7 @@ import { useDialogueManager } from '../../../hooks';
 import { styles } from './styles/CutsceneRowStyle';
 
 import TemplateList from './elements/TemplateList';
+import { DragHandle } from '@mui/icons-material';
 
 const useStyles = makeStyles(styles);
 
@@ -45,7 +46,7 @@ const CutsceneRow = ({
                 className={classes.dragHandleElement}
                 {...props.dragHandleProps}
               >
-                <Icon>drag_handle</Icon>
+                <DragHandle />
               </div>
             </Grid>
             <Grid item xs>

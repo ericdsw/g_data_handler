@@ -17,6 +17,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddNewMultiInputRow from '../components/elements/AddNewMultiInputRow';
 import CompositeDialogueFileInput from '../components/elements/CompositeDialogueFileInput';
 import CutsceneFileSearcher from '../components/elements/CutsceneFileSearcher';
+import { RestartAlt } from '@mui/icons-material';
 
 const nodeTargetDescription = (
   <ul>
@@ -249,7 +250,7 @@ export default function createInput(
               }}
               size="large"
             >
-              <Icon>restart_alt</Icon>
+              <RestartAlt />
             </IconButton>
           )}
         </Grid>

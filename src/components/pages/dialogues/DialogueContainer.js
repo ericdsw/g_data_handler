@@ -27,6 +27,7 @@ import Dialogue from './Dialogue';
 import DialogueToolbar from './elements/DialogueToolbar';
 
 class DialogueContainer extends React.Component {
+
   constructor() {
     super();
     window.exportDialogue = this.export;
@@ -76,7 +77,7 @@ class DialogueContainer extends React.Component {
         // Update the dialogue
         updateDialogue(targetFile.name, result, entities);
       })
-      .catch((error) => this.showError('Error parsing file'));
+      .catch((_) => this.showError('Error parsing file'));
   };
 
   /**

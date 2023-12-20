@@ -31,6 +31,8 @@ import { createEventDescription } from '../../../functions';
 
 import { styles } from './styles/CutsceneEventStyle';
 import AddEventToTemplateForm from './forms/AddEventToTemplateForm';
+import { Warning } from '@mui/icons-material';
+import { yellow } from '@mui/material/colors';
 
 function parseParameter(parameter) {
   switch (typeof parameter) {
@@ -154,6 +156,13 @@ const CutsceneEvent = ({
               minHeight: compact ? 70 : 100,
               alignItems: 'flex-start',
             }}
+            action={
+              <Tooltip title="Warning, a required prop is missing">
+                <Warning
+                  style={{ margin: 8, color: yellow[500] }}
+                />
+              </Tooltip>
+            }
           />
           <CardActions className={classes.actions} disableSpacing>
             {/* Edit button */}

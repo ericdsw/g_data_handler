@@ -11,7 +11,6 @@ import {
   Switch,
   Divider,
   IconButton,
-  Icon,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -33,6 +32,7 @@ import CreateChoiceForm from './CreateChoiceForm';
 import DialogueImageSearcher from './DialogueImageSearcher';
 
 import { addSavedTargetObject } from '../../../../actions/dialogueActions';
+import { Help, Search } from '@material-ui/icons';
 
 const EMPTY_MESSAGE_DATA = {
   speaker: '',
@@ -274,7 +274,7 @@ const CreateDialogueMessageForm = ({
                   onClick={() => toggleSpeakerNameSearchOpen(true)}
                   size="large"
                 >
-                  <Icon>search</Icon>
+                  <Search />
                 </IconButton>
               ),
             }}
@@ -387,7 +387,7 @@ const CreateDialogueMessageForm = ({
               }
               size="large"
             >
-              <Icon>help</Icon>
+              <Help />
             </IconButton>
           </Grid>
         </Grid>

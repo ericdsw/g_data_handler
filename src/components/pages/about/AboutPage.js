@@ -14,7 +14,7 @@ const AboutPage = () => {
   return (
     <React.Fragment>
       <Typography variant="body1">
-        Copyright 2019-2021,{' '}
+        Copyright 2019-2024,{' '}
         <a href="https://github.com/ericdsw" className={classes.link}>
           Eric De Sedas
         </a>
@@ -26,14 +26,14 @@ const AboutPage = () => {
         <a className={classes.link} href="https://github.com/rnoriega31">
           rnoriega31
         </a>
-        , we area creating a still-unnamed boss rush adventure game. Since our
+        , we area creating Bittersweet Birthday. Since our
         game revolves heavily on external formatted data, I created this tool to
         help ease a little bit some of the work that it takes to create and
         modify this information.
       </Typography>
       <br />
       <Typography variant="body2">
-        Created using React and MaterialUI v4.0. References to additional
+        Created using React and MaterialUI v6.0. References to additional
         libraries used can be found in the project's repository.
       </Typography>
       <br />

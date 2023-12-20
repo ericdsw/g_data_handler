@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Button, Icon } from '@mui/material';
+import { Button } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@material-ui/icons';
 
 const SimpleCollapse = ({ collapsedMessage, openedMessage, children }) => {
   const [collapsed, toggleCollapsed] = useState(true);
@@ -7,7 +8,7 @@ const SimpleCollapse = ({ collapsedMessage, openedMessage, children }) => {
     return (
       <>
         {collapsed ? collapsedMessage : openedMessage}
-        <Icon>{collapsed ? 'expand_more' : 'expand_less'}</Icon>
+        {collapsed ? <ExpandMore /> : <ExpandLess />}
       </>
     );
   }, [collapsedMessage, openedMessage, collapsed]);

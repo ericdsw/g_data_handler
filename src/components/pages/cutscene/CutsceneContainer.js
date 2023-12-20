@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import { useSnackbar } from 'notistack';
-import { Icon, Typography, Fab } from '@mui/material';
+import { Typography, Fab } from '@mui/material';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 
 import { GenericDialogue } from '../../elements';
@@ -35,6 +35,7 @@ import {
   transformOut,
 } from '../../../models/transformers/CutsceneTransformer';
 import { useDialogueManager } from '../../../hooks';
+import { Subscriptions } from '@material-ui/icons';
 
 const selectCutsceneId = (state) => state.cutscene.currentCutsceneId;
 const selectCutscenes = (state) => state.cutscene.cutscenes;
@@ -295,7 +296,7 @@ const CutsceneContainer = () => {
         dragString={
           <>
             <Typography gutterBottom>
-              <Icon fontSize="large">subscriptions</Icon>
+              <Subscriptions fontSize="large" />
             </Typography>
             Drag a <code>.json</code> here to edit an existing cutscene.
           </>

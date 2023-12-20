@@ -6,12 +6,12 @@ import {
   Typography,
   IconButton,
   Grid,
-  Icon,
   Badge,
   Tooltip,
 } from '@mui/material';
 import { createSelector } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
+import { Help } from '@material-ui/icons';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
@@ -143,7 +143,7 @@ const ApplicationBar = ({ isDarkMode, handleToggle, handleDarkModeToggle }) => {
                   onClick={() => toggleDialogue('helpDialogue', 'show')}
                   size="large"
                 >
-                  <Icon>help_outline</Icon>
+                  <Help />
                 </IconButton>
               </Tooltip>
             </Grid>

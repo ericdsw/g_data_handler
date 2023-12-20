@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import {
   IconButton,
-  Icon,
   Menu,
   MenuItem,
   Divider,
@@ -24,6 +23,8 @@ import {
 import { DialogueMessageDialogue } from '../../formDialogues';
 
 import { AddBelowMenuOptions } from './components';
+import { Delete, MoreVert, VerticalAlignBottom } from '@material-ui/icons';
+import { Edit } from '@mui/icons-material';
 
 const DialogueMessageToolbar = ({
   message,
@@ -263,7 +264,7 @@ const DialogueMessageToolbar = ({
         onClick={(e) => handleMenuOpen(e)}
         size="large"
       >
-        <Icon>more_vert</Icon>
+        <MoreVert />
       </IconButton>
 
       {/* Menu Elements */}
@@ -280,21 +281,21 @@ const DialogueMessageToolbar = ({
             onClick={(e) => handleMenuSelect(e, 'edit')}
           >
             <ListItemIcon>
-              <Icon>edit</Icon>
+              <Edit />
             </ListItemIcon>
             <ListItemText primary="Edit" />
           </MenuItem>
         )}
         <MenuItem onClick={(e) => handleMenuSelect(e, 'delete')}>
           <ListItemIcon>
-            <Icon>delete</Icon>
+            <Delete />
           </ListItemIcon>
           <ListItemText primary="Delete" />
         </MenuItem>
         <Divider />
         <MenuItem onClick={(e) => handleMenuSelect(e, 'splitBelow')}>
           <ListItemIcon>
-            <Icon>vertical_align_bottom</Icon>
+            <VerticalAlignBottom />
           </ListItemIcon>
           <ListItemText primary="Split From This" />
         </MenuItem>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
-import { Typography, Icon } from '@mui/material';
+import { Typography } from '@mui/material';
 import { normalize, denormalize } from 'normalizr';
 
 import Storyline from './Storyline';
@@ -18,6 +18,7 @@ import {
   updateAppliedRunsString,
   reorderStep,
 } from '../../../actions/storylineActions';
+import BubbleChart from '@mui/icons-material/BubbleChart';
 
 class StorylineContainer extends React.Component {
   constructor() {
@@ -171,7 +172,7 @@ class StorylineContainer extends React.Component {
           dragString={
             <React.Fragment>
               <Typography gutterBottom>
-                <Icon fontSize="large">bubble_chart</Icon>
+                <BubbleChart fontSize="large" />
               </Typography>
               Drag a <code>.json</code> here to edit an existing storyline
             </React.Fragment>
