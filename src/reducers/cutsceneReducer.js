@@ -348,6 +348,7 @@ function deleteCutsceneEvent(state, action) {
   const { eventId } = action.payload;
   delete state.cutsceneEvents[eventId];
   deleteReference(state.cutsceneRows, 'cutsceneEvents', eventId);
+  deleteReference(state.eventTemplates, 'templateEvents', eventId);
 }
 
 function editCutsceneEvent(state, action) {

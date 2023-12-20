@@ -19,7 +19,12 @@ const memoizedSelectCutsceneEventData = createSelector(
   })
 );
 
-const CutsceneEventContainer = ({ eventId, eventIndex, compact = false }) => {
+const CutsceneEventContainer = ({
+  eventId,
+  eventIndex,
+  compact = false,
+  skipRequiredCheck = false
+}) => {
   const dispatch = useDispatch();
   const { cutsceneEvents } = useSelector((state) =>
     memoizedSelectCutsceneEventData(state)
@@ -57,6 +62,7 @@ const CutsceneEventContainer = ({ eventId, eventIndex, compact = false }) => {
           ref={provided.innerRef}
         >
           <CutsceneEvent
+            skipRequiredCheck={skipRequiredCheck}
             cutsceneEventData={cutsceneEventData}
             handleEditEvent={handleEditEvent}
             handleDeleteEvent={handleDeleteEvent}

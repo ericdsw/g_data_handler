@@ -125,6 +125,7 @@ const TemplateCard = ({
                         <Grid container>
                           {templateData.templateEvents.map((eventId, index) => (
                             <CutsceneEventContainer
+                              skipRequiredCheck
                               key={eventId}
                               eventId={eventId}
                               eventIndex={index}
@@ -165,6 +166,7 @@ const TemplateCard = ({
         onClose={() => toggleDialogue('addEvent', 'hide')}
       >
         <CreateEventForm
+          skipRequiredCheck
           creationHandler={(eventData) => {
             toggleDialogue('addEvent', 'hide');
             dispatch(addExistingEventToTemplate(templateData.id, eventData));

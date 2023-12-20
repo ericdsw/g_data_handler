@@ -122,7 +122,7 @@ class CreateEventForm extends React.Component {
         continue;
       }
       const paramValue = eventData[paramName];
-      if (!checkForRequired(eventType, paramName, paramValue)) {
+      if (!checkForRequired(eventType, paramName, paramValue) && !this.props.skipRequiredCheck) {
         errorInputs.push(this.formFields[paramName].label);
       }
     }

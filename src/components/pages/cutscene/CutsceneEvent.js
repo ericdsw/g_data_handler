@@ -27,7 +27,7 @@ import { useDialogueManager } from '../../../hooks';
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
 import { CreateEventForm } from './forms';
 import { eventSchema } from '../../../globals';
-import { createEventDescription } from '../../../functions';
+import { checkForRequired, createEventDescription } from '../../../functions';
 
 import { styles } from './styles/CutsceneEventStyle';
 import AddEventToTemplateForm from './forms/AddEventToTemplateForm';
@@ -53,6 +53,7 @@ const CutsceneEvent = ({
   handleDeleteEvent,
   handleAddToTemplate,
   compact = false,
+  skipRequiredCheck = false,
   eventIndex,
 }) => {
   const classes = useStyles({ compact });
@@ -83,6 +84,23 @@ const CutsceneEvent = ({
       ),
     [cutsceneEventData]
   );
+
+  const missingParams = useMemo(() => {
+    const missingParamResults = [];
+    const eventType = cutsceneEventData.type;
+    const schemaParams = eventSchema[eventType].parameters
+    Object.keys(schemaParams).forEach(paramDataName => {
+      const provided = checkForRequired(
+        cutsceneEventData.type,
+        paramDataName,
+        cutsceneEventData.parameters[paramDataName]
+      );
+      if (!provided) {
+        missingParamResults.push(paramDataName);
+      }
+    });
+    return missingParamResults;
+  }, [cutsceneEventData]);
 
   const listParams = useMemo(() => {
     const paramNames = Object.keys(cutsceneEventData.parameters);
@@ -156,13 +174,17 @@ const CutsceneEvent = ({
               minHeight: compact ? 70 : 100,
               alignItems: 'flex-start',
             }}
-            // action={
-            //   <Tooltip title="Warning, a required prop is missing">
-            //     <Warning
-            //       style={{ margin: 8, color: yellow[500] }}
-            //     />
-            //   </Tooltip>
-            // }
+            action={
+              <>
+                {missingParams.length > 0 && (
+                  <Tooltip title={`One or more required props are missing: ${missingParams.join(", ")}`}>
+                    <Warning
+                      style={{ margin: 8, color: yellow[500] }}
+                    />
+                  </Tooltip>
+                )}
+              </>
+            }
           />
           <CardActions className={classes.actions} disableSpacing>
             {/* Edit button */}
@@ -170,7 +192,7 @@ const CutsceneEvent = ({
               <IconButton
                 aria-label="Edit"
                 onClick={() => toggleDialogue('editEvent', 'show')}
-                size={compact ? 'small' : 'large'}
+                size={compact ? 'small' : 'medium'}
               >
                 <EditIcon fontSize={compact ? 'small' : 'inherit'} />
               </IconButton>
@@ -181,7 +203,7 @@ const CutsceneEvent = ({
               <IconButton
                 aria-label="Delete"
                 onClick={() => toggleDialogue('confirmDelete', 'show')}
-                size={compact ? 'small' : 'large'}
+                size={compact ? 'small' : 'medium'}
               >
                 <DeleteIcon fontSize={compact ? 'small' : 'inherit'} />
               </IconButton>
@@ -190,7 +212,7 @@ const CutsceneEvent = ({
             {/* Add To template button */}
             <Tooltip title="Add Event to Template">
               <IconButton
-                size={compact ? 'small' : 'large'}
+                size={compact ? 'small' : 'medium'}
                 onClick={() => toggleDialogue('addToTemplate', 'show')}
               >
                 <CollectionsBookmarkIcon
@@ -207,7 +229,7 @@ const CutsceneEvent = ({
               onClick={() => toggleExpand(!expanded)}
               aria-expanded={expanded}
               aria-label="More Info"
-              size={compact ? 'small' : 'large'}
+              size={compact ? 'small' : 'medium'}
             >
               <ExpandMoreIcon fontSize={compact ? 'small' : 'inherit'} />
             </IconButton>
@@ -231,6 +253,7 @@ const CutsceneEvent = ({
         onClose={() => toggleDialogue('editEvent', 'hide')}
       >
         <CreateEventForm
+          skipRequiredCheck={skipRequiredCheck}
           existingData={cutsceneEventData}
           creationHandler={(cutsceneData) => {
             handleEditEvent(cutsceneData);
