@@ -156,13 +156,13 @@ const CutsceneEvent = ({
               minHeight: compact ? 70 : 100,
               alignItems: 'flex-start',
             }}
-            action={
-              <Tooltip title="Warning, a required prop is missing">
-                <Warning
-                  style={{ margin: 8, color: yellow[500] }}
-                />
-              </Tooltip>
-            }
+            // action={
+            //   <Tooltip title="Warning, a required prop is missing">
+            //     <Warning
+            //       style={{ margin: 8, color: yellow[500] }}
+            //     />
+            //   </Tooltip>
+            // }
           />
           <CardActions className={classes.actions} disableSpacing>
             {/* Edit button */}
