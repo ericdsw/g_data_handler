@@ -15,7 +15,7 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import VisuallyHiddenInput from './VisuallyHiddenInput';
 
-import { addPreLoadedCutscenes } from '../../actions/cutsceneActions';
+import { addPreLoadedCutscenes, addSinglePreLoadedCutsceneName } from '../../actions/cutsceneActions';
 import PreLoadedCutscenesContentRow from './PreLoadedCutscenesContentRow';
 
 const selectLoadedCutsceneFileData = (state) =>
@@ -44,8 +44,10 @@ const PreLoadedCutscenesContent = () => {
   };
 
   const handleSingleFileUpload = e => {
-    const fileName = e.target.files[0].name;
-
+    e.target.files.forEach(file => {
+      const fileName = file.name;
+      dispatch(addSinglePreLoadedCutsceneName(fileName));
+    });
   }
 
   return (
@@ -68,9 +70,8 @@ const PreLoadedCutscenesContent = () => {
               Import single cutscene file
               <VisuallyHiddenInput
                 type="file"
-                directory="true"
-                webkitdirectory="true"
-                onChange={handleFileUpload}
+                multiple
+                onChange={handleSingleFileUpload}
               />
             </Button>
           </Grid>
@@ -100,7 +101,13 @@ const PreLoadedCutscenesContent = () => {
             </TableHead>
             <TableBody>
               {loadedCutsceneFileData.map((fileName) => (
-                <PreLoadedCutscenesContentRow fileName={fileName}/>
+                <TableRow key={fileName}>
+                  <TableCell>
+                    <PreLoadedCutscenesContentRow
+                      fileName={fileName}
+                    />
+                  </TableCell>
+                </TableRow>
               ))}
             </TableBody>
           </Table>
