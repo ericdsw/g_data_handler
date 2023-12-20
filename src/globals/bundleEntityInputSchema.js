@@ -13,7 +13,7 @@ const bundleEntityInputSchema = {
     },
     change_cutscene: {
       label: 'Change Cutscene',
-      type: 'text',
+      type: 'dialogueFile',
       placeholder: 'json file, starting from the cutscenes res folder',
     },
     affected_map: {
