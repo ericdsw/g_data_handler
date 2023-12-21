@@ -16,6 +16,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import VisuallyHiddenInput from './VisuallyHiddenInput';
 
 import { addPreLoadedCutscenes } from '../../actions/cutsceneActions';
+import PreLoadedCutscenesContentRow from './PreLoadedCutscenesContentRow';
 
 const selectLoadedCutsceneFileData = (state) =>
   state.cutscene.preloadedCutsceneFileNames;
@@ -42,11 +43,16 @@ const PreLoadedCutscenesContent = () => {
     dispatch(addPreLoadedCutscenes(paths));
   };
 
+  const handleSingleFileUpload = e => {
+    const fileName = e.target.files[0].name;
+
+  }
+
   return (
     <>
       <div style={{ padding: 8 }}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs>
+          <Grid item>
             <Button variant="contained" component="label">
               Import Cutscenes Folder
               <VisuallyHiddenInput
@@ -57,9 +63,20 @@ const PreLoadedCutscenesContent = () => {
               />
             </Button>
           </Grid>
+          <Grid item>
+            <Button variant="contained" component="label">
+              Import single cutscene file
+              <VisuallyHiddenInput
+                type="file"
+                directory="true"
+                webkitdirectory="true"
+                onChange={handleFileUpload}
+              />
+            </Button>
+          </Grid>
           {loadedCutsceneFileData.length > 0 && (
-            <Grid item>
-              <Typography variant="body2">
+            <Grid item xs>
+              <Typography variant="body2" textAlign="right">
                 <b>Loaded {loadedCutsceneFileData.length} files</b>
               </Typography>
             </Grid>
@@ -83,9 +100,7 @@ const PreLoadedCutscenesContent = () => {
             </TableHead>
             <TableBody>
               {loadedCutsceneFileData.map((fileName) => (
-                <TableRow key={fileName}>
-                  <TableCell>{fileName}</TableCell>
-                </TableRow>
+                <PreLoadedCutscenesContentRow fileName={fileName}/>
               ))}
             </TableBody>
           </Table>

@@ -16,8 +16,6 @@ import {
   DELETE_CUTSCENE_JUMP,
   UPDATE_WITH_EMPTY_CUTSCENE,
   DELETE_CUTSCENE,
-  ADD_PRE_LOADED_CUTSCENE_NAMES,
-  DELETE_PRELOADED_CUTSCENE_NAMES,
   REORDER_CUTSCENE_ROWS,
   REORDER_CUTSCENE_EVENT,
   MOVE_CUTSCENE_EVENT,
@@ -30,6 +28,12 @@ import {
   REORDER_TEMPLATE,
   REORDER_EVENT_IN_TEMPLATE,
   MOVE_EVENT_BETWEEN_TEMPLATES,
+
+  ADD_PRE_LOADED_CUTSCENE_NAMES,
+  DELETE_PRELOADED_CUTSCENE_NAMES,
+  ADD_SINGLE_PRE_LOADED_CUTSCENE_NAME,
+  EDIT_PRE_LOADED_CUTSCENE_NAME,
+  DELETE_PRE_LOADED_CUTSCENE_NAME
 } from '../actions/types';
 
 const initialState = {
@@ -78,8 +82,35 @@ const cutsceneReducer = createReducer(initialState, (builder) => {
     .addCase(CREATE_TEMPLATE_WITH_DATA, createTemplateWithData)
     .addCase(REORDER_TEMPLATE, reorderTemplate)
     .addCase(REORDER_EVENT_IN_TEMPLATE, reorderEventInTemplate)
-    .addCase(MOVE_EVENT_BETWEEN_TEMPLATES, moveEventBetweenTemplates);
+    .addCase(MOVE_EVENT_BETWEEN_TEMPLATES, moveEventBetweenTemplates)
+    .addCase(ADD_SINGLE_PRE_LOADED_CUTSCENE_NAME, addSinglePreLoadedCutsceneName)
+    .addCase(EDIT_PRE_LOADED_CUTSCENE_NAME, editPreLoadedCutsceneName)
+    .addCase(DELETE_PRE_LOADED_CUTSCENE_NAME, deletePreLoadedCutsceneName)
 });
+
+function addSinglePreLoadedCutsceneName(state, action) {
+  const { newName } = action.payload;
+  if (!state.preloadedCutsceneFileNames.includes(newName)) {
+    state.preloadedCutsceneFileNames.push(newName);
+  }
+}
+
+function editPreLoadedCutsceneName(state, action) {
+  const { oldName, newName } = action.payload;
+  if (state.preloadedCutsceneFileNames.includes(oldName)) {
+    const index = state.preloadedCutsceneFileNames.indexOf(oldName);
+    state.preloadedCutsceneFileNames.splice(index, 1);
+    state.preloadedCutsceneFileNames.splice(index, 0, newName);
+  }
+}
+
+function deletePreLoadedCutsceneName(state, action) {
+  const { cutsceneName } = action.payload;
+  if (state.preloadedCutsceneFileNames.includes(cutsceneName)) {
+    const index = state.preloadedCutsceneFileNames.indexOf(cutsceneName);
+    state.preloadedCutsceneFileNames.splice(index, 1);
+  }
+}
 
 function reorderTemplate(state, action) {
   const { sourcePosition, destinationPosition, templateId } = action.payload;

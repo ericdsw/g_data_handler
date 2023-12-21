@@ -12,8 +12,6 @@ import {
   DELETE_CUTSCENE_JUMP,
   UPDATE_WITH_EMPTY_CUTSCENE,
   DELETE_CUTSCENE,
-  ADD_PRE_LOADED_CUTSCENE_NAMES,
-  DELETE_PRELOADED_CUTSCENE_NAMES,
   REORDER_CUTSCENE_ROWS,
   REORDER_CUTSCENE_EVENT,
   MOVE_CUTSCENE_EVENT,
@@ -26,7 +24,34 @@ import {
   REORDER_TEMPLATE,
   REORDER_EVENT_IN_TEMPLATE,
   MOVE_EVENT_BETWEEN_TEMPLATES,
+
+  ADD_PRE_LOADED_CUTSCENE_NAMES,
+  DELETE_PRELOADED_CUTSCENE_NAMES,
+  ADD_SINGLE_PRE_LOADED_CUTSCENE_NAME,
+  EDIT_PRE_LOADED_CUTSCENE_NAME,
+  DELETE_PRE_LOADED_CUTSCENE_NAME
 } from './types';
+
+export const addSinglePreLoadedCutsceneName = newName => dispatch => {
+  dispatch({
+    type: ADD_SINGLE_PRE_LOADED_CUTSCENE_NAME,
+    payload: { newName }
+  });
+}
+
+export const editPreLoadedCutsceneName = (oldName, newName) => dispatch => {
+  dispatch({
+    type: EDIT_PRE_LOADED_CUTSCENE_NAME,
+    payload: { oldName, newName }
+  });
+}
+
+export const deletePreLoadedCutsceneName = cutsceneName => dispatch => {
+  dispatch({
+    type: DELETE_PRE_LOADED_CUTSCENE_NAME,
+    payload: { cutsceneName }
+  });
+}
 
 export const reorderTemplate =
   (sourcePosition, destinationPosition, templateId) => (dispatch) => {
