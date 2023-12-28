@@ -73,236 +73,238 @@ const DialogueConversation = ({
   );
 
   return (
-    <Accordion
-      className={classes.conversationContainer}
-      square={true}
-      onChange={(_, expanded) => setIsExpanded(expanded)}
-      TransitionProps={{ unmountOnExit: true }}
-    >
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Grid container alignItems="center">
-          {/* Title Data */}
-          <Grid item xs={12} md={6}>
-            <Grid container>
-              <Grid item>
-                <div
-                  className={classes.dragHandleElement}
-                  {...props.dragHandleProps}
-                >
-                  <DragHandle />
-                </div>
-              </Grid>
-              <Grid item xs>
-                <Typography className={classes.heading}>
-                  <b>Name: {conversation.conversationName}</b>
-                </Typography>
-                <Typography className={classes.subHeading}>
-                  ({conversation.messages.length}{' '}
-                  {conversation.messages.length === 1 ? 'message' : 'messages'})
-                </Typography>
+    <>
+      <Accordion
+        className={classes.conversationContainer}
+        square={true}
+        onChange={(_, expanded) => setIsExpanded(expanded)}
+        TransitionProps={{ unmountOnExit: true }}
+      >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Grid container alignItems="center">
+            {/* Title Data */}
+            <Grid item xs={12} md={6}>
+              <Grid container>
+                <Grid item>
+                  <div
+                    className={classes.dragHandleElement}
+                    {...props.dragHandleProps}
+                  >
+                    <DragHandle />
+                  </div>
+                </Grid>
+                <Grid item xs>
+                  <Typography className={classes.heading}>
+                    <b>Name: {conversation.conversationName}</b>
+                  </Typography>
+                  <Typography className={classes.subHeading}>
+                    ({conversation.messages.length}{' '}
+                    {conversation.messages.length === 1 ? 'message' : 'messages'})
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
 
-          {/* Buttons */}
-          <Grid item xs={12} md={6}>
-            <Grid container justifyContent="flex-end">
-              <Tooltip title="Merge">
-                <Checkbox
-                  checked={conversationsToMerge.includes(conversation.id)}
-                  value={conversation.id}
-                  onChange={(e) => handleToggleFromMerger(e.target.checked)}
-                  onClick={(e) => e.stopPropagation()}
-                />
-              </Tooltip>
-              <Tooltip title="Edit Conversation Name" enterDelay={200}>
-                <IconButton onClick={(e) => onEditClick(e)} size="large">
-                  <Edit />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Delete Conversation" enterDelay={200}>
-                <IconButton onClick={(e) => onDeleteClick(e)} size="large">
-                  <Delete />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-          </Grid>
-        </Grid>
-      </AccordionSummary>
-
-      <AccordionDetails>
-        <div className={classes.detailsContainer}>
-          <Droppable
-            droppableId={conversation.id}
-            type={`messages`}
-            isDropDisabled={!isExpanded}
-          >
-            {(provided) => (
-              <div
-                className={classes.messageContainer}
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-              >
-                {conversation.messages.map((messageId, index) => (
-                  <DialogueMessageContainer
-                    key={messageId}
-                    conversationId={conversation.id}
-                    messageId={messageId}
-                    index={index}
-                    isDragDisabled={!isExpanded}
+            {/* Buttons */}
+            <Grid item xs={12} md={6}>
+              <Grid container justifyContent="flex-end">
+                <Tooltip title="Merge">
+                  <Checkbox
+                    checked={conversationsToMerge.includes(conversation.id)}
+                    value={conversation.id}
+                    onChange={(e) => handleToggleFromMerger(e.target.checked)}
+                    onClick={(e) => e.stopPropagation()}
                   />
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
+                </Tooltip>
+                <Tooltip title="Edit Conversation Name" enterDelay={200}>
+                  <IconButton onClick={(e) => onEditClick(e)} size="large">
+                    <Edit />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Delete Conversation" enterDelay={200}>
+                  <IconButton onClick={(e) => onDeleteClick(e)} size="large">
+                    <Delete />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+            </Grid>
+          </Grid>
+        </AccordionSummary>
 
-          <div className={classes.buttonContainer}>
-            <Button
-              style={{ marginTop: 8, marginRight: 16 }}
-              color="primary"
-              variant="contained"
-              onClick={() => {
-                toggleDialogue('addMessage', 'show');
-              }}
+        <AccordionDetails>
+          <div className={classes.detailsContainer}>
+            <Droppable
+              droppableId={conversation.id}
+              type={`messages`}
+              isDropDisabled={!isExpanded}
             >
-              Add message
-            </Button>
-            <Button
-              style={{ marginTop: 8, marginRight: 16 }}
-              color="secondary"
-              variant="contained"
-              onClick={() => {
-                toggleDialogue('addEmote', 'show');
-              }}
-            >
-              Emote
-            </Button>
-            <Button
-              style={{ marginTop: 8, marginRight: 16 }}
-              color="secondary"
-              variant="contained"
-              onClick={() => toggleDialogue('addSwarm', 'show')}
-            >
-              Dialogue Swarn
-            </Button>
-            <Button
-              style={{ marginTop: 8, marginRight: 16 }}
-              color="secondary"
-              variant="contained"
-              onClick={() => toggleDialogue('addGiveMoney', 'show')}
-            >
-              Give Money
-            </Button>
-            <Button
-              style={{ marginTop: 8, marginRight: 16 }}
-              color="secondary"
-              variant="contained"
-              onClick={() => toggleDialogue('addGiveItem', 'show')}
-            >
-              Give Item
-            </Button>
-            <Button
-              style={{ marginTop: 8 }}
-              color="secondary"
-              variant="contained"
-              onClick={() => toggleDialogue('addPickItem', 'show')}
-            >
-              Select Item
-            </Button>
+              {(provided) => (
+                <div
+                  className={classes.messageContainer}
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  {conversation.messages.map((messageId, index) => (
+                    <DialogueMessageContainer
+                      key={messageId}
+                      conversationId={conversation.id}
+                      messageId={messageId}
+                      index={index}
+                      isDragDisabled={!isExpanded}
+                    />
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+
+            <div className={classes.buttonContainer}>
+              <Button
+                style={{ marginTop: 8, marginRight: 16 }}
+                color="primary"
+                variant="contained"
+                onClick={() => {
+                  toggleDialogue('addMessage', 'show');
+                }}
+              >
+                Add message
+              </Button>
+              <Button
+                style={{ marginTop: 8, marginRight: 16 }}
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  toggleDialogue('addEmote', 'show');
+                }}
+              >
+                Emote
+              </Button>
+              <Button
+                style={{ marginTop: 8, marginRight: 16 }}
+                color="secondary"
+                variant="contained"
+                onClick={() => toggleDialogue('addSwarm', 'show')}
+              >
+                Dialogue Swarn
+              </Button>
+              <Button
+                style={{ marginTop: 8, marginRight: 16 }}
+                color="secondary"
+                variant="contained"
+                onClick={() => toggleDialogue('addGiveMoney', 'show')}
+              >
+                Give Money
+              </Button>
+              <Button
+                style={{ marginTop: 8, marginRight: 16 }}
+                color="secondary"
+                variant="contained"
+                onClick={() => toggleDialogue('addGiveItem', 'show')}
+              >
+                Give Item
+              </Button>
+              <Button
+                style={{ marginTop: 8 }}
+                color="secondary"
+                variant="contained"
+                onClick={() => toggleDialogue('addPickItem', 'show')}
+              >
+                Select Item
+              </Button>
+            </div>
           </div>
-        </div>
-      </AccordionDetails>
+        </AccordionDetails>
 
-      {/* Create Message Form */}
-      <DialogueMessageDialogue
-        title="Create Conversation"
-        open={dialogues['addMessage']}
-        onClose={() => toggleDialogue('addMessage', 'hide')}
-        creationHandler={(data, createAndContinue) => {
-          if (!createAndContinue) {
-            toggleDialogue('addMessage', 'hide');
-          }
-          handleAddToConversation(data);
-        }}
-        isEdit={false}
-      />
-
-      {/* Create Emote form */}
-      <GenericDialogue
-        title="Create Emote"
-        open={dialogues['addEmote']}
-        onClose={() => toggleDialogue('addEmote', 'hide')}
-        maxWidth="sm"
-      >
-        <CreateEmoteForm
-          creationHandler={(data) => {
-            toggleDialogue('addEmote', 'hide');
+        {/* Create Message Form */}
+        <DialogueMessageDialogue
+          title="Create Conversation"
+          open={dialogues['addMessage']}
+          onClose={() => toggleDialogue('addMessage', 'hide')}
+          creationHandler={(data, createAndContinue) => {
+            if (!createAndContinue) {
+              toggleDialogue('addMessage', 'hide');
+            }
             handleAddToConversation(data);
           }}
-        />
-      </GenericDialogue>
-
-      {/* Create Swarm form */}
-      <GenericDialogue
-        title="Create Swarm"
-        open={dialogues['addSwarm']}
-        onClose={() => toggleDialogue('addSwarm', 'hide')}
-      >
-        <CreateSwarmForm
           isEdit={false}
-          handleSubmit={(data) => {
-            toggleDialogue('addSwarm', 'hide');
-            handleAddToConversation(data);
-          }}
         />
-      </GenericDialogue>
 
-      {/* Give money dialogue */}
-      <GenericDialogue
-        title="Give Money"
-        open={dialogues['addGiveMoney']}
-        onClose={() => toggleDialogue('addGiveMoney', 'hide')}
-        maxWidth="sm"
-      >
-        <GiveMoneyFromDialogueForm
-          onSubmit={(data) => {
-            toggleDialogue('addGiveMoney', 'hide');
-            handleAddToConversation(data);
-          }}
-        />
-      </GenericDialogue>
+        {/* Create Emote form */}
+        <GenericDialogue
+          title="Create Emote"
+          open={dialogues['addEmote']}
+          onClose={() => toggleDialogue('addEmote', 'hide')}
+          maxWidth="sm"
+        >
+          <CreateEmoteForm
+            creationHandler={(data) => {
+              toggleDialogue('addEmote', 'hide');
+              handleAddToConversation(data);
+            }}
+          />
+        </GenericDialogue>
 
-      {/* Give Item Dialogue */}
-      <GenericDialogue
-        title="Give Item"
-        open={dialogues['addGiveItem']}
-        onClose={() => toggleDialogue('addGiveItem', 'hide')}
-        maxWidth="sm"
-      >
-        <GiveItemFromDialogueForm
-          onSubmit={(data) => {
-            toggleDialogue('addGiveItem', 'hide');
-            handleAddToConversation(data);
-          }}
-        />
-      </GenericDialogue>
+        {/* Create Swarm form */}
+        <GenericDialogue
+          title="Create Swarm"
+          open={dialogues['addSwarm']}
+          onClose={() => toggleDialogue('addSwarm', 'hide')}
+        >
+          <CreateSwarmForm
+            isEdit={false}
+            handleSubmit={(data) => {
+              toggleDialogue('addSwarm', 'hide');
+              handleAddToConversation(data);
+            }}
+          />
+        </GenericDialogue>
 
-      {/* Pick Item Dialogue */}
-      <GenericDialogue
-        title="Pick Item"
-        open={dialogues['addPickItem']}
-        onClose={() => toggleDialogue('addPickItem', 'hide')}
-        maxWidth="lg"
-      >
-        <PickItemFromDialogueForm
-          isEdit={false}
-          onSubmit={(data) => {
-            toggleDialogue('addPickItem', 'hide');
-            handleAddToConversation(data);
-          }}
-        />
-      </GenericDialogue>
+        {/* Give money dialogue */}
+        <GenericDialogue
+          title="Give Money"
+          open={dialogues['addGiveMoney']}
+          onClose={() => toggleDialogue('addGiveMoney', 'hide')}
+          maxWidth="sm"
+        >
+          <GiveMoneyFromDialogueForm
+            onSubmit={(data) => {
+              toggleDialogue('addGiveMoney', 'hide');
+              handleAddToConversation(data);
+            }}
+          />
+        </GenericDialogue>
+
+        {/* Give Item Dialogue */}
+        <GenericDialogue
+          title="Give Item"
+          open={dialogues['addGiveItem']}
+          onClose={() => toggleDialogue('addGiveItem', 'hide')}
+          maxWidth="sm"
+        >
+          <GiveItemFromDialogueForm
+            onSubmit={(data) => {
+              toggleDialogue('addGiveItem', 'hide');
+              handleAddToConversation(data);
+            }}
+          />
+        </GenericDialogue>
+
+        {/* Pick Item Dialogue */}
+        <GenericDialogue
+          title="Pick Item"
+          open={dialogues['addPickItem']}
+          onClose={() => toggleDialogue('addPickItem', 'hide')}
+          maxWidth="lg"
+        >
+          <PickItemFromDialogueForm
+            isEdit={false}
+            onSubmit={(data) => {
+              toggleDialogue('addPickItem', 'hide');
+              handleAddToConversation(data);
+            }}
+          />
+        </GenericDialogue> 
+      </Accordion>
 
       {/* Edit Conversation Name */}
       <GenericDialogue
@@ -330,7 +332,8 @@ const DialogueConversation = ({
           toggleDialogue('confirmDelete', 'hide');
         }}
       />
-    </Accordion>
+
+    </>
   );
 };
 
