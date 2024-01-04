@@ -470,14 +470,16 @@ const interactionInputSchema = {
       partial_save_cutscene: {
         label: 'Partial save cutscene',
         type: 'text',
-        tooltip: 'The cutscene that will be triggered if the action cannot show the flashback revisit UI',
-        default: 'res://Resources/Data/Cutscenes/Overworld/Misc/sleeping_partial.json'
+        tooltip: 'The cutscene that will be triggered if you CAN revisit a flashback',
+        default: 'res://Resources/Data/Cutscenes/Overworld/Misc/sleeping_partial.json',
+        helperText: 'The cutscene that will be triggered if you CAN revisit a flashback',
       },
       full_save_cutscene: {
         label: 'Partial save cutscene',
         type: 'text',
-        tooltip: 'The cutscene that will be triggered if the action must show the flashback revisit UI',
-        default: 'res://Resources/Data/Cutscenes/Overworld/Misc/sleeping.json'
+        tooltip: 'The cutscene that will be triggered if you CANNOT revisit a flashback (both if it is blocked or if there are none available)',
+        default: 'res://Resources/Data/Cutscenes/Overworld/Misc/sleeping.json',
+        helperText: 'The cutscene that will be triggered if you CANNOT revisit a flashback (both if it is blocked or if there are none available)',
       }
     },
   },
