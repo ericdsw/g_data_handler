@@ -448,7 +448,20 @@ const interactionInputSchema = {
   save_bed_interaction: {
     name: 'Save Bed Interaction',
     icon: 'bed',
-    parameters: {},
+    parameters: {
+      offer_flashback_revisit: {
+        label: 'Offer flashback revisit',
+        type: 'boolean',
+        default: true,
+        tooltip: 'If true, the flashback selection screen will be shown',
+      },
+      want_to_sleep_conversation: {
+        label: 'Want to sleep conversation',
+        type: 'text',
+        placeholder: 'The conversation that will be triggered when speaking with the bed',
+        default: 'b3_infirmary_bed'
+      }
+    },
   },
 };
 
