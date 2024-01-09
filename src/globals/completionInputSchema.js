@@ -168,6 +168,27 @@ const completionInputSchema = {
       },
     },
   },
+
+  complete_gacha_list: {
+    name: 'Complete Gacha List',
+    parameters: {
+      unique_name: {
+        label: 'Unique Name',
+        type: 'text',
+        required: true,
+        helperText: 'Must be unique inside the step',
+      },
+      which_list: {
+        label: 'Which List',
+        type: 'dropdown',
+        elements: {
+          morning: 'Morning',
+          night: 'Night',
+          all: 'All'
+        }
+      }
+    }
+  }
 };
 
 export default completionInputSchema;

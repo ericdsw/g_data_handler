@@ -73,6 +73,28 @@ const createConditionDescription = (condition) => {
           <span style={highlight}>{condition.parameters.message}</span>
         </React.Fragment>
       );
+    
+      case 'complete_gacha_list':
+
+        let content = <></>;
+        switch (condition.parameters.which_list) {
+          case 'morning':
+            content = <>All <i>morning</i> gachas are obtained</>
+            break;
+          case 'night':
+            content = <>All <i>night</i> gachas are obtained</>
+            break;
+          default:
+            content = <>All gachas are obtained</>
+            break;
+        }
+
+        return (
+          <>
+            Notice when&nbsp;
+            <span style={highlight}>{content}</span>
+          </>
+        )
 
     default:
       return <>{condition}</>;
