@@ -169,7 +169,7 @@ const completionInputSchema = {
     },
   },
 
-  complete_gacha_list: {
+  completed_gacha_list: {
     name: 'Complete Gacha List',
     parameters: {
       unique_name: {
