@@ -34,7 +34,7 @@ const PreLoadedCutscenesContentRow = ({
 
   const acceptEdit = () => {
     toggleInEditMode(false);
-    dispatch(editPreLoadedCutsceneName(editValue));
+    dispatch(editPreLoadedCutsceneName(fileName, editValue));
   }
 
   const acceptDelete = () => {

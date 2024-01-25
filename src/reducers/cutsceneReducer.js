@@ -98,7 +98,6 @@ function addSinglePreLoadedCutsceneName(state, action) {
 function editPreLoadedCutsceneName(state, action) {
   const { oldName, newName } = action.payload;
   if (state.preloadedCutsceneFileNames.includes(oldName)) {
-    console.log('finna edit')
     const index = state.preloadedCutsceneFileNames.indexOf(oldName);
     state.preloadedCutsceneFileNames.splice(index, 1);
     state.preloadedCutsceneFileNames.splice(index, 0, newName);

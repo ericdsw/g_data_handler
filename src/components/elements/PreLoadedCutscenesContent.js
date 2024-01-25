@@ -44,7 +44,7 @@ const PreLoadedCutscenesContent = () => {
   };
 
   const handleSingleFileUpload = e => {
-    e.target.files.forEach(file => {
+    [...e.target.files].forEach(file => {
       const fileName = file.name;
       dispatch(addSinglePreLoadedCutsceneName(fileName));
     });
