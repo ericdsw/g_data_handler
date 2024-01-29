@@ -179,7 +179,7 @@ const CutsceneContainer = () => {
     try {
       const json = await parseFile(targetFile, 'application/json');
       const jumps = json['cutscene_jumps'] || {};
-      const hideBars = json['hide_bars'] || false;
+      const hideBars = json['hide_black_bars'] || false;
 
       const fixedCutscene = fillCutsceneWithDefaults(json.data);
 
