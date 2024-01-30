@@ -752,6 +752,12 @@ const eventSchema = {
         tooltip:
           "If true, the camera will focus the node's base position rather than the center. Note that this property will be reset after the cutscene finished back to focusing the node's center",
       },
+      prevent_focusing_outside_camera: {
+        label: 'Prevent Focusing Outside Camera',
+        type: 'boolean',
+        default: false,
+        tooltip: 'If true, the focus position will be forced in such a way that the camera will not noticeably collide with the camera region boundaries. Useful for focusing something very close to the camera\'s borders'
+      }
     },
   },
 

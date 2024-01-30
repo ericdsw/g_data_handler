@@ -74,7 +74,7 @@ const createConditionDescription = (condition) => {
         </React.Fragment>
       );
     
-      case 'complete_gacha_list':
+      case 'completed_gacha_list':
 
         let content = <></>;
         switch (condition.parameters.which_list) {
