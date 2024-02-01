@@ -37,7 +37,7 @@ const JumpList = ({ jumpList, handleDeleteJump, handleEditJump }) => {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Path</TableCell>
-              <TableCell padding="dense" colSpan={2} align="center">
+              <TableCell colSpan={2} align="center">
                 Actions
               </TableCell>
             </TableRow>

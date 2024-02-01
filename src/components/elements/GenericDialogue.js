@@ -47,6 +47,7 @@ const GenericDialogue = ({
           maxWidth={maxWidth}
           style={style}
           disableScrollLock
+          disableRestoreFocus
         >
           <DialogTitle>
             {title}
