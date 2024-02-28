@@ -29,8 +29,25 @@ import {
   DELETE_PRELOADED_CUTSCENE_NAMES,
   ADD_SINGLE_PRE_LOADED_CUTSCENE_NAME,
   EDIT_PRE_LOADED_CUTSCENE_NAME,
-  DELETE_PRE_LOADED_CUTSCENE_NAME
+  DELETE_PRE_LOADED_CUTSCENE_NAME,
+
+  ADD_SAVED_NODE_TARGET,
+  REMOVE_SAVED_NODE_TARGET
 } from './types';
+
+export const addSavedNodeTarget = nodeTarget => dispatch => {
+  dispatch({
+    type: ADD_SAVED_NODE_TARGET,
+    payload: { nodeTarget }
+  })
+}
+
+export const removeSavedNodeTarget = nodeTarget => dispatch => {
+  dispatch({
+    type: REMOVE_SAVED_NODE_TARGET,
+    payload: { nodeTarget }
+  })
+}
 
 export const addSinglePreLoadedCutsceneName = newName => dispatch => {
   dispatch({
@@ -123,7 +140,6 @@ export const createTemplate = (templateName) => (dispatch) => {
 
 export const addExistingEventToTemplate =
   (templateId, eventData) => (dispatch) => {
-    console.log(templateId);
     dispatch({
       type: ADD_EXISTING_EVENT_TO_TEMPLATE,
       payload: { templateId, eventData },

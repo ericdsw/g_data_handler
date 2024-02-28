@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSnackbar } from 'notistack';
 import { useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import { Autocomplete, Button, Grid, TextField } from '@mui/material';
@@ -14,6 +15,10 @@ const memoizedSelector = createSelector(
 );
 
 const AddEventToTemplateForm = ({ onAddEvent }) => {
+
+  const { enqueueSnackbar } = useSnackbar();
+
+
   const { templates, templateIds } = useSelector((state) =>
     memoizedSelector(state)
   );
@@ -22,6 +27,10 @@ const AddEventToTemplateForm = ({ onAddEvent }) => {
   const submitForm = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (!selectedTemplate) {
+      enqueueSnackbar('No template selected', { variant: 'error' });
+      return
+    }
     onAddEvent(selectedTemplate);
   };
 

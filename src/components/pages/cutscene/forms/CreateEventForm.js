@@ -1,16 +1,14 @@
-import React from 'react';
-import withStyles from '@mui/styles/withStyles';
-import { enqueueSnackbar } from 'notistack';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSnackbar } from 'notistack';
+import makeStyles from '@mui/styles/makeStyles';
 import {
-  TextField,
-  Icon,
   Typography,
   Grid,
   Button,
   FormControlLabel,
   Switch,
-  Autocomplete,
-  Box,
+  Divider,
 } from '@mui/material';
 
 import { eventSchema } from '../../../../globals';
@@ -20,234 +18,240 @@ import {
   parseIn,
   parseOut,
 } from '../../../../functions';
+import EventTypeDropDown from '../elements/EventTypeDropDown';
 
-const styles = (theme) => ({
-  errorMessage: {
-    backgroundColor: theme.palette.error.dark,
-  },
-  close: {
-    padding: theme.spacing(0.5),
-  },
+import { addSavedNodeTarget } from '../../../../actions/cutsceneActions';
+
+const useStyles = makeStyles(theme => ({
   additionalText: {
-    color: 'grey',
-    marginTop: 12,
-    marginBottom: 12,
-  },
-});
-
-class CreateEventForm extends React.Component {
-  formFields = eventSchema['ability_toggle'].parameters;
-  additionalText = eventSchema['ability_toggle'].additionalText;
-
-  constructor(props) {
-    super(props);
-    if (props.existingData) {
-      let usedParameters = {};
-      for (const paramName in props.existingData.parameters) {
-        const data = props.existingData.parameters[paramName];
-        if (typeof data === 'object' && data !== null) {
-          usedParameters[paramName] = JSON.stringify(data);
-        } else {
-          usedParameters[paramName] = data;
-        }
-      }
-      this.formFields = eventSchema[props.existingData.type].parameters;
-      this.state = {
-        lockType: true,
-        currentEventType: props.existingData.type,
-        resultData: parseIn(usedParameters, this.formFields),
-      };
-      this.additionalText = eventSchema[props.existingData.type].additionalText;
-    } else {
-      this.state = {
-        lockType: false,
-        currentEventType: 'ability_toggle',
-        resultData: {
-          is_important: false,
-          ability_name: '',
-          enabled: false,
-        },
-      };
-    }
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    color: 'gray'
   }
+}));
 
-  handleTypeChange = (newType) => {
-    this.formFields = eventSchema[newType].parameters;
-    this.additionalText = eventSchema[newType].additionalText;
 
-    let resultData = {
-      is_important: eventSchema[newType].defaultImportant,
-    };
+const FALLBACK_EVENT_TYPE = 'ability_toggle';
 
-    for (const paramName in this.formFields) {
-      if (this.formFields[paramName].required) {
-        resultData[paramName] = '';
+function initialParseFormFields(existingData) {
+  if (existingData) {
+    return eventSchema[existingData.type].parameters;
+  }
+  return eventSchema[FALLBACK_EVENT_TYPE].parameters;
+}
+
+function initialParseAdditionalText(existingData) {
+  if (existingData) {
+    return eventSchema[existingData.type].additionalText;
+  }
+  return eventSchema[FALLBACK_EVENT_TYPE].additionalText;
+}
+
+function initialParseResultData(existingData) {
+  if (existingData) {
+    let usedParameters = {}
+    for (const paramName in existingData.parameters) {
+      const data = existingData.parameters[paramName];
+      if (typeof data === 'object' && data !== null) {
+        usedParameters[paramName] = JSON.stringify(data);
       } else {
-        resultData[paramName] = this.formFields[paramName].default;
+        usedParameters[paramName] = data;
       }
     }
+    return parseIn(usedParameters, eventSchema[existingData.type].parameters);
+  }
+  return {
+    is_important: false,
+    ability_name: '',
+    enabled: false,
+  }
+}
 
-    this.setState({
-      currentEventType: newType,
-      resultData: resultData,
-    });
-  };
 
-  handleInputChange = (inputIdentifier) => (event) => {
-    let newResultData = { ...this.state.resultData };
-    if (
-      inputIdentifier === 'is_important' ||
-      this.formFields[inputIdentifier].type === 'boolean'
-    ) {
-      newResultData[inputIdentifier] = event.target.checked;
+const Form = ({
+  existingData = null,
+  skipRequiredCheck = false,
+  creationHandler
+}) => {
+
+  const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const [formFields, updateFormFields] = useState(initialParseFormFields(existingData));
+  const [additionalText, updateAdditionalText] = useState(initialParseAdditionalText(existingData));
+
+  const lockType = useMemo(() => !!existingData, [existingData]);
+  const [currentEventType, updateCurrentEventType] = useState(existingData ? existingData.type : FALLBACK_EVENT_TYPE);
+  const [resultData, updateResultData] = useState(initialParseResultData(existingData));
+
+  /**
+   * Called for each inptu that changes value
+   */
+  const handleInputChange = useCallback(inputIdentifier => event => {
+    let newResultData = {...resultData};
+    if (inputIdentifier === 'is_important' || formFields[inputIdentifier].type === 'boolean') {
+      newResultData[inputIdentifier]  = event.target.checked;
     } else {
       newResultData[inputIdentifier] = event.target.value;
     }
-    this.setState({
-      currentEventType: this.state.currentEventType,
-      resultData: newResultData,
-    });
-  };
+    updateResultData(newResultData);
+  }, [formFields, resultData]);
 
-  submitData = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    const eventData = parseOut({ ...this.state.resultData }, this.formFields);
-
-    let errorInputs = [];
-    const eventType = this.state.currentEventType;
-    for (let paramName in eventData) {
-      if (paramName === 'is_important') {
-        continue;
-      }
-      const paramValue = eventData[paramName];
-      if (!checkForRequired(eventType, paramName, paramValue) && !this.props.skipRequiredCheck) {
-        errorInputs.push(this.formFields[paramName].label);
-      }
-    }
-
-    if (errorInputs.length > 0) {
-      const errors = errorInputs.join(', ');
-      enqueueSnackbar(`The following fields are required: ${errors}`, {
-        variant: 'error',
-      });
-    } else {
-      let cutsceneData = {
-        type: this.state.currentEventType,
-        parameters: eventData,
-      };
-      this.props.creationHandler(cutsceneData);
-    }
-  };
-
-  render() {
-    let fields = [];
-
-    /**
-     * Use a separate reference, as sort does not return the sorted output as
-     * a "chainable" method.
-     */
-    const sortedKeys = Object.keys(eventSchema).sort();
-
-    fields.push(
+  /**
+   * Memoized rendered fields
+   */
+  const fields = useMemo(() => {
+    let allFields = Object.keys(formFields)
+      .filter(paramName => !formFields[paramName].skipRender)
+      .map(paramName => (
+        <React.Fragment key={paramName}>
+          {createInput(
+            paramName,
+            formFields[paramName],
+            resultData[paramName],
+            handleInputChange,
+            false,
+            {},
+            resultData
+        )}
+        </React.Fragment>
+      ));
+    
+    allFields.unshift(
       <FormControlLabel
         key="is_important"
         label="Is Important"
         control={
           <Switch
-            checked={this.state.resultData['is_important']}
-            onChange={this.handleInputChange('is_important')}
-            value={this.state.resultData['is_important']}
+            checked={resultData['is_important']}
+            onChange={handleInputChange('is_important')}
+            value={resultData['is_important']}
           />
         }
       />
-    );
+    )
+    return allFields;
 
-    for (const paramName in this.formFields) {
-      const currentParamData = this.formFields[paramName];
+  }, [formFields, resultData, handleInputChange]);
 
-      if (currentParamData.skipRender) {
-        continue;
+  /**
+   * Called when the form type changes, will update the rest of the form and the current data.
+   * 
+   * @param {string} newType - The new event type that the form will render
+   */
+  const handleTypeChange = newType => {
+
+    const newFormFields = eventSchema[newType].parameters;
+
+    updateFormFields(newFormFields);
+    updateAdditionalText(eventSchema[newType].additionalText);
+    updateCurrentEventType(newType);
+
+    let resultData = {
+      is_important: eventSchema[newType].defaultImportant
+    }
+    for (const paramName in newFormFields) {
+      if (newFormFields[paramName].required) {
+        resultData[paramName] = '';
+      } else {
+        resultData[paramName] = newFormFields[paramName].default;
       }
-
-      const constructedFormField = createInput(
-        paramName,
-        currentParamData,
-        this.state.resultData[paramName],
-        this.handleInputChange,
-        false,
-        {},
-        this.state.resultData
-      );
-
-      fields.push(
-        <React.Fragment key={paramName}>{constructedFormField}</React.Fragment>
-      );
     }
 
-    return (
-      <form onSubmit={this.submitData}>
-        <Grid container>
-          <Grid item xs={12}>
-            <Autocomplete
-              id="event_type_select"
-              options={sortedKeys}
-              autoHighlight
-              getOptionLabel={(option) => eventSchema[option].name}
-              renderOption={(props, option) => (
-                <Box component="li" {...props}>
-                  <Icon sx={{ marginRight: 2 }}>
-                    {eventSchema[option].icon}
-                  </Icon>
-                  <Typography>{eventSchema[option].name}</Typography>
-                </Box>
-              )}
-              value={this.state.currentEventType}
-              onChange={(_, val) => this.handleTypeChange(val)}
-              clearOnBlur
-              clearOnEscape
-              disableClearable
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Event Type"
-                  fullWidth
-                  margin="normal"
-                  inputProps={{
-                    ...params.inputProps,
-                    autoComplete: 'new-password',
-                  }}
-                />
-              )}
-            />
-          </Grid>
-        </Grid>
-        <Grid container>{fields}</Grid>
-        <Grid container>
-          <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              className={this.props.classes.additionalText}
-            >
-              <i>{this.additionalText}</i>
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid justifyContent="flex-end" container>
-          <Button
-            type="submit"
-            variant="contained"
-            style={{ marginTop: 8 }}
-            color="primary"
-            onClick={this.showData}
-          >
-            {this.state.lockType ? 'Edit Cutscene Event' : 'Add Cutscene Event'}
-          </Button>
-        </Grid>
-      </form>
-    );
+    updateResultData(resultData);
+  }; 
+
+  /**
+   * Handles the form submit process.
+   */
+  const submitData = event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const eventData = parseOut(resultData, formFields);
+
+    let errorInputs = [];
+
+    for (let paramName in eventData) {
+      if (paramName === 'is_important') {
+        continue;
+      }
+      const paramValue = eventData[paramName];
+      if (!checkForRequired(currentEventType, paramName, paramValue) && !skipRequiredCheck) {
+        errorInputs.push(formFields[paramName].label)
+      }
+    }
+
+    if (errorInputs.length > 0) {
+      const errors = errorInputs.join(', ');
+      enqueueSnackbar(`The following fields are required: ${errors}`, { variant: 'error' });
+      return
+    }
+
+    /** Save any node target registered on the form */
+    Object.keys(eventData).forEach(paramName => {
+      const paramValue = eventData[paramName];
+      const inputData = eventSchema[currentEventType]['parameters'][paramName];
+      if (inputData && inputData.type === 'node_target') {
+        console.log("finna dispatch")
+        dispatch(addSavedNodeTarget(paramValue));
+      }
+    })
+
+    creationHandler({
+      type: currentEventType,
+      parameters: eventData
+    });
   }
+
+  return (
+    <form onSubmit={submitData}>
+
+      {/* Event Type */}
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <EventTypeDropDown
+            value={currentEventType}
+            onChange={handleTypeChange}
+            disabled={lockType}
+          />
+          <br />
+          <Divider />
+          <br />
+        </Grid>
+      </Grid>
+
+      {/* Fields */}
+      <Grid container>{fields}</Grid>
+
+      {/** Additional Text */}
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography
+            variant="body2"
+            className={classes.additionalText}
+          >
+            <i>{additionalText}</i>
+          </Typography>
+        </Grid>
+      </Grid>
+
+      {/* Submit Button */}
+      <Grid justifyContent="flex-end" container>
+        <Button
+          type="submit"
+          variant="contained"
+          style={{ marginTop: 8 }}
+          color="primary"
+        >
+          {lockType ? 'Edit Cutscene Event' : 'Add Cutscene Event'}
+        </Button>
+      </Grid>
+
+    </form>
+  );
 }
 
-export default withStyles(styles)(CreateEventForm);
+export default Form;

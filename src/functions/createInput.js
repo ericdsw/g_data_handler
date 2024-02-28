@@ -13,41 +13,12 @@ import {
   Grid,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { RestartAlt } from '@mui/icons-material';
 
 import AddNewMultiInputRow from '../components/elements/AddNewMultiInputRow';
 import CompositeDialogueFileInput from '../components/elements/CompositeDialogueFileInput';
 import CutsceneFileSearcher from '../components/elements/CutsceneFileSearcher';
-import { RestartAlt } from '@mui/icons-material';
-
-const nodeTargetDescription = (
-  <ul>
-    <li>
-      <code>CAMERA_VIEWPORT</code>&nbsp; Returns the camera node directly,
-      useful if you want to add something directly to the camera.
-    </li>
-    <li>
-      <code>StateName:NodeName</code>&nbsp; Will search for a node named
-      NodeName inside the state statename
-    </li>
-    <li>
-      <code>CAMERA:NodeName</code>&nbsp; Will search for a node named NodeName
-      inside the viewport. Useful when you want to modify or delete something
-      that is already inside the camera.
-    </li>
-    <li>
-      <code>PERMANENT:NodeName</code>&nbsp; Will search for a node named
-      NodeName inside permanentobjects
-    </li>
-    <li>
-      <code>MAP_OBJECTS:NodeName</code>&nbsp; Will search for a node named
-      NodeName inside the current active mapobject instance
-    </li>
-    <li>
-      <code>:NodeName</code>&nbsp; Will search for a node named NodeName
-      directly present as a child of the current map
-    </li>
-  </ul>
-);
+import NodeTargetField from '../components/elements/NodeTargetField';
 
 /**
  * Creates an input element instance using the provided attributes.
@@ -342,23 +313,23 @@ export default function createInput(
         />
       );
       break;
+    
+    case 'node_target':
+      contentValue = (
+        <NodeTargetField
+          label={label}
+          value={value}
+          onChange={handleChange(paramName)}
+        />
+      );
+      break;
 
     case 'positionArray':
     case 'position':
     case 'number':
     case 'text':
-    case 'node_target':
     default:
-      if (inputData.type === 'node_target') {
-        // inputColor = green[600];
-        adornment = (
-          <Tooltip enterDelay={300} title={nodeTargetDescription}>
-            <InputAdornment position="end">
-              <Icon>person_pin</Icon>
-            </InputAdornment>
-          </Tooltip>
-        );
-      } else if (inputData.type === 'position') {
+      if (inputData.type === 'position') {
         // inputColor = amber[600];
         adornment = (
           <Tooltip enterDelay={300} title="Position2D node name or JSON">

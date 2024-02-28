@@ -33,7 +33,10 @@ import {
   DELETE_PRELOADED_CUTSCENE_NAMES,
   ADD_SINGLE_PRE_LOADED_CUTSCENE_NAME,
   EDIT_PRE_LOADED_CUTSCENE_NAME,
-  DELETE_PRE_LOADED_CUTSCENE_NAME
+  DELETE_PRE_LOADED_CUTSCENE_NAME,
+
+  ADD_SAVED_NODE_TARGET,
+  REMOVE_SAVED_NODE_TARGET
 } from '../actions/types';
 
 const initialState = {
@@ -52,6 +55,8 @@ const initialState = {
 
   templateIds: [],
   eventTemplates: {},
+
+  savedNodeTargets : []
 };
 
 const cutsceneReducer = createReducer(initialState, (builder) => {
@@ -86,7 +91,24 @@ const cutsceneReducer = createReducer(initialState, (builder) => {
     .addCase(ADD_SINGLE_PRE_LOADED_CUTSCENE_NAME, addSinglePreLoadedCutsceneName)
     .addCase(EDIT_PRE_LOADED_CUTSCENE_NAME, editPreLoadedCutsceneName)
     .addCase(DELETE_PRE_LOADED_CUTSCENE_NAME, deletePreLoadedCutsceneName)
+    .addCase(ADD_SAVED_NODE_TARGET, addSavedNodeTarget)
+    .addCase(REMOVE_SAVED_NODE_TARGET, removeSavedNodeTarget)
 });
+
+
+function addSavedNodeTarget(state, action) {
+  const { nodeTarget } = action.payload;
+  if (!state.savedNodeTargets.includes(nodeTarget)) {
+    state.savedNodeTargets.push(nodeTarget);
+  }
+}
+
+function removeSavedNodeTarget(state, action) {
+  const { nodeTarget } = action.payload;
+  if (state.savedNodeTargets.includes(nodeTarget)) {
+    state.savedNodeTargets.splice(state.savedNodeTargets.indexOf(nodeTarget), 1);
+  }
+}
 
 function addSinglePreLoadedCutsceneName(state, action) {
   const { newName } = action.payload;
@@ -277,13 +299,30 @@ function updateCutscene(state, action) {
     hideBars,
   } = action.payload;
 
+  const templateEventIds = [];
+  Object.keys(state.eventTemplates).forEach(templateId => {
+    state.eventTemplates[templateId].templateEvents.forEach(eventId => {
+      templateEventIds.push(eventId);
+    })
+  });
+
+  Object.keys(state.cutsceneEvents).forEach(eventId => {
+    if (! templateEventIds.includes(eventId)) {
+      delete state.cutsceneEvents[eventId];
+    }
+  })
+
   state.currentCutsceneId = currentCutsceneId;
   state.cutscenes = cutscenes;
   state.cutsceneRows = cutsceneRows;
-  state.cutsceneEvents = cutsceneEvents;
   state.currentCutsceneJumps = jumps;
   state.fileName = fileName;
   state.hideBars = hideBars;
+
+  state.cutsceneEvents = {
+    ...state.cutsceneEvents,
+    ...cutsceneEvents
+  }
 }
 
 function updateWithEmptyCutscene(state, action) {

@@ -94,7 +94,9 @@ function addSavedTargetObject(state, action) {
 
 function removeSavedTargetObject(state, action) {
   const { targetObject } = action.payload;
-  state.savedTargetObjects.splice(state.savedTargetObjects.indexOf(targetObject), 1);
+  if (state.savedTargetObjects.has(targetObject)) {
+    state.savedTargetObjects.splice(state.savedTargetObjects.indexOf(targetObject), 1);
+  }
 }
 
 function removeAllSavedTargetObjects(state, action) {
