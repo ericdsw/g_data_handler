@@ -616,6 +616,13 @@ const eventSchema = {
         tooltip:
           'If defined, the custom position that the player will return to',
       },
+      new_target: {
+        label: 'New Target',
+        type: 'node_target',
+        default: '',
+        tooltip: 'Node that will be the new focus of the camera in the new map',
+        placeholder: 'BASE:node_name',
+      },
       keep_sprites: {
         label: 'Keep Sprites',
         type: 'text',
