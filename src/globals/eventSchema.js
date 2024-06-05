@@ -2011,6 +2011,16 @@ const eventSchema = {
       },
     },
   },
+
+  go_to_main_menu: {
+    name: 'Go to Main Menu',
+    icon: 'open_in_new',
+    additionalText: 'Returns the player to the main menu (cutscene will force end)',
+    defaultImportant: true,
+    parameters: {
+      ...defaultParameters,
+    }
+  }
 };
 
 export default eventSchema;

@@ -228,6 +228,9 @@ export default function createEventDescription(type, parameters) {
 
     case 'force_storyline_step':
       return `Will force the storyline ${parameters.storyline_name} to the step ${parameters.step_name}`;
+    
+    case 'go_to_main_menu':
+      return `Will return to the main menu`
 
     default:
       return '';
