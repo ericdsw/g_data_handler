@@ -143,6 +143,10 @@ const Form = ({
    */
   const handleTypeChange = newType => {
 
+    if (!Object.keys(eventSchema).includes(newType)) {
+      return;
+    }
+
     const newFormFields = eventSchema[newType].parameters;
 
     updateFormFields(newFormFields);

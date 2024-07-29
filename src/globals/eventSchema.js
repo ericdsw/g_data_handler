@@ -2020,6 +2020,30 @@ const eventSchema = {
     parameters: {
       ...defaultParameters,
     }
+  },
+
+  call_group_method: {
+    name: 'Call Group Method',
+    icon: 'diversity_1',
+    additionalText: 'Calls the provided method in the group',
+    defaultImportant: false,
+    parameters: {
+      ...defaultParameters,
+      group_name: {
+        label: 'Group Name',
+        type: 'text',
+        required: true,
+        placeholder: 'GroupName',
+        tooltip: 'The group whose method will be called'
+      },
+      method_name: {
+        label: 'Method Name',
+        type: 'text',
+        required: true,
+        placeholder: 'method_name',
+        tooltip: 'The method that will be called'
+      }
+    }
   }
 };
 
