@@ -71,6 +71,12 @@ const eventSchema = {
           'Will play when the specified animation ends (only if loops is set to false)',
         placeholder: 'animation_name',
       },
+      animation_player_node_path: {
+        label: 'Animation Player Node Path',
+        type: 'text',
+        default: 'AnimationPlayer',
+        tooltip: 'Full path to the animation player. If not defined, will try to find a node called "AnimationPlayer"'
+      }
     },
   },
 
