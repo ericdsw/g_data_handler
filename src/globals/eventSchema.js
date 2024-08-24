@@ -1710,7 +1710,7 @@ const eventSchema = {
     name: 'Give Currency',
     icon: 'monetization_on',
     additionalText: "Adds the provided funds to the player's wallet",
-    defaultImportant: false,
+    defaultImportant: true,
     parameters: {
       ...defaultParameters,
       given_amount: {
@@ -1718,6 +1718,23 @@ const eventSchema = {
         required: true,
         type: 'number',
       },
+      show_fanfare: {
+        label: 'Show Fanfare',
+        type: 'boolean',
+        default: true,
+        required: false
+      },
+      custom_message: {
+        label: 'Custom Message',
+        type: 'string',
+        required: false
+      },
+      with_animation: {
+        label: 'With Animation',
+        type: 'boolean',
+        default: true,
+        tooltip: 'Show the celebrate animation (only works if show_fanfare is true)'
+      }
     },
   },
 
