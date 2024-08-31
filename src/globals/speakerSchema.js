@@ -38,7 +38,9 @@ const speakerSchema = {
       'Vega_mask_aggro.png',
       'Vega_mask_curious.png',
       'Vega_mask_pensive_left.png',
-      'Vega_mask_pensive_right.png'
+      'Vega_mask_pensive_right.png',
+      'uvega_angry.png',
+      'uvega_mad.png'
     ],
   },
 
