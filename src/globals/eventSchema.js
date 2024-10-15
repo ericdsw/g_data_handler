@@ -1205,6 +1205,12 @@ const eventSchema = {
         tooltip:
           'If true, the foostep player will not be muffled for the follower',
       },
+      follow_steps_behind: {
+        label: 'Follow Steps Behind',
+        type: 'number',
+        default: 10,
+        tooltip: 'The amount of steps this follower will be offset relative to the player (each step is equivalent to 5px)'
+      }
     },
   },
 
@@ -1277,6 +1283,12 @@ const eventSchema = {
         tooltip:
           'If true, the foostep player will not be muffled for the follower',
       },
+      follow_steps_behind: {
+        label: 'Follow Steps Behind',
+        type: 'number',
+        default: 10,
+        tooltip: 'The amount of steps this follower will be offset relative to the player (each step is equivalent to 5px)'
+      }
     },
   },
 
