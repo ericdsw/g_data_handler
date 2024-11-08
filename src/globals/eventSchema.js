@@ -108,6 +108,11 @@ const eventSchema = {
         required: true,
         tooltip: 'How much health the enemy will have',
       },
+      additional_enemy_properties: {
+        label: 'Additional Enemy Properties',
+        type: 'json',
+        tooltip: 'Properties that will be injected to the enemy instance',
+      },
       cutscene_file: {
         label: 'End Cutscene File',
         type: 'text',
