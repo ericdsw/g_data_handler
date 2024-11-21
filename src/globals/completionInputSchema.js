@@ -108,6 +108,24 @@ const completionInputSchema = {
     },
   },
 
+  item_delivered: {
+    name: 'Item Delivered',
+    parameters: {
+      unique_name: {
+        label: 'Unique Name',
+        type: 'text',
+        required: true,
+        helperText: 'Must be unique inside the step',
+      },
+      delivered_item_id: {
+        label: 'Delivered item ID',
+        type: 'text',
+        tooltip:
+          'The item id that will trigger this condition when delivered (which is the key in the key_items.json file)',
+      },
+    }
+  },
+
   choice_selected: {
     name: 'Select Dialogue Choice',
     parameters: {
