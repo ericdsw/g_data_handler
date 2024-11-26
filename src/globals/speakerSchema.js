@@ -62,6 +62,9 @@ const speakerSchema = {
       'Cerie-Portrait-Angry.png',
       'Cerie-Portrait-Baffled.png',
       'Cerie-Portrait-Confident.png',
+      'Cerie-Portrait-Confused.png',
+      'Cerie-Portrait-Frowned-v2.png',
+      'Cerie-Portrait-Worried.png'
     ],
   },
 
