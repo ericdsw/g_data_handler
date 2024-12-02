@@ -211,11 +211,31 @@ const speakerSchema = {
   },
 
   abigail: {
-    image: null,
     name: 'SPEAKER_NAME_ABIGAIL',
     voice_file: 'vampire_voice.wav',
     target_object: 'AbigailNPC',
-    speakerImages: [],
+    image: 'Abigail-pris-Neutral.png',
+    speakerImages: [
+      "Abigail-civ-dishelved-Denial.png",
+      "Abigail-civ-dishelved-Pleading.png",
+      "Abigail-civ-normal-Angry.png",
+      "Abigail-civ-normal-Burning.png",
+      "Abigail-civ-normal-Denial.png",
+      "Abigail-civ-normal-Distressed.png",
+      "Abigail-civ-normal-DistressedIntense.png",
+      "Abigail-civ-normal-Hurt.png",
+      "Abigail-civ-normal-Neutral.png",
+      "Abigail-civ-normal-Pleading.png",
+      "Abigail-civ-normal-Shameful.png",
+      "Abigail-pris-Angry.png",
+      "Abigail-pris-Denial.png",
+      "Abigail-pris-Desperate.png",
+      "Abigail-pris-Distressed.png",
+      "Abigail-pris-DistressedIntense.png",
+      "Abigail-pris-Neutral.png",
+      "Abigail-pris-Shameful.png"
+
+    ],
   },
 
   marco: {
