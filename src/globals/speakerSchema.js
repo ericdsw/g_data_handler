@@ -239,11 +239,21 @@ const speakerSchema = {
   },
 
   marco: {
-    image: null,
+    image: "Marco-pris-Chill.png",
     name: 'SPEAKER_NAME_MARCO',
     voice_file: 'phoenix_voice.wav',
     target_object: 'MarcoNPC',
-    speakerImages: [],
+    speakerImages: [
+      "Marco-civ-Angry.png",
+      "Marco-civ-Concerned.png",
+      "Marco-civ-Decided.png",
+      "Marco-civ-Hurt.png",
+      "Marco-civ-Worried.png",
+      "Marco-pris-Chill.png",
+      "Marco-pris-Concerned.png",
+      "Marco-pris-Smiling.png",
+      "Marco-pris-SmilingHard.png"
+    ],
   },
 
   all: {
