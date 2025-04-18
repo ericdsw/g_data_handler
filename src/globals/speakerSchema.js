@@ -40,7 +40,11 @@ const speakerSchema = {
       'Vega_mask_pensive_left.png',
       'Vega_mask_pensive_right.png',
       'uvega_angry.png',
-      'uvega_mad.png'
+      'uvega_mad.png',
+      'vega-damaged-ashamed-away.png',
+      'vega-damaged-ashamed-away_2.png',
+      'vega-damaged-ashamed-straight.png',
+      'vega-damaged-determined.png'
     ],
   },
 
