@@ -91,6 +91,15 @@ const speakerSchema = {
       'Ada-releived.png',
       'Ada-fix-glasses.png',
       'Ada-fix-glasses-glare.png',
+      'ada-young-thinking.png',
+      'ada-young-smug.png',
+      'ada-young-smile.png',
+      'ada-young-neutral.png',
+      'ada-young-hurting.png',
+      'ada-research-thinking.png',
+      'ada-research-thinking-glare.png',
+      'ada-research-neutral.png',
+      'ada-research-neutral-glare.png'
     ],
   },
 
