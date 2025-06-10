@@ -184,6 +184,12 @@ const eventSchema = {
         default: false,
         tooltip: 'If true, the player will not be visible on the next map',
       },
+      camera_focus_custom_win_return_position: {
+        label: 'Camera focuses custom win return position',
+        type: 'boolean',
+        default: false,
+        tooltip: 'If true, the camera will focus the custom_win_return_position rather than the player\'s center'
+      }
     },
   },
 
