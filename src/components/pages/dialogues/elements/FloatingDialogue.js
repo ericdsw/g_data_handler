@@ -20,10 +20,10 @@ const useStyles = makeStyles(() => ({
   content: (props) => ({
     display: 'inline-block',
     position: 'relative',
-    width: 310 * 2,
-    height: 55 * 2,
+    width: 322 * 2,
+    height: 56 * 2,
     fontSize: 12 * 2,
-    borderRadius: 6 * 2,
+    borderRadius: 3 * 2,
     fontFamily: "'JF Dot Ayu Gothic 18'",
     whiteSpace: 'pre-line',
     color: props.transparent ? 'white' : 'black',
@@ -34,17 +34,18 @@ const useStyles = makeStyles(() => ({
   contentText: (props) => ({
     marginLeft: 8 * 2,
     marginTop: 6 * 2,
-    width: props.noImage ? 282 * 2 : 242 * 2,
+    width: props.noImage ? 306 * 2 : 249 * 2,
     height: 47 * 2,
     lineHeight: '30px',
     cursor: 'text',
+    wordBreak: 'break-word'
   }),
   contentImage: {
     width: 'auto',
     height: 64 * 2,
     position: 'absolute',
     bottom: 0,
-    right: 1,
+    right: 0,
   },
   contentSpeakerName: {
     width: 100 * 2,
@@ -52,13 +53,13 @@ const useStyles = makeStyles(() => ({
     left: 18 * 2,
     position: 'absolute',
     top: 0,
-    marginTop: -(30 * 2) / 2,
+    marginTop: -32,
     color: '#fff',
-    borderRadius: 4 * 2,
+    borderRadius: 2 * 2,
     backgroundColor: '#4C4945',
-    border: '4px solid #282624',
-    lineHeight: `${16 * 2}px`,
-    paddingLeft: 2 * 2,
+    border: '2px solid #282624',
+    lineHeight: `36px`,
+    paddingLeft: 4 * 2,
   },
 }));
 
