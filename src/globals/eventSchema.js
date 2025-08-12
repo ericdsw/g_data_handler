@@ -1123,6 +1123,12 @@ const eventSchema = {
         required: true,
         tooltip: 'How much time will it take to zoom to the target',
       },
+      linear_zoom: {
+        label: 'Linear Zoom',
+        type: 'boolean',
+        default: false,
+        tooltip: 'If true, movement will be linear, else it will be TRANS_CUBIC and EASE_IN_OUT'
+      }
     },
   },
 
