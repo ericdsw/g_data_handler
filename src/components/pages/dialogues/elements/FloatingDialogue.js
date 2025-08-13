@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { makeStyles } from '@mui/styles';
-import { Grid, TextField, Tooltip, Zoom, Card } from '@mui/material';
-import { Unstable_Popup as BasePopup } from '@mui/base/Unstable_Popup';
-import { ClickAwayListener } from '@mui/base/ClickAwayListener';
+import { Grid, TextField, Card } from '@mui/material';
+import Popover from '@mui/material/Popover';
 
 import { useDispatch } from 'react-redux';
 
@@ -31,6 +30,9 @@ const useStyles = makeStyles(() => ({
     border: props.transparent ? 'none' : '2px solid #272523',
     textAlign: props.transparent ? 'center' : 'left',
   }),
+  contentTextEdit: {
+    width: 310 * 2,
+  },
   contentText: (props) => ({
     marginLeft: 8 * 2,
     marginTop: 6 * 2,
@@ -121,11 +123,40 @@ const FloatingDialogue = ({
           {hasSpeakerName && (
             <div className={classes.contentSpeakerName}>{speakerName}</div>
           )}
-          <Tooltip TransitionComponent={Zoom} title={messageFullText}>
-            <div className={classes.contentText} onClick={handleClick}>
-              {messageTextOnly}
-            </div>
-          </Tooltip>
+          <div
+            className={classes.contentText}
+            onClick={handleClick}
+            aria-describedby={id}
+          >
+            {messageTextOnly}
+          </div>
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchor}
+            onClose={() => setAnchor(null)}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'left'
+            }}
+            transformOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left'
+            }}
+            style={{ marginLeft: -16 }}
+          >
+            <Card className={classes.contentTextEdit}>
+              <TextField
+                value={messageFullText}
+                onChange={handlePopupTextChange}
+                multiline
+                rows={3}
+                style={{
+                  width: 310 * 2,
+                }}
+              />
+            </Card>
+          </Popover>
           {hasImage && (
             <img
               alt="speaker"
@@ -134,28 +165,7 @@ const FloatingDialogue = ({
             />
           )}
         </div>
-      </Grid>
-      <BasePopup
-        id={id}
-        open={open}
-        anchor={anchor}
-        placement="top"
-        offset={20}
-      >
-        <ClickAwayListener onClickAway={() => setAnchor(null)}>
-          <Card>
-            <TextField
-              value={messageFullText}
-              onChange={handlePopupTextChange}
-              multiline
-              rows={3}
-              style={{
-                width: 310 * 2,
-              }}
-            />
-          </Card>
-        </ClickAwayListener>
-      </BasePopup>
+      </Grid> 
     </div>
   );
 };

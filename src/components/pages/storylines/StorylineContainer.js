@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { enqueueSnackbar } from 'notistack';
 import { Typography } from '@mui/material';
 import { normalize, denormalize } from 'normalizr';
+import Fab from '@mui/material/Fab';
+import BubbleChart from '@mui/icons-material/BubbleChart';
+import SystemUpdateAlt from '@mui/icons-material/SystemUpdateAlt';
 
 import Storyline from './Storyline';
 import { DragJsonFileManager } from '../../elements';
@@ -18,7 +21,6 @@ import {
   updateAppliedRunsString,
   reorderStep,
 } from '../../../actions/storylineActions';
-import BubbleChart from '@mui/icons-material/BubbleChart';
 
 class StorylineContainer extends React.Component {
   constructor() {
@@ -154,16 +156,27 @@ class StorylineContainer extends React.Component {
     let content;
     if (currentStoryline !== '') {
       content = (
-        <Storyline
-          storyline={storylines[currentStoryline]}
-          handleNameChange={this.updateName}
-          handleAddStep={this.addStep}
-          handleClear={this.clearStoryline}
-          handleExport={this.export}
-          appliedRunsString={appliedRunsString}
-          updateAppliedRunsString={this.updateAppliedRuns}
-          handleDragEnd={this.onDragEnd}
-        />
+        <>
+          <Storyline
+            storyline={storylines[currentStoryline]}
+            handleNameChange={this.updateName}
+            handleAddStep={this.addStep}
+            handleClear={this.clearStoryline}
+            handleExport={this.export}
+            appliedRunsString={appliedRunsString}
+            updateAppliedRunsString={this.updateAppliedRuns}
+            handleDragEnd={this.onDragEnd}
+          />
+          <Fab
+            variant='extended'
+            color='primary'
+            style={{ position: 'fixed', bottom: 32, right: 32 }}
+            onClick={this.export}
+          >
+            <SystemUpdateAlt />
+            &nbsp; Export
+          </Fab>
+        </>
       );
     } else {
       content = (

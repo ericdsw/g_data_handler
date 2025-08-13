@@ -25,6 +25,8 @@ import {
 } from '../../../models/transformers/DialogueTransformer';
 import Dialogue from './Dialogue';
 import DialogueToolbar from './elements/DialogueToolbar';
+import Fab from '@mui/material/Fab';
+import SystemUpdateAlt from '@mui/icons-material/SystemUpdateAlt';
 
 class DialogueContainer extends React.Component {
 
@@ -252,6 +254,15 @@ class DialogueContainer extends React.Component {
               handleUnselectAll={this.unselectAllConversations}
             />
           </DragDropContext>
+          <Fab
+            variant="extended"
+            color="primary"
+            style={{ position: 'fixed', bottom: 32, right: 32 }}
+            onClick={this.export}
+          >
+            <SystemUpdateAlt />
+            &nbsp; Export
+          </Fab>
         </React.Fragment>
       );
     } else {
