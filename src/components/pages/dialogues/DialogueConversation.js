@@ -77,8 +77,12 @@ const DialogueConversation = ({
       <Accordion
         className={classes.conversationContainer}
         square={true}
-        onChange={(_, expanded) => setIsExpanded(expanded)}
-        TransitionProps={{ unmountOnExit: true }}
+        onChange={(_, expanded) => {
+          setIsExpanded(expanded);
+        }}
+        slotProps={{
+          transition: { unmountOnExit: true },
+        }}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Grid container alignItems="center">

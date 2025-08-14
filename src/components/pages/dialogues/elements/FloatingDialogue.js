@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { makeStyles } from '@mui/styles';
-import { Grid, TextField, Card } from '@mui/material';
+import { Grid, TextField, Card, ButtonBase } from '@mui/material';
 import Popover from '@mui/material/Popover';
 
 import { useDispatch } from 'react-redux';
@@ -83,9 +83,12 @@ const FloatingDialogue = ({
   const open = Boolean(anchor);
   const id = open ? `simple-popper-${messageFullText}` : undefined;
 
-  const handleClick = (e) => {
-    setAnchor(anchor ? null : e.currentTarget);
-  };
+  const handleClick = useCallback(
+    (e) => {
+      setAnchor(anchor ? null : e.currentTarget);
+    },
+    [setAnchor, anchor]
+  );
 
   const handlePopupTextChange = (e) => {
     dispatch(
@@ -123,13 +126,24 @@ const FloatingDialogue = ({
           {hasSpeakerName && (
             <div className={classes.contentSpeakerName}>{speakerName}</div>
           )}
-          <div
-            className={classes.contentText}
+          <ButtonBase
             onClick={handleClick}
             aria-describedby={id}
+            disableRipple
+            style={{
+              textTransform: 'none',
+              border: 'none',
+              background: 'none',
+              color: 'black',
+              fontSize: 12 * 2,
+              borderRadius: 3 * 2,
+              fontFamily: "'JF Dot Ayu Gothic 18'",
+              whiteSpace: 'pre-line',
+              textAlign: isTransparent ? 'center' : 'left',
+            }}
           >
-            {messageTextOnly}
-          </div>
+            <div className={classes.contentText}>{messageTextOnly}</div>
+          </ButtonBase>
           <Popover
             id={id}
             open={open}
