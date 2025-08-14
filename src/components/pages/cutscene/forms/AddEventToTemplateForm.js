@@ -15,9 +15,7 @@ const memoizedSelector = createSelector(
 );
 
 const AddEventToTemplateForm = ({ onAddEvent }) => {
-
   const { enqueueSnackbar } = useSnackbar();
-
 
   const { templates, templateIds } = useSelector((state) =>
     memoizedSelector(state)
@@ -29,7 +27,7 @@ const AddEventToTemplateForm = ({ onAddEvent }) => {
     e.stopPropagation();
     if (!selectedTemplate) {
       enqueueSnackbar('No template selected', { variant: 'error' });
-      return
+      return;
     }
     onAddEvent(selectedTemplate);
   };

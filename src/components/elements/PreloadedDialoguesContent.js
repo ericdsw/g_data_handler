@@ -76,16 +76,14 @@ const PreloadedDialoguesContent = () => {
   const handleSingleFileUpload = async (e) => {
     toggleLoading(true);
     try {
-      const file = e.target.files[0]
+      const file = e.target.files[0];
       const result = await parseFile(file, 'application/json');
-      dispatch(
-        addPreUploadedFile(file.name, Object.keys(result), uuidv4())
-      );
+      dispatch(addPreUploadedFile(file.name, Object.keys(result), uuidv4()));
     } catch (e) {
       console.log(`Error uploading file: ${e}`);
     }
     toggleLoading(false);
-  }
+  };
 
   return (
     <>
@@ -114,7 +112,9 @@ const PreloadedDialoguesContent = () => {
             <Grid item>
               <Typography variant="body2">
                 <b>
-                  Loaded {dialoguesAmount} {dialoguesAmount === 1 ? 'dialogue' : 'dialogues'}, {conversationsAmount}{' '}
+                  Loaded {dialoguesAmount}{' '}
+                  {dialoguesAmount === 1 ? 'dialogue' : 'dialogues'},{' '}
+                  {conversationsAmount}{' '}
                   {conversationsAmount === 1 ? 'conversation' : 'conversations'}
                 </b>
               </Typography>
@@ -156,7 +156,9 @@ const PreloadedDialoguesContent = () => {
                 key={fileId}
                 id={fileId}
                 fileName={preUploadedFiles[fileId].fileName}
-                conversationAmount={preUploadedFiles[fileId].conversationKeys.length}
+                conversationAmount={
+                  preUploadedFiles[fileId].conversationKeys.length
+                }
               />
             ))}
           </TableBody>

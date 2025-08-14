@@ -25,36 +25,37 @@ import {
   ADD_SAVED_TARGET_OBJECT,
   REMOVE_SAVED_TARGET_OBJECT,
   REMOVE_ALL_SAVED_TARGET_OBJECTS,
-  DELETE_PRE_UPLOADED_FILE_NAME
+  DELETE_PRE_UPLOADED_FILE_NAME,
+  EXPORT_DIALOGUE,
 } from './types';
 
-export const deletePreUploadedFileName = fileId => dispatch => {
+export const deletePreUploadedFileName = (fileId) => (dispatch) => {
   dispatch({
     type: DELETE_PRE_UPLOADED_FILE_NAME,
-    payload: { fileId }
-  })
-}
+    payload: { fileId },
+  });
+};
 
-export const addSavedTargetObject = targetObject => dispatch => {
+export const addSavedTargetObject = (targetObject) => (dispatch) => {
   dispatch({
     type: ADD_SAVED_TARGET_OBJECT,
-    payload: { targetObject }
+    payload: { targetObject },
   });
-}
+};
 
-export const removeSavedTargetObject = targetObject => dispatch => {
+export const removeSavedTargetObject = (targetObject) => (dispatch) => {
   dispatch({
     type: REMOVE_SAVED_TARGET_OBJECT,
-    payload: { targetObject }
+    payload: { targetObject },
   });
-}
+};
 
-export const removeAllSavedTargetObjects = () => dispatch => {
+export const removeAllSavedTargetObjects = () => (dispatch) => {
   dispatch({
     type: REMOVE_ALL_SAVED_TARGET_OBJECTS,
-    payload: {}
-  })
-}
+    payload: {},
+  });
+};
 
 export const clearPreUploadedFiles = () => (dispatch) => {
   dispatch({
@@ -293,6 +294,13 @@ export const selectAllConversations = () => (dispatch) => {
 export const unselectAllConversations = () => (dispatch) => {
   dispatch({
     type: UNSELECT_ALL_CONVERSATIONS,
+    payload: {},
+  });
+};
+
+export const exportDialogue = () => (dispatch) => {
+  dispatch({
+    type: EXPORT_DIALOGUE,
     payload: {},
   });
 };

@@ -23,7 +23,7 @@ const CutsceneEventContainer = ({
   eventId,
   eventIndex,
   compact = false,
-  skipRequiredCheck = false
+  skipRequiredCheck = false,
 }) => {
   const dispatch = useDispatch();
   const { cutsceneEvents } = useSelector((state) =>

@@ -16,16 +16,11 @@ import { useDialogueManager } from '../../hooks';
 import ConfirmationDialogue from './ConfirmationDialogue';
 import {
   deletePreUploadedFileName,
-  updatePreUploadedFile
+  updatePreUploadedFile,
 } from '../../actions/dialogueActions';
 
-const PreloadedDialoguesContentRow = ({
-  id,
-  fileName,
-  conversationAmount,
-}) => {
-
-  const [dialogues, toggleDialogues] = useDialogueManager('confirmDelete')
+const PreloadedDialoguesContentRow = ({ id, fileName, conversationAmount }) => {
+  const [dialogues, toggleDialogues] = useDialogueManager('confirmDelete');
   const [inEditMode, toggleInEditMode] = useState(false);
   const [editValue, setEditValue] = useState('');
 
@@ -42,21 +37,19 @@ const PreloadedDialoguesContentRow = ({
     } else {
       toggleInEditMode(false);
     }
-  }
+  };
 
   const acceptEdit = () => {
     toggleInEditMode(false);
     dispatch(updatePreUploadedFile(id, editValue));
-  }
+  };
 
   return (
     <TableRow>
       <TableCell>
         {!inEditMode && (
           <Grid container>
-            <Typography variant="body1">
-              {fileName}
-            </Typography>
+            <Typography variant="body1">{fileName}</Typography>
           </Grid>
         )}
         {inEditMode && (
@@ -64,32 +57,28 @@ const PreloadedDialoguesContentRow = ({
             autoFocus
             label="File Name"
             value={editValue}
-            onChange={e => setEditValue(e.target.value)}
+            onChange={(e) => setEditValue(e.target.value)}
             fullWidth
             size="small"
-            onKeyDown={e => {
-              if (e.key === "Enter") {
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
                 acceptEdit();
               }
             }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton
-                    onClick={acceptEdit}
-                  >
+                  <IconButton onClick={acceptEdit}>
                     <Check />
                   </IconButton>
                 </InputAdornment>
-              )
+              ),
             }}
           />
         )}
       </TableCell>
       <TableCell>
-        <Typography variant="body1">
-          {conversationAmount}
-        </Typography> 
+        <Typography variant="body1">{conversationAmount}</Typography>
       </TableCell>
       <TableCell>
         <div style={{ display: 'flex', flexDirection: 'horizontal' }}>
@@ -97,9 +86,7 @@ const PreloadedDialoguesContentRow = ({
             {!inEditMode && <Edit />}
             {inEditMode && <Close />}
           </IconButton>
-          <IconButton
-            onClick={handleDeleteClick}
-          >
+          <IconButton onClick={handleDeleteClick}>
             <Delete />
           </IconButton>
         </div>
@@ -110,13 +97,12 @@ const PreloadedDialoguesContentRow = ({
         isOpen={dialogues['confirmDelete']}
         handleClose={() => toggleDialogues('confirmDelete', 'hide')}
         handleConfirm={() => {
-          toggleDialogues('confirmDelete', 'hide')
+          toggleDialogues('confirmDelete', 'hide');
           dispatch(deletePreUploadedFileName(id));
         }}
       />
-
     </TableRow>
   );
-}
+};
 
 export default PreloadedDialoguesContentRow;

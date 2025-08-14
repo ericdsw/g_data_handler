@@ -313,7 +313,7 @@ export default function createInput(
         />
       );
       break;
-    
+
     case 'node_target':
       contentValue = (
         <NodeTargetField

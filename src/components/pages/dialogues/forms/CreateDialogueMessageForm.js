@@ -69,7 +69,6 @@ const CreateDialogueMessageForm = ({
   messageData = EMPTY_MESSAGE_DATA,
   onMinimizeRequested,
 }) => {
-
   const dispatch = useDispatch();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -144,7 +143,7 @@ const CreateDialogueMessageForm = ({
       creationHandler,
       createAndContinue,
       freshStart,
-      dispatch
+      dispatch,
     ]
   );
 
@@ -334,7 +333,7 @@ const CreateDialogueMessageForm = ({
               <TargetObjectField
                 label="Target Object"
                 value={curMessageData.target_object}
-                onChange={e => handleInputChange('target_object', e)}
+                onChange={(e) => handleInputChange('target_object', e)}
               />
             </Grid>
             <Grid item xs={4}>

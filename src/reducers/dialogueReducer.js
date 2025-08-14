@@ -30,7 +30,10 @@ import {
   REMOVE_SAVED_TARGET_OBJECT,
   REMOVE_ALL_SAVED_TARGET_OBJECTS,
   DELETE_PRE_UPLOADED_FILE_NAME,
+  EXPORT_DIALOGUE,
 } from '../actions/types';
+import { downloadJSON } from '../functions';
+import { transformOut } from '../models/transformers/DialogueTransformer';
 
 const initialState = {
   fileName: '',
@@ -40,7 +43,7 @@ const initialState = {
   conversations: {},
   messages: {},
   preUploadedFiles: {},
-  savedTargetObjects: []
+  savedTargetObjects: [],
 };
 
 const dialogueReducer = createReducer(initialState, (builder) => {
@@ -78,6 +81,8 @@ const dialogueReducer = createReducer(initialState, (builder) => {
     .addCase(REMOVE_SAVED_TARGET_OBJECT, removeSavedTargetObject)
     .addCase(REMOVE_ALL_SAVED_TARGET_OBJECTS, removeAllSavedTargetObjects)
     .addCase(DELETE_PRE_UPLOADED_FILE_NAME, deletePreUploadedFileName)
+
+    .addCase(EXPORT_DIALOGUE, exportCurrentDialogue);
 });
 
 function deletePreUploadedFileName(state, action) {
@@ -95,7 +100,10 @@ function addSavedTargetObject(state, action) {
 function removeSavedTargetObject(state, action) {
   const { targetObject } = action.payload;
   if (state.savedTargetObjects.has(targetObject)) {
-    state.savedTargetObjects.splice(state.savedTargetObjects.indexOf(targetObject), 1);
+    state.savedTargetObjects.splice(
+      state.savedTargetObjects.indexOf(targetObject),
+      1
+    );
   }
 }
 
@@ -365,6 +373,14 @@ function selectAllConversations(state) {
 
 function unselectAllConversations(state) {
   state.conversationsToMerge = [];
+}
+
+function exportCurrentDialogue(state) {
+  const { fileName, currentDialogue, dialogues } = state;
+  if (Object.keys(dialogues[currentDialogue].conversations).length <= 0) {
+    return;
+  }
+  downloadJSON(fileName, transformOut(currentDialogue, state));
 }
 
 export default dialogueReducer;

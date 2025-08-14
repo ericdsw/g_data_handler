@@ -98,7 +98,7 @@ const Dialogue = ({
           transform:
             conversationsToMerge.length <= 0 ? 'scale(0.0)' : 'scale(1.0)',
         }}
-        onClick={(e) => toggleDialogue('confirmMerge', 'show')}
+        onClick={(_e) => toggleDialogue('confirmMerge', 'show')}
       >
         <Icon>merge_type</Icon>
         Merge Selected
@@ -113,7 +113,7 @@ const Dialogue = ({
           transform:
             conversationsToMerge.length <= 0 ? 'scale(0.0)' : 'scale(1.0)',
         }}
-        onClick={(e) => toggleDialogue('confirmBulkDelete', 'show')}
+        onClick={(_e) => toggleDialogue('confirmBulkDelete', 'show')}
       >
         <Icon>delete</Icon>
         Delete Selected

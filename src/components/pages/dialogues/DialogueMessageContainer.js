@@ -1,12 +1,13 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback, useMemo } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
+import { createSelector } from '@reduxjs/toolkit';
+
 import {
   editConversationMessage,
   deleteConversationMessage,
   addMessageAtPosition,
   splitConversation,
 } from '../../../actions/dialogueActions';
-import { Draggable } from 'react-beautiful-dnd';
 
 import DialogueMessage from './DialogueMessage';
 import DialogueEmote from './DialogueEmote';
@@ -14,151 +15,158 @@ import MessageSwarm from './MessageSwarm';
 import GiveMoneyFromDialogue from './GiveMoneyFromDialogue';
 import GiveItemFromDialogue from './GiveItemFromDialogue';
 import PickItem from './PickItem';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-class DialogueMessageContainer extends React.Component {
-  editMessage = (data) => {
-    const { messageId, editConversationMessage } = this.props;
-    editConversationMessage(messageId, data);
-  };
+const memoizedSelectDialogueMessageData = createSelector(
+  (state) => state.dialogue.messages,
+  (_, messageId) => messageId,
+  (dialogueMessageData, messageId) => {
+    return dialogueMessageData[messageId];
+  }
+);
 
-  addAbove = (data) => {
-    const { conversationId, messageId, conversations, addMessageAtPosition } =
-      this.props;
-    const currentConversation = conversations[conversationId];
-    const offset = currentConversation.messages.indexOf(messageId);
+const DialogueMessageContainer = ({
+  messageId,
+  conversationId,
+  index,
+  isDragDisabled,
+}) => {
+  const dispatch = useDispatch();
+  const messageData = useSelector((state) =>
+    memoizedSelectDialogueMessageData(state, messageId)
+  );
 
-    addMessageAtPosition(conversationId, offset, data);
-  };
+  const handleEditMessage = useCallback(
+    (data) => dispatch(editConversationMessage(messageId, data)),
+    [dispatch, messageId]
+  );
+  const handleDeleteMessage = useCallback(
+    () => dispatch(deleteConversationMessage(messageId)),
+    [dispatch, messageId]
+  );
+  const handleSplitBelow = useCallback(
+    (newConversationName) =>
+      dispatch(
+        splitConversation(conversationId, messageId, newConversationName)
+      ),
+    [dispatch, conversationId, messageId]
+  );
+  const handleAddAbove = useCallback(
+    (data) => dispatch(addMessageAtPosition(conversationId, index, data)),
+    [dispatch, conversationId, index]
+  );
+  const handleAddBelow = useCallback(
+    (data, additionalOffset) =>
+      dispatch(
+        addMessageAtPosition(conversationId, index + 1 + additionalOffset, data)
+      ),
+    [dispatch, conversationId, index]
+  );
 
-  addBelow = (data, additionalOffset) => {
-    const { conversationId, messageId, conversations, addMessageAtPosition } =
-      this.props;
-    const currentConversation = conversations[conversationId];
-    const offset = currentConversation.messages.indexOf(messageId);
-
-    addMessageAtPosition(conversationId, offset + 1 + additionalOffset, data);
-    console.log(additionalOffset);
-  };
-
-  deleteMessage = () => {
-    const { messageId, deleteConversationMessage } = this.props;
-    deleteConversationMessage(messageId);
-  };
-
-  splitBelow = (newConversationName) => {
-    const { conversationId, messageId, splitConversation } = this.props;
-    splitConversation(conversationId, messageId, newConversationName);
-  };
-
-  render() {
-    const { messageId, messages, index, isDragDisabled } = this.props;
-    const message = messages[messageId];
-
-    let content;
-    switch (message.type) {
+  const content = useMemo(() => {
+    let result;
+    switch (messageData.type) {
       case 'message':
-        content = (
+        result = (
           <DialogueMessage
-            message={message}
-            handleEdit={this.editMessage}
-            handleDelete={this.deleteMessage}
-            handleAddAbove={this.addAbove}
-            handleAddBelow={this.addBelow}
-            handleSplitBelow={this.splitBelow}
+            message={messageData}
+            handleEdit={handleEditMessage}
+            handleDelete={handleDeleteMessage}
+            handleAddAbove={handleAddAbove}
+            handleAddBelow={handleAddBelow}
+            handleSplitBelow={handleSplitBelow}
           />
         );
         break;
       case 'emote':
-        content = (
+        result = (
           <DialogueEmote
-            message={message}
-            handleDelete={this.deleteMessage}
-            handleAddAbove={this.addAbove}
-            handleAddBelow={this.addBelow}
-            handleSplitBelow={this.splitBelow}
+            message={messageData}
+            handleDelete={handleDeleteMessage}
+            handleAddAbove={handleAddAbove}
+            handleAddBelow={handleAddBelow}
+            handleSplitBelow={handleSplitBelow}
           />
         );
         break;
       case 'swarm':
-        content = (
+        result = (
           <MessageSwarm
-            swarmData={message}
-            handleEdit={this.editMessage}
-            handleDelete={this.deleteMessage}
-            handleSplitBelow={this.splitBelow}
+            swarmData={messageData}
+            handleEdit={handleEditMessage}
+            handleDelete={handleDeleteMessage}
+            handleSplitBelow={handleSplitBelow}
           />
         );
         break;
       case 'give_money':
-        content = (
+        result = (
           <GiveMoneyFromDialogue
-            message={message}
-            handleEdit={this.editMessage}
-            handleDelete={this.deleteMessage}
-            handleAddAbove={this.addAbove}
-            handleAddBelow={this.addBelow}
-            handleSplitBelow={this.splitBelow}
+            message={messageData}
+            handleEdit={handleEditMessage}
+            handleDelete={handleDeleteMessage}
+            handleAddAbove={handleAddAbove}
+            handleAddBelow={handleAddBelow}
+            handleSplitBelow={handleSplitBelow}
           />
         );
         break;
       case 'give_item':
-        content = (
+        result = (
           <GiveItemFromDialogue
-            message={message}
-            handleEdit={this.editMessage}
-            handleDelete={this.deleteMessage}
-            handleAddAbove={this.addAbove}
-            handleAddBelow={this.addBelow}
-            handleSplitBelow={this.splitBelow}
+            message={messageData}
+            handleEdit={handleEditMessage}
+            handleDelete={handleDeleteMessage}
+            handleAddAbove={handleAddAbove}
+            handleAddBelow={handleAddBelow}
+            handleSplitBelow={handleSplitBelow}
             buttonText="Edit"
           />
         );
         break;
       case 'pick_item':
-        content = (
+        result = (
           <PickItem
-            pickItemData={message}
-            handleEdit={this.editMessage}
-            handleDelete={this.deleteMessage}
-            handleAddAbove={this.addAbove}
-            handleAddBelow={this.addBelow}
-            handleSplitBelow={this.splitBelow}
+            pickItemData={messageData}
+            handleEdit={handleEditMessage}
+            handleDelete={handleDeleteMessage}
+            handleAddAbove={handleAddAbove}
+            handleAddBelow={handleAddBelow}
+            handleSplitBelow={handleSplitBelow}
           />
         );
         break;
       default:
-        content = <React.Fragment />;
-        break;
+        result = <></>;
     }
+    return result;
+  }, [
+    messageData,
+    handleEditMessage,
+    handleDeleteMessage,
+    handleAddAbove,
+    handleAddBelow,
+    handleSplitBelow,
+  ]);
 
-    return (
-      <Draggable
-        draggableId={messageId}
-        index={index}
-        isDragDisabled={isDragDisabled}
-      >
-        {(provided) => (
-          <div
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            ref={provided.innerRef}
-          >
-            {content}
-          </div>
-        )}
-      </Draggable>
-    );
-  }
-}
+  return (
+    <Draggable
+      draggableId={messageId}
+      index={index}
+      isDragDisabled={isDragDisabled}
+    >
+      {(provided) => (
+        <div
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          {content}
+        </div>
+      )}
+    </Draggable>
+  );
+};
 
-const mapStateToProps = (state) => ({
-  conversations: state.dialogue.conversations,
-  messages: state.dialogue.messages,
-});
-
-export default connect(mapStateToProps, {
-  editConversationMessage,
-  deleteConversationMessage,
-  addMessageAtPosition,
-  splitConversation,
-})(DialogueMessageContainer);
+export default DialogueMessageContainer;

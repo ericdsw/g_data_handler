@@ -47,11 +47,11 @@ const ConversationExtraParams = ({ message }) => {
   }, [classes.chip, message]);
 
   return (
-    <React.Fragment>
+    <>
       {extraChips.length > 0 && (
         <div className={classes.chipContainer}>{extraChips}</div>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

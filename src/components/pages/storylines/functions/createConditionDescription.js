@@ -45,14 +45,16 @@ const createConditionDescription = (condition) => {
           <span style={highlight}>{condition.parameters.used_item_id}</span>
         </React.Fragment>
       );
-    
-      case 'item_delivered':
-        return (
-          <>
+
+    case 'item_delivered':
+      return (
+        <>
           Deliver Item&nbsp;
-          <span style={highlight}>{condition.parameters.delivered_item_id}</span>
-          </>
-        )
+          <span style={highlight}>
+            {condition.parameters.delivered_item_id}
+          </span>
+        </>
+      );
 
     case 'choice_selected':
       return (
@@ -81,28 +83,35 @@ const createConditionDescription = (condition) => {
           <span style={highlight}>{condition.parameters.message}</span>
         </React.Fragment>
       );
-    
-    case 'completed_gacha_list':
 
+    case 'completed_gacha_list':
       let content = <></>;
       switch (condition.parameters.which_list) {
         case 'morning':
-          content = <>All <i>morning</i> gachas are obtained</>
+          content = (
+            <>
+              All <i>morning</i> gachas are obtained
+            </>
+          );
           break;
         case 'night':
-          content = <>All <i>night</i> gachas are obtained</>
+          content = (
+            <>
+              All <i>night</i> gachas are obtained
+            </>
+          );
           break;
         default:
-          content = <>All gachas are obtained</>
+          content = <>All gachas are obtained</>;
           break;
       }
 
-        return (
-          <>
-            Notice when&nbsp;
-            <span style={highlight}>{content}</span>
-          </>
-        )
+      return (
+        <>
+          Notice when&nbsp;
+          <span style={highlight}>{content}</span>
+        </>
+      );
 
     default:
       return <></>;

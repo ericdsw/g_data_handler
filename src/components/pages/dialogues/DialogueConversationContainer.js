@@ -1,70 +1,83 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { createSelector } from '@reduxjs/toolkit';
+import { Draggable } from 'react-beautiful-dnd';
+
 import {
   deleteDialogueConversation,
   addMessageToConversation,
   editDialogueConversation,
   addToConversationMerger,
 } from '../../../actions/dialogueActions';
-import { Draggable } from 'react-beautiful-dnd';
 
 import DialogueConversation from './DialogueConversation';
 
-class DialogueConversationContainer extends React.Component {
-  deleteConversation = () => {
-    const { deleteDialogueConversation, conversationId } = this.props;
-    deleteDialogueConversation(conversationId);
-  };
-
-  addNewToConversation = (newEntryData) => {
-    const { addMessageToConversation, conversationId } = this.props;
-    addMessageToConversation(conversationId, newEntryData);
-  };
-
-  updateConversation = (newName) => {
-    const { editDialogueConversation, conversationId } = this.props;
-    editDialogueConversation(conversationId, {
-      conversationName: newName,
-    });
-  };
-
-  handleToggleFromMerger = (checked) => {
-    const { addToConversationMerger, conversationId } = this.props;
-    addToConversationMerger(conversationId, checked);
-  };
-
-  render() {
-    const { conversationId, conversations, conversationsToMerge } = this.props;
-    const currentConversation = conversations[conversationId];
-
-    return (
-      <Draggable draggableId={conversationId} index={this.props.index}>
-        {(provided) => (
-          <div {...provided.draggableProps} ref={provided.innerRef}>
-            <DialogueConversation
-              conversation={currentConversation}
-              conversationsToMerge={conversationsToMerge}
-              handleDeleteConversation={this.deleteConversation}
-              handleAddToConversation={this.addNewToConversation}
-              handleUpdateConversation={this.updateConversation}
-              handleToggleFromMerger={this.handleToggleFromMerger}
-              dragHandleProps={provided.dragHandleProps}
-            />
-          </div>
-        )}
-      </Draggable>
-    );
+const memoizedSelectDialogueConversationData = createSelector(
+  (state) => state.dialogue.conversations,
+  (_, conversationId) => conversationId,
+  (dialogueConversationData, conversationId) => {
+    return dialogueConversationData[conversationId];
   }
-}
+);
 
-const mapStateToProps = (state) => ({
-  conversations: state.dialogue.conversations,
-  conversationsToMerge: state.dialogue.conversationsToMerge,
-});
+const memoizedIsInConversationsToMerge = createSelector(
+  (state) => state.dialogue.conversationsToMerge,
+  (_, conversationId) => conversationId,
+  (conversationsToMergeData, conversationId) => {
+    return conversationsToMergeData.includes(conversationId);
+  }
+);
 
-export default connect(mapStateToProps, {
-  deleteDialogueConversation,
-  addMessageToConversation,
-  editDialogueConversation,
-  addToConversationMerger,
-})(DialogueConversationContainer);
+const DialogueConversationContainer = ({ conversationId, index }) => {
+  const dispatch = useDispatch();
+  const conversationData = useSelector((state) =>
+    memoizedSelectDialogueConversationData(state, conversationId)
+  );
+  const isInMergeMode = useSelector((state) =>
+    memoizedIsInConversationsToMerge(state, conversationId)
+  );
+
+  const handleDeleteConversation = useCallback(
+    () => dispatch(deleteDialogueConversation(conversationId)),
+    [dispatch, conversationId]
+  );
+  const handleAddNewMessageToConversation = useCallback(
+    (newEntryData) =>
+      dispatch(addMessageToConversation(conversationId, newEntryData)),
+    [dispatch, conversationId]
+  );
+  const handleUpdateConversation = useCallback(
+    (newName) => {
+      dispatch(
+        editDialogueConversation(conversationId, {
+          conversationName: newName,
+        })
+      );
+    },
+    [dispatch, conversationId]
+  );
+  const handleToggleFromMerger = useCallback(
+    (checked) => dispatch(addToConversationMerger(conversationId, checked)),
+    [dispatch, conversationId]
+  );
+
+  return (
+    <Draggable draggableId={conversationId} index={index}>
+      {(provided) => (
+        <div {...provided.draggableProps} ref={provided.innerRef}>
+          <DialogueConversation
+            conversation={conversationData}
+            isInMergeMode={isInMergeMode}
+            handleDeleteConversation={handleDeleteConversation}
+            handleAddToConversation={handleAddNewMessageToConversation}
+            handleUpdateConversation={handleUpdateConversation}
+            handleToggleFromMerger={handleToggleFromMerger}
+            dragHandleProps={provided.dragHandleProps}
+          />
+        </div>
+      )}
+    </Draggable>
+  );
+};
+
+export default DialogueConversationContainer;

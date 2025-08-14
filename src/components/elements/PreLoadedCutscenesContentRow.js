@@ -4,7 +4,7 @@ import {
   Typography,
   IconButton,
   TextField,
-  InputAdornment
+  InputAdornment,
 } from '@mui/material';
 import { Check, Close, Delete, Edit } from '@mui/icons-material';
 
@@ -13,12 +13,12 @@ import { useDispatch } from 'react-redux';
 import { useDialogueManager } from '../../hooks';
 import ConfirmationDialogue from './ConfirmationDialogue';
 
-import { editPreLoadedCutsceneName, deletePreLoadedCutsceneName } from '../../actions/cutsceneActions';
+import {
+  editPreLoadedCutsceneName,
+  deletePreLoadedCutsceneName,
+} from '../../actions/cutsceneActions';
 
-const PreLoadedCutscenesContentRow = ({
-  fileName
-}) => {
-
+const PreLoadedCutscenesContentRow = ({ fileName }) => {
   const dispatch = useDispatch();
 
   const [dialogues, toggleDialogues] = useDialogueManager('confirmDelete');
@@ -30,47 +30,43 @@ const PreLoadedCutscenesContentRow = ({
       setEditValue(fileName);
     }
     toggleInEditMode(!inEditMode);
-  }
+  };
 
   const acceptEdit = () => {
     toggleInEditMode(false);
     dispatch(editPreLoadedCutsceneName(fileName, editValue));
-  }
+  };
 
   const acceptDelete = () => {
     toggleInEditMode(false);
     dispatch(deletePreLoadedCutsceneName(fileName));
-  }
+  };
 
   return (
     <Grid container justifyContent="center" spacing={2}>
       <Grid item xs>
-        {!inEditMode && (
-          <Typography variant="body1">{fileName}</Typography>
-        )}
+        {!inEditMode && <Typography variant="body1">{fileName}</Typography>}
         {inEditMode && (
           <TextField
             autoFocus
             label="File Name"
             value={editValue}
-            onChange={e => setEditValue(e.target.value)}
+            onChange={(e) => setEditValue(e.target.value)}
             fullWidth
             size="small"
-            onKeyDown={e => {
-              if (e.key === "Enter") {
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
                 acceptEdit();
               }
             }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton
-                    onClick={acceptEdit}
-                  >
+                  <IconButton onClick={acceptEdit}>
                     <Check />
                   </IconButton>
                 </InputAdornment>
-              )
+              ),
             }}
           />
         )}
@@ -94,7 +90,7 @@ const PreLoadedCutscenesContentRow = ({
         }}
       />
     </Grid>
-  )
+  );
 };
 
 export default PreLoadedCutscenesContentRow;

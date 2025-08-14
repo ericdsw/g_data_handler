@@ -24,51 +24,49 @@ import {
   REORDER_TEMPLATE,
   REORDER_EVENT_IN_TEMPLATE,
   MOVE_EVENT_BETWEEN_TEMPLATES,
-
   ADD_PRE_LOADED_CUTSCENE_NAMES,
   DELETE_PRELOADED_CUTSCENE_NAMES,
   ADD_SINGLE_PRE_LOADED_CUTSCENE_NAME,
   EDIT_PRE_LOADED_CUTSCENE_NAME,
   DELETE_PRE_LOADED_CUTSCENE_NAME,
-
   ADD_SAVED_NODE_TARGET,
-  REMOVE_SAVED_NODE_TARGET
+  REMOVE_SAVED_NODE_TARGET,
 } from './types';
 
-export const addSavedNodeTarget = nodeTarget => dispatch => {
+export const addSavedNodeTarget = (nodeTarget) => (dispatch) => {
   dispatch({
     type: ADD_SAVED_NODE_TARGET,
-    payload: { nodeTarget }
-  })
-}
+    payload: { nodeTarget },
+  });
+};
 
-export const removeSavedNodeTarget = nodeTarget => dispatch => {
+export const removeSavedNodeTarget = (nodeTarget) => (dispatch) => {
   dispatch({
     type: REMOVE_SAVED_NODE_TARGET,
-    payload: { nodeTarget }
-  })
-}
+    payload: { nodeTarget },
+  });
+};
 
-export const addSinglePreLoadedCutsceneName = newName => dispatch => {
+export const addSinglePreLoadedCutsceneName = (newName) => (dispatch) => {
   dispatch({
     type: ADD_SINGLE_PRE_LOADED_CUTSCENE_NAME,
-    payload: { newName }
+    payload: { newName },
   });
-}
+};
 
-export const editPreLoadedCutsceneName = (oldName, newName) => dispatch => {
+export const editPreLoadedCutsceneName = (oldName, newName) => (dispatch) => {
   dispatch({
     type: EDIT_PRE_LOADED_CUTSCENE_NAME,
-    payload: { oldName, newName }
+    payload: { oldName, newName },
   });
-}
+};
 
-export const deletePreLoadedCutsceneName = cutsceneName => dispatch => {
+export const deletePreLoadedCutsceneName = (cutsceneName) => (dispatch) => {
   dispatch({
     type: DELETE_PRE_LOADED_CUTSCENE_NAME,
-    payload: { cutsceneName }
+    payload: { cutsceneName },
   });
-}
+};
 
 export const reorderTemplate =
   (sourcePosition, destinationPosition, templateId) => (dispatch) => {

@@ -458,29 +458,37 @@ const interactionInputSchema = {
       want_to_sleep_dialogue_file: {
         label: 'Want to sleep dialogue file',
         type: 'text',
-        default: 'res://Resources/Data/Cutscenes/Overworld/Misc/sleeping_partial_out.json',
-        tooltip: 'The dialogue file that contains the sleep trigger conversation'
+        default:
+          'res://Resources/Data/Cutscenes/Overworld/Misc/sleeping_partial_out.json',
+        tooltip:
+          'The dialogue file that contains the sleep trigger conversation',
       },
       want_to_sleep_conversation: {
         label: 'Want to sleep conversation',
         type: 'text',
-        placeholder: 'The conversation that will be triggered when speaking with the bed',
-        default: 'b3_infirmary_bed'
+        placeholder:
+          'The conversation that will be triggered when speaking with the bed',
+        default: 'b3_infirmary_bed',
       },
       partial_save_cutscene: {
         label: 'Partial save cutscene',
         type: 'text',
-        tooltip: 'The cutscene that will be triggered if you CAN revisit a flashback',
-        default: 'res://Resources/Data/Cutscenes/Overworld/Misc/sleeping_partial.json',
-        helperText: 'The cutscene that will be triggered if you CAN revisit a flashback',
+        tooltip:
+          'The cutscene that will be triggered if you CAN revisit a flashback',
+        default:
+          'res://Resources/Data/Cutscenes/Overworld/Misc/sleeping_partial.json',
+        helperText:
+          'The cutscene that will be triggered if you CAN revisit a flashback',
       },
       full_save_cutscene: {
         label: 'Partial save cutscene',
         type: 'text',
-        tooltip: 'The cutscene that will be triggered if you CANNOT revisit a flashback (both if it is blocked or if there are none available)',
+        tooltip:
+          'The cutscene that will be triggered if you CANNOT revisit a flashback (both if it is blocked or if there are none available)',
         default: 'res://Resources/Data/Cutscenes/Overworld/Misc/sleeping.json',
-        helperText: 'The cutscene that will be triggered if you CANNOT revisit a flashback (both if it is blocked or if there are none available)',
-      }
+        helperText:
+          'The cutscene that will be triggered if you CANNOT revisit a flashback (both if it is blocked or if there are none available)',
+      },
     },
   },
 };

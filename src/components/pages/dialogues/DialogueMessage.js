@@ -9,6 +9,7 @@ import {
   ButtonGroup,
 } from '@mui/material';
 import { useDispatch } from 'react-redux';
+import { DirectionsWalk } from '@material-ui/icons';
 
 import { editConversationMessage } from '../../../actions/dialogueActions';
 
@@ -21,7 +22,6 @@ import {
 import { speakerSchema } from '../../../globals';
 
 import { styles } from './styles/DialogueMessageStyle';
-import { DirectionsWalk } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
@@ -74,7 +74,7 @@ const DialogueMessage = ({
       usedImagePath: imageResult,
       speakerName: nameResult,
     };
-  }, [message]);
+  }, [message.speaker, message.image, message.name]);
 
   return (
     <Card square className={classes.messageContainer}>
@@ -102,15 +102,11 @@ const DialogueMessage = ({
               </div>
               <DialogueMessageToolbar
                 message={message}
-                handleAddAbove={(data) => handleAddAbove(data)}
-                handleAddBelow={(data, additionalOffset) =>
-                  handleAddBelow(data, additionalOffset)
-                }
-                handleEdit={(data) => handleEdit(data)}
-                handleDelete={() => handleDelete()}
-                handleSplitBelow={(conversationName) =>
-                  handleSplitBelow(conversationName)
-                }
+                handleAddAbove={handleAddAbove}
+                handleAddBelow={handleAddBelow}
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+                handleSplitBelow={handleSplitBelow}
                 omitEdit={false}
               />
             </div>

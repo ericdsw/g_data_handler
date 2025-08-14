@@ -88,8 +88,8 @@ const CutsceneEvent = ({
   const missingParams = useMemo(() => {
     const missingParamResults = [];
     const eventType = cutsceneEventData.type;
-    const schemaParams = eventSchema[eventType].parameters
-    Object.keys(schemaParams).forEach(paramDataName => {
+    const schemaParams = eventSchema[eventType].parameters;
+    Object.keys(schemaParams).forEach((paramDataName) => {
       const provided = checkForRequired(
         cutsceneEventData.type,
         paramDataName,
@@ -177,10 +177,12 @@ const CutsceneEvent = ({
             action={
               <>
                 {missingParams.length > 0 && (
-                  <Tooltip title={`One or more required props are missing: ${missingParams.join(", ")}`}>
-                    <Warning
-                      style={{ margin: 8, color: yellow[500] }}
-                    />
+                  <Tooltip
+                    title={`One or more required props are missing: ${missingParams.join(
+                      ', '
+                    )}`}
+                  >
+                    <Warning style={{ margin: 8, color: yellow[500] }} />
                   </Tooltip>
                 )}
               </>

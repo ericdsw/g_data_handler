@@ -9,6 +9,7 @@ import MenuIconButton from './MenuIconButton';
 import MenuButton from './MenuButton';
 import GenericForm from './GenericForm';
 import VisuallyHiddenInput from './VisuallyHiddenInput';
+import FabAbsoluteContainer from './FabAbsoluteContainer';
 
 export {
   NavigationDrawer,
@@ -22,4 +23,5 @@ export {
   MenuButton,
   GenericForm,
   VisuallyHiddenInput,
+  FabAbsoluteContainer,
 };

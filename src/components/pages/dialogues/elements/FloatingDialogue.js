@@ -40,7 +40,7 @@ const useStyles = makeStyles(() => ({
     height: 47 * 2,
     lineHeight: '30px',
     cursor: 'text',
-    wordBreak: 'break-word'
+    wordBreak: 'break-word',
   }),
   contentImage: {
     width: 'auto',
@@ -137,11 +137,11 @@ const FloatingDialogue = ({
             onClose={() => setAnchor(null)}
             anchorOrigin={{
               vertical: 'top',
-              horizontal: 'left'
+              horizontal: 'left',
             }}
             transformOrigin={{
               vertical: 'bottom',
-              horizontal: 'left'
+              horizontal: 'left',
             }}
             style={{ marginLeft: -16 }}
           >
@@ -165,7 +165,7 @@ const FloatingDialogue = ({
             />
           )}
         </div>
-      </Grid> 
+      </Grid>
     </div>
   );
 };

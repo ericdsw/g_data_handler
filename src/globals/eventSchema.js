@@ -75,8 +75,9 @@ const eventSchema = {
         label: 'Animation Player Node Path',
         type: 'text',
         default: 'AnimationPlayer',
-        tooltip: 'Full path to the animation player. If not defined, will try to find a node called "AnimationPlayer"'
-      }
+        tooltip:
+          'Full path to the animation player. If not defined, will try to find a node called "AnimationPlayer"',
+      },
     },
   },
 
@@ -188,8 +189,9 @@ const eventSchema = {
         label: 'Camera focuses custom win return position',
         type: 'boolean',
         default: false,
-        tooltip: 'If true, the camera will focus the custom_win_return_position rather than the player\'s center'
-      }
+        tooltip:
+          "If true, the camera will focus the custom_win_return_position rather than the player's center",
+      },
     },
   },
 
@@ -647,7 +649,7 @@ const eventSchema = {
           'node_name=next_pos,another_node=next_pos,yet_another_node',
         tooltip:
           'Which nodes will be visible between changes, must have a Sprite child',
-      }, 
+      },
       follower_target_positions: {
         label: 'Follower Target Positions',
         type: 'positionArray',
@@ -666,8 +668,8 @@ const eventSchema = {
         label: 'Follower Animations',
         type: 'text',
         tooltip: 'Animations that the followers will play, separated by comma',
-        default: ''
-      }
+        default: '',
+      },
     },
   },
 
@@ -794,8 +796,9 @@ const eventSchema = {
         label: 'Prevent Focusing Outside Camera',
         type: 'boolean',
         default: false,
-        tooltip: 'If true, the focus position will be forced in such a way that the camera will not noticeably collide with the camera region boundaries. Useful for focusing something very close to the camera\'s borders'
-      }
+        tooltip:
+          "If true, the focus position will be forced in such a way that the camera will not noticeably collide with the camera region boundaries. Useful for focusing something very close to the camera's borders",
+      },
     },
   },
 
@@ -1127,8 +1130,9 @@ const eventSchema = {
         label: 'Linear Zoom',
         type: 'boolean',
         default: false,
-        tooltip: 'If true, movement will be linear, else it will be TRANS_CUBIC and EASE_IN_OUT'
-      }
+        tooltip:
+          'If true, movement will be linear, else it will be TRANS_CUBIC and EASE_IN_OUT',
+      },
     },
   },
 
@@ -1226,8 +1230,9 @@ const eventSchema = {
         label: 'Follow Steps Behind',
         type: 'number',
         default: 10,
-        tooltip: 'The amount of steps this follower will be offset relative to the player (each step is equivalent to 5px)'
-      }
+        tooltip:
+          'The amount of steps this follower will be offset relative to the player (each step is equivalent to 5px)',
+      },
     },
   },
 
@@ -1304,8 +1309,9 @@ const eventSchema = {
         label: 'Follow Steps Behind',
         type: 'number',
         default: 10,
-        tooltip: 'The amount of steps this follower will be offset relative to the player (each step is equivalent to 5px)'
-      }
+        tooltip:
+          'The amount of steps this follower will be offset relative to the player (each step is equivalent to 5px)',
+      },
     },
   },
 
@@ -1757,19 +1763,20 @@ const eventSchema = {
         label: 'Show Fanfare',
         type: 'boolean',
         default: true,
-        required: false
+        required: false,
       },
       custom_message: {
         label: 'Custom Message',
         type: 'string',
-        required: false
+        required: false,
       },
       with_animation: {
         label: 'With Animation',
         type: 'boolean',
         default: true,
-        tooltip: 'Show the celebrate animation (only works if show_fanfare is true)'
-      }
+        tooltip:
+          'Show the celebrate animation (only works if show_fanfare is true)',
+      },
     },
   },
 
@@ -2067,11 +2074,12 @@ const eventSchema = {
   go_to_main_menu: {
     name: 'Go to Main Menu',
     icon: 'open_in_new',
-    additionalText: 'Returns the player to the main menu (cutscene will force end)',
+    additionalText:
+      'Returns the player to the main menu (cutscene will force end)',
     defaultImportant: true,
     parameters: {
       ...defaultParameters,
-    }
+    },
   },
 
   call_group_method: {
@@ -2086,17 +2094,17 @@ const eventSchema = {
         type: 'text',
         required: true,
         placeholder: 'GroupName',
-        tooltip: 'The group whose method will be called'
+        tooltip: 'The group whose method will be called',
       },
       method_name: {
         label: 'Method Name',
         type: 'text',
         required: true,
         placeholder: 'method_name',
-        tooltip: 'The method that will be called'
-      }
-    }
-  }
+        tooltip: 'The method that will be called',
+      },
+    },
+  },
 };
 
 export default eventSchema;

@@ -168,8 +168,8 @@ class StorylineContainer extends React.Component {
             handleDragEnd={this.onDragEnd}
           />
           <Fab
-            variant='extended'
-            color='primary'
+            variant="extended"
+            color="primary"
             style={{ position: 'fixed', bottom: 32, right: 32 }}
             onClick={this.export}
           >

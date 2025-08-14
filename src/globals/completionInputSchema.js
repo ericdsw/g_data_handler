@@ -123,7 +123,7 @@ const completionInputSchema = {
         tooltip:
           'The item id that will trigger this condition when delivered (which is the key in the key_items.json file)',
       },
-    }
+    },
   },
 
   choice_selected: {
@@ -202,11 +202,11 @@ const completionInputSchema = {
         elements: {
           morning: 'Morning',
           night: 'Night',
-          all: 'All'
-        }
-      }
-    }
-  }
+          all: 'All',
+        },
+      },
+    },
+  },
 };
 
 export default completionInputSchema;

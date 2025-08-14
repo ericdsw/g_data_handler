@@ -1,5 +1,10 @@
 import React from 'react';
-import { Autocomplete, InputAdornment, TextField, Tooltip } from '@mui/material';
+import {
+  Autocomplete,
+  InputAdornment,
+  TextField,
+  Tooltip,
+} from '@mui/material';
 import { useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import { PersonPin } from '@mui/icons-material';
@@ -34,18 +39,14 @@ const nodeTargetDescription = (
   </ul>
 );
 
-const savedNodeTargets = state => state.cutscene.savedNodeTargets;
+const savedNodeTargets = (state) => state.cutscene.savedNodeTargets;
 const memoizedSelector = createSelector(
   [savedNodeTargets],
-  savedNodeTargets => ({ savedNodeTargets })
+  (savedNodeTargets) => ({ savedNodeTargets })
 );
 
-const NodeTargetField = ({
-  label,
-  value,
-  onChange
-}) => {
-  const { savedNodeTargets } = useSelector(state => memoizedSelector(state));
+const NodeTargetField = ({ label, value, onChange }) => {
+  const { savedNodeTargets } = useSelector((state) => memoizedSelector(state));
 
   return (
     <Autocomplete
@@ -53,15 +54,15 @@ const NodeTargetField = ({
       fullWidth
       value={value || null}
       onChange={(_, val) => {
-        onChange({ target: { value: val }});
+        onChange({ target: { value: val } });
       }}
       onInputChange={(_, val) => {
-        onChange({ target: { value: val }});
+        onChange({ target: { value: val } });
       }}
       options={savedNodeTargets}
       disableClearable
-      getOptionLabel={option => option}
-      renderInput={params => (
+      getOptionLabel={(option) => option}
+      renderInput={(params) => (
         <TextField
           {...params}
           label={label}
@@ -76,12 +77,12 @@ const NodeTargetField = ({
                   </InputAdornment>
                 </Tooltip>
               </>
-            )
+            ),
           }}
         />
       )}
     />
   );
-}
+};
 
 export default NodeTargetField;

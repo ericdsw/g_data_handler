@@ -60,11 +60,11 @@ const ConversationChoices = ({ message }) => {
   }, [message, classes.chip]);
 
   return (
-    <React.Fragment>
+    <>
       {choicesChips.length > 0 && (
         <div className={classes.chipContainer}>{choicesChips}</div>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

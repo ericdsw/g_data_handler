@@ -5,11 +5,7 @@ import { eventSchema } from '../../../../globals';
 
 const SORTED_KEYS = Object.keys(eventSchema).sort();
 
-const EventTypeDropDown = ({
-  value,
-  onChange,
-  disabled = false
-}) => (
+const EventTypeDropDown = ({ value, onChange, disabled = false }) => (
   <Autocomplete
     id="event_type_select"
     options={SORTED_KEYS}
@@ -17,9 +13,7 @@ const EventTypeDropDown = ({
     getOptionLabel={(option) => eventSchema[option].name}
     renderOption={(props, option) => (
       <Box component="li" {...props}>
-        <Icon sx={{ marginRight: 2 }}>
-          {eventSchema[option].icon}
-        </Icon>
+        <Icon sx={{ marginRight: 2 }}>{eventSchema[option].icon}</Icon>
         <Typography>{eventSchema[option].name}</Typography>
       </Box>
     )}

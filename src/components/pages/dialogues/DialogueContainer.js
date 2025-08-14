@@ -1,8 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { DragDropContext } from 'react-beautiful-dnd';
 
+import { createSelector } from '@reduxjs/toolkit';
+
 import {
   updateDialogue,
   updateWithEmptyDialogue,
@@ -16,290 +17,227 @@ import {
   deleteConversationsToMerge,
   selectAllConversations,
   unselectAllConversations,
+  exportDialogue,
 } from '../../../actions/dialogueActions';
-import { parseFile, downloadJSON } from '../../../functions';
+import { parseFile } from '../../../functions';
 import NoDialogue from './elements/NoDialogue';
-import {
-  transformIn,
-  transformOut,
-} from '../../../models/transformers/DialogueTransformer';
+import { transformIn } from '../../../models/transformers/DialogueTransformer';
 import Dialogue from './Dialogue';
 import DialogueToolbar from './elements/DialogueToolbar';
-import Fab from '@mui/material/Fab';
 import SystemUpdateAlt from '@mui/icons-material/SystemUpdateAlt';
+import { FabAbsoluteContainer } from '../../elements';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-class DialogueContainer extends React.Component {
+const memoizedSelectCurrentDialogue = createSelector(
+  (state) => state.dialogue.dialogues,
+  (state) => state.dialogue.currentDialogue,
+  (dialogueData, currentDialogue) => dialogueData[currentDialogue]
+);
 
-  constructor() {
-    super();
-    window.exportDialogue = this.export;
-    window.printDialogue = () => {
-      const { allData, currentDialogue } = this.props;
-      console.log(JSON.stringify(transformOut(currentDialogue, allData)));
-    };
-  }
+const DialogueContainer = () => {
+  const dispatch = useDispatch();
+  const fileName = useSelector((state) => state.dialogue.fileName);
+  const conversationsToMerge = useSelector(
+    (state) => state.dialogue.conversationsToMerge
+  );
+  const currentDialogueId = useSelector(
+    (state) => state.dialogue.currentDialogue
+  );
 
-  /**
-   * Erases the current dialogue and restores the view to its default
-   * state
-   */
-  clearDialogue = () => {
-    const { deleteCurrentDialogue } = this.props;
-    deleteCurrentDialogue();
-  };
+  const dialogueData = useSelector((state) =>
+    memoizedSelectCurrentDialogue(state)
+  );
 
-  /**
-   * Sets an empty dialogue as the current dialogue
-   */
-  updateWithEmptyDialogue = () => {
-    const { updateWithEmptyDialogue } = this.props;
-    updateWithEmptyDialogue('file_name.json');
-  };
+  const handleDeleteDialogue = useCallback(
+    () => dispatch(deleteCurrentDialogue()),
+    [dispatch]
+  );
+  const handleUpdateWithEmptyDialogue = useCallback(
+    () => dispatch(updateWithEmptyDialogue('file_name.json')),
+    [dispatch]
+  );
+  const handleUpdateDialogueFromFile = useCallback(
+    (targetFile) => {
+      parseFile(targetFile, 'application/json')
+        .then((json) => {
+          const { result, entities } = transformIn(json);
 
-  /**
-   * Sets the dialogue contained in the file as the current dialaogue
-   */
-  updateDialogueFromFile = (targetFile) => {
-    const { updateDialogue } = this.props;
-    parseFile(targetFile, 'application/json')
-      .then((json) => {
-        const { result, entities } = transformIn(json);
-
-        // Inject type if not found
-        Object.keys(entities.messages).forEach((mId) => {
-          if (!entities.messages[mId].type) {
-            if (!entities.messages[mId].is_emote) {
-              entities.messages[mId].type = 'message';
-            } else {
-              entities.messages[mId].type = 'emote';
+          // Inject type if not found
+          Object.keys(entities.messages).forEach((mId) => {
+            if (!entities.messages[mId].type) {
+              if (!entities.messages[mId].is_emote) {
+                entities.messages[mId].type = 'message';
+              } else {
+                entities.messages[mId].type = 'emote';
+              }
             }
-          }
+          });
+
+          dispatch(updateDialogue(targetFile.name, result, entities));
+        })
+        .catch((e) => {
+          console.log(e);
+          enqueueSnackbar('Error parsing file', { variant: 'error' });
         });
-
-        // Update the dialogue
-        updateDialogue(targetFile.name, result, entities);
-      })
-      .catch((_) => this.showError('Error parsing file'));
-  };
-
-  /**
-   * Adds a conversation to the current dialogue
-   */
-  addConversation = (conversationName) => {
-    const { currentDialogue, addDialogueConversation } = this.props;
-    addDialogueConversation(currentDialogue, conversationName);
-  };
-
-  /**
-   * Updates the current file name
-   */
-  changeFileName = (newFileName) => {
-    const { updateDialogueFilename } = this.props;
-    updateDialogueFilename(newFileName);
-  };
-
-  /**
-   * Exports the current data as a JSON file
-   */
-  export = () => {
-    const { allData, fileName, currentDialogue } = this.props;
-
-    if (Object.keys(allData.conversations).length <= 0) {
-      this.showError('Cannot export an empty dialogue file');
-      return;
-    }
-
-    let emptyConversations = 0;
-    Object.keys(allData.conversations).forEach((conversationId) => {
-      const conversation = allData.conversations[conversationId];
-      if (conversation.messages.length <= 0) {
-        emptyConversations++;
+    },
+    [dispatch]
+  );
+  const handleAddConversation = useCallback(
+    (conversationName) =>
+      dispatch(addDialogueConversation(currentDialogueId, conversationName)),
+    [dispatch, currentDialogueId]
+  );
+  const handleFileNameChange = useCallback(
+    (newFileName) => dispatch(updateDialogueFilename(newFileName)),
+    [dispatch]
+  );
+  const handleImportAndMerge = useCallback(
+    (dialoguesToMerge) => {
+      let compositeDialogue = {};
+      for (let i = 0; i < Object.keys(dialoguesToMerge).length; i++) {
+        const key = Object.keys(dialoguesToMerge)[i];
+        const usedJson = dialoguesToMerge[key];
+        compositeDialogue = {
+          ...compositeDialogue,
+          ...usedJson,
+        };
       }
-    });
 
-    if (emptyConversations > 0) {
-      this.showError(
-        `${emptyConversations} conversation${
-          emptyConversations === 1 ? ' is' : 's are'
-        } empty`
-      );
-      return;
-    }
+      const { result, entities } = transformIn(compositeDialogue);
 
-    downloadJSON(fileName, transformOut(currentDialogue, allData));
-  };
-
-  importAndMerge = (dialoguesToMerge) => {
-    let compositeDialogue = {};
-    for (let i = 0; i < Object.keys(dialoguesToMerge).length; i++) {
-      const key = Object.keys(dialoguesToMerge)[i];
-      const usedJson = dialoguesToMerge[key];
-      compositeDialogue = {
-        ...compositeDialogue,
-        ...usedJson,
-      };
-    }
-
-    const { result, entities } = transformIn(compositeDialogue);
-
-    // Inject type if not found
-    Object.keys(entities.messages).forEach((mId) => {
-      if (!entities.messages[mId].type) {
-        if (!entities.messages[mId].is_emote) {
-          entities.messages[mId].type = 'message';
-        } else {
-          entities.messages[mId].type = 'emote';
+      // Inject type if not found
+      Object.keys(entities.messages).forEach((mId) => {
+        if (!entities.messages[mId].type) {
+          if (!entities.messages[mId].is_emote) {
+            entities.messages[mId].type = 'message';
+          } else {
+            entities.messages[mId].type = 'emote';
+          }
         }
+      });
+      dispatch(updateDialogue('Amalgamation.json', result, entities));
+    },
+    [dispatch]
+  );
+  const handleDragEnd = useCallback(
+    (result) => {
+      const { source, destination, draggableId } = result;
+      // If no destination is defined or no movement needs to be made, skip
+      if (
+        !destination ||
+        (destination.droppableId === source.droppableId &&
+          destination.index === source.index)
+      ) {
+        return;
       }
-    });
 
-    this.props.updateDialogue('Amalgamation.json', result, entities);
-  };
-
-  /**
-   * Displays a "snackbar" with the provided error message
-   */
-  showError = (errorMessage) => {
-    enqueueSnackbar(errorMessage, { variant: 'error' });
-  };
-
-  onDragEnd = (result) => {
-    const { source, destination, draggableId } = result;
-
-    // If no destination is defined or no movement needs to be made, skip
-    if (
-      !destination ||
-      (destination.droppableId === source.droppableId &&
-        destination.index === source.index)
-    ) {
-      return;
-    }
-
-    if (result.type === 'conversations') {
-      const { reorderConversations, currentDialogue } = this.props;
-      reorderConversations(
-        source.index,
-        destination.index,
-        currentDialogue,
-        draggableId
-      );
-    } else {
-      if (source.droppableId === destination.droppableId) {
-        // Move inside
-        const { reorderMessage } = this.props;
-        reorderMessage(
-          source.index,
-          destination.index,
-          source.droppableId,
-          draggableId
+      if (result.type === 'conversations') {
+        dispatch(
+          reorderConversations(
+            source.index,
+            destination.index,
+            currentDialogueId,
+            draggableId
+          )
         );
       } else {
-        // Move outside
-        const { moveMessage } = this.props;
-        moveMessage(
-          source.index,
-          destination.index,
-          source.droppableId,
-          destination.droppableId,
-          draggableId
-        );
+        if (source.droppableId === destination.droppableId) {
+          // Move inside
+          dispatch(
+            reorderMessage(
+              source.index,
+              destination.index,
+              source.droppableId,
+              draggableId
+            )
+          );
+        } else {
+          // Move outside
+          dispatch(
+            moveMessage(
+              source.index,
+              destination.index,
+              source.droppableId,
+              destination.droppableId,
+              draggableId
+            )
+          );
+        }
       }
+    },
+    [dispatch, currentDialogueId]
+  );
+  const handleConfirmMerge = useCallback(
+    () => dispatch(confirmConversationMerge()),
+    [dispatch]
+  );
+  const handleConfirmBulkDelete = useCallback(
+    () => dispatch(deleteConversationsToMerge()),
+    [dispatch]
+  );
+  const handleSelectAllConversations = useCallback(
+    () => dispatch(selectAllConversations()),
+    [dispatch]
+  );
+  const handleUnselectAllConversations = useCallback(
+    () => dispatch(unselectAllConversations()),
+    [dispatch]
+  );
+
+  const handleExport = useCallback(() => {
+    if (dialogueData.conversations.length <= 0) {
+      enqueueSnackbar('Cannot export an empty dialogue file', {
+        variant: 'error',
+      });
+    } else {
+      dispatch(exportDialogue());
     }
-  };
+  }, [dispatch, dialogueData]);
 
-  confirmMerge = () => {
-    this.props.confirmConversationMerge();
-  };
-
-  confirmBulkDelete = () => {
-    this.props.deleteConversationsToMerge();
-  };
-
-  selectAllConversations = () => {
-    this.props.selectAllConversations();
-  };
-
-  unselectAllConversations = () => {
-    this.props.unselectAllConversations();
-  };
-
-  /**
-   * Render Method
-   */
-  render() {
-    const { currentDialogue, dialogues, fileName, conversationsToMerge } =
-      this.props;
-
-    let content;
-
-    if (currentDialogue !== '') {
-      content = (
-        <React.Fragment>
+  return (
+    <>
+      {currentDialogueId !== '' && (
+        <>
           <DialogueToolbar
-            handleExport={this.export}
-            handleClear={this.clearDialogue}
-            handleAddConversation={this.addConversation}
+            handleExport={handleExport}
+            handleClear={handleDeleteDialogue}
+            handleAddConversation={handleAddConversation}
           />
-          <DragDropContext onDragEnd={this.onDragEnd}>
+          <DragDropContext onDragEnd={handleDragEnd}>
             <Dialogue
               fileName={fileName}
-              dialogueData={dialogues[currentDialogue]}
+              dialogueData={dialogueData}
               conversationsToMerge={conversationsToMerge}
-              handleFileNameChange={this.changeFileName}
-              handleAddConversation={this.addConversation}
-              handleDragEnd={this.onDragEnd}
-              handleConfirmMerge={this.confirmMerge}
-              handleConfirmBulkDelete={this.confirmBulkDelete}
-              handleSelectAll={this.selectAllConversations}
-              handleUnselectAll={this.unselectAllConversations}
+              handleFileNameChange={handleFileNameChange}
+              handleAddConversation={handleAddConversation}
+              handleDragEnd={handleDragEnd}
+              handleConfirmMerge={handleConfirmMerge}
+              handleConfirmBulkDelete={handleConfirmBulkDelete}
+              handleSelectAll={handleSelectAllConversations}
+              handleUnselectAll={handleUnselectAllConversations}
             />
           </DragDropContext>
-          <Fab
-            variant="extended"
-            color="primary"
-            style={{ position: 'fixed', bottom: 32, right: 32 }}
-            onClick={this.export}
-          >
-            <SystemUpdateAlt />
-            &nbsp; Export
-          </Fab>
-        </React.Fragment>
-      );
-    } else {
-      content = (
+          <FabAbsoluteContainer
+            buttonMetadata={[
+              {
+                title: 'Export',
+                icon: <SystemUpdateAlt />,
+                onClick: handleExport,
+              },
+            ]}
+          />
+        </>
+      )}
+      {currentDialogueId === '' && (
         <NoDialogue
-          handleEmptyDialogue={this.updateWithEmptyDialogue}
-          handleUpdateFromFile={this.updateDialogueFromFile}
-          handleMerge={(dialoguesToMerge) =>
-            this.importAndMerge(dialoguesToMerge)
-          }
+          handleEmptyDialogue={handleUpdateWithEmptyDialogue}
+          handleUpdateFromFile={handleUpdateDialogueFromFile}
+          handleMerge={handleImportAndMerge}
         />
-      );
-    }
+      )}
+    </>
+  );
+};
 
-    return content;
-  }
-}
-
-const mapStateToProps = (state) => ({
-  fileName: state.dialogue.fileName,
-  currentDialogue: state.dialogue.currentDialogue,
-  dialogues: state.dialogue.dialogues,
-  conversationsToMerge: state.dialogue.conversationsToMerge,
-  allData: state.dialogue,
-});
-
-export default connect(mapStateToProps, {
-  updateDialogue,
-  updateWithEmptyDialogue,
-  updateDialogueFilename,
-  addDialogueConversation,
-  deleteCurrentDialogue,
-  reorderConversations,
-  reorderMessage,
-  moveMessage,
-  confirmConversationMerge,
-  deleteConversationsToMerge,
-  selectAllConversations,
-  unselectAllConversations,
-})(DialogueContainer);
+export default DialogueContainer;

@@ -26,10 +26,10 @@ const AboutPage = () => {
         <a className={classes.link} href="https://github.com/rnoriega31">
           rnoriega31
         </a>
-        , we area creating Bittersweet Birthday. Since our
-        game revolves heavily on external formatted data, I created this tool to
-        help ease a little bit some of the work that it takes to create and
-        modify this information.
+        , we area creating Bittersweet Birthday. Since our game revolves heavily
+        on external formatted data, I created this tool to help ease a little
+        bit some of the work that it takes to create and modify this
+        information.
       </Typography>
       <br />
       <Typography variant="body2">

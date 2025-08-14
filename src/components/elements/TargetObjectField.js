@@ -3,19 +3,16 @@ import { Autocomplete, TextField } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 
-const selectTargetObjects = state => state.dialogue.savedTargetObjects;
+const selectTargetObjects = (state) => state.dialogue.savedTargetObjects;
 const memoizedSelector = createSelector(
   [selectTargetObjects],
-  (savedTargetObjects) => ( { savedTargetObjects })
+  (savedTargetObjects) => ({ savedTargetObjects })
 );
 
-const TargetObjectField = ({
-  value,
-  label,
-  onChange
-}) => {
-
-  const { savedTargetObjects } = useSelector(state => memoizedSelector(state));
+const TargetObjectField = ({ value, label, onChange }) => {
+  const { savedTargetObjects } = useSelector((state) =>
+    memoizedSelector(state)
+  );
 
   return (
     <Autocomplete
@@ -23,23 +20,19 @@ const TargetObjectField = ({
       fullWidth
       value={value || null}
       onChange={(_, val) => {
-        onChange({ target: { value: val }})
+        onChange({ target: { value: val } });
       }}
       onInputChange={(_, val) => {
-        onChange({ target: { value: val }})
+        onChange({ target: { value: val } });
       }}
       options={savedTargetObjects}
       disableClearable
-      getOptionLabel={option => option}
-      renderInput={params => (
-        <TextField
-          {...params}
-          label={label}
-          margin="normal"
-        />
+      getOptionLabel={(option) => option}
+      renderInput={(params) => (
+        <TextField {...params} label={label} margin="normal" />
       )}
     />
   );
-}
+};
 
 export default TargetObjectField;

@@ -47,7 +47,7 @@ const DialogueToolbar = ({
         </Grid>
         <Grid item xs={6}>
           <Typography align="right">
-            <Button onClick={() => handleExport()} color="secondary">
+            <Button onClick={handleExport} color="secondary">
               Export
             </Button>
             <Button

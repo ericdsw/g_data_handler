@@ -2,10 +2,13 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import { useSnackbar } from 'notistack';
-import { Typography, Fab, Grid } from '@mui/material';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import Typography from '@mui/material/Typography';
 
-import { GenericDialogue } from '../../elements';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import Subscriptions from '@material-ui/icons/Subscriptions';
+import SystemUpdateAlt from '@mui/icons-material/SystemUpdateAlt';
+
+import { FabAbsoluteContainer, GenericDialogue } from '../../elements';
 import TemplateList from './elements/TemplateList';
 
 import Cutscene from './Cutscene';
@@ -35,8 +38,6 @@ import {
   transformOut,
 } from '../../../models/transformers/CutsceneTransformer';
 import { useDialogueManager } from '../../../hooks';
-import { Subscriptions } from '@material-ui/icons';
-import { SystemUpdateAlt } from '@mui/icons-material';
 
 const selectCutsceneId = (state) => state.cutscene.currentCutsceneId;
 const selectCutscenes = (state) => state.cutscene.cutscenes;
@@ -141,9 +142,6 @@ const CutsceneContainer = () => {
     };
   }, [generatedJson, fileName]);
 
-  /**
-   * Generates the exported file
-   */
   const exportFile = useCallback(() => {
     // Check that the cutscene is not empty
     if (currentCutscene.cutsceneRows.length <= 0) {
@@ -308,40 +306,23 @@ const CutsceneContainer = () => {
     );
   }
 
-  console.log(currentCutsceneId);
-
   return (
     <>
       {content}
-      <div style={{ position: 'fixed', bottom: 32, right: 32 }}>
-        <Grid
-          container
-          spacing={2}
-        > 
-          <Grid item>
-            <Fab
-              variant="extended"
-              color="primary"
-              onClick={() => toggleDialogue('templates', 'show')}
-            >
-              <LibraryBooksIcon />
-              &nbsp; Templates
-            </Fab>
-          </Grid> 
-          {currentCutsceneId !== '' && (
-            <Grid item>
-              <Fab
-                variant="extended"
-                color="primary"
-                onClick={exportFile}
-              >
-              <SystemUpdateAlt />
-                &nbsp; Export
-              </Fab>
-            </Grid>
-          )}
-        </Grid>
-      </div>
+      <FabAbsoluteContainer
+        buttonMetadata={[
+          {
+            title: 'Templates',
+            icon: <LibraryBooksIcon />,
+            onClick: () => toggleDialogue('templates', 'show'),
+          },
+          {
+            title: 'Export',
+            icon: <SystemUpdateAlt />,
+            onClick: exportFile,
+          },
+        ]}
+      />
       <GenericDialogue
         open={dialogues['templates']}
         onClose={() => toggleDialogue('templates', 'hide')}

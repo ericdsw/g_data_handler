@@ -34,7 +34,7 @@ const useStyles = makeStyles(styles);
 
 const DialogueConversation = ({
   conversation,
-  conversationsToMerge,
+  isInMergeMode,
   handleDeleteConversation,
   handleAddToConversation,
   handleUpdateConversation,
@@ -99,7 +99,10 @@ const DialogueConversation = ({
                   </Typography>
                   <Typography className={classes.subHeading}>
                     ({conversation.messages.length}{' '}
-                    {conversation.messages.length === 1 ? 'message' : 'messages'})
+                    {conversation.messages.length === 1
+                      ? 'message'
+                      : 'messages'}
+                    )
                   </Typography>
                 </Grid>
               </Grid>
@@ -110,7 +113,7 @@ const DialogueConversation = ({
               <Grid container justifyContent="flex-end">
                 <Tooltip title="Merge">
                   <Checkbox
-                    checked={conversationsToMerge.includes(conversation.id)}
+                    checked={isInMergeMode}
                     value={conversation.id}
                     onChange={(e) => handleToggleFromMerger(e.target.checked)}
                     onClick={(e) => e.stopPropagation()}
@@ -303,7 +306,7 @@ const DialogueConversation = ({
               handleAddToConversation(data);
             }}
           />
-        </GenericDialogue> 
+        </GenericDialogue>
       </Accordion>
 
       {/* Edit Conversation Name */}
@@ -332,7 +335,6 @@ const DialogueConversation = ({
           toggleDialogue('confirmDelete', 'hide');
         }}
       />
-
     </>
   );
 };
