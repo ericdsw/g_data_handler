@@ -1,3 +1,5 @@
+import { keyForValue, possibleEaseTypes, possibleTransTypes } from "./godotEnums";
+
 /**
  * These parameters are defined in the base CutsceneEvent file.
  */
@@ -1126,13 +1128,16 @@ const eventSchema = {
         required: true,
         tooltip: 'How much time will it take to zoom to the target',
       },
-      linear_zoom: {
-        label: 'Linear Zoom',
-        type: 'boolean',
-        default: false,
-        tooltip:
-          'If true, movement will be linear, else it will be TRANS_CUBIC and EASE_IN_OUT',
+      zoom_trans_type: {
+        label: 'Zoom Trans Type',
+        type: 'tween_trans_types',
+        default: keyForValue(possibleTransTypes, 'TRANS_CUBIC'),
       },
+      zoom_ease_type: {
+        lable: 'Zoom Ease Type',
+        type: 'tween_ease_types',
+        default: keyForValue(possibleEaseTypes, 'EASE_IN_OUT')
+      }
     },
   },
 

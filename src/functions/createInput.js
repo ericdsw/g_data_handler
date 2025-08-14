@@ -19,6 +19,9 @@ import AddNewMultiInputRow from '../components/elements/AddNewMultiInputRow';
 import CompositeDialogueFileInput from '../components/elements/CompositeDialogueFileInput';
 import CutsceneFileSearcher from '../components/elements/CutsceneFileSearcher';
 import NodeTargetField from '../components/elements/NodeTargetField';
+import { possibleEaseTypes, possibleTransTypes } from '../globals/godotEnums';
+
+
 
 /**
  * Creates an input element instance using the provided attributes.
@@ -267,6 +270,52 @@ export default function createInput(
           conversationNameOnChange={handleChange(inputData.conversationNameKey)}
           multiple={inputData.multiple}
         />
+      );
+      break;
+    
+    case 'tween_trans_types':
+      contentValue = (
+        <TextField
+          label={label}
+          id={paramName}
+          select
+          fullWidth
+          value={value}
+          onChange={handleChange(paramName)}
+          disabled={disabled}
+          variant="outlined"
+          margin="normal"
+          {...extraParams}
+        >
+          {Object.keys(possibleTransTypes).map(transTypeId => (
+            <MenuItem key={transTypeId} value={transTypeId}>
+              <Typography variant="body1">{possibleTransTypes[transTypeId]}</Typography>
+            </MenuItem>
+          ))}
+        </TextField>
+      );
+      break;
+    
+    case 'tween_ease_types':
+      contentValue = (
+        <TextField
+          label={label}
+          id={paramName}
+          select
+          fullWidth
+          value={value}
+          onChange={handleChange(paramName)}
+          disabled={disabled}
+          variant="outlined"
+          margin="normal"
+          {...extraParams}
+        >
+          {Object.keys(possibleEaseTypes).map(easeTypeId => (
+            <MenuItem key={easeTypeId} value={easeTypeId}>
+              <Typography variant="body1">{possibleEaseTypes[easeTypeId]}</Typography>
+            </MenuItem>
+          ))}
+        </TextField>
       );
       break;
 

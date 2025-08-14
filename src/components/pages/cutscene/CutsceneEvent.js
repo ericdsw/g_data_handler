@@ -9,10 +9,6 @@ import {
   IconButton,
   Avatar,
   Icon,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
   Tooltip,
   Typography,
 } from '@mui/material';
@@ -33,17 +29,7 @@ import { styles } from './styles/CutsceneEventStyle';
 import AddEventToTemplateForm from './forms/AddEventToTemplateForm';
 import { Warning } from '@mui/icons-material';
 import { yellow } from '@mui/material/colors';
-
-function parseParameter(parameter) {
-  switch (typeof parameter) {
-    case 'boolean':
-      return parameter ? 'True' : 'False';
-    case 'object':
-      return JSON.stringify(parameter);
-    default:
-      return parameter;
-  }
-}
+import { CutsceneEventProperties } from './elements';
 
 const useStyles = makeStyles(styles);
 
@@ -100,41 +86,6 @@ const CutsceneEvent = ({
       }
     });
     return missingParamResults;
-  }, [cutsceneEventData]);
-
-  const listParams = useMemo(() => {
-    const paramNames = Object.keys(cutsceneEventData.parameters);
-    return paramNames.map((paramName, index) => {
-      const data = parseParameter(cutsceneEventData.parameters[paramName]);
-      return (
-        <TableRow key={index}>
-          <Tooltip
-            arrow
-            title={data !== undefined && data !== '' ? data : 'N/A'}
-            enterDelay={300}
-          >
-            <TableCell
-              align="left"
-              padding="none"
-              size="small"
-              style={{ padding: 10 }}
-            >
-              <Typography>
-                <b>{paramName}</b>
-              </Typography>
-              {data !== undefined && data !== '' && (
-                <Typography variant="caption">{data}</Typography>
-              )}
-              {(data === undefined || data === '') && (
-                <Typography variant="caption" style={{ color: '#aaa' }}>
-                  N/A
-                </Typography>
-              )}
-            </TableCell>
-          </Tooltip>
-        </TableRow>
-      );
-    });
   }, [cutsceneEventData]);
 
   return (
@@ -238,11 +189,7 @@ const CutsceneEvent = ({
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              <Table>
-                <TableBody style={{ wordWrap: 'break-word' }}>
-                  {listParams}
-                </TableBody>
-              </Table>
+              <CutsceneEventProperties cutsceneEventData={cutsceneEventData}/>
             </CardContent>
           </Collapse>
         </Card>

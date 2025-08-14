@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { DragDropContext } from 'react-beautiful-dnd';
 
+import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 
 import {
@@ -26,8 +27,6 @@ import Dialogue from './Dialogue';
 import DialogueToolbar from './elements/DialogueToolbar';
 import SystemUpdateAlt from '@mui/icons-material/SystemUpdateAlt';
 import { FabAbsoluteContainer } from '../../elements';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 
 const memoizedSelectCurrentDialogue = createSelector(
   (state) => state.dialogue.dialogues,
