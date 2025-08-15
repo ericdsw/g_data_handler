@@ -31,6 +31,7 @@ import {
   DELETE_PRE_LOADED_CUTSCENE_NAME,
   ADD_SAVED_NODE_TARGET,
   REMOVE_SAVED_NODE_TARGET,
+  EXPORT_CUTSCENE
 } from './types';
 
 export const addSavedNodeTarget = (nodeTarget) => (dispatch) => {
@@ -309,3 +310,11 @@ export const deleteCutsceneJump = (jumpName) => (dispatch) => {
     },
   });
 };
+
+
+export const exportCutscene = () => dispatch => {
+  dispatch({
+    type: EXPORT_CUTSCENE,
+    payload: {}
+  });
+}

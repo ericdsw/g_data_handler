@@ -35,7 +35,10 @@ import {
   DELETE_PRE_LOADED_CUTSCENE_NAME,
   ADD_SAVED_NODE_TARGET,
   REMOVE_SAVED_NODE_TARGET,
+  EXPORT_CUTSCENE
 } from '../actions/types';
+import { transformOut } from '../models/transformers/CutsceneTransformer';
+import { downloadJSON } from '../functions';
 
 const initialState = {
   currentCutsceneId: '',
@@ -93,7 +96,8 @@ const cutsceneReducer = createReducer(initialState, (builder) => {
     .addCase(EDIT_PRE_LOADED_CUTSCENE_NAME, editPreLoadedCutsceneName)
     .addCase(DELETE_PRE_LOADED_CUTSCENE_NAME, deletePreLoadedCutsceneName)
     .addCase(ADD_SAVED_NODE_TARGET, addSavedNodeTarget)
-    .addCase(REMOVE_SAVED_NODE_TARGET, removeSavedNodeTarget);
+    .addCase(REMOVE_SAVED_NODE_TARGET, removeSavedNodeTarget)
+    .addCase(EXPORT_CUTSCENE, exportCurrentCutscene)
 });
 
 function addSavedNodeTarget(state, action) {
@@ -450,6 +454,35 @@ function deleteCutsceneJump(state, action) {
 function updateCutsceneHideBars(state, action) {
   const { hideBars } = action.payload;
   state.hideBars = hideBars;
+}
+
+
+function exportCurrentCutscene(state) {
+  const {
+    currentCutsceneId,
+    cutscenes,
+    cutsceneRows,
+    cutsceneEvents,
+    currentCutsceneJumps,
+    hideBars,
+    fileName
+  } = state;
+
+  const transformedData = transformOut(currentCutsceneId, {
+    cutscenes: {
+      [currentCutsceneId]: cutscenes[currentCutsceneId],
+    },
+    cutsceneRows,
+    cutsceneEvents
+  });
+
+  const outputData = {
+    data: transformedData,
+    cutscene_jumps: currentCutsceneJumps,
+    hide_black_bars: hideBars
+  };
+
+  downloadJSON(fileName, outputData);
 }
 
 export default cutsceneReducer;

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { DragDropContext } from 'react-beautiful-dnd';
 
@@ -193,6 +193,11 @@ const DialogueContainer = () => {
       dispatch(exportDialogue());
     }
   }, [dispatch, dialogueData]);
+
+
+  useEffect(() => {
+    window.exportDialogue = () => handleExport();
+  }, [handleExport])
 
   return (
     <>
