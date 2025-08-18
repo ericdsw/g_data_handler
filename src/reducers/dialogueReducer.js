@@ -107,11 +107,11 @@ function removeSavedTargetObject(state, action) {
   }
 }
 
-function removeAllSavedTargetObjects(state, action) {
+function removeAllSavedTargetObjects(state, _) {
   state.savedTargetObjects = [];
 }
 
-function clearPreUploadedFiles(state, action) {
+function clearPreUploadedFiles(state, _) {
   state.preUploadedFiles = {};
 }
 

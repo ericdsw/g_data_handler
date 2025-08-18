@@ -1,9 +1,8 @@
-import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { Grid, TextField, Button, Fab, Icon } from '@mui/material';
+import { Grid, TextField, Button } from '@mui/material';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-import { GenericDialogue, ConfirmationDialogue } from '../../elements';
+import { GenericDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
 import DialogueConversationContainer from './DialogueConversationContainer';
 
@@ -17,14 +16,9 @@ const useStyles = makeStyles(styles);
 const Dialogue = ({
   fileName,
   dialogueData,
-  conversationsToMerge,
   handleFileNameChange,
   handleAddConversation,
   handleDragEnd,
-  handleConfirmMerge,
-  handleConfirmBulkDelete,
-  handleSelectAll,
-  handleUnselectAll,
 }) => {
   const classes = useStyles();
 
@@ -33,9 +27,6 @@ const Dialogue = ({
     'confirmMerge',
     'confirmBulkDelete'
   );
-
-  const conversationAmount = dialogueData.conversations.length;
-  const mergeAmount = conversationsToMerge.length;
 
   return (
     <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>
@@ -87,67 +78,6 @@ const Dialogue = ({
         </Grid>
       </Grid>
 
-      {/* Merge Conversations Button */}
-      <Fab
-        color="primary"
-        size="large"
-        variant="extended"
-        aria-label="Merge Conversations"
-        className={classes.mergeFab}
-        style={{
-          transform:
-            conversationsToMerge.length <= 0 ? 'scale(0.0)' : 'scale(1.0)',
-        }}
-        onClick={(_e) => toggleDialogue('confirmMerge', 'show')}
-      >
-        <Icon>merge_type</Icon>
-        Merge Selected
-      </Fab>
-
-      <Fab
-        size="large"
-        variant="extended"
-        aria-label="Merge Conversations"
-        className={classes.deleteFab}
-        style={{
-          transform:
-            conversationsToMerge.length <= 0 ? 'scale(0.0)' : 'scale(1.0)',
-        }}
-        onClick={(_e) => toggleDialogue('confirmBulkDelete', 'show')}
-      >
-        <Icon>delete</Icon>
-        Delete Selected
-      </Fab>
-
-      <Fab
-        size="large"
-        variant="extended"
-        color="secondary"
-        aria-label="All"
-        className={classes.selectAllFab}
-        style={{
-          transform:
-            conversationsToMerge.length <= 0 ? 'scale(0.0)' : 'scale(1.0)',
-        }}
-        onClick={() => {
-          if (conversationAmount > mergeAmount) {
-            handleSelectAll();
-          } else {
-            handleUnselectAll();
-          }
-        }}
-      >
-        {conversationAmount > mergeAmount ? (
-          <React.Fragment>
-            <Icon>select_all</Icon> Select All
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <Icon>clear_all</Icon> Unselect All
-          </React.Fragment>
-        )}
-      </Fab>
-
       {/* Conversation Form */}
       <GenericDialogue
         title="Create Conversation"
@@ -163,29 +93,6 @@ const Dialogue = ({
         />
       </GenericDialogue>
 
-      {/* Merge Confirmation Form */}
-      <ConfirmationDialogue
-        message={`Merge selected conversations?`}
-        descriptionText={`${conversationsToMerge.length} conversations will be merged`}
-        isOpen={dialogues['confirmMerge']}
-        handleClose={() => toggleDialogue('confirmMerge', 'hide')}
-        handleConfirm={() => {
-          handleConfirmMerge();
-          toggleDialogue('confirmMerge', 'hide');
-        }}
-      />
-
-      {/* Bulk Delete Confirmation Form */}
-      <ConfirmationDialogue
-        message="Delete selected conversations?"
-        descriptionText={`${conversationsToMerge.length} conversations will be deleted`}
-        isOpen={dialogues['confirmBulkDelete']}
-        handleClose={() => toggleDialogue('confirmBulkDelete', 'hide')}
-        handleConfirm={() => {
-          handleConfirmBulkDelete();
-          toggleDialogue('confirmBulkDelete', 'hide');
-        }}
-      />
     </DragDropContext>
   );
 };

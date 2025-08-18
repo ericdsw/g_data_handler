@@ -31,7 +31,12 @@ import {
   DELETE_PRE_LOADED_CUTSCENE_NAME,
   ADD_SAVED_NODE_TARGET,
   REMOVE_SAVED_NODE_TARGET,
-  EXPORT_CUTSCENE
+  EXPORT_CUTSCENE,
+  ADD_CUTSCENE_ROW_TO_BULK,
+  REMOVE_CUTSCENE_ROW_FROM_BULK,
+  DELETE_CUTSCENE_ROW_BULK,
+  BULK_SELECT_ALL_CUTSCENE_ROWS,
+  BULK_UNSELECT_ALL_CUTSCENE_ROWS,
 } from './types';
 
 export const addSavedNodeTarget = (nodeTarget) => (dispatch) => {
@@ -312,7 +317,42 @@ export const deleteCutsceneJump = (jumpName) => (dispatch) => {
 };
 
 
-export const exportCutscene = () => dispatch => {
+export const addCutsceneRowToBulk = rowId => dispatch => {
+  dispatch({
+    type: ADD_CUTSCENE_ROW_TO_BULK,
+    payload: { rowId }
+  });
+}
+
+export const removeCutsceneRowFromBulk = rowId => dispatch => {
+  dispatch({
+    type: REMOVE_CUTSCENE_ROW_FROM_BULK,
+    payload: { rowId },
+  });
+}
+
+export const deleteCutsceneRowBulk = () => dispatch => {
+  dispatch({
+    type: DELETE_CUTSCENE_ROW_BULK,
+    payload: {}
+  });
+};
+
+export const bulkSelectAll = () => dispatch => {
+  dispatch({
+    type: BULK_SELECT_ALL_CUTSCENE_ROWS,
+    payload: {}
+  });
+}
+
+export const bulkUnselectAllCutsceneRows = () => dispatch => {
+  dispatch({
+    type: BULK_UNSELECT_ALL_CUTSCENE_ROWS,
+    payload: {}
+  });
+}
+
+export const exportCurrentCutscene = () => dispatch => {
   dispatch({
     type: EXPORT_CUTSCENE,
     payload: {}

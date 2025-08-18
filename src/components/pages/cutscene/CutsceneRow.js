@@ -19,11 +19,13 @@ const useStyles = makeStyles(styles);
 const CutsceneRow = ({
   rowData,
   rowNumber,
+  isBulkSelected,
   handleAddRowBelow,
   handleAddRowAbove,
   handleDeleteRow,
   handleAddEvent,
   handleInjectTemplate,
+  handleToggleBulkSelected,
   ...props
 }) => {
   const classes = useStyles();
@@ -54,6 +56,7 @@ const CutsceneRow = ({
             </Grid>
             <Grid item xs={8}>
               <CutsceneRowToolbar
+                cutsceneRowId={rowData.id}
                 addAboveClick={handleAddRowAbove}
                 addBelowClick={handleAddRowBelow}
                 addEventClick={() => {
@@ -65,6 +68,8 @@ const CutsceneRow = ({
                 insertTemplateClick={() => {
                   toggleDialogue('insertTemplate', 'show');
                 }}
+                isBulkSelected={isBulkSelected}
+                handleToggleBulkSelected={handleToggleBulkSelected}
               />
             </Grid>
           </Grid>

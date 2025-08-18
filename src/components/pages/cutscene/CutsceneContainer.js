@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import { useSnackbar } from 'notistack';
@@ -7,8 +7,9 @@ import Typography from '@mui/material/Typography';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import Subscriptions from '@material-ui/icons/Subscriptions';
 import SystemUpdateAlt from '@mui/icons-material/SystemUpdateAlt';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-import { FabAbsoluteContainer, GenericDialogue } from '../../elements';
+import { ConfirmationDialogue, FabAbsoluteContainer, GenericDialogue } from '../../elements';
 import TemplateList from './elements/TemplateList';
 
 import Cutscene from './Cutscene';
@@ -30,13 +31,17 @@ import {
   reorderCutsceneRows,
   reorderCutsceneEvent,
   moveCutsceneEvent,
-  exportCutscene
+  exportCurrentCutscene,
+  deleteCutsceneRowBulk,
+  bulkSelectAll,
+  bulkUnselectAllCutsceneRows
 } from '../../../actions/cutsceneActions';
 
 import {
   transformIn,
 } from '../../../models/transformers/CutsceneTransformer';
 import { useDialogueManager } from '../../../hooks';
+import { ClearAll, SelectAll } from '@mui/icons-material';
 
 const selectCutsceneId = (state) => state.cutscene.currentCutsceneId;
 const selectCutscenes = (state) => state.cutscene.cutscenes;
@@ -68,7 +73,7 @@ const memoizedSelectCutsceneData = createSelector(
 );
 
 const CutsceneContainer = () => {
-  const [dialogues, toggleDialogue] = useDialogueManager('templates');
+  const [dialogues, toggleDialogue] = useDialogueManager('templates', 'confirmBulkDelete');
 
   /**
    * Snackbar related
@@ -92,10 +97,31 @@ const CutsceneContainer = () => {
     fileName,
     hideBars,
   } = useSelector((state) => memoizedSelectCutsceneData(state));
+  const bulkModeRows = useSelector(state => state.cutscene.cutsceneRowsToMerge);
+
+  const bulkRowsAmount = useMemo(() => bulkModeRows.length, [bulkModeRows]);
+  const rowsAmount = useMemo(
+    () => currentCutscene ? currentCutscene.cutsceneRows.length : 0,
+    [currentCutscene]
+  );
+
+  /**
+   * In case some fucky wucky happens, I'll just bind these two methods directly
+   * to the window object so they can be invoked by the browser's console.
+   */
+  useEffect(() => {
+    window.exportCutscene = () => {
+      dispatch(exportCurrentCutscene());
+    };
+  }, [dispatch, fileName]);
 
   const exportFile = useCallback(() => {
-    dispatch(exportCutscene());
-  }, [dispatch]);
+    if (currentCutscene.cutsceneRows.length <= 0) {
+      showError('Cannot export an empty cutscene');
+      return;
+    }
+    dispatch(exportCurrentCutscene());
+  }, [dispatch, currentCutscene, showError]);
 
   const clearCutscene = useCallback(() => {
     dispatch(deleteCutscene());
@@ -149,6 +175,18 @@ const CutsceneContainer = () => {
     dispatch(deleteCutsceneJump(jumpName));
   }, [dispatch]);
 
+  const bulkDelete = useCallback(() => {
+    dispatch(deleteCutsceneRowBulk());
+  }, [dispatch]);
+
+  const handleModifySelect = useCallback(() => {
+    if (rowsAmount > bulkRowsAmount) {
+      dispatch(bulkSelectAll());
+    } else {
+      dispatch(bulkUnselectAllCutsceneRows());
+    }
+  }, [dispatch, rowsAmount, bulkRowsAmount])
+
   const onDragEnd = useCallback((result) => {
     const { source, destination, draggableId, type } = result;
     // If no destination is defined or no movement needs to be made, skip
@@ -197,7 +235,7 @@ const CutsceneContainer = () => {
 
   return (
     <>
-      {(currentCutsceneId !== '' && (
+      {currentCutsceneId !== '' && (
         <>
           <CutsceneToolbar
             jumps={currentCutsceneJumps}
@@ -217,8 +255,8 @@ const CutsceneContainer = () => {
             handleDragEnd={onDragEnd}
           />
         </>
-      ))}
-      {(currentCutsceneId === '' && (
+      )}
+      {currentCutsceneId === '' && (
         <DragJsonFileManager
           buttonString="New Cutscene"
           dragString={
@@ -232,18 +270,35 @@ const CutsceneContainer = () => {
           handleEmpty={updateEmpty}
           handleUpdateFromFile={updateCutsceneFromFile}
         />
-      ))}
+      )}
       <FabAbsoluteContainer
         buttonMetadata={[
+          {
+            title: rowsAmount > bulkRowsAmount ? 'Select All' : 'Unselect All',
+            icon: rowsAmount > bulkModeRows ? <SelectAll /> : <ClearAll />,
+            color: 'default',
+            hidden: bulkRowsAmount <= 0,
+            onClick: handleModifySelect
+          },
+          {
+            title: 'Delete Selected',
+            icon: <DeleteIcon />,
+            onClick: () => toggleDialogue('confirmBulkDelete', 'show'),
+            color: 'secondary',
+            hidden: bulkRowsAmount <= 0
+          },
           {
             title: 'Templates',
             icon: <LibraryBooksIcon />,
             onClick: () => toggleDialogue('templates', 'show'),
+            color: 'primary'
           },
           {
             title: 'Export',
             icon: <SystemUpdateAlt />,
             onClick: exportFile,
+            color: 'primary',
+            hidden: currentCutsceneId === ''
           },
         ]}
       />
@@ -254,6 +309,15 @@ const CutsceneContainer = () => {
       >
         <TemplateList />
       </GenericDialogue>
+      <ConfirmationDialogue
+        message="Delete selected rows?"
+        isOpen={dialogues['confirmBulkDelete']}
+        handleConfirm={() => {
+          bulkDelete();
+          toggleDialogue('confirmBulkDelete', 'hide');
+        }}
+        handleClose={() => toggleDialogue('confirmBulkDelete', 'hide')}
+      />
     </>
   );
 };

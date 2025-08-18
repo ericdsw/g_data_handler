@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import { Draggable } from 'react-beautiful-dnd';
@@ -9,14 +9,21 @@ import {
   deleteCutsceneRow,
   addCutsceneEvent,
   injectTemplate,
+  addCutsceneRowToBulk,
+  removeCutsceneRowFromBulk,
 } from '../../../actions/cutsceneActions';
 
-const selectCutsceneRows = (state) => state.cutscene.cutsceneRows;
 const memoizedSelectCutsceneRowData = createSelector(
-  [selectCutsceneRows],
+  state => state.cutscene.cutsceneRows,
   (cutsceneRowData) => ({
     cutsceneRowData,
   })
+);
+
+const memoizedSelectIsRowInBulkMode = createSelector(
+  state => state.cutscene.cutsceneRowsToMerge,
+  (_, rowId) => rowId,
+  (rowsToMerge, rowId) => rowsToMerge.includes(rowId)
 );
 
 const CutsceneRowContainer = ({ rowId, rowNumber }) => {
@@ -24,6 +31,8 @@ const CutsceneRowContainer = ({ rowId, rowNumber }) => {
   const { cutsceneRowData } = useSelector((state) =>
     memoizedSelectCutsceneRowData(state)
   );
+  const isInBulkMode = useSelector(state => memoizedSelectIsRowInBulkMode(state, rowId));
+
   const rowData = useMemo(
     () => cutsceneRowData[rowId],
     [rowId, cutsceneRowData]
@@ -55,6 +64,16 @@ const CutsceneRowContainer = ({ rowId, rowNumber }) => {
     [dispatch, rowId]
   );
 
+  const handleToggleBulkMode = useCallback(
+    (checked) => {
+      if (checked) {
+        dispatch(addCutsceneRowToBulk(rowId));
+      } else {
+        dispatch(removeCutsceneRowFromBulk(rowId));
+      }
+    }, [dispatch, rowId]
+  );
+
   return (
     <Draggable draggableId={rowId} index={rowNumber}>
       {(provided) => {
@@ -69,6 +88,8 @@ const CutsceneRowContainer = ({ rowId, rowNumber }) => {
               handleAddEvent={handleAddEvent}
               dragHandleProps={provided.dragHandleProps}
               handleInjectTemplate={handleInjectTemplate}
+              handleToggleBulkSelected={handleToggleBulkMode}
+              isBulkSelected={isInBulkMode}
             />
           </div>
         );

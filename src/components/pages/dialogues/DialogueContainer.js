@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useMemo, useEffect } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { DragDropContext } from 'react-beautiful-dnd';
 
@@ -26,7 +26,9 @@ import { transformIn } from '../../../models/transformers/DialogueTransformer';
 import Dialogue from './Dialogue';
 import DialogueToolbar from './elements/DialogueToolbar';
 import SystemUpdateAlt from '@mui/icons-material/SystemUpdateAlt';
-import { FabAbsoluteContainer } from '../../elements';
+import { ConfirmationDialogue, FabAbsoluteContainer } from '../../elements';
+import { ClearAll, Delete, MergeType, SelectAll } from '@mui/icons-material';
+import { useDialogueManager } from '../../../hooks';
 
 const memoizedSelectCurrentDialogue = createSelector(
   (state) => state.dialogue.dialogues,
@@ -47,15 +49,22 @@ const DialogueContainer = () => {
   const dialogueData = useSelector((state) =>
     memoizedSelectCurrentDialogue(state)
   );
+  
+  const conversationAmount = useMemo(() => dialogueData ? dialogueData.conversations.length : 0, [dialogueData]);
+  const mergeAmount = useMemo(() => conversationsToMerge ? conversationsToMerge.length : 0, [conversationsToMerge]);
+
+  const [dialogues, toggleDialogue] = useDialogueManager('confirmMerge', 'confirmBulkDelete');
 
   const handleDeleteDialogue = useCallback(
     () => dispatch(deleteCurrentDialogue()),
     [dispatch]
   );
+
   const handleUpdateWithEmptyDialogue = useCallback(
     () => dispatch(updateWithEmptyDialogue('file_name.json')),
     [dispatch]
   );
+
   const handleUpdateDialogueFromFile = useCallback(
     (targetFile) => {
       parseFile(targetFile, 'application/json')
@@ -82,15 +91,18 @@ const DialogueContainer = () => {
     },
     [dispatch]
   );
+
   const handleAddConversation = useCallback(
     (conversationName) =>
       dispatch(addDialogueConversation(currentDialogueId, conversationName)),
     [dispatch, currentDialogueId]
   );
+
   const handleFileNameChange = useCallback(
     (newFileName) => dispatch(updateDialogueFilename(newFileName)),
     [dispatch]
   );
+
   const handleImportAndMerge = useCallback(
     (dialoguesToMerge) => {
       let compositeDialogue = {};
@@ -119,6 +131,7 @@ const DialogueContainer = () => {
     },
     [dispatch]
   );
+
   const handleDragEnd = useCallback(
     (result) => {
       const { source, destination, draggableId } = result;
@@ -175,14 +188,16 @@ const DialogueContainer = () => {
     () => dispatch(deleteConversationsToMerge()),
     [dispatch]
   );
-  const handleSelectAllConversations = useCallback(
-    () => dispatch(selectAllConversations()),
-    [dispatch]
-  );
-  const handleUnselectAllConversations = useCallback(
-    () => dispatch(unselectAllConversations()),
-    [dispatch]
-  );
+  const handleModifySelect = useCallback(
+    () => {
+      if (conversationAmount > mergeAmount) {
+        dispatch(selectAllConversations());
+      } else {
+        dispatch(unselectAllConversations());
+      }
+    },
+    [dispatch, mergeAmount, conversationAmount]
+  )
 
   const handleExport = useCallback(() => {
     if (dialogueData.conversations.length <= 0) {
@@ -212,25 +227,11 @@ const DialogueContainer = () => {
             <Dialogue
               fileName={fileName}
               dialogueData={dialogueData}
-              conversationsToMerge={conversationsToMerge}
               handleFileNameChange={handleFileNameChange}
               handleAddConversation={handleAddConversation}
               handleDragEnd={handleDragEnd}
-              handleConfirmMerge={handleConfirmMerge}
-              handleConfirmBulkDelete={handleConfirmBulkDelete}
-              handleSelectAll={handleSelectAllConversations}
-              handleUnselectAll={handleUnselectAllConversations}
             />
-          </DragDropContext>
-          <FabAbsoluteContainer
-            buttonMetadata={[
-              {
-                title: 'Export',
-                icon: <SystemUpdateAlt />,
-                onClick: handleExport,
-              },
-            ]}
-          />
+          </DragDropContext> 
         </>
       )}
       {currentDialogueId === '' && (
@@ -240,6 +241,62 @@ const DialogueContainer = () => {
           handleMerge={handleImportAndMerge}
         />
       )}
+
+      <FabAbsoluteContainer
+        buttonMetadata={[
+          {
+            title: conversationAmount > mergeAmount ? 'Select All' : 'Unselect All',
+            icon: conversationAmount > mergeAmount ? <SelectAll /> : <ClearAll />,
+            color: 'default',
+            hidden: conversationsToMerge.length <= 0,
+            onClick: handleModifySelect
+          },
+          {
+            title: 'Merge Selected',
+            icon: <MergeType />,
+            color: 'secondary',
+            hidden: conversationsToMerge.length <= 0,
+            onClick: () => toggleDialogue('confirmMerge', 'show')
+          },
+          {
+            title: 'Delete Selected',
+            icon: <Delete />,
+            color: 'error',
+            hidden: conversationsToMerge <= 0,
+            onClick: () => toggleDialogue('confirmBulkDelete', 'show')
+          }, 
+          {
+            title: 'Export',
+            icon: <SystemUpdateAlt />,
+            hidden: currentDialogueId === '',
+            onClick: handleExport,
+          },
+        ]}
+      />
+
+      {/* Merge Confirmation Form */}
+      <ConfirmationDialogue
+        message={`Merge selected conversations?`}
+        descriptionText={`${conversationsToMerge.length} conversations will be merged`}
+        isOpen={dialogues['confirmMerge']}
+        handleClose={() => toggleDialogue('confirmMerge', 'hide')}
+        handleConfirm={() => {
+          handleConfirmMerge();
+          toggleDialogue('confirmMerge', 'hide');
+        }}
+      />
+
+      {/* Bulk Delete Confirmation Form */}
+      <ConfirmationDialogue
+        message="Delete selected conversations?"
+        descriptionText={`${conversationsToMerge.length} conversations will be deleted`}
+        isOpen={dialogues['confirmBulkDelete']}
+        handleClose={() => toggleDialogue('confirmBulkDelete', 'hide')}
+        handleConfirm={() => {
+          handleConfirmBulkDelete();
+          toggleDialogue('confirmBulkDelete', 'hide');
+        }}
+      />
     </>
   );
 };
