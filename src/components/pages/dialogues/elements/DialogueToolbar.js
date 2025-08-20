@@ -5,7 +5,7 @@ import { Grid, Typography, Button } from '@mui/material';
 import { red } from '@mui/material/colors';
 
 import { useDialogueManager } from '../../../../hooks';
-import { GenericDialogue, ConfirmationDialogue } from '../../../elements';
+import { GenericDialogue } from '../../../elements';
 import { CreateConversationForm } from '../forms';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +26,6 @@ const DialogueToolbar = ({
 
   const [dialogues, toggleDialogue] = useDialogueManager(
     'addConversation',
-    'confirmDelete'
   );
 
   return (
@@ -53,7 +52,7 @@ const DialogueToolbar = ({
             <Button
               className={classes.deleteButton}
               color="secondary"
-              onClick={() => toggleDialogue('confirmDelete', 'show')}
+              onClick={handleClear}
             >
               Clear Dialogue File
             </Button>
@@ -74,16 +73,6 @@ const DialogueToolbar = ({
           }}
         />
       </GenericDialogue>
-
-      <ConfirmationDialogue
-        message="Delete the current loaded dialogues?"
-        isOpen={dialogues['confirmDelete']}
-        handleClose={() => toggleDialogue('confirmDelete', 'hide')}
-        handleConfirm={() => {
-          handleClear();
-          toggleDialogue('confirmDelete', 'hide');
-        }}
-      />
     </React.Fragment>
   );
 };

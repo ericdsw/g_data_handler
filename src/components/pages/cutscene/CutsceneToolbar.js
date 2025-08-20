@@ -1,8 +1,7 @@
-import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { Grid, Typography, Button } from '@mui/material';
 
-import { GenericDialogue, ConfirmationDialogue } from '../../elements';
+import { GenericDialogue } from '../../elements';
 import { JumpForm } from './forms';
 import { useDialogueManager } from '../../../hooks';
 import JumpList from './JumpList';
@@ -62,7 +61,7 @@ const CutsceneToolbar = ({
           <Button
             color="secondary"
             className={classes.deleteButton}
-            onClick={() => toggleDialogue('confirmDelete', 'show')}
+            onClick={handleClearCutscene}
           >
             Clear Cutscene
           </Button>
@@ -102,16 +101,6 @@ const CutsceneToolbar = ({
           }}
         />
       </GenericDialogue>
-
-      <ConfirmationDialogue
-        message="Delete the current cutscene?"
-        isOpen={dialogues['confirmDelete']}
-        handleConfirm={() => {
-          handleClearCutscene();
-          toggleDialogue('confirmDelete', 'hide');
-        }}
-        handleClose={() => toggleDialogue('confirmDelete', 'hide')}
-      />
     </Grid>
   );
 };

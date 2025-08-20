@@ -27,8 +27,9 @@ import Dialogue from './Dialogue';
 import DialogueToolbar from './elements/DialogueToolbar';
 import SystemUpdateAlt from '@mui/icons-material/SystemUpdateAlt';
 import { ConfirmationDialogue, FabAbsoluteContainer } from '../../elements';
-import { ClearAll, Delete, MergeType, SelectAll } from '@mui/icons-material';
+import { ClearAll, Delete, DeleteSweep, MergeType, SelectAll } from '@mui/icons-material';
 import { useDialogueManager } from '../../../hooks';
+import { red } from '@mui/material/colors';
 
 const memoizedSelectCurrentDialogue = createSelector(
   (state) => state.dialogue.dialogues,
@@ -53,7 +54,9 @@ const DialogueContainer = () => {
   const conversationAmount = useMemo(() => dialogueData ? dialogueData.conversations.length : 0, [dialogueData]);
   const mergeAmount = useMemo(() => conversationsToMerge ? conversationsToMerge.length : 0, [conversationsToMerge]);
 
-  const [dialogues, toggleDialogue] = useDialogueManager('confirmMerge', 'confirmBulkDelete');
+  const [dialogues, toggleDialogue] = useDialogueManager(
+    'confirmMerge', 'confirmBulkDelete', 'confirmClearDialogue'
+  );
 
   const handleDeleteDialogue = useCallback(
     () => dispatch(deleteCurrentDialogue()),
@@ -220,7 +223,7 @@ const DialogueContainer = () => {
         <>
           <DialogueToolbar
             handleExport={handleExport}
-            handleClear={handleDeleteDialogue}
+            handleClear={() => toggleDialogue('confirmClearDialogue', 'show')}
             handleAddConversation={handleAddConversation}
           />
           <DragDropContext onDragEnd={handleDragEnd}>
@@ -250,7 +253,17 @@ const DialogueContainer = () => {
             color: 'default',
             hidden: conversationsToMerge.length <= 0,
             onClick: handleModifySelect
-          },
+          }, 
+          {
+            title: 'Delete Selected',
+            icon: <DeleteSweep />,
+            color: 'error',
+            hidden: conversationsToMerge <= 0,
+            onClick: () => toggleDialogue('confirmBulkDelete', 'show'),
+            style: {
+              background: red[300]
+            }
+          }, 
           {
             title: 'Merge Selected',
             icon: <MergeType />,
@@ -259,12 +272,12 @@ const DialogueContainer = () => {
             onClick: () => toggleDialogue('confirmMerge', 'show')
           },
           {
-            title: 'Delete Selected',
+            title: 'Clear Dialogue',
             icon: <Delete />,
             color: 'error',
-            hidden: conversationsToMerge <= 0,
-            onClick: () => toggleDialogue('confirmBulkDelete', 'show')
-          }, 
+            hidden: currentDialogueId === '',
+            onClick: () => toggleDialogue('confirmClearDialogue', 'show')
+          },
           {
             title: 'Export',
             icon: <SystemUpdateAlt />,
@@ -295,6 +308,16 @@ const DialogueContainer = () => {
         handleConfirm={() => {
           handleConfirmBulkDelete();
           toggleDialogue('confirmBulkDelete', 'hide');
+        }}
+      />
+
+      {/* Clear current dialogue */}
+      <ConfirmationDialogue
+        message="Clear the current dialogue?"
+        isOpen={dialogues['confirmClearDialogue']}
+        handleConfirm={() => {
+          toggleDialogue('confirmClearDialogue', 'hide');
+          handleDeleteDialogue();
         }}
       />
     </>

@@ -169,7 +169,8 @@ function addToConversationMerger(state, action) {
     state.conversationsToMerge.push(conversationId);
   } else {
     state.conversationsToMerge.splice(
-      state.conversationsToMerge.indexOf(conversationId, 1)
+      state.conversationsToMerge.indexOf(conversationId),
+      1
     );
   }
 }

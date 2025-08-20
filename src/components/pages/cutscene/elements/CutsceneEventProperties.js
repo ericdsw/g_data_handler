@@ -48,7 +48,10 @@ function getValue(eventType, paramName, paramValue) {
     case 'dropdown':
       return event.parameters[paramName].elements[paramValue];
     default:
-      return paramValue
+      if (typeof paramValue === 'object') {
+        return JSON.stringify(paramValue);
+      }
+      return paramValue;
   }
 }
 

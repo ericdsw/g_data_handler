@@ -41,7 +41,8 @@ import {
   transformIn,
 } from '../../../models/transformers/CutsceneTransformer';
 import { useDialogueManager } from '../../../hooks';
-import { ClearAll, SelectAll } from '@mui/icons-material';
+import { ClearAll, DeleteSweep, SelectAll } from '@mui/icons-material';
+import { red } from '@mui/material/colors';
 
 const selectCutsceneId = (state) => state.cutscene.currentCutsceneId;
 const selectCutscenes = (state) => state.cutscene.cutscenes;
@@ -73,7 +74,9 @@ const memoizedSelectCutsceneData = createSelector(
 );
 
 const CutsceneContainer = () => {
-  const [dialogues, toggleDialogue] = useDialogueManager('templates', 'confirmBulkDelete');
+  const [dialogues, toggleDialogue] = useDialogueManager(
+    'templates', 'confirmBulkDelete', 'confirmClearCutscene'
+  );
 
   /**
    * Snackbar related
@@ -243,7 +246,7 @@ const CutsceneContainer = () => {
             handleAddJump={addJump}
             handleDeleteJump={deleteJump}
             handleExport={exportFile}
-            handleClearCutscene={clearCutscene}
+            handleClearCutscene={() => toggleDialogue('confirmClearCutscene', 'show')}
           />
           <Cutscene
             cutscene={currentCutscene}
@@ -282,16 +285,26 @@ const CutsceneContainer = () => {
           },
           {
             title: 'Delete Selected',
-            icon: <DeleteIcon />,
+            icon: <DeleteSweep />,
             onClick: () => toggleDialogue('confirmBulkDelete', 'show'),
-            color: 'secondary',
-            hidden: bulkRowsAmount <= 0
+            color: 'error',
+            hidden: bulkRowsAmount <= 0,
+            style: {
+              background: red[300]
+            }
           },
           {
             title: 'Templates',
             icon: <LibraryBooksIcon />,
             onClick: () => toggleDialogue('templates', 'show'),
-            color: 'primary'
+            color: 'secondary'
+          },
+          {
+            title: 'Clear Cutscene',
+            color: 'error',
+            icon: <DeleteIcon />,
+            hidden: currentCutsceneId === '',
+            onClick: () => toggleDialogue('confirmClearCutscene', 'show'),
           },
           {
             title: 'Export',
@@ -317,6 +330,15 @@ const CutsceneContainer = () => {
           toggleDialogue('confirmBulkDelete', 'hide');
         }}
         handleClose={() => toggleDialogue('confirmBulkDelete', 'hide')}
+      />
+      <ConfirmationDialogue
+        message="Clear the current cutscene?"
+        isOpen={dialogues['confirmClearCutscene']}
+        handleConfirm={() => {
+          toggleDialogue('confirmClearCutscene', 'hide');
+          clearCutscene();
+        }}
+        handleClose={() => toggleDialogue('confirmClearCutscene', 'hide')}
       />
     </>
   );

@@ -38,7 +38,10 @@ const FabAbsoluteContainer = ({
               color={data.color || 'primary'}
               onClick={data.onClick}
               className={classes.fab}
-              style={{ transform : data.hidden ? 'scale(0.0)' : 'scale(1.0)' }}
+              style={{
+                transform : data.hidden ? 'scale(0.0)' : 'scale(1.0)',
+                ...(data.style || {})
+              }}
             >
               {data.icon}
               &nbsp; {data.title}
