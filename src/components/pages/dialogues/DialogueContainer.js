@@ -327,6 +327,7 @@ const DialogueContainer = () => {
       <ConfirmationDialogue
         message="Clear the current dialogue?"
         isOpen={dialogues['confirmClearDialogue']}
+        handleClose={() => toggleDialogue('confirmClearDialogue', 'hide')}
         handleConfirm={() => {
           toggleDialogue('confirmClearDialogue', 'hide');
           handleDeleteDialogue();
