@@ -520,7 +520,7 @@ function exportCutscene(state) {
       cutsceneEvents,
     }),
     cutscene_jumps: currentCutsceneJumps,
-    hide_black_Bars: hideBars,
+    hide_black_bars: hideBars,
   };
   downloadJSON(fileName, result);
 }
