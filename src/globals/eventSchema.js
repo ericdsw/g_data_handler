@@ -1382,6 +1382,16 @@ const eventSchema = {
         tooltip:
           'If this value is more than 0, the event will force finish after this duration if the player has not pressed anything',
       },
+      zoom_trans_type: {
+        label: 'Zoom Trans Type',
+        type: 'tween_trans_types',
+        default: keyForValue(possibleTransTypes, 'TRANS_CUBIC'),
+      },
+      zoom_ease_type: {
+        lable: 'Zoom Ease Type',
+        type: 'tween_ease_types',
+        default: keyForValue(possibleEaseTypes, 'EASE_OUT'),
+      },
     },
   },
 
