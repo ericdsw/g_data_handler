@@ -109,7 +109,7 @@ const cutsceneReducer = createReducer(initialState, (builder) => {
     .addCase(DELETE_CUTSCENE_ROW_BULK, deleteCutsceneRowBulk)
     .addCase(EXPORT_CUTSCENE, exportCutscene)
     .addCase(BULK_SELECT_ALL_CUTSCENE_ROWS, bulkSelectAll)
-    .addCase(BULK_UNSELECT_ALL_CUTSCENE_ROWS, bulkUnselectAll)
+    .addCase(BULK_UNSELECT_ALL_CUTSCENE_ROWS, bulkUnselectAll);
 });
 
 function addSavedNodeTarget(state, action) {
@@ -479,7 +479,8 @@ function removeCutsceneRowFromBulk(state, action) {
 }
 
 function bulkSelectAll(state) {
-  state.cutsceneRowsToMerge = state.cutscenes[state.currentCutsceneId].cutsceneRows;
+  state.cutsceneRowsToMerge =
+    state.cutscenes[state.currentCutsceneId].cutsceneRows;
 }
 
 function bulkUnselectAll(state) {
@@ -488,11 +489,11 @@ function bulkUnselectAll(state) {
 
 function deleteCutsceneRowBulk(state) {
   const { cutsceneRowsToMerge } = state;
-  cutsceneRowsToMerge.forEach(rowId => {
+  cutsceneRowsToMerge.forEach((rowId) => {
     const rowEvents = state.cutsceneRows[rowId].cutsceneEvents;
-    rowEvents.forEach(eventId => {
+    rowEvents.forEach((eventId) => {
       delete state.cutsceneEvents[eventId];
-    })
+    });
     delete state.cutsceneRows[rowId];
     deleteReference(state.cutscenes, 'cutsceneRows', rowId);
   });
@@ -507,19 +508,19 @@ function exportCutscene(state) {
     cutsceneEvents,
     cutsceneRows,
     currentCutsceneJumps,
-    fileName
+    fileName,
   } = state;
   const currentCutscene = cutscenes[currentCutsceneId];
   const result = {
     data: transformOut(currentCutsceneId, {
       cutscenes: {
-        [currentCutsceneId]: currentCutscene
+        [currentCutsceneId]: currentCutscene,
       },
       cutsceneRows,
-      cutsceneEvents
+      cutsceneEvents,
     }),
     cutscene_jumps: currentCutsceneJumps,
-    hide_black_Bars: hideBars
+    hide_black_Bars: hideBars,
   };
   downloadJSON(fileName, result);
 }

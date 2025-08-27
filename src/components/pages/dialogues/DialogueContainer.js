@@ -27,7 +27,13 @@ import Dialogue from './Dialogue';
 import DialogueToolbar from './elements/DialogueToolbar';
 import SystemUpdateAlt from '@mui/icons-material/SystemUpdateAlt';
 import { ConfirmationDialogue, FabAbsoluteContainer } from '../../elements';
-import { ClearAll, Delete, DeleteSweep, MergeType, SelectAll } from '@mui/icons-material';
+import {
+  ClearAll,
+  Delete,
+  DeleteSweep,
+  MergeType,
+  SelectAll,
+} from '@mui/icons-material';
 import { useDialogueManager } from '../../../hooks';
 import { red } from '@mui/material/colors';
 
@@ -50,12 +56,20 @@ const DialogueContainer = () => {
   const dialogueData = useSelector((state) =>
     memoizedSelectCurrentDialogue(state)
   );
-  
-  const conversationAmount = useMemo(() => dialogueData ? dialogueData.conversations.length : 0, [dialogueData]);
-  const mergeAmount = useMemo(() => conversationsToMerge ? conversationsToMerge.length : 0, [conversationsToMerge]);
+
+  const conversationAmount = useMemo(
+    () => (dialogueData ? dialogueData.conversations.length : 0),
+    [dialogueData]
+  );
+  const mergeAmount = useMemo(
+    () => (conversationsToMerge ? conversationsToMerge.length : 0),
+    [conversationsToMerge]
+  );
 
   const [dialogues, toggleDialogue] = useDialogueManager(
-    'confirmMerge', 'confirmBulkDelete', 'confirmClearDialogue'
+    'confirmMerge',
+    'confirmBulkDelete',
+    'confirmClearDialogue'
   );
 
   const handleDeleteDialogue = useCallback(
@@ -191,16 +205,13 @@ const DialogueContainer = () => {
     () => dispatch(deleteConversationsToMerge()),
     [dispatch]
   );
-  const handleModifySelect = useCallback(
-    () => {
-      if (conversationAmount > mergeAmount) {
-        dispatch(selectAllConversations());
-      } else {
-        dispatch(unselectAllConversations());
-      }
-    },
-    [dispatch, mergeAmount, conversationAmount]
-  )
+  const handleModifySelect = useCallback(() => {
+    if (conversationAmount > mergeAmount) {
+      dispatch(selectAllConversations());
+    } else {
+      dispatch(unselectAllConversations());
+    }
+  }, [dispatch, mergeAmount, conversationAmount]);
 
   const handleExport = useCallback(() => {
     if (dialogueData.conversations.length <= 0) {
@@ -212,10 +223,9 @@ const DialogueContainer = () => {
     }
   }, [dispatch, dialogueData]);
 
-
   useEffect(() => {
     window.exportDialogue = () => handleExport();
-  }, [handleExport])
+  }, [handleExport]);
 
   return (
     <>
@@ -234,7 +244,7 @@ const DialogueContainer = () => {
               handleAddConversation={handleAddConversation}
               handleDragEnd={handleDragEnd}
             />
-          </DragDropContext> 
+          </DragDropContext>
         </>
       )}
       {currentDialogueId === '' && (
@@ -248,12 +258,14 @@ const DialogueContainer = () => {
       <FabAbsoluteContainer
         buttonMetadata={[
           {
-            title: conversationAmount > mergeAmount ? 'Select All' : 'Unselect All',
-            icon: conversationAmount > mergeAmount ? <SelectAll /> : <ClearAll />,
+            title:
+              conversationAmount > mergeAmount ? 'Select All' : 'Unselect All',
+            icon:
+              conversationAmount > mergeAmount ? <SelectAll /> : <ClearAll />,
             color: 'default',
             hidden: conversationsToMerge.length <= 0,
-            onClick: handleModifySelect
-          }, 
+            onClick: handleModifySelect,
+          },
           {
             title: 'Delete Selected',
             icon: <DeleteSweep />,
@@ -261,22 +273,22 @@ const DialogueContainer = () => {
             hidden: conversationsToMerge <= 0,
             onClick: () => toggleDialogue('confirmBulkDelete', 'show'),
             style: {
-              background: red[300]
-            }
-          }, 
+              background: red[300],
+            },
+          },
           {
             title: 'Merge Selected',
             icon: <MergeType />,
             color: 'secondary',
             hidden: conversationsToMerge.length <= 0,
-            onClick: () => toggleDialogue('confirmMerge', 'show')
+            onClick: () => toggleDialogue('confirmMerge', 'show'),
           },
           {
             title: 'Clear Dialogue',
             icon: <Delete />,
             color: 'error',
             hidden: currentDialogueId === '',
-            onClick: () => toggleDialogue('confirmClearDialogue', 'show')
+            onClick: () => toggleDialogue('confirmClearDialogue', 'show'),
           },
           {
             title: 'Export',

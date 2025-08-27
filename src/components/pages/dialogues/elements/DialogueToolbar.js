@@ -24,9 +24,7 @@ const DialogueToolbar = ({
 }) => {
   const classes = useStyles();
 
-  const [dialogues, toggleDialogue] = useDialogueManager(
-    'addConversation',
-  );
+  const [dialogues, toggleDialogue] = useDialogueManager('addConversation');
 
   return (
     <React.Fragment>

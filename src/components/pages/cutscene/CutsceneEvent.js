@@ -189,7 +189,7 @@ const CutsceneEvent = ({
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              <CutsceneEventProperties cutsceneEventData={cutsceneEventData}/>
+              <CutsceneEventProperties cutsceneEventData={cutsceneEventData} />
             </CardContent>
           </Collapse>
         </Card>

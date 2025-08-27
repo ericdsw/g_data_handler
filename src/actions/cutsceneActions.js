@@ -316,45 +316,44 @@ export const deleteCutsceneJump = (jumpName) => (dispatch) => {
   });
 };
 
-
-export const addCutsceneRowToBulk = rowId => dispatch => {
+export const addCutsceneRowToBulk = (rowId) => (dispatch) => {
   dispatch({
     type: ADD_CUTSCENE_ROW_TO_BULK,
-    payload: { rowId }
+    payload: { rowId },
   });
-}
+};
 
-export const removeCutsceneRowFromBulk = rowId => dispatch => {
+export const removeCutsceneRowFromBulk = (rowId) => (dispatch) => {
   dispatch({
     type: REMOVE_CUTSCENE_ROW_FROM_BULK,
     payload: { rowId },
   });
-}
+};
 
-export const deleteCutsceneRowBulk = () => dispatch => {
+export const deleteCutsceneRowBulk = () => (dispatch) => {
   dispatch({
     type: DELETE_CUTSCENE_ROW_BULK,
-    payload: {}
+    payload: {},
   });
 };
 
-export const bulkSelectAll = () => dispatch => {
+export const bulkSelectAll = () => (dispatch) => {
   dispatch({
     type: BULK_SELECT_ALL_CUTSCENE_ROWS,
-    payload: {}
+    payload: {},
   });
-}
+};
 
-export const bulkUnselectAllCutsceneRows = () => dispatch => {
+export const bulkUnselectAllCutsceneRows = () => (dispatch) => {
   dispatch({
     type: BULK_UNSELECT_ALL_CUTSCENE_ROWS,
-    payload: {}
+    payload: {},
   });
-}
+};
 
-export const exportCurrentCutscene = () => dispatch => {
+export const exportCurrentCutscene = () => (dispatch) => {
   dispatch({
     type: EXPORT_CUTSCENE,
-    payload: {}
+    payload: {},
   });
-}
+};

@@ -9,16 +9,17 @@ import Subscriptions from '@material-ui/icons/Subscriptions';
 import SystemUpdateAlt from '@mui/icons-material/SystemUpdateAlt';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { ConfirmationDialogue, FabAbsoluteContainer, GenericDialogue } from '../../elements';
+import {
+  ConfirmationDialogue,
+  FabAbsoluteContainer,
+  GenericDialogue,
+} from '../../elements';
 import TemplateList from './elements/TemplateList';
 
 import Cutscene from './Cutscene';
 import CutsceneToolbar from './CutsceneToolbar';
 import { DragJsonFileManager } from '../../elements';
-import {
-  parseFile,
-  fillCutsceneWithDefaults,
-} from '../../../functions';
+import { parseFile, fillCutsceneWithDefaults } from '../../../functions';
 import {
   updateCutsceneFileName,
   updateCutscene,
@@ -34,12 +35,10 @@ import {
   exportCurrentCutscene,
   deleteCutsceneRowBulk,
   bulkSelectAll,
-  bulkUnselectAllCutsceneRows
+  bulkUnselectAllCutsceneRows,
 } from '../../../actions/cutsceneActions';
 
-import {
-  transformIn,
-} from '../../../models/transformers/CutsceneTransformer';
+import { transformIn } from '../../../models/transformers/CutsceneTransformer';
 import { useDialogueManager } from '../../../hooks';
 import { ClearAll, DeleteSweep, SelectAll } from '@mui/icons-material';
 import { red } from '@mui/material/colors';
@@ -58,13 +57,7 @@ const memoizedSelectCutsceneData = createSelector(
     selectHideBars,
     selectJumps,
   ],
-  (
-    currentCutsceneId,
-    cutscenes,
-    fileName,
-    hideBars,
-    currentCutsceneJumps,
-  ) => ({
+  (currentCutsceneId, cutscenes, fileName, hideBars, currentCutsceneJumps) => ({
     currentCutsceneId,
     currentCutscene: cutscenes[currentCutsceneId],
     fileName,
@@ -75,7 +68,9 @@ const memoizedSelectCutsceneData = createSelector(
 
 const CutsceneContainer = () => {
   const [dialogues, toggleDialogue] = useDialogueManager(
-    'templates', 'confirmBulkDelete', 'confirmClearCutscene'
+    'templates',
+    'confirmBulkDelete',
+    'confirmClearCutscene'
   );
 
   /**
@@ -100,11 +95,13 @@ const CutsceneContainer = () => {
     fileName,
     hideBars,
   } = useSelector((state) => memoizedSelectCutsceneData(state));
-  const bulkModeRows = useSelector(state => state.cutscene.cutsceneRowsToMerge);
+  const bulkModeRows = useSelector(
+    (state) => state.cutscene.cutsceneRowsToMerge
+  );
 
   const bulkRowsAmount = useMemo(() => bulkModeRows.length, [bulkModeRows]);
   const rowsAmount = useMemo(
-    () => currentCutscene ? currentCutscene.cutsceneRows.length : 0,
+    () => (currentCutscene ? currentCutscene.cutsceneRows.length : 0),
     [currentCutscene]
   );
 
@@ -134,49 +131,64 @@ const CutsceneContainer = () => {
     dispatch(updateWithEmptyCutscene());
   }, [dispatch]);
 
-  const updateCutsceneFromFile = useCallback(async (targetFile) => {
-    try {
-      const json = await parseFile(targetFile, 'application/json');
-      const jumps = json['cutscene_jumps'] || {};
-      const hideBars = json['hide_black_bars'] || false;
+  const updateCutsceneFromFile = useCallback(
+    async (targetFile) => {
+      try {
+        const json = await parseFile(targetFile, 'application/json');
+        const jumps = json['cutscene_jumps'] || {};
+        const hideBars = json['hide_black_bars'] || false;
 
-      const fixedCutscene = fillCutsceneWithDefaults(json.data);
+        const fixedCutscene = fillCutsceneWithDefaults(json.data);
 
-      const { result, entities } = transformIn(fixedCutscene);
+        const { result, entities } = transformIn(fixedCutscene);
 
-      dispatch(
-        updateCutscene({
-          currentCutsceneId: result,
-          jumps,
-          fileName: targetFile.name,
-          hideBars: hideBars,
-          ...entities,
-        })
-      );
-    } catch (e) {
-      showError(e.message);
-    }
-  }, [dispatch, showError]);
+        dispatch(
+          updateCutscene({
+            currentCutsceneId: result,
+            jumps,
+            fileName: targetFile.name,
+            hideBars: hideBars,
+            ...entities,
+          })
+        );
+      } catch (e) {
+        showError(e.message);
+      }
+    },
+    [dispatch, showError]
+  );
 
-  const updateHideBars = useCallback((shouldHide) => {
-    dispatch(updateCutsceneHideBars(shouldHide));
-  }, [dispatch]);
+  const updateHideBars = useCallback(
+    (shouldHide) => {
+      dispatch(updateCutsceneHideBars(shouldHide));
+    },
+    [dispatch]
+  );
 
-  const changeFileName = useCallback((newFileName) => {
-    dispatch(updateCutsceneFileName(newFileName));
-  }, [dispatch]);
+  const changeFileName = useCallback(
+    (newFileName) => {
+      dispatch(updateCutsceneFileName(newFileName));
+    },
+    [dispatch]
+  );
 
   const addRow = useCallback(() => {
     dispatch(addCutsceneRow());
   }, [dispatch]);
 
-  const addJump = useCallback((jumpName, fileName) => {
-    dispatch(addCutsceneJump(jumpName, fileName));
-  }, [dispatch]);
+  const addJump = useCallback(
+    (jumpName, fileName) => {
+      dispatch(addCutsceneJump(jumpName, fileName));
+    },
+    [dispatch]
+  );
 
-  const deleteJump = useCallback((jumpName) => {
-    dispatch(deleteCutsceneJump(jumpName));
-  }, [dispatch]);
+  const deleteJump = useCallback(
+    (jumpName) => {
+      dispatch(deleteCutsceneJump(jumpName));
+    },
+    [dispatch]
+  );
 
   const bulkDelete = useCallback(() => {
     dispatch(deleteCutsceneRowBulk());
@@ -188,53 +200,56 @@ const CutsceneContainer = () => {
     } else {
       dispatch(bulkUnselectAllCutsceneRows());
     }
-  }, [dispatch, rowsAmount, bulkRowsAmount])
+  }, [dispatch, rowsAmount, bulkRowsAmount]);
 
-  const onDragEnd = useCallback((result) => {
-    const { source, destination, draggableId, type } = result;
-    // If no destination is defined or no movement needs to be made, skip
-    if (
-      !destination ||
-      (destination.droppableId === source.droppableId &&
-        destination.index === source.index)
-    ) {
-      return;
-    }
+  const onDragEnd = useCallback(
+    (result) => {
+      const { source, destination, draggableId, type } = result;
+      // If no destination is defined or no movement needs to be made, skip
+      if (
+        !destination ||
+        (destination.droppableId === source.droppableId &&
+          destination.index === source.index)
+      ) {
+        return;
+      }
 
-    switch (type) {
-      case 'cutsceneRow':
-        dispatch(
-          reorderCutsceneRows(source.index, destination.index, draggableId)
-        );
-        break;
-
-      case 'cutsceneEvent':
-        if (source.droppableId === destination.droppableId) {
+      switch (type) {
+        case 'cutsceneRow':
           dispatch(
-            reorderCutsceneEvent(
-              source.index,
-              destination.index,
-              source.droppableId,
-              draggableId
-            )
+            reorderCutsceneRows(source.index, destination.index, draggableId)
           );
-        } else {
-          dispatch(
-            moveCutsceneEvent(
-              source.index,
-              destination.index,
-              source.droppableId,
-              destination.droppableId,
-              draggableId
-            )
-          );
-        }
-        break;
+          break;
 
-      default:
-        break;
-    }
-  }, [dispatch]);
+        case 'cutsceneEvent':
+          if (source.droppableId === destination.droppableId) {
+            dispatch(
+              reorderCutsceneEvent(
+                source.index,
+                destination.index,
+                source.droppableId,
+                draggableId
+              )
+            );
+          } else {
+            dispatch(
+              moveCutsceneEvent(
+                source.index,
+                destination.index,
+                source.droppableId,
+                destination.droppableId,
+                draggableId
+              )
+            );
+          }
+          break;
+
+        default:
+          break;
+      }
+    },
+    [dispatch]
+  );
 
   return (
     <>
@@ -246,7 +261,9 @@ const CutsceneContainer = () => {
             handleAddJump={addJump}
             handleDeleteJump={deleteJump}
             handleExport={exportFile}
-            handleClearCutscene={() => toggleDialogue('confirmClearCutscene', 'show')}
+            handleClearCutscene={() =>
+              toggleDialogue('confirmClearCutscene', 'show')
+            }
           />
           <Cutscene
             cutscene={currentCutscene}
@@ -281,7 +298,7 @@ const CutsceneContainer = () => {
             icon: rowsAmount > bulkModeRows ? <SelectAll /> : <ClearAll />,
             color: 'default',
             hidden: bulkRowsAmount <= 0,
-            onClick: handleModifySelect
+            onClick: handleModifySelect,
           },
           {
             title: 'Delete Selected',
@@ -290,14 +307,14 @@ const CutsceneContainer = () => {
             color: 'error',
             hidden: bulkRowsAmount <= 0,
             style: {
-              background: red[300]
-            }
+              background: red[300],
+            },
           },
           {
             title: 'Templates',
             icon: <LibraryBooksIcon />,
             onClick: () => toggleDialogue('templates', 'show'),
-            color: 'secondary'
+            color: 'secondary',
           },
           {
             title: 'Clear Cutscene',
@@ -311,7 +328,7 @@ const CutsceneContainer = () => {
             icon: <SystemUpdateAlt />,
             onClick: exportFile,
             color: 'primary',
-            hidden: currentCutsceneId === ''
+            hidden: currentCutsceneId === '',
           },
         ]}
       />

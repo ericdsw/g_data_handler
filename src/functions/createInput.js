@@ -21,8 +21,6 @@ import CutsceneFileSearcher from '../components/elements/CutsceneFileSearcher';
 import NodeTargetField from '../components/elements/NodeTargetField';
 import { possibleEaseTypes, possibleTransTypes } from '../globals/godotEnums';
 
-
-
 /**
  * Creates an input element instance using the provided attributes.
  *
@@ -272,7 +270,7 @@ export default function createInput(
         />
       );
       break;
-    
+
     case 'tween_trans_types':
       contentValue = (
         <TextField
@@ -287,15 +285,17 @@ export default function createInput(
           margin="normal"
           {...extraParams}
         >
-          {Object.keys(possibleTransTypes).map(transTypeId => (
+          {Object.keys(possibleTransTypes).map((transTypeId) => (
             <MenuItem key={transTypeId} value={transTypeId}>
-              <Typography variant="body1">{possibleTransTypes[transTypeId]}</Typography>
+              <Typography variant="body1">
+                {possibleTransTypes[transTypeId]}
+              </Typography>
             </MenuItem>
           ))}
         </TextField>
       );
       break;
-    
+
     case 'tween_ease_types':
       contentValue = (
         <TextField
@@ -310,9 +310,11 @@ export default function createInput(
           margin="normal"
           {...extraParams}
         >
-          {Object.keys(possibleEaseTypes).map(easeTypeId => (
+          {Object.keys(possibleEaseTypes).map((easeTypeId) => (
             <MenuItem key={easeTypeId} value={easeTypeId}>
-              <Typography variant="body1">{possibleEaseTypes[easeTypeId]}</Typography>
+              <Typography variant="body1">
+                {possibleEaseTypes[easeTypeId]}
+              </Typography>
             </MenuItem>
           ))}
         </TextField>

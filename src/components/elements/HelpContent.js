@@ -35,7 +35,7 @@ const nodeTargetInputSchema = {
   type: 'node_target',
 };
 
-const emptyOnChange = () => () => {}
+const emptyOnChange = () => () => {};
 
 const HelpContent = () => {
   const classes = useStyles();
@@ -53,17 +53,16 @@ const HelpContent = () => {
       <Typography variant="h6" className={classes.blueText}>
         Normal text
       </Typography>
-      Account for the mayority of cases and their specific format will depend
-      on what the input is for.
+      Account for the mayority of cases and their specific format will depend on
+      what the input is for.
       {createInput('foo', textInputSchema, 'Some Text', emptyOnChange)}
       <br />
       <br />
       <Typography variant="h6" className={classes.amberText}>
         Positions
       </Typography>
-      A position can either be a json with both x and y defined, or a
-      Position2D node inside the map, in which case only the node name must be
-      defined.
+      A position can either be a json with both x and y defined, or a Position2D
+      node inside the map, in which case only the node name must be defined.
       {createInput(
         'bar',
         positionInputSchema,
@@ -75,13 +74,13 @@ const HelpContent = () => {
       <Typography variant="h6" className={classes.yellowText}>
         Position Arrays
       </Typography>
-      A position array is a list of Position2Ds on the map, and is defined as
-      a comma separated list the position's node names.
+      A position array is a list of Position2Ds on the map, and is defined as a
+      comma separated list the position's node names.
       {createInput(
         'baz',
         positionArrayInputSchema,
         'Position1, Position2, Position3',
-        emptyOnChange 
+        emptyOnChange
       )}
       <br />
       <br />
@@ -100,9 +99,8 @@ const HelpContent = () => {
         </li>
         <li>
           <code className={classes.codetext}>CAMERA:NodeName</code>&nbsp; Will
-          search for a node named NodeName inside the viewport. Useful when
-          you want to modify or delete something that is already inside the
-          camera.
+          search for a node named NodeName inside the viewport. Useful when you
+          want to modify or delete something that is already inside the camera.
         </li>
         <li>
           <code className={classes.codetext}>PERMANENT:NodeName</code>&nbsp;
@@ -110,16 +108,21 @@ const HelpContent = () => {
         </li>
         <li>
           <code className={classes.codetext}>MAP_OBJECTS:NodeName</code>
-          &nbsp; Will search for a node named NodeName inside the current
-          active mapobject instance
+          &nbsp; Will search for a node named NodeName inside the current active
+          mapobject instance
         </li>
         <li>
-          <code className={classes.codetext}>:NodeName</code>&nbsp; Will
-          search for a node named NodeName directly present as a child of the
-          current map
+          <code className={classes.codetext}>:NodeName</code>&nbsp; Will search
+          for a node named NodeName directly present as a child of the current
+          map
         </li>
       </ul>
-      {createInput('qux', nodeTargetInputSchema, 'Default:NPCName', emptyOnChange)}
+      {createInput(
+        'qux',
+        nodeTargetInputSchema,
+        'Default:NPCName',
+        emptyOnChange
+      )}
     </>
   );
 };

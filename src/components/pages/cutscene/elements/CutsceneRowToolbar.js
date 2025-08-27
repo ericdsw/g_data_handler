@@ -15,7 +15,7 @@ const CutsceneRowToolbar = ({
   deleteRowClick,
   insertTemplateClick,
   isBulkSelected,
-  handleToggleBulkSelected
+  handleToggleBulkSelected,
 }) => {
   return (
     <Typography variant="h6" align="right">
@@ -23,8 +23,8 @@ const CutsceneRowToolbar = ({
         <Checkbox
           checked={isBulkSelected}
           value={cutsceneRowId}
-          onChange={e => handleToggleBulkSelected(e.target.checked)}
-          onClick={e => e.stopPropagation()}
+          onChange={(e) => handleToggleBulkSelected(e.target.checked)}
+          onClick={(e) => e.stopPropagation()}
         />
       </Tooltip>
       <Tooltip title="Add row above" enterDelay={200}>

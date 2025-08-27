@@ -14,14 +14,14 @@ import {
 } from '../../../actions/cutsceneActions';
 
 const memoizedSelectCutsceneRowData = createSelector(
-  state => state.cutscene.cutsceneRows,
+  (state) => state.cutscene.cutsceneRows,
   (cutsceneRowData) => ({
     cutsceneRowData,
   })
 );
 
 const memoizedSelectIsRowInBulkMode = createSelector(
-  state => state.cutscene.cutsceneRowsToMerge,
+  (state) => state.cutscene.cutsceneRowsToMerge,
   (_, rowId) => rowId,
   (rowsToMerge, rowId) => rowsToMerge.includes(rowId)
 );
@@ -31,7 +31,9 @@ const CutsceneRowContainer = ({ rowId, rowNumber }) => {
   const { cutsceneRowData } = useSelector((state) =>
     memoizedSelectCutsceneRowData(state)
   );
-  const isInBulkMode = useSelector(state => memoizedSelectIsRowInBulkMode(state, rowId));
+  const isInBulkMode = useSelector((state) =>
+    memoizedSelectIsRowInBulkMode(state, rowId)
+  );
 
   const rowData = useMemo(
     () => cutsceneRowData[rowId],
@@ -71,7 +73,8 @@ const CutsceneRowContainer = ({ rowId, rowNumber }) => {
       } else {
         dispatch(removeCutsceneRowFromBulk(rowId));
       }
-    }, [dispatch, rowId]
+    },
+    [dispatch, rowId]
   );
 
   return (

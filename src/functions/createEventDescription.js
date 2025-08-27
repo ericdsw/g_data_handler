@@ -232,6 +232,13 @@ export default function createEventDescription(type, parameters) {
     case 'go_to_main_menu':
       return `Will return to the main menu`;
 
+    case 'intermediate_save_file':
+      if (parameters.mark_demo_completed) {
+        return `Will create an intermediate save file with the demo marked as completed`;
+      } else {
+        return `Will create an intermediate save file without marking the demo`;
+      }
+
     default:
       return '';
   }

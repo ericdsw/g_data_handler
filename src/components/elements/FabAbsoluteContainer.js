@@ -5,19 +5,18 @@ import makeStyles from '@mui/styles/makeStyles';
 const useStyles = makeStyles({
   fab: {
     transition: 'transform 0.2s ease',
-    width: 200
+    width: 200,
   },
   fabContainer: {
-    transition: 'max-height 0.4s ease'
-  }
+    transition: 'max-height 0.4s ease',
+  },
 });
 
 const FabAbsoluteContainer = ({
   buttonMetadata,
   bottomSpacing = 32,
-  rightSpacing = 32
+  rightSpacing = 32,
 }) => {
-
   const classes = useStyles();
 
   return (
@@ -31,7 +30,7 @@ const FabAbsoluteContainer = ({
             key={data.title}
             id={data.title}
             className={classes.fabContainer}
-            style={{ maxHeight : data.hidden ? 0 : 70}}
+            style={{ maxHeight: data.hidden ? 0 : 70 }}
           >
             <Fab
               variant="extended"
@@ -39,8 +38,8 @@ const FabAbsoluteContainer = ({
               onClick={data.onClick}
               className={classes.fab}
               style={{
-                transform : data.hidden ? 'scale(0.0)' : 'scale(1.0)',
-                ...(data.style || {})
+                transform: data.hidden ? 'scale(0.0)' : 'scale(1.0)',
+                ...(data.style || {}),
               }}
             >
               {data.icon}

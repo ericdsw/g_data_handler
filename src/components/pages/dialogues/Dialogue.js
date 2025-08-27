@@ -92,7 +92,6 @@ const Dialogue = ({
           }}
         />
       </GenericDialogue>
-
     </DragDropContext>
   );
 };

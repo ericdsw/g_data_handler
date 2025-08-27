@@ -1,4 +1,8 @@
-import { keyForValue, possibleEaseTypes, possibleTransTypes } from "./godotEnums";
+import {
+  keyForValue,
+  possibleEaseTypes,
+  possibleTransTypes,
+} from './godotEnums';
 
 /**
  * These parameters are defined in the base CutsceneEvent file.
@@ -1136,8 +1140,8 @@ const eventSchema = {
       zoom_ease_type: {
         lable: 'Zoom Ease Type',
         type: 'tween_ease_types',
-        default: keyForValue(possibleEaseTypes, 'EASE_IN_OUT')
-      }
+        default: keyForValue(possibleEaseTypes, 'EASE_IN_OUT'),
+      },
     },
   },
 
@@ -2107,6 +2111,27 @@ const eventSchema = {
         required: true,
         placeholder: 'method_name',
         tooltip: 'The method that will be called',
+      },
+    },
+  },
+
+  intermediate_save_file: {
+    name: 'Create Intermediate Save File',
+    icon: 'history_edu',
+    additionalText:
+      'Generates the intermediate save file to migrate between the demo and the full game',
+    defaultImportant: false,
+    parameters: {
+      ...defaultParameters,
+      show_disk_save_feedback: {
+        label: 'Show Disk Save Feedback',
+        type: 'boolean',
+        default: false,
+      },
+      mark_demo_completed: {
+        label: 'Mark Demo Completed',
+        type: 'boolean',
+        default: false,
       },
     },
   },
