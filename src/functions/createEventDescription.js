@@ -80,11 +80,16 @@ export default function createEventDescription(type, parameters) {
       return `Remove the item ${parameters.item_id}`;
     case 'save':
       const { map_data, npc_data, player_data } = parameters;
+      let result = "";
       if (!map_data && !npc_data && !player_data) {
-        return 'Complete Save';
+        result = 'Complete Save';
       } else {
-        return 'Partial Save';
+        result = 'Partial Save';
       }
+      if (parameters.only_for_demo) {
+        result = `${result} (demo only)`
+      }
+      return result
     case 'shake':
       const { duration, shake_amount, shake_id } = parameters;
       if (shake_amount <= 0) {
@@ -238,6 +243,8 @@ export default function createEventDescription(type, parameters) {
       } else {
         return `Will create an intermediate save file without marking the demo`;
       }
+    case 'finish_demo':
+      return 'Finish the demo and go back to the main menu (only in demo versions)';
 
     default:
       return '';

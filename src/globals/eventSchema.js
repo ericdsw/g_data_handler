@@ -956,6 +956,18 @@ const eventSchema = {
         tooltip:
           'Whether the save icon will appear on the bottom of the screen',
       },
+      custom_player_position_name: {
+        label: 'Custom Player Position Node Name',
+        required: false,
+        type: 'string',
+        placeholder: 'foo_node'
+      },
+      only_for_demo: {
+        label: 'Only For Demo',
+        type: 'boolean',
+        default: false,
+        tooltip: 'If true, this save will only be trigered on the demo version of the game.'
+      }
     },
   },
 
@@ -1721,6 +1733,12 @@ const eventSchema = {
         tooltip:
           'If true, the prompt will never trigger the instructions, even if this memory is the first one obtained',
       },
+      do_not_fade_out_for_demo: {
+        label: 'Do Not Fade Out For Demo',
+        type: 'boolean',
+        default: false,
+        tooltip: 'If true, the memory prompt\'s black background will not fade out (a change map should remove it)'
+      }
     },
   },
 
@@ -2145,6 +2163,16 @@ const eventSchema = {
       },
     },
   },
+
+  finish_demo: {
+    name: 'Finish Demo Event',
+    icon: 'door_sliding',
+    additionalText: 'Finishes the demo and returns to the main menu. Will not work on non-demo versions',
+    defaultImportant: true,
+    parameters: {
+      ...defaultParameters
+    }
+  }
 };
 
 export default eventSchema;
