@@ -32,6 +32,7 @@ const Cutscene = ({
   const cutsceneRows = useMemo(() => cutscene.cutsceneRows, [cutscene]);
 
   return (
+    <>
     <DragDropContext onDragEnd={handleDragEnd}>
       <Grid className={classes.root} container spacing={2} alignItems="center">
         <Grid item xs={12} md={10}>
@@ -104,6 +105,8 @@ const Cutscene = ({
         </Grid>
       </Grid>
     </DragDropContext>
+    <div style={{ height: 150 }} />
+    </>
   );
 };
 

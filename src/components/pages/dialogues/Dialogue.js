@@ -29,6 +29,7 @@ const Dialogue = ({
   );
 
   return (
+    <>
     <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>
       <Grid className={classes.root} container spacing={2}>
         {/* File Name Manager */}
@@ -93,6 +94,8 @@ const Dialogue = ({
         />
       </GenericDialogue>
     </DragDropContext>
+    <div style={{ height: 150 }} />
+    </>
   );
 };
 
