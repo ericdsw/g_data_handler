@@ -1,4 +1,3 @@
-import React from 'react';
 import { ThemeProvider } from '@mui/styles';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
