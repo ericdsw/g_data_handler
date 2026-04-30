@@ -6,6 +6,7 @@ import { GenericDialogue } from "@/components/elements";
 import HelpContent from "./HelpContent";
 
 const HelpButton = () => {
+
   const [dialogues, toggleDialogue] = useDialogueManager('helpDialogue')
   
   const iconButtonClick = () => toggleDialogue('helpDialogue', 'show');

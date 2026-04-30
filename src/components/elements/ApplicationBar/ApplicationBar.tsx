@@ -1,4 +1,3 @@
-import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import {
   AppBar,
@@ -9,7 +8,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-import { applicationName } from '../../../globals';
+import { applicationName } from '@/globals';
 
 import CutsceneFileNamesButton from './CutsceneFileNamesButton';
 import PreloadedDialoguesButton from './PreloadedDialoguesButton';

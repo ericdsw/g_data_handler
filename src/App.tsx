@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
@@ -37,9 +37,7 @@ const App = () => {
     <div className={classes.root}>
       <SnackbarProvider maxSnack={3}>
         <Router>
-          <ApplicationBar
-            handleToggle={() => toggleDrawerOpen(!drawerOpen)}
-          />
+          <ApplicationBar handleToggle={() => toggleDrawerOpen(!drawerOpen)} />
           <NavigationDrawer
             isOpen={drawerOpen}
             handleCollapse={() => toggleDrawerOpen(false)}
