@@ -7,16 +7,14 @@ import {
   InputAdornment,
 } from '@mui/material';
 import { Check, Close, Delete, Edit } from '@mui/icons-material';
-
 import { useDispatch } from 'react-redux';
 
-import { useDialogueManager } from '../../hooks';
-import ConfirmationDialogue from './ConfirmationDialogue';
-
+import { useDialogueManager } from '@/hooks';
+import { ConfirmationDialogue } from '@/components/elements';
 import {
   editPreLoadedCutsceneName,
   deletePreLoadedCutsceneName,
-} from '../../actions/cutsceneActions';
+} from '@/actions/cutsceneActions';
 
 const PreLoadedCutscenesContentRow = ({ fileName }) => {
   const dispatch = useDispatch();

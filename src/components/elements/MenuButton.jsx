@@ -29,7 +29,7 @@ const MenuButton = ({
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
       >
-        {Object.keys(contentDictionary).map((key, index) => (
+        {Object.keys(contentDictionary).map((key, _index) => (
           <MenuItem
             key={key}
             onClick={() => {

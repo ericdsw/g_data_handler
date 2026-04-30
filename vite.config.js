@@ -6,11 +6,16 @@ export default defineConfig(() => {
   return {
     build: {
       outDir: 'build',
-    },
+    }, 
     plugins: [
       react(),
       svgr({ svgrOptions: { icon: true } })
     ],
+    resolve: {
+      alias: {
+        "@": "/src"
+      }
+    },
     server: {
       open: true
     }

@@ -29,7 +29,7 @@ const ConfirmationDialogue = ({
   const classes = useStyles();
 
   if (!isOpen) {
-    return <React.Fragment />;
+    return <></>;
   }
 
   return (

@@ -10,8 +10,8 @@ import {
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
-import routes from '../../router';
-import { drawerWidth } from '../../globals';
+import routes from '@/router';
+import { drawerWidth } from '@/globals';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {

@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { NavigationDrawer, ApplicationBar } from './components/elements';
-import { drawerWidth } from './globals';
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import { SnackbarProvider } from 'notistack';
-import { useDispatch, useSelector } from 'react-redux';
 
-import routes, { fallbackRoute } from './router';
-
-import { toggleDarkMode } from './actions/appActions';
+import { NavigationDrawer, ApplicationBar } from '@/components/elements';
+import { drawerWidth } from '@/globals';
+import routes, { fallbackRoute } from '@/router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,16 +23,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// Prevents tardiness
+// Prevents accidental closes
 window.onbeforeunload = function () {
   return 'u sure?';
 };
 
 const App = () => {
   const [drawerOpen, toggleDrawerOpen] = useState(false);
-
-  const dispatch = useDispatch();
-  const { darkMode } = useSelector((state) => state.app);
 
   const classes = useStyles();
 
@@ -47,8 +39,6 @@ const App = () => {
         <Router>
           <ApplicationBar
             handleToggle={() => toggleDrawerOpen(!drawerOpen)}
-            handleDarkModeToggle={() => dispatch(toggleDarkMode())}
-            isDarkMode={darkMode}
           />
           <NavigationDrawer
             isOpen={drawerOpen}

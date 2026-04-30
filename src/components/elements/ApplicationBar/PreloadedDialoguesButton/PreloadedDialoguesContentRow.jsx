@@ -12,12 +12,12 @@ import {
 } from '@mui/material';
 import { Delete, Edit, Check, Close } from '@mui/icons-material';
 
-import { useDialogueManager } from '../../hooks';
-import ConfirmationDialogue from './ConfirmationDialogue';
+import { useDialogueManager } from '@/hooks';
+import { ConfirmationDialogue } from '@/components/elements';
 import {
   deletePreUploadedFileName,
   updatePreUploadedFile,
-} from '../../actions/dialogueActions';
+} from '@/actions/dialogueActions';
 
 const PreloadedDialoguesContentRow = ({ id, fileName, conversationAmount }) => {
   const [dialogues, toggleDialogues] = useDialogueManager('confirmDelete');

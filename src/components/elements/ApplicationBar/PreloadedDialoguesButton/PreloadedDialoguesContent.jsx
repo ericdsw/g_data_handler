@@ -14,13 +14,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 
-import VisuallyHiddenInput from './VisuallyHiddenInput';
-import { parseFile } from '../../functions';
+import { VisuallyHiddenInput } from '@/components/elements';
+import { parseFile } from '@/functions';
 
 import {
   addPreUploadedFile,
   clearPreUploadedFiles,
-} from '../../actions/dialogueActions';
+} from '@/actions/dialogueActions';
 import PreloadedDialoguesContentRow from './PreloadedDialoguesContentRow';
 
 const selectLoadedFileData = (state) => state.dialogue.preUploadedFiles;

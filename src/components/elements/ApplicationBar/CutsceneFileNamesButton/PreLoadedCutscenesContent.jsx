@@ -13,12 +13,12 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 
-import VisuallyHiddenInput from './VisuallyHiddenInput';
+import { VisuallyHiddenInput } from '@/components/elements';
 
 import {
   addPreLoadedCutscenes,
   addSinglePreLoadedCutsceneName,
-} from '../../actions/cutsceneActions';
+} from '@/actions/cutsceneActions';
 import PreLoadedCutscenesContentRow from './PreLoadedCutscenesContentRow';
 
 const selectLoadedCutsceneFileData = (state) =>

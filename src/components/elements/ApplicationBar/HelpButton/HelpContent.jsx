@@ -1,9 +1,8 @@
 import { Typography } from '@mui/material';
 import { blue, green, yellow, amber, grey } from '@mui/material/colors';
-
 import makeStyles from '@mui/styles/makeStyles';
 
-import { createInput } from '../../functions';
+import { createInput } from '@/functions';
 
 const useStyles = makeStyles(() => ({
   blueText: { color: blue[600] },
