@@ -22,7 +22,7 @@ const selectData = createSelector(
 
 const CutsceneFileNamesButton = () => {
 
-  const { preUploadedFiles, preUploadedCutsceneFiles } = useSelector((state) =>
+  const { preUploadedCutsceneFiles } = useSelector((state) =>
     selectData(state)
   );
 

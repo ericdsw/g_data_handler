@@ -1,5 +1,4 @@
-import React, { useMemo } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
+import { useMemo, useState } from 'react';
 import {
   Drawer,
   List,
@@ -12,32 +11,20 @@ import { NavLink } from 'react-router-dom';
 
 import routes from '@/router';
 import { drawerWidth } from '@/globals';
+import { ToolbarSpace } from '@/components/elements';
 
-const useStyles = makeStyles((theme) => ({
-  toolbar: {
-    ...theme.mixins.toolbar,
-    marginBottom: theme.spacing(1),
-  },
-  root: {
-    display: 'flex',
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-}));
-
-const NavigationDrawer = ({ isOpen, handleCollapse }) => {
-  const classes = useStyles();
+const NavigationDrawer = () => {
+  const [drawerOpen, toggleDrawerOpen] = useState(false);
 
   const drawerContent = useMemo(
     () => (
       <div>
-        <div className={classes.toolbar} />
+        <ToolbarSpace />
         <List>
           {routes.map((route) => (
             <ListItemButton
               component={NavLink}
-              onClick={() => handleCollapse()}
+              onClick={() => toggleDrawerOpen(!drawerOpen)}
               to={route.path}
               key={route.path}
             >
@@ -48,52 +35,39 @@ const NavigationDrawer = ({ isOpen, handleCollapse }) => {
         </List>
       </div>
     ),
-    [classes.toolbar, handleCollapse]
+    [toggleDrawerOpen, drawerOpen]
   );
 
   return (
-    <nav className={classes.drawer}>
-      {/* <Box>
-        <Drawer
-          variant="temporary"
-          anchor="left"
-          open={isOpen}
-          onClose={() => handleCollapse()}
-          classes={{ paper: classes.drawerPaper }}
-        >
-          {drawerContent}
-        </Drawer>
-      </Box> */}
-      <Box>
-        <Drawer
-          variant="permanent"
-          open
-          classes={{ paper: classes.drawerPaper }}
-        >
-          {drawerContent}
-        </Drawer>
-      </Box>
-      {/* <Hidden smUp implementation="css">
-        <Drawer
-          variant="temporary"
-          anchor="left"
-          open={isOpen}
-          onClose={() => handleCollapse()}
-          classes={{ paper: classes.drawerPaper }}
-        >
-          {drawerContent}
-        </Drawer>
-      </Hidden>
-      <Hidden lgDown implementation="css">
-        <Drawer
-          variant="permanent"
-          open
-          classes={{ paper: classes.drawerPaper }}
-        >
-          {drawerContent}
-        </Drawer>
-      </Hidden> */}
-    </nav>
+    <Box
+      component="nav"
+      sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+      aria-label="Navigation"
+    >
+      {/* Mobile Drawer */}
+      <Drawer
+        variant="temporary"
+        open={drawerOpen}
+        onClose={() => toggleDrawerOpen(!drawerOpen)}
+        sx={{
+          display: { xs: 'block', sm: 'none' },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+        }}
+      >
+        {drawerContent}
+      </Drawer>
+
+      {/* Desktop Drawer */}
+      <Drawer
+        variant="permanent"
+        sx={{
+          display: { xs: 'none', sm: 'block' },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
+        }}
+      >
+        {drawerContent}
+      </Drawer>
+    </Box>
   );
 };
 

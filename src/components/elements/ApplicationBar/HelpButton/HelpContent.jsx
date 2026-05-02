@@ -1,17 +1,23 @@
+import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 import { blue, green, yellow, amber, grey } from '@mui/material/colors';
-import makeStyles from '@mui/styles/makeStyles';
 
 import { createInput } from '@/functions';
 
-const useStyles = makeStyles(() => ({
-  blueText: { color: blue[600] },
-  greenText: { color: green[600] },
-  yellowText: { color: yellow[600] },
-  amberText: { color: amber[600] },
-  codeText: {
-    color: grey[500],
-  },
+const BlueTypography = styled(Typography)(() => ({
+  color: blue[600]
+}));
+const GreenTypography = styled(Typography)(() => ({
+  color: green[600]
+}));
+const YellowTypography = styled(Typography)(() => ({
+  color: yellow[600]
+}));
+const AmberTypography = styled(Typography)(() => ({
+  color: amber[600]
+}));
+const CodeTypography = styled('code')(() => ({
+  color: grey[500]
 }));
 
 const textInputSchema = {
@@ -37,7 +43,7 @@ const nodeTargetInputSchema = {
 const emptyOnChange = () => () => {};
 
 const HelpContent = () => {
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
     <>
       <Typography variant="h5" gutterBottom>
@@ -49,17 +55,17 @@ const HelpContent = () => {
         formats:&nbsp;
       </Typography>
       <br />
-      <Typography variant="h6" className={classes.blueText}>
+      <BlueTypography variant="h6">
         Normal text
-      </Typography>
+      </BlueTypography>
       Account for the mayority of cases and their specific format will depend on
       what the input is for.
       {createInput('foo', textInputSchema, 'Some Text', emptyOnChange)}
       <br />
       <br />
-      <Typography variant="h6" className={classes.amberText}>
+      <AmberTypography variant="h6">
         Positions
-      </Typography>
+      </AmberTypography>
       A position can either be a json with both x and y defined, or a Position2D
       node inside the map, in which case only the node name must be defined.
       {createInput(
@@ -70,9 +76,9 @@ const HelpContent = () => {
       )}
       <br />
       <br />
-      <Typography variant="h6" className={classes.yellowText}>
+      <YellowTypography variant="h6">
         Position Arrays
-      </Typography>
+      </YellowTypography>
       A position array is a list of Position2Ds on the map, and is defined as a
       comma separated list the position's node names.
       {createInput(
@@ -83,35 +89,35 @@ const HelpContent = () => {
       )}
       <br />
       <br />
-      <Typography variant="h6" className={classes.greenText}>
+      <GreenTypography variant="h6">
         Node Target
-      </Typography>
+      </GreenTypography>
       A node inside the map, will query depending on the following parameters:
       <ul>
         <li>
-          <code>CAMERA_VIEWPORT</code>&nbsp; Returns the camera node directly,
+          <CodeTypography>CAMERA_VIEWPORT</CodeTypography>&nbsp; Returns the camera node directly,
           useful if you want to add something directly to the camera.
         </li>
         <li>
-          <code className={classes.codetext}>StateName:NodeName</code>&nbsp;
+          <CodeTypography>StateName:NodeName</CodeTypography>&nbsp;
           Will search for a node named NodeName inside the state statename
         </li>
         <li>
-          <code className={classes.codetext}>CAMERA:NodeName</code>&nbsp; Will
+          <CodeTypography>CAMERA:NodeName</CodeTypography>&nbsp; Will
           search for a node named NodeName inside the viewport. Useful when you
           want to modify or delete something that is already inside the camera.
         </li>
         <li>
-          <code className={classes.codetext}>PERMANENT:NodeName</code>&nbsp;
+          <CodeTypography>PERMANENT:NodeName</CodeTypography>&nbsp;
           Will search for a node named NodeName inside permanentobjects
         </li>
         <li>
-          <code className={classes.codetext}>MAP_OBJECTS:NodeName</code>
+          <CodeTypography>MAP_OBJECTS:NodeName</CodeTypography>
           &nbsp; Will search for a node named NodeName inside the current active
           mapobject instance
         </li>
         <li>
-          <code className={classes.codetext}>:NodeName</code>&nbsp; Will search
+          <CodeTypography>:NodeName</CodeTypography>&nbsp; Will search
           for a node named NodeName directly present as a child of the current
           map
         </li>

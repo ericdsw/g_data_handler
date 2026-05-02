@@ -1,6 +1,4 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { makeStyles } from '@mui/styles';
-import classnames from 'classnames';
 import {
   Grid,
   Typography,
@@ -14,6 +12,8 @@ import {
   Divider,
   Tooltip,
 } from '@mui/material';
+import { blue, green, grey } from '@mui/material/colors';
+import { styled } from '@mui/material/styles';
 
 import StepMapContainer from './StepMapContainer';
 import CompletionBundleContainer from './CompletionBundleContainer';
@@ -23,16 +23,23 @@ import {
   ConfirmationDialogue,
   MenuIconButton,
   MenuButton,
-} from '../../elements';
-import { useDialogueManager } from '../../../hooks';
-import { storylineEntityInputSchema } from '../../../globals';
+} from '@/components/elements';
+import { useDialogueManager } from '@/hooks';
+import { storylineEntityInputSchema } from '@/globals';
 import CreateMapEntityForm from './forms/CreateMapEntityForm';
 import CompletionBundleForm from './forms/CompletionBundleForm';
 import StorylineStepForm from './forms/StorylineStepForm';
 
-import { styles } from './styles/StorylineStepStyle';
-
-const useStyles = makeStyles(styles);
+const DescriptionListUl = styled('ul')(({ theme }) => ({
+  color: theme.palette.text.primary,
+  lineHeight: '200%',
+}));
+const ExpandIconButton = styled(IconButton)(({ theme }) => ({
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
 
 const StorylineStep = ({
   storylineStep,
@@ -47,8 +54,6 @@ const StorylineStep = ({
   handleDuplicateConfigs,
   draggableProps,
 }) => {
-  const classes = useStyles();
-
   const [dialogues, toggleDialogue] = useDialogueManager(
     'createCompletionBundle',
     'editName',
@@ -90,7 +95,7 @@ const StorylineStep = ({
 
   const shortMapEntityDescription = useCallback(
     (mapEntity) => {
-      const entityName = <b className={classes.blueText}>{mapEntity.name}</b>;
+      const entityName = <b style={{ color: blue[400] }}>{mapEntity.name}</b>;
       switch (mapEntity.type) {
         case 'create_npc':
           return <Typography>Create NPC {entityName}</Typography>;
@@ -108,7 +113,7 @@ const StorylineStep = ({
           return entityName;
       }
     },
-    [classes.blueText]
+    []
   );
 
   const createNewEntity = useCallback(
@@ -135,7 +140,7 @@ const StorylineStep = ({
         <li key={mapData.map.id}>
           <Typography>
             NPCs in map&nbsp;
-            <span className={classes.greenText}>{mapData.map.map_name}:</span>
+            <span style={{ color: green[400] }}>{mapData.map.map_name}:</span>
           </Typography>
           <ul>
             {mapData.entities.map((entity) => (
@@ -144,7 +149,7 @@ const StorylineStep = ({
           </ul>
         </li>
       )),
-    [classes.greenText, configDescription, shortMapEntityDescription]
+    [configDescription, shortMapEntityDescription]
   );
 
   const completionDescriptionText = useMemo(
@@ -153,7 +158,7 @@ const StorylineStep = ({
         <li key={data.bundle.id}>
           <Typography>
             Go to step&nbsp;
-            <span className={classes.greenText}>
+            <span style={{ color: green[400] }}>
               {data.bundle.next_step}
             </span>{' '}
             after:
@@ -161,15 +166,15 @@ const StorylineStep = ({
           <ul>
             {data.conditions.length > 0 &&
               data.conditions.map((condition, index) => (
-                <li className={classes.blueText} key={condition.id}>
-                  <Typography className={classes.blueText}>
+                <li key={condition.id}>
+                  <Typography sx={{ color: blue[400] }}>
                     {condition.unique_name}
                   </Typography>
                 </li>
               ))}
             {data.conditions.length <= 0 && (
-              <li className={classes.greyText}>
-                <Typography className={classes.greyText}>
+              <li>
+                <Typography sx={{ color: grey[400] }}>
                   <i>No conditions defined</i>
                 </Typography>
               </li>
@@ -177,7 +182,7 @@ const StorylineStep = ({
           </ul>
         </li>
       )),
-    [classes, completionDescription]
+    [completionDescription]
   );
 
   /**
@@ -234,7 +239,7 @@ const StorylineStep = ({
           title={
             <Typography variant="h6">
               {storylineStep.name} &nbsp;
-              <small className={classes.headerSmall}>{fString}</small>
+              <small style={{ color: '#aaa', fontSize: '0.7em' }}>{fString}</small>
             </Typography>
           }
           subheader={subHeader}
@@ -261,9 +266,9 @@ const StorylineStep = ({
                     md: 6
                   }}>
                   {storylineStep.configuration.length > 0 && (
-                    <ul className={classes.descriptionList}>
+                    <DescriptionListUl>
                       {configDescriptionText}
-                    </ul>
+                    </DescriptionListUl>
                   )}
                   {storylineStep.configuration.length <= 0 && (
                     <Typography variant="body2">
@@ -278,9 +283,9 @@ const StorylineStep = ({
                     md: 6
                   }}>
                   {storylineStep.completion.length > 0 && (
-                    <ul className={classes.descriptionList}>
+                    <DescriptionListUl>
                       {completionDescriptionText}
-                    </ul>
+                    </DescriptionListUl>
                   )}
                   {storylineStep.completion.length <= 0 && (
                     <Typography variant="body2">
@@ -335,15 +340,13 @@ const StorylineStep = ({
               <Icon>add_alert</Icon>
             </IconButton>
           </Tooltip>
-          <IconButton
-            className={classnames(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
+          <ExpandIconButton
+            sx={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
             onClick={() => toggleExpanded(!expanded)}
             size="large"
           >
             <Icon>expand_more</Icon>
-          </IconButton>
+          </ExpandIconButton>
         </CardActions>
 
         <Collapse in={expanded} timeout="auto" unmountOnExit>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import {
   Grid,
   Card,
@@ -9,8 +8,7 @@ import {
   Typography,
   Button,
 } from '@mui/material';
-import { blue } from '@mui/material/colors';
-import { createInput } from '../../../../functions';
+import { createInput } from '@/functions';
 
 const shortMessageSchema = {
   parameters: {
@@ -37,23 +35,11 @@ const shortMessageSchema = {
   },
 };
 
-const useStyles = makeStyles((theme) => ({
-  swarmMessageCard: {
-    backgroundColor: '#222',
-    margin: theme.spacing(0.5),
-  },
-  targetObject: {
-    color: blue[200],
-  },
-}));
-
 const CreateSwarmForm = ({
   initialSwarmData = [],
   isEdit = false,
   handleSubmit,
 }) => {
-  const classes = useStyles();
-
   const [swarmMessages, updateSwarmMessages] = useState(initialSwarmData);
   const [curMessage, updateCurMessage] = useState({
     offset: -1,
@@ -128,7 +114,7 @@ const CreateSwarmForm = ({
   };
 
   return (
-    <React.Fragment>
+    <>
       <Grid container spacing={2}>
         <Grid size={6}>
           <form onSubmit={(e) => messageFormSubmit(e)}>
@@ -165,10 +151,11 @@ const CreateSwarmForm = ({
           {swarmMessages.map((currentMessage, index) => (
             <Card
               key={index}
-              className={classes.swarmMessageCard}
-              style={{
+              sx={theme => ({
                 border: curMessage.offset === index ? '1px solid red' : 'none',
-              }}
+                backgroundColor: '#222',
+                margin: theme.spacing(0.5)
+              })}
             >
               <CardHeader
                 subheader={
@@ -222,7 +209,7 @@ const CreateSwarmForm = ({
           </Grid>
         </Grid>
       </Grid>
-    </React.Fragment>
+    </>
   );
 };
 

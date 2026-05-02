@@ -1,12 +1,28 @@
-import React, { useMemo } from 'react';
-import { makeStyles } from '@mui/styles';
-import { Card, CardContent, Typography, Grid, CardHeader } from '@mui/material';
+import { useMemo } from 'react';
+import { Box, Card, CardContent, Typography, Grid, CardHeader } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { blue } from '@mui/material/colors';
 
+import EmoteBackground from '@/images/emote_background.png';
 import { DialogueMessageToolbar, ConversationCardTitle } from './elements';
 
-import { styles } from './styles/DialogueEmoteStyle';
-
-const useStyles = makeStyles(styles);
+const EmoteImageBackground = styled(Box)(({ theme }) => ({
+  display: 'inline-block',
+  width: 48,
+  height: 48,
+  padding: 8,
+  margin: 0,
+  background: `url(${EmoteBackground})`,
+  backgroundSize: '48px 48px',
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center',
+  textAlign: 'center',
+}));
+const StyledEmoteContainer = styled(Card)(({ theme }) => ({
+  backgroundColor: theme.palette.messageBackground,
+  borderBottom: '1px solid #666',
+  padding: theme.spacing(2),
+}));
 
 const DialogueEmote = ({
   message,
@@ -15,7 +31,6 @@ const DialogueEmote = ({
   handleAddBelow,
   handleSplitBelow,
 }) => {
-  const classes = useStyles();
   const imagePath = useMemo(
     () => `/images/emotes/${message.message}.png`,
     [message.message]
@@ -24,7 +39,7 @@ const DialogueEmote = ({
   return (
     <Grid container>
       <Grid size={12}>
-        <Card className={classes.emoteContainer}>
+        <StyledEmoteContainer>
           <CardHeader
             title={
               <ConversationCardTitle
@@ -61,34 +76,28 @@ const DialogueEmote = ({
                 <Grid container sx={{
                   justifyContent: "center"
                 }}>
-                  <div className={classes.emoteImageBackground}>
+                  <EmoteImageBackground>
                     <img
-                      alt="asdflol"
+                      alt="Dialogue Emote"
                       src={imagePath}
-                      className={classes.emoteImage}
+                      style={{ width: 24, height: 24 }}
                     />
-                  </div>
+                  </EmoteImageBackground>
                 </Grid>
                 <br />
                 <Typography
                   align="center"
                   variant="body1"
-                  className={classes.emoteTarget}
+                  sx={{ fontWeight: 'bold', color: blue[200] }}
                 >
                   {message.target_object}
                 </Typography>
               </Grid>
             </Grid>
           </CardContent>
-        </Card>
+        </StyledEmoteContainer>
       </Grid>
-      <Grid
-        size={{
-          xs: 1,
-          md: 4
-        }}>
-        {/* Empty grid item */}
-      </Grid>
+      <Grid size={{ xs: 1, md: 4 }} />
     </Grid>
   );
 };

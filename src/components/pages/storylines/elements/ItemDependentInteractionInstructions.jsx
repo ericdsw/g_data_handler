@@ -1,18 +1,8 @@
-import React from 'react';
-import { Grid, Typography } from '@mui/material';
-
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3),
-  },
-}));
+import { Box, Grid, Typography } from '@mui/material';
 
 const ItemDependentInteractionInstructions = () => {
-  const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <Box sx={theme => ({ padding: theme.spacing(3) })}>
       <Grid container>
         <Grid size={12}>
           <Typography variant="h4" gutterBottom>
@@ -99,7 +89,7 @@ const ItemDependentInteractionInstructions = () => {
           </Typography>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

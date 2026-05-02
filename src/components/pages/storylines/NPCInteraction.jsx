@@ -1,5 +1,4 @@
 import React, { useMemo, useCallback } from 'react';
-import { makeStyles } from '@mui/styles';
 import {
   Typography,
   Card,
@@ -14,22 +13,14 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { ConfirmationDialogue, GenericDialogue } from '../../elements';
-import { useDialogueManager } from '../../../hooks';
+import { ConfirmationDialogue, GenericDialogue } from '@/components/elements';
+import { useDialogueManager } from '@/hooks';
+import { interactionInputSchema } from '@/globals';
 import CreateNPCInteractionForm from './forms/CreateNPCInteractionForm';
-import { interactionInputSchema } from '../../../globals';
-
-const useStyles = makeStyles(() => ({
-  interactionCard: {
-    background: (props) => props.cardBackground,
-  },
-}));
 
 const NPCInteraction = ({ npcInteraction, handleEdit, handleDelete }) => {
   const { darkMode } = useSelector((state) => state.app);
-  const classes = useStyles({
-    cardBackground: darkMode ? '#463f47' : '#fafafa',
-  });
+  const cardBackground = useMemo(() => darkMode ? '#463f47' : '#fafafa', [darkMode]);
 
   const paramKeys = useMemo(
     () => Object.keys(npcInteraction.parameters),
@@ -85,7 +76,7 @@ const NPCInteraction = ({ npcInteraction, handleEdit, handleDelete }) => {
   }, []);
 
   return (
-    <Card className={classes.interactionCard}>
+    <Card sx={{ background: cardBackground }}>
       {header}
       <Table>
         <TableBody>

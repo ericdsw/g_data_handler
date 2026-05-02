@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
 import {
   Dialog,
   DialogTitle,
@@ -7,14 +8,10 @@ import {
   Icon,
 } from '@mui/material';
 
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyles = makeStyles((theme) => ({
-  titleButtonContainer: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-  },
+const TitleButtonContainer = styled('div')(({ theme }) => ({
+  position: 'absolute',
+  right: theme.spacing(1),
+  top: theme.spacing(1)
 }));
 
 const GenericDialogue = ({
@@ -26,7 +23,6 @@ const GenericDialogue = ({
   helpComponent,
   style = {},
 }) => {
-  const classes = useStyles();
 
   const [helpOpen, toggleHelpOpen] = useState(false);
   useEffect(() => {
@@ -52,7 +48,7 @@ const GenericDialogue = ({
           <DialogTitle>
             {title}
             {helpComponent && (
-              <div className={classes.titleButtonContainer}>
+              <TitleButtonContainer>
                 <IconButton
                   onClick={() => {
                     toggleHelpOpen(true);
@@ -61,7 +57,7 @@ const GenericDialogue = ({
                 >
                   <Icon>help</Icon>
                 </IconButton>
-              </div>
+              </TitleButtonContainer>
             )}
           </DialogTitle>
           <DialogContent style={{ paddingBottom: 24 }}>

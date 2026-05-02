@@ -1,4 +1,3 @@
-import React from 'react';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
@@ -9,14 +8,9 @@ import {
   CutsceneContainer,
   DialogueContainer,
   StorylineContainer,
-  NotFound,
   AboutPage,
   SaveFileFix,
-} from '../components/pages';
-
-export const fallbackRoute = {
-  component: NotFound,
-};
+} from '@/components/pages';
 
 const routes = [
   {

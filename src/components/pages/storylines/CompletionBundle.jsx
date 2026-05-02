@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { makeStyles } from '@mui/styles';
 import {
   Card,
   CardHeader,
@@ -23,10 +22,6 @@ import {
 import { completionInputSchema } from '../../../globals';
 import { useDialogueManager } from '../../../hooks';
 
-import { styles } from './styles/CompletionBundleStyle';
-
-const useStyles = makeStyles(styles);
-
 const CompletionBundle = ({
   completionBundle,
   handleCreateCondition,
@@ -34,9 +29,7 @@ const CompletionBundle = ({
   handleDeleteBundle,
 }) => {
   const { darkMode } = useSelector((state) => state.app);
-  const classes = useStyles({
-    bundleCardBackground: darkMode ? '#463f47' : '#eee',
-  });
+  const bundleCardBackground = useMemo(() => darkMode ? '#463f47' : '#eee', [darkMode]);
 
   const [curCompletionType, setCurCompletionType] = useState('');
   const [dialogues, toggleDialogue] = useDialogueManager(
@@ -93,16 +86,16 @@ const CompletionBundle = ({
     if (affected_map) {
       if (change_cutscene) {
         return (
-          <React.Fragment>
+          <>
             Wil trigger cutscene <b>{change_cutscene}</b> if in map{' '}
             <b>{affected_map}</b>
-          </React.Fragment>
+          </>
         );
       } else if (use_fade) {
         return (
-          <React.Fragment>
+          <>
             Will use fade if in map <b>{affected_map}</b>
-          </React.Fragment>
+          </>
         );
       }
     }
@@ -111,7 +104,10 @@ const CompletionBundle = ({
   }, [completionBundle, completionBundle.conditions.length]);
 
   return (
-    <Card className={classes.bundleCard}>
+    <Card sx={{
+      marginTop: 4,
+      background: bundleCardBackground
+    }}>
       <CardHeader
         title={
           <Typography variant="subtitle1">
@@ -153,7 +149,7 @@ const CompletionBundle = ({
         }
       />
       <CardContent>
-        <Typography className={classes.descriptionText} variant="body2">
+        <Typography sx={{ marginBottom: 16, fontStyle: 'italic'}} variant="body2">
           {generateDescription()}
         </Typography>
         {completionContent}

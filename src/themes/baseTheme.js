@@ -1,18 +1,18 @@
 import { createTheme } from '@mui/material/styles';
 
-const primaryColor = {
-  main: '#b65672',
-  light: '#e9ccd5',
-  dark: '#9e3c55',
-  contrastText: '#fff',
-};
+// const primaryColor = {
+//   main: '#b65672',
+//   light: '#e9ccd5',
+//   dark: '#9e3c55',
+//   contrastText: '#fff',
+// };
 
-const secondaryColor = {
-  main: '#ccaa74',
-  light: '#f0e6d5',
-  dark: '#b99057',
-  contrastText: '#000',
-};
+// const secondaryColor = {
+//   main: '#ccaa74',
+//   light: '#f0e6d5',
+//   dark: '#b99057',
+//   contrastText: '#000',
+// };
 
 const baseTheme = (mode) =>
   createTheme({
@@ -23,10 +23,10 @@ const baseTheme = (mode) =>
         paper: mode === 'dark' ? '#2b202a' : '#fefefe',
       },
       primary: {
-        ...primaryColor,
+        main: '#b65672',
       },
       secondary: {
-        ...secondaryColor,
+        main: '#ccaa74',
       },
       messageBackground: mode === 'dark' ? '#222' : '#eee',
     },

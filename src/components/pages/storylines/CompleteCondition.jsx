@@ -1,5 +1,4 @@
-import React, { useState, useMemo } from 'react';
-import { makeStyles } from '@mui/styles';
+import { useState, useMemo } from 'react';
 import {
   Typography,
   ButtonBase,
@@ -10,23 +9,18 @@ import {
   Icon,
   Card,
 } from '@mui/material';
+import { blue } from '@mui/material/colors';
 
-import { GenericDialogue, ConfirmationDialogue } from '../../elements';
-import { useDialogueManager } from '../../../hooks';
+import { GenericDialogue, ConfirmationDialogue } from '@/components/elements';
+import { useDialogueManager } from '@/hooks';
 import CompleteConditionForm from './forms/CompleteConditionForm';
 import createConditionDescription from './functions/createConditionDescription';
-
-import { styles } from './styles/CompleteConditionStyle';
-
-const useStyles = makeStyles(styles);
 
 const CompleteCondition = ({
   completeCondition,
   handleDeleteCondition,
   handleEditCondition,
 }) => {
-  const classes = useStyles();
-
   const [dialogues, toggleDialogue] = useDialogueManager(
     'confirmDelete',
     'editDialogue'
@@ -47,24 +41,24 @@ const CompleteCondition = ({
 
   return (
     <div>
-      <ButtonBase className={classes.summaryWrapper}>
+      <ButtonBase sx={{ display: 'flex', width: '100%' }}>
         <Card
           square
-          className={classes.conditionContainer}
+          sx={{ padding: 16, width: '100%' }}
           onClick={() => toggleExpand(!expanded)}
         >
           <Typography variant="caption">
             [unique name: {completeCondition.unique_name}]
           </Typography>
           <br />
-          <Typography variant="caption" className={classes.interactionTypeText}>
+          <Typography variant="caption" sx={{ color: blue[400] }}>
             {createConditionDescription(completeCondition)}
           </Typography>
         </Card>
       </ButtonBase>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         {/* <Divider /> */}
-        <Card square className={classes.conditionContainer}>
+        <Card square sx={{ padding: 16, width: '100%' }}>
           <List component="nav">{paramList}</List>
           <Typography align="left">
             <IconButton

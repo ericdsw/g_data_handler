@@ -1,5 +1,3 @@
-import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import {
   Card,
   CardHeader,
@@ -9,23 +7,16 @@ import {
   Chip,
   Typography,
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 import { DialogueMessageToolbar, ConversationCardTitle } from './elements';
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    width: '100%',
-    backgroundColor: theme.palette.messageBackground,
-    borderBottom: '1px solid #666',
-    padding: theme.spacing(2),
-  },
-  iconContainer: {
-    color: '#2d81b5',
-  },
-  actionContainer: {
-    padding: theme.spacing(2),
-  },
-}));
+const StyledCardContainer = styled(Card)(({ theme }) => ({
+  width: '100%',
+  backgroundColor: theme.palette.messageBackground,
+  borderBottom: '1px solid #666',
+  padding: theme.spacing(2),
+}))
 
 const PickItem = ({
   pickItemData,
@@ -33,10 +24,9 @@ const PickItem = ({
   handleDelete,
   handleSplitBelow,
 }) => {
-  const classes = useStyles();
 
   return (
-    <Card className={classes.container} square>
+    <StyledCardContainer square>
       <CardHeader
         title={
           <ConversationCardTitle
@@ -60,7 +50,9 @@ const PickItem = ({
       />
       <CardContent>
         <Card
-          className={classes.actionContainer}
+          sx={(theme) => ({
+            padding: theme.spacing(2),
+          })}
           raised={false}
           square={true}
           variant="outlined"
@@ -148,7 +140,7 @@ const PickItem = ({
           </Typography>
         )}
       </CardContent>
-    </Card>
+    </StyledCardContainer>
   );
 };
 

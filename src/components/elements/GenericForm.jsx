@@ -1,5 +1,4 @@
-import React, { useState, useCallback } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
+import { useState, useCallback } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { Grid, Button, Typography } from '@mui/material';
 
@@ -10,12 +9,6 @@ import {
   getMissingRequired,
 } from '../../functions';
 
-const useStyles = makeStyles(() => ({
-  additionalText: {
-    color: 'grey',
-  },
-}));
-
 const GenericForm = ({
   initialDataSet = {},
   schema = {},
@@ -24,8 +17,6 @@ const GenericForm = ({
   buttonColor = 'primary',
   handleSubmit,
 }) => {
-  const classes = useStyles();
-
   // Extract data from schemas
   const { parameters, additionalText } = schema;
 
@@ -96,7 +87,7 @@ const GenericForm = ({
       <br />
       <br />
       {additionalText && (
-        <Typography variant="body2" className={classes.additionalText}>
+        <Typography variant="body2" sx={{ color: 'grey' }}>
           <i>{additionalText}</i>
         </Typography>
       )}

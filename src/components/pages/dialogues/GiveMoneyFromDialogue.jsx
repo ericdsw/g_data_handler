@@ -1,23 +1,7 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Card, CardHeader, CardContent, Typography, Grid } from '@mui/material';
 
-import makeStyles from '@mui/styles/makeStyles';
-
 import { DialogueMessageToolbar, ConversationCardTitle } from './elements';
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-    backgroundColor: theme.palette.messageBackground,
-    borderBottom: '1px solid #666',
-    padding: theme.spacing(2),
-  },
-  moneyIconContainer: {
-    color: '#ad9b0c',
-  },
-  moneyIcon: {
-    fontSize: 30,
-  },
-}));
 
 const GiveMoneyFromDialogue = ({
   message,
@@ -27,7 +11,6 @@ const GiveMoneyFromDialogue = ({
   handleAddBelow,
   handleSplitBelow,
 }) => {
-  const classes = useStyles();
 
   const usedMessage = useMemo(() => {
     return !message.custom_message
@@ -36,7 +19,11 @@ const GiveMoneyFromDialogue = ({
   }, [message.custom_message]);
 
   return (
-    <Card className={classes.container}>
+    <Card sx={(theme) => ({
+      backgroundColor: theme.palette.messageBackground,
+      borderBottom: '1px solid #666',
+      padding: theme.spacing(2),
+    })}>
       <CardHeader
         title={
           <ConversationCardTitle

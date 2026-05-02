@@ -1,23 +1,20 @@
-import React, { useMemo } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import { Chip, Tooltip } from '@mui/material';
+import { useMemo } from 'react';
+import { Chip, Tooltip, Box } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
-const useStyles = makeStyles((theme) => ({
-  chip: {
-    marginRight: theme.spacing(1),
-    [theme.breakpoints.down('lg')]: {
-      marginBottom: theme.spacing(1),
-    },
+const StyledChip = styled(Chip)(({ theme }) => ({
+  marginRight: theme.spacing(1),
+  [theme.breakpoints.down('lg')]: {
+    marginBottom: theme.spacing(1),
   },
-  chipContainer: {
-    borderTop: '1px solid #333',
-    marginTop: 12,
-    paddingTop: 12,
-  },
+}));
+const StyledChipContainer = styled(Box)(({ theme }) => ({
+  borderTop: '1px solid #333',
+  marginTop: 12,
+  paddingTop: 12,
 }));
 
 const ConversationChoices = ({ message }) => {
-  const classes = useStyles();
 
   const choicesChips = useMemo(() => {
     if (!message.choices) {
@@ -32,8 +29,7 @@ const ConversationChoices = ({ message }) => {
             key={currentChoice.key}
             title={`Next Message: ${currentChoice.next_message}`}
           >
-            <Chip
-              className={classes.chip}
+            <StyledChip
               color="primary"
               label={label}
               style={{
@@ -46,23 +42,22 @@ const ConversationChoices = ({ message }) => {
         );
       } else {
         return (
-          <Chip
+          <StyledChip
             key={currentChoice.key}
-            className={classes.chip}
             label={`${currentChoice.key}: ${currentChoice.value}`}
-            style={{
+            sx={{
               border: currentChoice.isDefaultCancel ? '1px solid red' : 'none',
             }}
           />
         );
       }
     });
-  }, [message, classes.chip]);
+  }, [message]);
 
   return (
     <>
       {choicesChips.length > 0 && (
-        <div className={classes.chipContainer}>{choicesChips}</div>
+        <StyledChipContainer>{choicesChips}</StyledChipContainer>
       )}
     </>
   );

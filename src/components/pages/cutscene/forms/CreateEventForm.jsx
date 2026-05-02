@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import makeStyles from '@mui/styles/makeStyles';
 import {
   Typography,
   Grid,
@@ -11,24 +10,16 @@ import {
   Divider,
 } from '@mui/material';
 
-import { eventSchema } from '../../../../globals';
+import { eventSchema } from '@/globals';
 import {
   createInput,
   checkForRequired,
   parseIn,
   parseOut,
-} from '../../../../functions';
+} from '@/functions';
+import { addSavedNodeTarget } from '@/actions/cutsceneActions';
 import EventTypeDropDown from '../elements/EventTypeDropDown';
-
-import { addSavedNodeTarget } from '../../../../actions/cutsceneActions';
-
-const useStyles = makeStyles((theme) => ({
-  additionalText: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    color: 'gray',
-  },
-}));
+import { grey } from '@mui/material/colors';
 
 const FALLBACK_EVENT_TYPE = 'ability_toggle';
 
@@ -71,7 +62,6 @@ const Form = ({
   skipRequiredCheck = false,
   creationHandler,
 }) => {
-  const classes = useStyles();
   const dispatch = useDispatch();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -244,7 +234,11 @@ const Form = ({
       {/** Additional Text */}
       <Grid container>
         <Grid size={12}>
-          <Typography variant="body2" className={classes.additionalText}>
+          <Typography variant="body2" sx={(theme) => ({
+            marginTop: theme.spacing(2),
+            marginBottom: theme.spacing(2),
+            color: grey[400]
+          })}>
             <i>{additionalText}</i>
           </Typography>
         </Grid>

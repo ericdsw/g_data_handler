@@ -6,28 +6,12 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 
-import { eventSchema } from '../../../../globals';
+import { eventSchema } from '@/globals';
 import {
   possibleEaseTypes,
   possibleTransTypes,
-} from '../../../../globals/godotEnums';
-
-const useStyles = makeStyles((theme) => ({
-  tableBody: {
-    wordWrap: 'break-word',
-  },
-  tableCell: {
-    padding: 10,
-  },
-  paramValueValid: {
-    color: theme.palette.text.primary,
-  },
-  paramValueInvalid: {
-    color: theme.palette.text.secondary,
-  },
-}));
+} from '@/globals/godotEnums';
 
 function paramIsValid(paramValue) {
   return paramValue !== undefined && paramValue !== '';
@@ -63,10 +47,9 @@ function getValue(eventType, paramName, paramValue) {
 }
 
 const CutsceneEventProperties = ({ cutsceneEventData }) => {
-  const classes = useStyles();
   return (
     <Table>
-      <TableBody className={classes.tableBody}>
+      <TableBody sx={{ wordWrap: 'break-word' }}>
         {Object.keys(cutsceneEventData.parameters).map((paramName) => {
           const curVal = cutsceneEventData.parameters[paramName];
           const parsedValue = getValue(
@@ -81,18 +64,16 @@ const CutsceneEventProperties = ({ cutsceneEventData }) => {
                   align="left"
                   padding="none"
                   size="small"
-                  className={classes.tableCell}
+                  sx={{ padding: 10 }}
                 >
                   <Typography>
                     <b>{paramName}</b>
                   </Typography>
                   <Typography
                     variant="caption"
-                    className={
-                      paramIsValid(curVal)
-                        ? classes.paramValueValid
-                        : classes.paramValueInvalid
-                    }
+                    sx={(theme) => ({
+                      color: paramIsValid(curVal) ? theme.palette.primary : theme.palette.secondary
+                    })}
                   >
                     {parsedValue}
                   </Typography>

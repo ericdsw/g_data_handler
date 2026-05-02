@@ -1,33 +1,18 @@
-import React from 'react';
-
-import makeStyles from '@mui/styles/makeStyles';
 import { Grid, Typography, Button } from '@mui/material';
 import { red } from '@mui/material/colors';
 
-import { useDialogueManager } from '../../../../hooks';
-import { GenericDialogue } from '../../../elements';
+import { useDialogueManager } from '@/hooks';
+import { GenericDialogue } from '@/components/elements';
 import { CreateConversationForm } from '../forms';
-
-const useStyles = makeStyles((theme) => ({
-  deleteButton: {
-    color: red[400],
-  },
-  defaultButton: {
-    color: theme.palette.primary.main,
-  },
-}));
 
 const DialogueToolbar = ({
   handleExport,
   handleClear,
   handleAddConversation,
 }) => {
-  const classes = useStyles();
-
   const [dialogues, toggleDialogue] = useDialogueManager('addConversation');
-
   return (
-    <React.Fragment>
+    <>
       <Grid container>
         <Grid size={6}>
           <Typography align="left">
@@ -36,7 +21,7 @@ const DialogueToolbar = ({
                 toggleDialogue('addConversation', 'show');
               }}
               color="primary"
-              className={classes.defaultButton}
+              sx={theme => ({ color: theme.palette.primary.main })}
             >
               Add Conversation
             </Button>
@@ -48,7 +33,7 @@ const DialogueToolbar = ({
               Export
             </Button>
             <Button
-              className={classes.deleteButton}
+              sx={{ color: red[400] }}
               color="secondary"
               onClick={handleClear}
             >
@@ -70,7 +55,7 @@ const DialogueToolbar = ({
           }}
         />
       </GenericDialogue>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import {
   Grid,
   IconButton,
@@ -11,41 +11,14 @@ import {
   Box,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import makeStyles from '@mui/styles/makeStyles';
 
-import StyledPopper from '../../../elements/StyledPopper';
-
-import speakerSchema from '../../../../globals/speakerSchema';
+import StyledPopper from '@/components/elements/StyledPopper';
+import speakerSchema from '@/globals/speakerSchema';
 
 const LARGE_AVATAR_SIZE = 128;
 const SMALL_AVATAR_SIZE = 32;
 
-const styles = () => ({
-  imagePreview: {
-    backgroundColor: '#C9C3B8',
-    marginTop: 16,
-    height: 225,
-    borderRadius: 4,
-  },
-  largeAvatar: {
-    width: LARGE_AVATAR_SIZE,
-    height: LARGE_AVATAR_SIZE,
-    borderRadius: 0,
-    backgroundSize: 'contain',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-  },
-  smallAvatar: {
-    width: SMALL_AVATAR_SIZE,
-    height: SMALL_AVATAR_SIZE,
-    borderRadius: 0,
-  },
-});
-
-const useStyles = makeStyles(styles);
-
 const DialogueImageSearcher = ({ updateImage, image, selectedSpeaker }) => {
-  const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -98,10 +71,15 @@ const DialogueImageSearcher = ({ updateImage, image, selectedSpeaker }) => {
       );
     }
     return (
-      <div
-        className={classes.largeAvatar}
-        style={{
+      <Box
+        sx={{
           backgroundImage: `url(images/${image})`,
+          width: LARGE_AVATAR_SIZE,
+          height: LARGE_AVATAR_SIZE,
+          borderRadius: 0,
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
         }}
         aria-owns={open ? 'image-menu' : undefined}
         aria-haspopup="true"
@@ -115,16 +93,19 @@ const DialogueImageSearcher = ({ updateImage, image, selectedSpeaker }) => {
         }}
       />
     );
-  }, [image, speakerImages, open, handleSearchImageShow, classes]);
+  }, [image, speakerImages, open, handleSearchImageShow]);
 
   return (
     <>
       <Grid
         container
-        className={classes.imagePreview}
         sx={{
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          backgroundColor: '#C9C3B8',
+          marginTop: 16,
+          height: 225,
+          borderRadius: 4,
         }}>
         {searchContent}
       </Grid>
@@ -146,12 +127,12 @@ const DialogueImageSearcher = ({ updateImage, image, selectedSpeaker }) => {
                   }}>
                     <Grid>
                       <Avatar
-                        className={classes.smallAvatar}
                         src={`images/${option}`}
                         alt="Speaker"
                         sx={{
                           width: SMALL_AVATAR_SIZE,
-                          height: 'auto',
+                          height: SMALL_AVATAR_SIZE,
+                          borderRadius: 0,
                         }}
                       />
                     </Grid>

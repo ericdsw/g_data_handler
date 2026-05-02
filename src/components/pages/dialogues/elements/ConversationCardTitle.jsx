@@ -1,25 +1,12 @@
-import React from 'react';
 import { Icon, Typography, Grid } from '@mui/material';
 
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-    color: (props) => (props.color ? props.color : theme.palette.text.primary),
-  },
-  icon: {
-    marginRight: theme.spacing(1),
-  },
-}));
-
 const ConversationCardTitle = ({ text, icon, color }) => {
-  const classes = useStyles({ color });
-
   return (
-    <Grid container className={classes.container} sx={{
-      alignItems: "center"
-    }}>
-      {icon && <Icon className={classes.icon}>{icon}</Icon>}
+    <Grid container sx={(theme) => ({
+      alignItems: "center",
+      color: theme.palette.text.primary
+    })}>
+      {icon && <Icon sx={theme => ({ marginRight: theme.spacing(1) })}>{icon}</Icon>}
       <Typography variant="h5">{text}</Typography>
     </Grid>
   );

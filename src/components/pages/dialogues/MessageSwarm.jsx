@@ -1,5 +1,3 @@
-import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import {
   Card,
   CardHeader,
@@ -7,44 +5,32 @@ import {
   Typography,
   Tooltip,
   Zoom,
+  Box,
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 import { DialogueMessageToolbar, ConversationCardTitle } from './elements';
 import { cleanMessage } from './functions';
 
-const styles = (theme) => ({
-  swarmContainer: {
-    width: '100%',
-    backgroundColor: theme.palette.messageBackground,
-    borderBottom: '1px solid #666',
-    padding: theme.spacing(2),
-  },
-
-  /**
-   * Dimensions, colors and fonts mimics how the dialogues are being displayed in-game
-   */
-  swarmMessageTextWrapper: {
-    width: 188 * 2,
-    height: 28 * 2,
-    borderRadius: 6 * 2,
-    fontSize: 12 * 2,
-    color: '#000',
-    backgroundColor: '#C9C3B8',
-    fontFamily: "'JF Dot Ayu Gothic 18'",
-    border: '2px solid #272523',
-  },
-  swarmMessageTextContent: {
-    marginLeft: 8 * 2,
-    lineHeight: `${25 * 2}px`,
-  },
-  swarmMessage: {
-    padding: theme.spacing(1),
-    marginBottom: theme.spacing(0.5),
-    width: '100%',
-  },
-});
-
-const useStyles = makeStyles(styles);
+const SwarmContainer = styled(Card)(({ theme }) => ({
+  width: '100%',
+  backgroundColor: theme.palette.messageBackground,
+  borderBottom: '1px solid #666',
+  padding: theme.spacing(2),
+}));
+/**
+ * Dimensions, colors and fonts mimics how the dialogues are being displayed in-game
+ */
+const SwarmMessageTextWrapper = styled(Box)(({ theme }) => ({
+  width: 188 * 2,
+  height: 28 * 2,
+  borderRadius: 6 * 2,
+  fontSize: 12 * 2,
+  color: '#000',
+  backgroundColor: '#C9C3B8',
+  fontFamily: "'JF Dot Ayu Gothic 18'",
+  border: '2px solid #272523',
+}));
 
 const MessageSwarm = ({
   swarmData,
@@ -52,10 +38,9 @@ const MessageSwarm = ({
   handleDelete,
   handleSplitBelow,
 }) => {
-  const classes = useStyles();
 
   return (
-    <Card className={classes.swarmContainer} square={true}>
+    <SwarmContainer square={true}>
       <CardHeader
         title={
           <ConversationCardTitle
@@ -81,20 +66,26 @@ const MessageSwarm = ({
         {swarmData.swarmData.map((swarmMessage, index) => (
           <Card
             key={index}
-            className={classes.swarmMessage}
             raised={false}
             square={true}
             variant="outlined"
-            style={{ padding: 16 }}
+            sx={(theme) => ({
+              padding: theme.spacing(1),
+              marginBottom: theme.spacing(0.5),
+              width: '100%',
+            })}
           >
             <Tooltip title={swarmMessage.message} slots={{
               transition: Zoom
             }}>
-              <div className={classes.swarmMessageTextWrapper}>
-                <div className={classes.swarmMessageTextContent}>
+              <SwarmMessageTextWrapper>
+                <Box sx={{
+                  marginLeft: 8 * 2,
+                  lineHeight: `${25 * 2}px`,
+                }}>
                   {cleanMessage(swarmMessage.message)}
-                </div>
-              </div>
+                </Box>
+              </SwarmMessageTextWrapper>
             </Tooltip>
             <Typography variant="body2" style={{ marginTop: 8 }}>
               Target: {swarmMessage.target_object}. Appears after{' '}
@@ -103,7 +94,7 @@ const MessageSwarm = ({
           </Card>
         ))}
       </CardContent>
-    </Card>
+    </SwarmContainer>
   );
 };
 

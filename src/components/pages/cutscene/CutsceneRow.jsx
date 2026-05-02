@@ -1,20 +1,33 @@
-import React, { useMemo } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import { Paper, Grid, Typography } from '@mui/material';
+import { useMemo } from 'react';
+import { Paper, Grid, Typography, Box } from '@mui/material';
 import { Droppable } from 'react-beautiful-dnd';
+import { styled } from '@mui/material/styles';
+import { DragHandle } from '@mui/icons-material';
 
 import { CutsceneRowToolbar } from './elements';
 import { CreateEventForm } from './forms';
 import CutsceneEventContainer from './CutsceneEventContainer';
-import { GenericDialogue, ConfirmationDialogue } from '../../elements';
-import { useDialogueManager } from '../../../hooks';
-
-import { styles } from './styles/CutsceneRowStyle';
+import { GenericDialogue, ConfirmationDialogue } from '@/components/elements';
+import { useDialogueManager } from '@/hooks';
 
 import TemplateList from './elements/TemplateList';
-import { DragHandle } from '@mui/icons-material';
 
-const useStyles = makeStyles(styles);
+const MockContainer = styled(Box)(({ theme }) => ({
+  paddingBottom: theme.spacing(1),
+  paddingTop: theme.spacing(1)
+}));
+const StyledCutsceneRowPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(1),
+  paddingBottom: theme.spacing(3)
+}));
+const DragHandleWrapper = styled('div')(({ theme }) => ({
+  width: 40,
+  height: 40,
+  color: theme.palette.getContrastText(theme.palette.messageBackground),
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
 
 const CutsceneRow = ({
   rowData,
@@ -28,8 +41,6 @@ const CutsceneRow = ({
   handleToggleBulkSelected,
   ...props
 }) => {
-  const classes = useStyles();
-
   const [dialogues, toggleDialogue] = useDialogueManager(
     'confirmDelete',
     'createEvent',
@@ -40,18 +51,15 @@ const CutsceneRow = ({
 
   return (
     <Grid size={12}>
-      <div className={classes.mockContainer}>
-        <Paper className={classes.cutsceneRow} elevation={1}>
+      <MockContainer>
+        <StyledCutsceneRowPaper elevation={1}>
           <Grid container sx={{
             alignItems: "center"
           }}>
             <Grid>
-              <div
-                className={classes.dragHandleElement}
-                {...props.dragHandleProps}
-              >
+              <DragHandleWrapper {...props.dragHandleProps}>
                 <DragHandle />
-              </div>
+              </DragHandleWrapper>
             </Grid>
             <Grid size="grow">
               <Typography variant="caption">Event Row: {rowNumber}</Typography>
@@ -106,8 +114,8 @@ const CutsceneRow = ({
               )}
             </Droppable>
           </Grid>
-        </Paper>
-      </div>
+        </StyledCutsceneRowPaper>
+      </MockContainer>
       <GenericDialogue
         title="Create Cutscene Event"
         open={dialogues['createEvent']}

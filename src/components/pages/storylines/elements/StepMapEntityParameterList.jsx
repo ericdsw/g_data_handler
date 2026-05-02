@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { makeStyles } from '@mui/styles';
 import { blue } from '@mui/material/colors';
 import {
   Table,
@@ -16,18 +15,8 @@ import {
   Divider,
 } from '@mui/material';
 
-import { ConfirmationDialogue } from '../../../elements';
-import { useDialogueManager } from '../../../../hooks';
-
-const useStyles = makeStyles(() => ({
-  blueText: {
-    color: blue[400],
-  },
-  emptyMessage: {
-    fontStyle: 'italic',
-    padding: 16,
-  },
-}));
+import { ConfirmationDialogue } from '@/components/elements';
+import { useDialogueManager } from '@/hooks';
 
 const StepMapEntityParameterList = ({
   entityParams,
@@ -35,7 +24,6 @@ const StepMapEntityParameterList = ({
   handleEditParameter,
   handleDeleteParameter,
 }) => {
-  const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager('confirmParamDelete');
 
@@ -126,8 +114,11 @@ const StepMapEntityParameterList = ({
       {paramKeys.length <= 0 && (
         <Typography
           variant="body2"
-          className={classes.emptyMessage}
           align="center"
+          sx={{
+            fontStyle: 'italic',
+            padding: 16,
+          }}
         >
           No parmeters found
         </Typography>
@@ -145,7 +136,7 @@ const StepMapEntityParameterList = ({
             {paramKeys.map((param, index) => (
               <TableRow key={param}>
                 <TableCell>
-                  <Typography className={classes.blueText} variant="subtitle2">
+                  <Typography sx={{ color: blue[400] }} variant="subtitle2">
                     {param}
                   </Typography>
                 </TableCell>

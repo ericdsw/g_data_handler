@@ -1,5 +1,4 @@
-import React, { useMemo } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
+import { useMemo } from 'react';
 import {
   Grid,
   Typography,
@@ -9,14 +8,21 @@ import {
   Switch,
   Tooltip,
   Paper,
+  Box
 } from '@mui/material';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { styled } from '@mui/material/styles';
 
 import CutsceneRowContainer from './CutsceneRowContainer';
 
-import { styles } from './styles/CutsceneStyle';
-
-const useStyles = makeStyles(styles);
+const CutsceneRoot = styled(Grid)(({ theme }) => ({
+  paddingBottom: theme.spacing(2),
+  paddingTop: theme.spacing(2),
+  [theme.breakpoints.down('lg')]: {
+    paddingLeft: 0,
+    paddingRight: 0
+  }
+}))
 
 const Cutscene = ({
   cutscene,
@@ -27,21 +33,15 @@ const Cutscene = ({
   handleShouldHideBars,
   handleDragEnd,
 }) => {
-  const classes = useStyles();
-
   const cutsceneRows = useMemo(() => cutscene.cutsceneRows, [cutscene]);
 
   return (
     <>
       <DragDropContext onDragEnd={handleDragEnd}>
-        <Grid className={classes.root} container spacing={2} sx={{
+        <CutsceneRoot container spacing={2} sx={{
           alignItems: "center"
         }}>
-          <Grid
-            size={{
-              xs: 12,
-              md: 10
-            }}>
+          <Grid size={{ xs: 12, md: 10 }}>
             <TextField
               id="file_name"
               label="File Name"
@@ -86,7 +86,7 @@ const Cutscene = ({
                           variant="h5"
                           color="textSecondary"
                           align="center"
-                          className={classes.emptyText}
+                          sx={{ padding: 32, width: '100%' }}
                         >
                           The cutscene is empty
                         </Typography>
@@ -115,9 +115,9 @@ const Cutscene = ({
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        </CutsceneRoot>
       </DragDropContext>
-      <div style={{ height: 150 }} />
+      <Box sx={{ height: 150 }} />
     </>
   );
 };

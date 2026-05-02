@@ -1,5 +1,4 @@
-import React, { useMemo } from 'react';
-import { makeStyles } from '@mui/styles';
+import { useMemo } from 'react';
 import {
   Card,
   CardContent,
@@ -10,20 +9,25 @@ import {
 } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { DirectionsWalk } from '@mui/icons-material';
+import { styled } from '@mui/material/styles';
+import { red, blue } from '@mui/material/colors';
 
-import { editConversationMessage } from '../../../actions/dialogueActions';
-
+import { editConversationMessage } from '@/actions/dialogueActions';
+import { speakerSchema } from '@/globals';
 import {
   ConversationChoices,
   ConversationExtraParams,
   DialogueMessageToolbar,
   FloatingDialogue,
 } from './elements';
-import { speakerSchema } from '../../../globals';
 
-import { styles } from './styles/DialogueMessageStyle';
-
-const useStyles = makeStyles(styles);
+const StyledMessageContainer = styled(Card)(({ theme }) => ({
+  width: '100%',
+  backgroundColor: theme.palette.messageBackground,
+  position: 'relative',
+  borderBottom: '1px solid #666',
+  padding: theme.spacing(2),
+}));
 
 const DialogueMessage = ({
   handleEdit,
@@ -33,7 +37,6 @@ const DialogueMessage = ({
   handleSplitBelow,
   message,
 }) => {
-  const classes = useStyles();
   const dispatch = useDispatch();
 
   const changeLocation = (newLocation) => {
@@ -77,13 +80,17 @@ const DialogueMessage = ({
   }, [message.speaker, message.image, message.name]);
 
   return (
-    <Card square className={classes.messageContainer}>
+    <StyledMessageContainer square>
       {message.interrupts && (
-        <div className={classes.interruptDiv}>
+        <Box sx={{
+          background: red[600],
+          color: 'white',
+          padding: 6,
+        }}>
           <Typography align="center" variant="body2">
             <b>Interrupts Previous</b>
           </Typography>
-        </div>
+        </Box>
       )}
       <CardContent>
         <Grid container spacing={2}>
@@ -93,8 +100,10 @@ const DialogueMessage = ({
                 {message.speaker && (
                   <Typography
                     variant="caption"
-                    className={classes.subTitle}
                     align="left"
+                    sx={theme => ({
+                      color: theme.palette.getContrastText(theme.palette.messageBackground),
+                    })}
                   >
                     Speaker: {message.speaker}
                   </Typography>
@@ -213,7 +222,7 @@ const DialogueMessage = ({
             {message.target_object && (
               <Typography
                 variant="body1"
-                className={classes.targetObject}
+                sx={{ color: blue[200] }}
                 align="right"
               >
                 <DirectionsWalk />
@@ -223,7 +232,7 @@ const DialogueMessage = ({
           </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </StyledMessageContainer>
   );
 };
 

@@ -1,17 +1,23 @@
-import makeStyles from '@mui/styles/makeStyles';
-import { Grid, TextField, Button } from '@mui/material';
+import { Box, Grid, TextField, Button } from '@mui/material';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { styled } from '@mui/material/styles';
 
-import { GenericDialogue } from '../../elements';
-import { useDialogueManager } from '../../../hooks';
+import { GenericDialogue } from '@/components/elements';
+import { useDialogueManager } from '@/hooks';
 import DialogueConversationContainer from './DialogueConversationContainer';
 
 import { NoConversationsNotifier } from './elements';
 import { CreateConversationForm } from './forms';
 
-import { styles } from './styles/DialogueStyle';
-
-const useStyles = makeStyles(styles);
+const StyledRoot = styled(Grid)(({ theme }) => ({
+  paddingTop: theme.spacing(2),
+  paddingBottom: theme.spacing(2),
+  width: '100%',
+  [theme.breakpoints.down('lg')]: {
+    paddingLeft: 0,
+    paddingRight: 0,
+  }
+}));
 
 const Dialogue = ({
   fileName,
@@ -20,18 +26,15 @@ const Dialogue = ({
   handleAddConversation,
   handleDragEnd,
 }) => {
-  const classes = useStyles();
-
   const [dialogues, toggleDialogue] = useDialogueManager(
     'addConversation',
     'confirmMerge',
     'confirmBulkDelete'
   );
-
   return (
     <>
       <DragDropContext onDragEnd={(result) => handleDragEnd(result)}>
-        <Grid className={classes.root} container spacing={2}>
+        <StyledRoot container spacing={2}>
           {/* File Name Manager */}
           <Grid size={12}>
             <TextField
@@ -79,7 +82,7 @@ const Dialogue = ({
               </Button>
             </Grid>
           </Grid>
-        </Grid>
+        </StyledRoot>
 
         {/* Conversation Form */}
         <GenericDialogue
@@ -96,7 +99,7 @@ const Dialogue = ({
           />
         </GenericDialogue>
       </DragDropContext>
-      <div style={{ height: 150 }} />
+      <Box sx={{ height: 150 }} />
     </>
   );
 };

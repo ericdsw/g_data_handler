@@ -1,5 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import { makeStyles } from '@mui/styles';
+import { useState, useMemo, useCallback } from 'react';
 import {
   Card,
   CardHeader,
@@ -13,25 +12,18 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { useDialogueManager } from '../../../hooks';
+import { useDialogueManager } from '@/hooks';
 
 import StepMapEntityContainer from './StepMapEntityContainer';
-import { GenericDialogue, MenuIconButton } from '../../elements';
-import { storylineEntityInputSchema } from '../../../globals';
+import { GenericDialogue, MenuIconButton } from '@/components/elements';
+import { storylineEntityInputSchema } from '@/globals';
 import CreateMapEntityForm from './forms/CreateMapEntityForm';
 import EditStepMapNameForm from './forms/EditStepMapNameForm';
 
-const useStyles = makeStyles(() => ({
-  mapCard: {
-    background: (props) => props.cardBackground,
-  },
-}));
-
 const StepMap = ({ stepMap, handleAddEntity, handleUpdateName }) => {
   const { darkMode } = useSelector((state) => state.app);
-  const classes = useStyles({
-    cardBackground: darkMode ? '#463f47' : '#eee',
-  });
+  const cardBackground = useMemo(() => darkMode ? '#463f47' : '#eee', [darkMode]);
+
   const [dialogues, toggleDialogue] = useDialogueManager('editName');
 
   const [curEntityType, setCurEntityType] = useState('');
@@ -81,7 +73,7 @@ const StepMap = ({ stepMap, handleAddEntity, handleUpdateName }) => {
   );
 
   return (
-    <Card className={classes.mapCard}>
+    <Card sx={{ background: cardBackground }}>
       <CardHeader
         avatar={
           <Avatar>

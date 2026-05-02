@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-import { makeStyles } from '@mui/styles';
 import {
   Card,
   CardHeader,
@@ -17,8 +16,10 @@ import {
   Collapse,
 } from '@mui/material';
 import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate';
+import { blue } from '@mui/material/colors';
+import { styled } from '@mui/material/styles';
 
-import { interactionInputSchema } from '../../../globals';
+import { interactionInputSchema } from '@/globals';
 import NPCInteractionContainer from './NPCInteractionContainer';
 import StepMapEntityParameterList from './elements/StepMapEntityParameterList';
 import CreateNPCInteractionForm from './forms/CreateNPCInteractionForm';
@@ -26,15 +27,34 @@ import {
   GenericDialogue,
   ConfirmationDialogue,
   MenuIconButton,
-} from '../../elements';
-import { useDialogueManager } from '../../../hooks';
+} from '@/components/elements';
+import { useDialogueManager } from '@/hooks';
 import CreateMapEntityForm from './forms/CreateMapEntityForm';
 import ItemDependentInteractionInstructions from './elements/ItemDependentInteractionInstructions';
 import DuplicateMapEntityForm from './forms/DuplicateMapEntityForm';
 
-import { styles } from './styles/StepMapEntityStyle';
-
-const useStyles = makeStyles(styles);
+const StyledDescriptionElementButton = styled(ButtonBase)(({ theme }) => ({
+  display: 'flex',
+  width: '100%',
+  paddingLeft: 16,
+  paddingRight: 16,
+  backgroundColor: 'transparent',
+}));
+const StyledDescriptionElementPaper = styled(Paper)(({ theme }) => ({
+  padding: 16,
+  cursor: 'pointer',
+  width: '100%',
+  fontSize: 14,
+  backgroundColor: 'transparent',
+color: theme.palette.text.primary,
+}));
+const NoParametersGridText = styled(Grid)(({ theme }) => ({
+color: theme.palette.text.primary,
+backgroundColor: theme.palette.background.paper,
+  padding: 10,
+  paddingTop: 16,
+  paddingBottom: 0,
+}))
 
 const StepMapEntity = ({
   stepMapEntity,
@@ -47,8 +67,6 @@ const StepMapEntity = ({
   handleDeleteEntity,
   handleDuplicateInMaps,
 }) => {
-  const classes = useStyles();
-
   const [dialogues, toggleDialogue] = useDialogueManager(
     'viewParameters',
     'viewInteractions',
@@ -155,7 +173,7 @@ const StepMapEntity = ({
           </Tooltip>
         }
         subheader={
-          <Typography variant="caption" className={classes.typeSubheader}>
+          <Typography variant="caption" sx={{ color: blue[400] }}>
             {entityType}
           </Typography>
         }
@@ -163,21 +181,19 @@ const StepMapEntity = ({
       <Divider />
       {stepMapEntity.type !== 'remove_entity' && (
         <React.Fragment>
-          <ButtonBase
-            className={classes.descriptionWrapper}
+          <StyledDescriptionElementButton
             onClick={() => toggleParamsExpanded(!paramsExpanded)}
           >
-            <Paper elevation={0} className={classes.descriptionElement}>
+            <StyledDescriptionElementPaper elevation={0}>
               <Typography variant="body2">
                 {paramsExpanded ? 'Hide' : 'Show'} parameters
               </Typography>
-            </Paper>
-          </ButtonBase>
+            </StyledDescriptionElementPaper>
+          </StyledDescriptionElementButton>
           <Collapse in={paramsExpanded} timeout="auto" unmountOnExit>
             {paramAmount <= 0 && (
-              <Grid
+              <NoParametersGridText
                 container
-                className={classes.noParametersText}
                 sx={{
                   justifyContent: "center",
                   alignItems: "center"
@@ -185,34 +201,52 @@ const StepMapEntity = ({
                 <Typography variant="caption" align="center">
                   No parameters configured
                 </Typography>
-              </Grid>
+              </NoParametersGridText>
             )}
             <Paper square elevation={0}>
               <List component="nav">{paramList}</List>
             </Paper>
           </Collapse>
           <Divider />
-          <ButtonBase
-            className={classes.descriptionWrapper}
+          <StyledDescriptionElementButton
             onClick={() => toggleDialogue('viewInteractions', 'show')}
           >
-            <Paper elevation={0} className={classes.descriptionElement}>
+            <StyledDescriptionElementPaper elevation={0}>
               <Typography variant="body2">
                 Contains {inAmount} interaction{inAmount === 1 ? '' : 's'}
               </Typography>
-            </Paper>
-          </ButtonBase>
+            </StyledDescriptionElementPaper>
+          </StyledDescriptionElementButton>
         </React.Fragment>
       )}
       {stepMapEntity.type === 'remove_entity' && (
-        <Paper elevation={0} className={classes.descriptionWrapper}>
-          <Typography variant="caption" className={classes.descriptionElement}>
+        <Paper
+          elevation={0}
+          sx={{
+            display: 'flex',
+            width: '100%',
+            paddingLeft: 16,
+            paddingRight: 16,
+            backgroundColor: 'transparent',
+          }}
+        >
+          <Typography
+            variant="caption"
+            sx={theme => ({
+              padding: 16,
+              cursor: 'pointer',
+              width: '100%',
+              fontSize: 14,
+              backgroundColor: 'transparent',
+              color: theme.palette.text.primary,
+            })}
+          >
             Remove Entity has no parameters and no interactions
           </Typography>
         </Paper>
       )}
       <Divider />
-      <CardActions className={classes.actions}>
+      <CardActions sx={{ display: 'flex' }}>
         <Tooltip title="Edit entity name">
           <IconButton
             onClick={() => toggleDialogue('editEntity', 'show')}

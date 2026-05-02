@@ -1,22 +1,18 @@
-import React, { useState, useCallback, useMemo } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
+import { useState, useCallback, useMemo } from 'react';
 import { Button, Divider, Paper, Grid, Typography } from '@mui/material';
 import DragAndDrop from './DragAndDrop';
+import { styled } from '@mui/material/styles';
 
-const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(1),
-    marginBottom: 24,
-  },
-  dragCapturer: {
-    padding: 16,
-    marginTop: 24,
-    cursor: 'pointer',
-  },
-  gridContainer: {
-    minHeight: 300,
-  },
+const DragCapturer = styled(Paper)(() => ({
+  padding: 16,
+  marginTop: 24,
+  cursor: 'pointer',
 }));
+
+const EmptyButton = styled(Button)(({ theme }) => ({
+  margin: theme.spacing(1),
+  marginBottom: 24
+}))
 
 const DragJsonFileManager = ({
   buttonString,
@@ -25,7 +21,6 @@ const DragJsonFileManager = ({
   handleUpdateFromFile,
   additionalActions = [],
 }) => {
-  const classes = useStyles();
 
   const [loading, toggleLoading] = useState(false);
 
@@ -41,51 +36,49 @@ const DragJsonFileManager = ({
     () => (
       <>
         {additionalActions.map((actionData) => (
-          <Button
+          <EmptyButton
             key={actionData.title}
             variant="contained"
             color="primary"
             onClick={actionData.action}
-            className={classes.button}
           >
             {actionData.title}
-          </Button>
+          </EmptyButton>
         ))}
       </>
     ),
-    [additionalActions, classes.button]
+    [additionalActions]
   );
 
   return (
     <div>
-      <Button
+      <EmptyButton
         variant="contained"
         color="primary"
         onClick={() => handleEmpty()}
-        className={classes.button}
       >
         {buttonString}
-      </Button>
+      </EmptyButton>
       {additionalButtons}
       <Divider />
       <DragAndDrop handleDrop={handleDrop}>
-        <Paper elevation={1} className={classes.dragCapturer}>
+        <DragCapturer elevation={1}>
           <Grid
             container
             direction="row"
-            className={classes.gridContainer}
             sx={{
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
+              minHeight: 300
             }}>
             <Grid size="grow">
               <Typography color="textSecondary" align="center" variant="h4">
-                {loading && <React.Fragment>Loading...</React.Fragment>}
+                {loading && <>Loading...</>}
                 {!loading && dragString}
               </Typography>
             </Grid>
           </Grid>
-        </Paper>
+        </DragCapturer>
       </DragAndDrop>
     </div>
   );

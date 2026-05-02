@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Grid,
   Card,
@@ -11,27 +11,34 @@ import {
   Icon,
   Tooltip,
   Typography,
+  Box
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import classnames from 'classnames';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
-
-import { useDialogueManager } from '../../../hooks';
-import { GenericDialogue, ConfirmationDialogue } from '../../elements';
-import { CreateEventForm } from './forms';
-import { eventSchema } from '../../../globals';
-import { checkForRequired, createEventDescription } from '../../../functions';
-
-import { styles } from './styles/CutsceneEventStyle';
-import AddEventToTemplateForm from './forms/AddEventToTemplateForm';
 import { Warning } from '@mui/icons-material';
-import { yellow } from '@mui/material/colors';
+import { yellow, grey } from '@mui/material/colors';
+import { styled } from '@mui/material/styles';
+
+import { useDialogueManager } from '@/hooks';
+import { GenericDialogue, ConfirmationDialogue } from '@/components/elements';
+import { CreateEventForm } from './forms';
+import { eventSchema } from '@/globals';
+import { checkForRequired, createEventDescription } from '@/functions';
+
+import AddEventToTemplateForm from './forms/AddEventToTemplateForm';
 import { CutsceneEventProperties } from './elements';
 
-const useStyles = makeStyles(styles);
+const StyledEventCard = styled(Card)(({ theme }) => ({
+  border: `1px solid ${theme.palette.background.default}`
+}));
+const StyledExpandIconButton = styled(IconButton)(({ theme }) => ({
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  })
+}));
 
 const CutsceneEvent = ({
   cutsceneEventData,
@@ -42,7 +49,6 @@ const CutsceneEvent = ({
   skipRequiredCheck = false,
   eventIndex,
 }) => {
-  const classes = useStyles({ compact });
 
   const [dialogues, toggleDialogue] = useDialogueManager(
     'editEvent',
@@ -51,6 +57,7 @@ const CutsceneEvent = ({
   );
 
   const [expanded, toggleExpand] = useState(false);
+
 
   const { name, icon } = useMemo(
     () => eventSchema[cutsceneEventData.type],
@@ -61,6 +68,7 @@ const CutsceneEvent = ({
     () => cutsceneEventData.parameters.is_important,
     [cutsceneEventData]
   );
+  const showNonImportant = useMemo(() => typeof important !== 'undefined' && !important, [important]);
 
   const eventDescription = useMemo(
     () =>
@@ -90,21 +98,18 @@ const CutsceneEvent = ({
 
   return (
     <Grid>
-      <div style={{ padding: 8 }}>
-        <Card className={classes.eventCard} elevation={2}>
+      <Box sx={{ padding: 8 }}>
+        <StyledEventCard elevation={2} sx={{ width: compact ? 200 : 300 }}>
           <CardHeader
             avatar={
               <Avatar
                 aria-label="Type"
-                className={
-                  typeof important !== 'undefined' && !important
-                    ? classes.avatarNonImportant
-                    : classes.avatar
-                }
-                sx={{
+                sx={(theme) => ({
                   width: compact ? 36 : 40,
                   height: compact ? 36 : 40,
-                }}
+                  backgroundColor: showNonImportant ? grey[300] : theme.palette.primary.main,
+                  opacity: showNonImportant ? 0.7 : 1.0
+                })}
               >
                 <Icon>{icon}</Icon>
               </Avatar>
@@ -121,7 +126,7 @@ const CutsceneEvent = ({
                 </Typography>
               </Tooltip>
             }
-            style={{
+            sx={{
               minHeight: compact ? 70 : 100,
               alignItems: 'flex-start',
             }}
@@ -133,13 +138,13 @@ const CutsceneEvent = ({
                       ', '
                     )}`}
                   >
-                    <Warning style={{ margin: 8, color: yellow[500] }} />
+                    <Warning sx={{ margin: 8, color: yellow[500] }} />
                   </Tooltip>
                 )}
               </>
             }
           />
-          <CardActions className={classes.actions} disableSpacing>
+          <CardActions sx={{ display: 'flex' }} disableSpacing>
             {/* Edit button */}
             <Tooltip title="Edit Event">
               <IconButton
@@ -175,25 +180,23 @@ const CutsceneEvent = ({
             </Tooltip>
 
             {/* Expand Icon */}
-            <IconButton
-              className={classnames(classes.expand, {
-                [classes.expandOpen]: expanded,
-              })}
+            <StyledExpandIconButton
               onClick={() => toggleExpand(!expanded)}
               aria-expanded={expanded}
               aria-label="More Info"
               size={compact ? 'small' : 'medium'}
+              sx={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
             >
               <ExpandMoreIcon fontSize={compact ? 'small' : 'inherit'} />
-            </IconButton>
+            </StyledExpandIconButton>
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
               <CutsceneEventProperties cutsceneEventData={cutsceneEventData} />
             </CardContent>
           </Collapse>
-        </Card>
-      </div>
+        </StyledEventCard>
+      </Box>
       <GenericDialogue
         title="Edit Cutscene Event"
         open={dialogues['editEvent']}

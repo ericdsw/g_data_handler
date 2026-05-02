@@ -1,31 +1,26 @@
-import React from 'react';
 import { Typography, Button } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 
-const useStyles = makeStyles((theme) => ({
-  link: {
-    color: theme.palette.secondary.main,
-  },
-}));
+const Link = styled('a')(({ theme }) => ({
+  color: theme.palette.secondary.main
+}))
 
 const AboutPage = () => {
-  const classes = useStyles();
-
   return (
     <>
       <Typography variant="body1">
         Copyright 2026,{' '}
-        <a href="https://github.com/ericdsw" className={classes.link}>
+        <Link href="https://github.com/ericdsw">
           Eric De Sedas
-        </a>
+        </Link>
         , All rights reserved.
       </Typography>
       <br />
       <Typography variant="body2">
         Currently working at World Eater Games alongside{' '}
-        <a className={classes.link} href="https://github.com/rnoriega31">
+        <Link href="https://github.com/rnoriega31">
           rnoriega31
-        </a>
+        </Link>
         , we area creating Bittersweet Birthday. Since our game revolves heavily
         on external formatted data, I created this tool to help ease a little
         bit some of the work that it takes to create and modify this

@@ -1,26 +1,19 @@
 import { useState } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
+import { styled } from '@mui/material/styles';
+import { Box } from '@mui/material';
 
 import { NavigationDrawer, ApplicationBar } from '@/components/elements';
-import { drawerWidth } from '@/globals';
-import routes, { fallbackRoute } from '@/router';
+import routes from '@/router';
+import { NotFound } from '@/components/pages';
+import { ToolbarSpace } from '@/components/elements';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  toolbar: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    paddingLeft: theme.spacing(5),
-    paddingRight: theme.spacing(5),
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: drawerWidth,
-    },
-  },
+const StyledContentWrapper = styled('main')(({ theme }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  paddingLeft: theme.spacing(5),
+  paddingRight: theme.spacing(5),
 }));
 
 // Prevents accidental closes
@@ -30,35 +23,28 @@ window.onbeforeunload = function () {
 
 const App = () => {
   const [drawerOpen, toggleDrawerOpen] = useState(false);
-
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
+    <Box sx={{ display: 'flex' }}>
       <SnackbarProvider maxSnack={3}>
-        <Router>
+        <BrowserRouter>
           <ApplicationBar handleToggle={() => toggleDrawerOpen(!drawerOpen)} />
-          <NavigationDrawer
-            isOpen={drawerOpen}
-            handleCollapse={() => toggleDrawerOpen(false)}
-          />
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
+          <NavigationDrawer />
+          <StyledContentWrapper>
+            <ToolbarSpace />
             <Routes>
               {routes.map((route) => (
                 <Route
                   key={route.path}
                   path={route.path}
-                  exact={route.exact.toString()}
                   element={route.component}
                 />
               ))}
-              <Route component={fallbackRoute.component} />
+              <Route element={<NotFound />} />
             </Routes>
-          </main>
-        </Router>
+          </StyledContentWrapper>
+        </BrowserRouter>
       </SnackbarProvider>
-    </div>
+    </Box>
   );
 };
 

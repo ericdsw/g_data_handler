@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@mui/styles';
+import { useState } from 'react';
 import { Fab, Icon } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 import { GenericDialogue } from '../../../elements';
 import { CreateDialogueMessageForm } from '../forms';
 
-const useStyles = makeStyles((theme) => ({
-  fab: {
-    position: 'fixed',
-    left: 16,
-    bottom: 16,
-    transition: 'transform 0.2s ease',
-    margin: theme.spacing(1),
-    zIndex: 1500,
-  },
+const StyledFab = styled(Fab)(({ theme }) => ({
+  position: 'fixed',
+  left: 16,
+  bottom: 16,
+  transition: 'transform 0.2s ease',
+  margin: theme.spacing(1),
+  zIndex: 1500,
 }));
 
 const DialogueMessageDialogue = ({
@@ -24,23 +22,19 @@ const DialogueMessageDialogue = ({
   isEdit,
   messageData,
 }) => {
-  const classes = useStyles();
   const [minimized, toggleMinimized] = useState(false);
 
   return (
     <>
-      <Fab
-        className={classes.fab}
+      <StyledFab
         color="primary"
         variant="extended"
         onClick={() => toggleMinimized(false)}
-        style={{
-          transform: minimized ? 'scale(1.0)' : 'scale(0.0)',
-        }}
+        sx={{ transform: minimized ? 'scale(1.0)' : 'scale(0.0)' }}
       >
         <Icon>open_in_full</Icon>
         &nbsp; Maximize
-      </Fab>
+      </StyledFab>
       <GenericDialogue
         title={title}
         open={open}

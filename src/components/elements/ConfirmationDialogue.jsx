@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Dialog,
   DialogContent,
@@ -7,17 +6,7 @@ import {
   Button,
   Typography,
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { red, green } from '@mui/material/colors';
-
-const useStyles = makeStyles(() => ({
-  cancelButton: {
-    color: red[400],
-  },
-  confirmButton: {
-    color: green[400],
-  },
-}));
 
 const ConfirmationDialogue = ({
   isOpen = false,
@@ -26,8 +15,6 @@ const ConfirmationDialogue = ({
   message,
   descriptionText = '',
 }) => {
-  const classes = useStyles();
-
   if (!isOpen) {
     return <></>;
   }
@@ -41,10 +28,10 @@ const ConfirmationDialogue = ({
         </DialogContent>
       )}
       <DialogActions>
-        <Button className={classes.cancelButton} onClick={handleClose}>
+        <Button sx={{ color: red[400] }} onClick={handleClose}>
           No
         </Button>
-        <Button className={classes.confirmButton} onClick={handleConfirm}>
+        <Button sx={{ color: green[400] }} onClick={handleConfirm}>
           Yes
         </Button>
       </DialogActions>

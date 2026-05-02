@@ -1,5 +1,4 @@
 import React, { useState, useMemo, Fragment } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import {
   Icon,
   Button,
@@ -15,24 +14,9 @@ import {
   DragJsonFileManager,
   GenericDialogue,
 } from '../../../elements';
-import { useDialogueManager } from '../../../../hooks';
-import { parseFile } from '../../../../functions';
+import { useDialogueManager } from '@/hooks';
+import { parseFile } from '@/functions';
 import { QuestionAnswer } from '@mui/icons-material';
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(1),
-    marginBottom: 24,
-  },
-  dragCapturer: {
-    padding: 16,
-    marginTop: 24,
-    minHeight: 332,
-  },
-  gridContainer: {
-    minHeight: 300,
-  },
-}));
 
 const NoDialogue = ({
   handleEmptyDialogue,
@@ -41,8 +25,6 @@ const NoDialogue = ({
 }) => {
   const [dialogues, toggleDialogue] = useDialogueManager('mergeDialogue');
   const [dialoguesToMerge, updateDialoguesToMerge] = useState({});
-
-  const classes = useStyles();
 
   const processNewFile = async (newFiles) => {
     const newData = {};
@@ -140,15 +122,19 @@ const NoDialogue = ({
         <Typography variant="h5">
           Import & Merge
           <DragAndDrop handleDrop={(file) => processNewFile(file)}>
-            <Paper elevation={1} className={classes.dragCapturer}>
+            <Paper elevation={1} sx={{
+              padding: 16,
+              marginTop: 24,
+              minHeight: 332
+            }}>
               {!hasDialoguesToMerge && (
                 <Grid
                   container
                   direction="row"
-                  className={classes.gridContainer}
                   sx={{
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
+                    minHeight: 300
                   }}>
                   <Grid size="grow">
                     <Typography

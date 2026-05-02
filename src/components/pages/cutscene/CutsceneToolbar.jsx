@@ -1,14 +1,16 @@
-import makeStyles from '@mui/styles/makeStyles';
 import { Grid, Typography, Button } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { red } from '@mui/material/colors';
 
-import { GenericDialogue } from '../../elements';
-import { JumpForm } from './forms';
-import { useDialogueManager } from '../../../hooks';
+import { GenericDialogue } from '@/components/elements';
+import { useDialogueManager } from '@/hooks';
 import JumpList from './JumpList';
+import { JumpForm } from './forms';
 
-import { styles } from './styles/CutsceneToolbarStyle';
 
-const useStyles = makeStyles(styles);
+const DeleteButton = styled(Button)({
+  color: red[400]
+});
 
 const CutsceneToolbar = ({
   jumps,
@@ -18,8 +20,6 @@ const CutsceneToolbar = ({
   handleExport,
   handleClearCutscene,
 }) => {
-  const classes = useStyles();
-
   // Dialogue management
   const [dialogues, toggleDialogue] = useDialogueManager(
     'confirmDelete',
@@ -28,21 +28,17 @@ const CutsceneToolbar = ({
   );
 
   return (
-    <Grid container spacing={2} sx={{
-      alignItems: "center"
-    }}>
+    <Grid container spacing={2} sx={{ alignItems: "center" }}>
       <Grid size={6}>
         <Typography align="left">
           <Button
             color="primary"
-            className={classes.defaultButton}
-            onClick={() => handleAddRow()}
+            onClick={handleAddRow}
           >
             Add Row
           </Button>
           <Button
             color="primary"
-            className={classes.defaultButton}
             onClick={() => toggleDialogue('createJump', 'show')}
           >
             Add Jump
@@ -60,13 +56,9 @@ const CutsceneToolbar = ({
           <Button color="secondary" onClick={() => handleExport()}>
             Export
           </Button>
-          <Button
-            color="secondary"
-            className={classes.deleteButton}
-            onClick={handleClearCutscene}
-          >
+          <DeleteButton onClick={handleClearCutscene}>
             Clear Cutscene
-          </Button>
+          </DeleteButton>
         </Typography>
       </Grid>
       <GenericDialogue

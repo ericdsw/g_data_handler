@@ -1,17 +1,7 @@
 import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import { Paper, Typography } from '@mui/material';
 
-const useStyles = makeStyles(() => ({
-  emptyText: {
-    padding: 32,
-    width: '100%',
-  },
-}));
-
 const NoConversationsNotifier = ({ conversations }) => {
-  const classes = useStyles();
-
   if (conversations.length <= 0) {
     return (
       <Paper>
@@ -19,7 +9,7 @@ const NoConversationsNotifier = ({ conversations }) => {
           variant="h5"
           color="textSecondary"
           align="center"
-          className={classes.emptyText}
+          sx={{ padding: 32, width: '100%' }}
         >
           No conversations for this dialogue
         </Typography>

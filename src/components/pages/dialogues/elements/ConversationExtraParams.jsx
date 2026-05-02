@@ -1,19 +1,17 @@
-import React, { useMemo } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import { Chip } from '@mui/material';
+import { useMemo } from 'react';
+import { Chip, Box } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
-const useStyles = makeStyles((theme) => ({
-  chip: {
-    marginRight: theme.spacing(1),
-    [theme.breakpoints.down('lg')]: {
-      marginBottom: theme.spacing(1),
-    },
+const StyledChip = styled(Chip)(({ theme }) => ({
+  marginRight: theme.spacing(1),
+  [theme.breakpoints.down('lg')]: {
+    marginBottom: theme.spacing(1),
   },
-  chipContainer: {
-    borderTop: '1px solid #333',
-    marginTop: 12,
-    paddingTop: 12,
-  },
+}));
+const StyledChipContainer = styled(Box)(({ theme }) => ({
+  borderTop: '1px solid #333',
+  marginTop: 12,
+  paddingTop: 12,
 }));
 
 const EXTRAS = {
@@ -32,24 +30,22 @@ const EXTRAS = {
 };
 
 const ConversationExtraParams = ({ message }) => {
-  const classes = useStyles();
   const extraChips = useMemo(() => {
     return Object.keys(EXTRAS)
       .filter((extraProperty) => message.hasOwnProperty(extraProperty))
       .filter((extraProperty) => message[extraProperty] !== '')
       .map((extraProperty) => (
-        <Chip
+        <StyledChip
           key={extraProperty}
-          className={classes.chip}
           label={`${EXTRAS[extraProperty].label}: ${message[extraProperty]}`}
         />
       ));
-  }, [classes.chip, message]);
+  }, [message]);
 
   return (
     <>
       {extraChips.length > 0 && (
-        <div className={classes.chipContainer}>{extraChips}</div>
+        <StyledChipContainer>{extraChips}</StyledChipContainer>
       )}
     </>
   );

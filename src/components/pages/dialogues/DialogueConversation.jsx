@@ -1,5 +1,4 @@
-import React, { useState, useCallback } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
+import { useState, useCallback } from 'react';
 import {
   Accordion,
   AccordionSummary,
@@ -10,12 +9,14 @@ import {
   IconButton,
   Tooltip,
   Checkbox,
+  Box,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Droppable } from 'react-beautiful-dnd';
+import { styled } from '@mui/material/styles';
 
-import { ConfirmationDialogue, GenericDialogue } from '../../elements';
-import { useDialogueManager } from '../../../hooks';
+import { ConfirmationDialogue, GenericDialogue } from '@/components/elements';
+import { useDialogueManager } from '@/hooks';
 import DialogueMessageContainer from './DialogueMessageContainer';
 import { CreateConversationForm } from './forms';
 import {
@@ -27,10 +28,37 @@ import {
 } from './forms';
 import { DialogueMessageDialogue } from './formDialogues';
 
-import { styles } from './styles/DialogueConversationStyle';
 import { Delete, DragHandle, Edit } from '@mui/icons-material';
 
-const useStyles = makeStyles(styles);
+const StyledAccordionContainer = styled(Accordion)(({ theme }) => ({
+  width: '100%',
+  borderBottom: `1px solid ${theme.palette.divider}`,
+}));
+const HeadingTypography = styled(Typography)(({ theme }) => ({
+  fontSize: theme.typography.pxToRem(15),
+  fontWeight: theme.typography.fontWeightBold,
+  flexBasis: '33.3%',
+  flexShrink: 0,
+}));
+const SubHeadingTypography = styled(Typography)(({ theme }) => ({
+  fontSize: theme.typography.pxToRem(15),
+  fontWeight: theme.typography.fontWeightRegular,
+  color: theme.palette.text.secondary,
+}));
+const DragHandleElement = styled('div')(({ theme }) => ({
+  width: 50,
+  height: 40,
+  color: theme.palette.getContrastText(theme.palette.messageBackground),
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+const ButtonContainer = styled(Box)(({ theme }) => ({
+  marginTop: 16,
+  display: 'flex',
+  alignItems: 'stretch',
+  justifyContent: 'center',
+}));
 
 const DialogueConversation = ({
   conversation,
@@ -41,8 +69,6 @@ const DialogueConversation = ({
   handleToggleFromMerger,
   ...props
 }) => {
-  const classes = useStyles();
-
   const [dialogues, toggleDialogue] = useDialogueManager(
     'confirmDelete',
     'updateConversation',
@@ -74,8 +100,7 @@ const DialogueConversation = ({
 
   return (
     <>
-      <Accordion
-        className={classes.conversationContainer}
+      <StyledAccordionContainer
         square={true}
         onChange={(_, expanded) => {
           setIsExpanded(expanded);
@@ -90,31 +115,24 @@ const DialogueConversation = ({
             flexGrow: 1
           }}>
             {/* Title Data */}
-            <Grid
-              size={{
-                xs: 12,
-                md: 6
-              }}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <Grid container>
                 <Grid>
-                  <div
-                    className={classes.dragHandleElement}
-                    {...props.dragHandleProps}
-                  >
+                  <DragHandleElement {...props.dragHandleProps}>
                     <DragHandle />
-                  </div>
+                  </DragHandleElement>
                 </Grid>
                 <Grid size="grow">
-                  <Typography className={classes.heading}>
+                  <HeadingTypography>
                     <b>Name: {conversation.conversationName}</b>
-                  </Typography>
-                  <Typography className={classes.subHeading}>
+                  </HeadingTypography>
+                  <SubHeadingTypography>
                     ({conversation.messages.length}{' '}
                     {conversation.messages.length === 1
                       ? 'message'
                       : 'messages'}
                     )
-                  </Typography>
+                  </SubHeadingTypography>
                 </Grid>
               </Grid>
             </Grid>
@@ -152,15 +170,15 @@ const DialogueConversation = ({
         </AccordionSummary>
 
         <AccordionDetails>
-          <div className={classes.detailsContainer}>
+          <Box sx={{ width: '100%', minHeight: 50 }}>
             <Droppable
               droppableId={conversation.id}
               type={`messages`}
               isDropDisabled={!isExpanded}
             >
               {(provided) => (
-                <div
-                  className={classes.messageContainer}
+                <Box
+                  sx={{ flexGrow: 1 }}
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
@@ -174,11 +192,11 @@ const DialogueConversation = ({
                     />
                   ))}
                   {provided.placeholder}
-                </div>
+                </Box>
               )}
             </Droppable>
 
-            <div className={classes.buttonContainer}>
+            <ButtonContainer>
               <Button
                 style={{ marginTop: 8, marginRight: 16 }}
                 color="primary"
@@ -231,8 +249,8 @@ const DialogueConversation = ({
               >
                 Select Item
               </Button>
-            </div>
-          </div>
+            </ButtonContainer>
+          </Box>
         </AccordionDetails>
 
         {/* Create Message Form */}
@@ -324,7 +342,7 @@ const DialogueConversation = ({
             }}
           />
         </GenericDialogue>
-      </Accordion>
+      </StyledAccordionContainer>
       {/* Edit Conversation Name */}
       <GenericDialogue
         title="Edit Conversation"

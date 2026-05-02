@@ -1,16 +1,12 @@
-import React, { useMemo } from 'react';
-import { makeStyles } from '@mui/styles';
+import { useMemo } from 'react';
 import { Grid, Typography, TextField, Button, Tooltip } from '@mui/material';
+import { red } from '@mui/material/colors';
 
 import StorylineStepContainer from './StorylineStepContainer';
 import { GenericDialogue, ConfirmationDialogue } from '../../elements';
 import { useDialogueManager } from '../../../hooks';
 import StorylineStepForm from './forms/StorylineStepForm';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-
-import { styles } from './styles/StorylineStyle';
-
-const useStyles = makeStyles(styles);
 
 const Storyline = ({
   storyline,
@@ -22,7 +18,6 @@ const Storyline = ({
   updateAppliedRunsString,
   handleDragEnd,
 }) => {
-  const classes = useStyles();
 
   const [dialogues, toggleDialogue] = useDialogueManager(
     'createStepDialogue',
@@ -56,9 +51,15 @@ const Storyline = ({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <Grid className={classes.root} container spacing={2} sx={{
-        alignItems: "center"
-      }}>
+      <Grid container spacing={2} sx={theme => ({
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
+        alignItems: "center",
+        [theme.breakpoints.down('lg')]: {
+          paddingLeft: 0,
+          paddingRight: 0,
+        }
+      })}>
         <Grid size={8}>
           <Typography variant="h4" gutterBottom>
             Current Storyline: {storyline.name}
@@ -67,7 +68,7 @@ const Storyline = ({
         <Grid size={4}>
           <Typography align="right">
             <Button
-              className={classes.defaultButton}
+              sx={theme => ({ color: theme.palette.primary.main })}
               onClick={() => toggleDialogue('createStepDialogue', 'show')}
             >
               Add Step
@@ -76,7 +77,7 @@ const Storyline = ({
               Export
             </Button>
             <Button
-              className={classes.deleteButton}
+              sx={{ color: red[400] }}
               onClick={() => toggleDialogue('confirmDelete', 'show')}
             >
               Clear Storyline
@@ -154,7 +155,7 @@ const Storyline = ({
         <Grid size={12}>
           <Typography align="center">
             <Button
-              className={classes.defaultButton}
+              sx={theme => ({ color: theme.palette.primary.main })}
               onClick={() => toggleDialogue('createStepDialogue', 'show')}
             >
               Add Step
