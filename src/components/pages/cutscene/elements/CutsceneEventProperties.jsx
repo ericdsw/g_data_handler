@@ -64,7 +64,7 @@ const CutsceneEventProperties = ({ cutsceneEventData }) => {
                   align="left"
                   padding="none"
                   size="small"
-                  sx={{ padding: 10 }}
+                  sx={{ paddingTop: 1, paddingBottom: 1 }}
                 >
                   <Typography>
                     <b>{paramName}</b>

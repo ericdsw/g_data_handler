@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import { useSnackbar } from 'notistack';
 import Typography from '@mui/material/Typography';
+import { ClearAll, DeleteSweep, SelectAll } from '@mui/icons-material';
+import { red } from '@mui/material/colors';
 
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import Subscriptions from '@mui/icons-material/Subscriptions';
@@ -13,13 +15,10 @@ import {
   ConfirmationDialogue,
   FabAbsoluteContainer,
   GenericDialogue,
-} from '../../elements';
-import TemplateList from './elements/TemplateList';
+  DragJsonFileManager
+} from '@/components/elements';
+import { parseFile, fillCutsceneWithDefaults } from '@/functions';
 
-import Cutscene from './Cutscene';
-import CutsceneToolbar from './CutsceneToolbar';
-import { DragJsonFileManager } from '../../elements';
-import { parseFile, fillCutsceneWithDefaults } from '../../../functions';
 import {
   updateCutsceneFileName,
   updateCutscene,
@@ -36,12 +35,13 @@ import {
   deleteCutsceneRowBulk,
   bulkSelectAll,
   bulkUnselectAllCutsceneRows,
-} from '../../../actions/cutsceneActions';
+} from '@/actions/cutsceneActions';
+import { transformIn } from '@/models/transformers/CutsceneTransformer';
+import { useDialogueManager } from '@/hooks';
 
-import { transformIn } from '../../../models/transformers/CutsceneTransformer';
-import { useDialogueManager } from '../../../hooks';
-import { ClearAll, DeleteSweep, SelectAll } from '@mui/icons-material';
-import { red } from '@mui/material/colors';
+import TemplateList from './elements/TemplateList';
+import Cutscene from './Cutscene';
+import CutsceneToolbar from './CutsceneToolbar';
 
 const selectCutsceneId = (state) => state.cutscene.currentCutsceneId;
 const selectCutscenes = (state) => state.cutscene.cutscenes;

@@ -92,7 +92,8 @@ const FloatingDialogue = ({
   return (
     <Box sx={{ display: 'flex' }}>
       <Grid container sx={{
-        justifyContent: "center"
+        justifyContent: "center",
+        flexGrow: 1
       }}>
         <StyledContentWrapper
           sx={{
@@ -121,7 +122,7 @@ const FloatingDialogue = ({
               textAlign: isTransparent ? 'center' : 'left',
             }}
           >
-            <StyledMessageTextOnlyWrapper sx={{ width: noImage ? 306 * 2 : 249 * 2 }}>
+            <StyledMessageTextOnlyWrapper sx={{ width: !hasImage ? 306 * 2 : 249 * 2 }}>
               {messageTextOnly}
             </StyledMessageTextOnlyWrapper>
           </ButtonBase>

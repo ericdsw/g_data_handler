@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import { Draggable } from 'react-beautiful-dnd';
@@ -8,7 +8,7 @@ import {
   editCutsceneEvent,
   deleteCutsceneEvent,
   addExistingEventToTemplate,
-} from '../../../actions/cutsceneActions';
+} from '@/actions/cutsceneActions';
 
 const selectCutsceneEvents = (state) => state.cutscene.cutsceneEvents;
 

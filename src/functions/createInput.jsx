@@ -15,11 +15,14 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import { RestartAlt } from '@mui/icons-material';
 
-import AddNewMultiInputRow from '../components/elements/AddNewMultiInputRow';
-import CompositeDialogueFileInput from '../components/elements/CompositeDialogueFileInput';
-import CutsceneFileSearcher from '../components/elements/CutsceneFileSearcher';
-import NodeTargetField from '../components/elements/NodeTargetField';
-import { possibleEaseTypes, possibleTransTypes } from '../globals/godotEnums';
+import {
+  CutsceneFileSearcher,
+  NodeTargetField,
+  CompositeDialogueFileInput,
+  AddNewMultiInputRow,
+} from '@/components/elements';
+
+import { possibleEaseTypes, possibleTransTypes } from '@/globals/godotEnums';
 
 /**
  * Creates an input element instance using the provided attributes.

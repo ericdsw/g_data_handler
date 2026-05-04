@@ -1,4 +1,4 @@
-import { eventSchema } from '../globals';
+import { eventSchema } from '@/globals';
 
 /**
  * This method will return true if the provided value is an actual

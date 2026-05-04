@@ -1,4 +1,3 @@
-import React from 'react';
 import { GenericForm } from '../../../elements';
 
 const schema = {

@@ -11,7 +11,7 @@ import {
   injectTemplate,
   addCutsceneRowToBulk,
   removeCutsceneRowFromBulk,
-} from '../../../actions/cutsceneActions';
+} from '@/actions/cutsceneActions';
 
 const memoizedSelectCutsceneRowData = createSelector(
   (state) => state.cutscene.cutsceneRows,

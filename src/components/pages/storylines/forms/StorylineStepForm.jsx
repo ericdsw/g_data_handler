@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
-import { GenericForm } from '../../../elements';
+import { GenericForm } from '@/components/elements';
 
 const schema = {
   parameters: {
