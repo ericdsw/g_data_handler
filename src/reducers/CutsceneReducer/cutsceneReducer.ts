@@ -1,6 +1,6 @@
 import { createReducer, PayloadAction, createAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
-import { deleteReference } from './reducerActions';
+import { deleteReference } from '../reducerActions';
 
 import {
   UPDATE_CUTSCENE,
@@ -47,45 +47,31 @@ import { downloadJSON } from '@/functions';
 
 type CutsceneSliceState = {
   currentCutsceneId: string,
-
-  cutscenes: {},
-  cutsceneRows: {},
-  cutsceneEvents: {},
-
-  currentCutsceneJumps: {},
-
+  cutscenes: { [key: string]: any },
+  cutsceneRows: { [key: string]: any },
+  cutsceneEvents: { [key: string]: any },
+  currentCutsceneJumps: { [key: string]: any },
   fileName: string,
   hideBars: boolean,
-
   preloadedCutsceneFileNames: string[],
-
   templateIds: string[],
-  eventTemplates: {},
-
+  eventTemplates: { [key: string]: any},
   savedNodeTargets: string[],
-
   cutsceneRowsToMerge: string[]
 }
 
 const initialState: CutsceneSliceState = {
   currentCutsceneId: '',
-
   cutscenes: {},
   cutsceneRows: {},
   cutsceneEvents: {},
-
   currentCutsceneJumps: {},
-
   fileName: '',
   hideBars: false,
-
   preloadedCutsceneFileNames: [],
-
   templateIds: [],
   eventTemplates: {},
-
   savedNodeTargets: [],
-
   cutsceneRowsToMerge: [],
 };
 

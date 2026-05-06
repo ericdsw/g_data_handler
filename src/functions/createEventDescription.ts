@@ -2,7 +2,7 @@
  * This method will generate the appropiate description for the defined
  * event type and parameters
  */
-export default function createEventDescription(type, parameters) {
+export default function createEventDescription(type: string, parameters: {[key: string]: any}) {
   switch (type) {
     case 'gain_abilities':
       return `Max allowed level: ${parameters.max_level}`;

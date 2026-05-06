@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import cutsceneReducer from './cutsceneReducer';
+import cutsceneReducer from './CutsceneReducer';
 import dialogueReducer from './dialogueReducer';
 import storylineReducer from './storylineReducer';
 import appReducer from './appReducer';

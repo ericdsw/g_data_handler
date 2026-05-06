@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, SyntheticEvent } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { Grid, Button, Typography, ButtonOwnProps } from '@mui/material';
 
@@ -47,7 +47,7 @@ const GenericForm = ({
   }, [formData, parameters]);
 
   const onSubmit = useCallback(
-    (event) => {
+    (event: SyntheticEvent<HTMLFormElement>) => {
       event.preventDefault();
       const resultData = parseOut(formData, parameters);
       const missingRequired = getMissingRequired(resultData, parameters);
@@ -69,9 +69,13 @@ const GenericForm = ({
 
   return (
     <form onSubmit={onSubmit}>
-      <Grid container spacing={1} sx={{
-        alignItems: "center"
-      }}>
+      <Grid
+        container
+        spacing={1}
+        sx={{
+          alignItems: "center"
+        }}
+      >
         {Object.keys(parameters).map((inputName, index) => {
           if (parameters[inputName].skipRender) {
             return <></>;
@@ -99,9 +103,7 @@ const GenericForm = ({
           <i>{additionalText}</i>
         </Typography>
       )}
-      <Grid container sx={{
-        justifyContent: "flex-end"
-      }}>
+      <Grid container sx={{ justifyContent: "flex-end" }}>
         <Button variant="contained" color={buttonColor} type="submit">
           {buttonText}
         </Button>

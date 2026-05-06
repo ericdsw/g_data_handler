@@ -1,6 +1,14 @@
-import React, { useMemo, useCallback } from 'react';
-import { completionInputSchema } from '../../../../globals';
-import { GenericForm } from '../../../elements';
+import { useMemo, useCallback } from 'react';
+import { completionInputSchema } from '@/globals';
+import { GenericForm } from '@/components/elements';
+
+type CompleteConditionFormProps = {
+  completionType?: string,
+  conditionParams?: { [key: string]: any },
+  name?: string,
+  buttonText?: string,
+  handleSubmit: (uniqueName: string, newData: { [key: string]: any }) => void,
+}
 
 const CompleteConditionForm = ({
   completionType = '',
@@ -8,7 +16,7 @@ const CompleteConditionForm = ({
   name = '',
   buttonText = 'Create',
   handleSubmit,
-}) => {
+}: CompleteConditionFormProps) => {
   const currentSchema = useMemo(
     () => (completionType !== '' ? completionInputSchema[completionType] : {}),
     [completionType]
@@ -32,7 +40,7 @@ const CompleteConditionForm = ({
   );
 
   if (completionType === '') {
-    return <React.Fragment />;
+    return <></>;
   }
 
   return (

@@ -1,6 +1,5 @@
-import React from 'react';
-import { GenericForm } from '../../../elements';
-import { bundleEntityInputSchema } from '../../../../globals';
+import { GenericForm } from '@/components/elements';
+import { bundleEntityInputSchema } from '@/globals';
 
 const CompletionBundleForm = ({
   buttonText = 'Create',
