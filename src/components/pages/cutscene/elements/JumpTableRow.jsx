@@ -4,8 +4,8 @@ import { TableRow, TableCell, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-import { useDialogueManager } from '../../../../hooks';
-import { GenericDialogue, ConfirmationDialogue } from '../../../elements';
+import { useDialogueManager } from '@/hooks';
+import { GenericDialogue, ConfirmationDialogue } from '@/components/elements';
 import { JumpForm } from '../forms';
 
 const JumpTableRow = ({

@@ -1,7 +1,6 @@
-import React from 'react';
 import { Autocomplete, Box, Icon, Typography, TextField } from '@mui/material';
 
-import { eventSchema } from '../../../../globals';
+import { eventSchema } from '@/globals';
 
 const SORTED_KEYS = Object.keys(eventSchema).sort();
 

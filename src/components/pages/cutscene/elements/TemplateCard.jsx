@@ -17,8 +17,8 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
 
 import CutsceneEventContainer from '../CutsceneEventContainer';
-import { ConfirmationDialogue, GenericDialogue } from '../../../elements';
-import { useDialogueManager } from '../../../../hooks';
+import { ConfirmationDialogue, GenericDialogue } from '@/components/elements';
+import { useDialogueManager } from '@/hooks';
 import UpdateTemplateNameForm from '../forms/UpdateTemplateNameForm';
 import { CreateEventForm } from '../forms';
 
@@ -26,7 +26,7 @@ import {
   updateTemplateName,
   deleteTemplate,
   addExistingEventToTemplate,
-} from '../../../../actions/cutsceneActions';
+} from '@/actions/cutsceneActions';
 
 const TemplateCard = ({
   templateData,

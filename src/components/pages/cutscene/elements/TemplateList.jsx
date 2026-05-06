@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import { Button, Fab, Grid, Paper, TextField, Typography } from '@mui/material';
@@ -7,7 +7,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useSnackbar } from 'notistack';
 
 import TemplateCard from './TemplateCard';
-import { DragAndDrop } from '../../../elements';
+import { DragAndDrop } from '@/components/elements';
 
 import {
   createTemplate,
@@ -15,8 +15,8 @@ import {
   moveEventBetweenTemplates,
   reorderEventInTemplate,
   reorderTemplate,
-} from '../../../../actions/cutsceneActions';
-import { downloadJSON, parseFile } from '../../../../functions';
+} from '@/actions/cutsceneActions';
+import { downloadJSON, parseFile } from '@/functions';
 
 const selectTemplateIds = (state) => state.cutscene.templateIds;
 const selectTemplates = (state) => state.cutscene.eventTemplates;

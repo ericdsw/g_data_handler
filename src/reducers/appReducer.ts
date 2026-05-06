@@ -3,7 +3,7 @@ import {
   TOGGLE_SIDEBAR,
   COLLAPSE_SIDEBAR,
   TOGGLE_DARK_MODE,
-} from '../actions/types';
+} from '@/actions/types';
 
 type AppReducerInitialState = {
   drawerOpen: boolean,
